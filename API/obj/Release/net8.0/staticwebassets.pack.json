@@ -1,0 +1,285 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\css\\bootstrap\\bootstrap-select.css",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap-select.css"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\css\\bootstrap\\bootstrap-tagsinput-bs5.css",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap-tagsinput-bs5.css"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\css\\bootstrap\\bootstrap-tagsinput.css",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap-tagsinput.css"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\css\\bootstrap\\bootstrap-toggle.min.css",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap-toggle.min.css"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\css\\dropzone\\dropzone-theme.css",
+      "PackagePath": "staticwebassets\\css\\dropzone\\dropzone-theme.css"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\css\\dropzone\\dropzone.min.css",
+      "PackagePath": "staticwebassets\\css\\dropzone\\dropzone.min.css"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\css\\flatpickr\\airbnb.css",
+      "PackagePath": "staticwebassets\\css\\flatpickr\\airbnb.css"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\css\\flatpickr\\flatpickr.min.css",
+      "PackagePath": "staticwebassets\\css\\flatpickr\\flatpickr.min.css"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\css\\fontawesome\\all.min.css",
+      "PackagePath": "staticwebassets\\css\\fontawesome\\all.min.css"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\css\\fontawesome\\v4-font-face.min.css",
+      "PackagePath": "staticwebassets\\css\\fontawesome\\v4-font-face.min.css"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\css\\fontawesome\\v4-shims.min.css",
+      "PackagePath": "staticwebassets\\css\\fontawesome\\v4-shims.min.css"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\css\\highlightjs\\theme.min.css",
+      "PackagePath": "staticwebassets\\css\\highlightjs\\theme.min.css"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\css\\webfonts\\fa-brands-400.ttf",
+      "PackagePath": "staticwebassets\\css\\webfonts\\fa-brands-400.ttf"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\css\\webfonts\\fa-brands-400.woff2",
+      "PackagePath": "staticwebassets\\css\\webfonts\\fa-brands-400.woff2"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\css\\webfonts\\fa-regular-400.ttf",
+      "PackagePath": "staticwebassets\\css\\webfonts\\fa-regular-400.ttf"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\css\\webfonts\\fa-regular-400.woff2",
+      "PackagePath": "staticwebassets\\css\\webfonts\\fa-regular-400.woff2"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\css\\webfonts\\fa-solid-900.ttf",
+      "PackagePath": "staticwebassets\\css\\webfonts\\fa-solid-900.ttf"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\css\\webfonts\\fa-solid-900.woff2",
+      "PackagePath": "staticwebassets\\css\\webfonts\\fa-solid-900.woff2"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\css\\webfonts\\fa-v4compatibility.ttf",
+      "PackagePath": "staticwebassets\\css\\webfonts\\fa-v4compatibility.ttf"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\css\\webfonts\\fa-v4compatibility.woff2",
+      "PackagePath": "staticwebassets\\css\\webfonts\\fa-v4compatibility.woff2"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\favicon.ico",
+      "PackagePath": "staticwebassets\\favicon.ico"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\images\\JJMasterData.png",
+      "PackagePath": "staticwebassets\\images\\JJMasterData.png"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\images\\JJMasterDataLogo.png",
+      "PackagePath": "staticwebassets\\images\\JJMasterDataLogo.png"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\images\\JJMasterDataLogoVertical.png",
+      "PackagePath": "staticwebassets\\images\\JJMasterDataLogoVertical.png"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\images\\LoadingIndicator.gif",
+      "PackagePath": "staticwebassets\\images\\LoadingIndicator.gif"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\js\\autonumeric\\autoNumeric.min.js",
+      "PackagePath": "staticwebassets\\js\\autonumeric\\autoNumeric.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\js\\autonumeric\\autoNumeric.min.js.map",
+      "PackagePath": "staticwebassets\\js\\autonumeric\\autoNumeric.min.js.map"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\js\\bootstrap\\bootstrap-select\\bootstrap-select.min.js",
+      "PackagePath": "staticwebassets\\js\\bootstrap\\bootstrap-select\\bootstrap-select.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\js\\bootstrap\\bootstrap-tagsinput\\bootstrap-tagsinput.min.js",
+      "PackagePath": "staticwebassets\\js\\bootstrap\\bootstrap-tagsinput\\bootstrap-tagsinput.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\js\\bootstrap\\bootstrap-toggle\\bootstrap-toggle.min.js",
+      "PackagePath": "staticwebassets\\js\\bootstrap\\bootstrap-toggle\\bootstrap-toggle.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\js\\bootstrap\\bootstrap5\\bootstrap.bundle.min.js",
+      "PackagePath": "staticwebassets\\js\\bootstrap\\bootstrap5\\bootstrap.bundle.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\js\\dropzone\\dropzone.min.js",
+      "PackagePath": "staticwebassets\\js\\dropzone\\dropzone.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\js\\flatpickr\\flatpickr.min.js",
+      "PackagePath": "staticwebassets\\js\\flatpickr\\flatpickr.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\js\\flatpickr\\l10n\\en.min.js",
+      "PackagePath": "staticwebassets\\js\\flatpickr\\l10n\\en.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\js\\flatpickr\\l10n\\pt.min.js",
+      "PackagePath": "staticwebassets\\js\\flatpickr\\l10n\\pt.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\js\\fontawesome\\all.min.js",
+      "PackagePath": "staticwebassets\\js\\fontawesome\\all.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\js\\fontawesome\\conflict-detection.min.js",
+      "PackagePath": "staticwebassets\\js\\fontawesome\\conflict-detection.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\js\\fontawesome\\v4-shims.min.js",
+      "PackagePath": "staticwebassets\\js\\fontawesome\\v4-shims.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\js\\highlightjs\\highlight.min.js",
+      "PackagePath": "staticwebassets\\js\\highlightjs\\highlight.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\js\\highlightjs\\languages\\csharp.min.js",
+      "PackagePath": "staticwebassets\\js\\highlightjs\\languages\\csharp.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\js\\highlightjs\\languages\\tsql.min.js",
+      "PackagePath": "staticwebassets\\js\\highlightjs\\languages\\tsql.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\js\\inputmask\\dist\\bindings\\inputmask.binding.js",
+      "PackagePath": "staticwebassets\\js\\inputmask\\dist\\bindings\\inputmask.binding.js"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\js\\inputmask\\dist\\inputmask.js",
+      "PackagePath": "staticwebassets\\js\\inputmask\\dist\\inputmask.js"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\js\\inputmask\\dist\\inputmask.min.js",
+      "PackagePath": "staticwebassets\\js\\inputmask\\dist\\inputmask.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\js\\inputmask\\dist\\jquery.inputmask.js",
+      "PackagePath": "staticwebassets\\js\\inputmask\\dist\\jquery.inputmask.js"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\js\\inputmask\\dist\\jquery.inputmask.min.js",
+      "PackagePath": "staticwebassets\\js\\inputmask\\dist\\jquery.inputmask.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\js\\jjmasterdata\\jjmasterdata.js",
+      "PackagePath": "staticwebassets\\js\\jjmasterdata\\jjmasterdata.js"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\js\\jjmasterdata\\jjmasterdata.js.map",
+      "PackagePath": "staticwebassets\\js\\jjmasterdata\\jjmasterdata.js.map"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\js\\jquery\\jquery-form\\jquery.form.js",
+      "PackagePath": "staticwebassets\\js\\jquery\\jquery-form\\jquery.form.js"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\js\\jquery\\jquery-ui\\jquery-ui.min.js",
+      "PackagePath": "staticwebassets\\js\\jquery\\jquery-ui\\jquery-ui.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\js\\jquery\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
+      "PackagePath": "staticwebassets\\js\\jquery\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\js\\jquery\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
+      "PackagePath": "staticwebassets\\js\\jquery\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\js\\jquery\\jquery-validation\\additional-methods.js",
+      "PackagePath": "staticwebassets\\js\\jquery\\jquery-validation\\additional-methods.js"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\js\\jquery\\jquery-validation\\additional-methods.min.js",
+      "PackagePath": "staticwebassets\\js\\jquery\\jquery-validation\\additional-methods.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\js\\jquery\\jquery-validation\\jquery.validate.js",
+      "PackagePath": "staticwebassets\\js\\jquery\\jquery-validation\\jquery.validate.js"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\js\\jquery\\jquery-validation\\jquery.validate.min.js",
+      "PackagePath": "staticwebassets\\js\\jquery\\jquery-validation\\jquery.validate.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\js\\jquery\\jquery.js",
+      "PackagePath": "staticwebassets\\js\\jquery\\jquery.js"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\js\\jquery\\jquery.min.js",
+      "PackagePath": "staticwebassets\\js\\jquery\\jquery.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\js\\jquery\\jquery.min.map",
+      "PackagePath": "staticwebassets\\js\\jquery\\jquery.min.map"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\js\\popperjs\\popper.min.js",
+      "PackagePath": "staticwebassets\\js\\popperjs\\popper.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\js\\popperjs\\popper.min.js.map",
+      "PackagePath": "staticwebassets\\js\\popperjs\\popper.min.js.map"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\js\\spin\\spin.min.js",
+      "PackagePath": "staticwebassets\\js\\spin\\spin.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\wwwroot\\js\\typeahead\\typeahead.min.js",
+      "PackagePath": "staticwebassets\\js\\typeahead\\typeahead.min.js"
+    },
+    {
+      "Id": "obj\\Release\\net8.0\\staticwebassets\\msbuild.APIProjIFSP.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
+    },
+    {
+      "Id": "obj\\Release\\net8.0\\staticwebassets\\msbuild.APIProjIFSP.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Release\\net8.0\\staticwebassets\\msbuild.build.APIProjIFSP.props",
+      "PackagePath": "build\\APIProjIFSP.props"
+    },
+    {
+      "Id": "obj\\Release\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.APIProjIFSP.props",
+      "PackagePath": "buildMultiTargeting\\APIProjIFSP.props"
+    },
+    {
+      "Id": "obj\\Release\\net8.0\\staticwebassets\\msbuild.buildTransitive.APIProjIFSP.props",
+      "PackagePath": "buildTransitive\\APIProjIFSP.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

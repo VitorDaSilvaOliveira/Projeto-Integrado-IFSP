@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "osGdcfiUjV8=",
+  "dgSpecHash": "+znQoaEHSis=",
   "success": true,
-  "projectFilePath": "C:\\Users\\vitor\\Documents\\ProjetoIntegrado\\APIProjIFSP\\APIProjIFSP.csproj",
+  "projectFilePath": "C:\\Users\\vitor\\Desktop\\Projeto-Integrado-IFSP\\API\\APIProjIFSP.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\vitor\\.nuget\\packages\\aspnetcore.sasscompiler\\1.77.4\\aspnetcore.sasscompiler.1.77.4.nupkg.sha512",
     "C:\\Users\\vitor\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
