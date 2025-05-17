@@ -1,0 +1,14 @@
+# Arquivos temporários do LaTeX
+*.aux
+*.log
+*.lof
+*.lot
+*.toc
+*.out
+*.idx
+*.synctex.gz
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+
