@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("APIProjIFSP")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+daf33187edba195f80fc56a41e948684ba058803")]
 [assembly: System.Reflection.AssemblyProductAttribute("APIProjIFSP")]
 [assembly: System.Reflection.AssemblyTitleAttribute("APIProjIFSP")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
