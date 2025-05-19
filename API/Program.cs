@@ -1,47 +1,23 @@
-using JJMasterData.Web.Configuration;
+using APIProjIFSP.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// REGISTRA OS SERVIÇOS ANTES DE builder.Build()
-builder.Services.AddJJMasterDataWeb();
-builder.Services.AddCors(options =>
-{
-    options.AddDefaultPolicy(corsBuilder =>
-    {
-        corsBuilder.AllowAnyOrigin()
-                   .AllowAnyHeader()
-                   .AllowAnyMethod();
-    });
-});
+// ServiÃ§os
+builder.Services.AddCustomServices();
 
 var app = builder.Build();
 
+// Middlewares
 app.UseCors();
-
-// Middleware para liberar iframe
-app.Use(async (context, next) =>
-{
-    context.Response.Headers.Remove("X-Frame-Options"); // Remove o header que bloqueia iframe
-    context.Response.Headers["Content-Security-Policy"] = "frame-ancestors *"; // Permite iframe em qualquer origem
-    await next();
-});
-
+app.UseIframeSupport();
 app.UseStaticFiles();
 app.UseSession();
 
-// Mapas de rota
-app.MapDataDictionary();
-app.MapMasterData();
+// Endpoints
+app.MapCustomEndpoints();
 
-// Seeding com log de erro
-try
-{
-    await app.UseMasterDataSeedingAsync();
-}
-catch (Exception ex)
-{
-    Console.WriteLine($"Erro durante o seeding: {ex.Message}");
-    throw; // rethrow para ver erro completo no Azure
-}
+// Seeding
+var logger = app.Services.GetRequiredService<ILogger<Program>>();
+await app.UseSeedingAsync(logger);
 
 app.Run();
