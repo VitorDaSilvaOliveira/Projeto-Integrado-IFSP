@@ -615,7 +615,23 @@ Fases do desenvolvimento do projeto
 
 \subsection{Regras do Negócio}
 
-\lipsum[1]
+\begin{quadro}[htb]
+\caption{\label{quadro_regras}Regras de Negócio}
+\begin{tabular}{|c|p{10cm}|c|}
+	\hline
+\textbf{Regra} & \textbf{Descrição} & \textbf{Prioridade} \\ \hline
+ RN01 & Um produto precisa de nome, marca, modelo e preço para ser cadastrado.    & Média     \\ \hline
+ RN02  & Não é permitido cadastrar produtos com nome duplicado da mesma marca e modelo.   & Média    \\ \hline
+ RN03    & O campo de estoque inicial deve ser informado no momento do cadastro.   & Média     \\ \hline
+ RN04  & A quantidade de produtos vendidos não pode ser superior à quantidade em estoque.  & Média    \\ \hline
+ RN05  & O sistema deve permitir reposição de estoque.   & Média    \\ \hline
+ RN06  & Produtos com estoque igual a zero devem ser marcados como "Esgotado" no sistema.   & Média    \\ \hline
+ RN07  & A venda só pode ser finalizada se houver estoque disponível para todos os itens do pedido.   & Média    \\ \hline
+ RN08  & Cada venda deve gerar um comprovante com data, hora, produtos, quantidades e valor total.   & Média    \\ \hline
+ RN09  & O sistema deve registrar todas as movimentações de entrada e saída de estoque com data e responsável.  & Média    \\ \hline
+         
+\end{tabular}
+\end{quadro}
 
 
 \subsection{Requisitos Funcionais}
