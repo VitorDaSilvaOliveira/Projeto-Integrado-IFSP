@@ -14,6 +14,10 @@ export default {
   },
 
   methods: {
+    autorizarLogin() {
+      localStorage.setItem('loginAutorizado', 'true');
+      window.location.href = '/';
+    }
   },
 
   async mounted () {
@@ -57,14 +61,13 @@ export default {
             <div class="D-flex JC-space-between WIDTH-100" style="margin-top: 20px;">
               <a class="FSIZE-13px">Esqueceu sua senha?</a>
 
-              <NuxtLink to="/" style="width: 25%;">
-                <button
-                  style="width: 100%;"
-                  id="login-button"
-                  type="button"
-                  class="btn BGC-azul-2 COLOR-white WIDTH-25 BORRAD-5 BGC-H-azul-1"
-                >Entrar</button>
-              </NuxtLink>
+              <button
+                style="width: 25%;"
+                id="login-button"
+                type="button"
+                class="btn BGC-azul-2 COLOR-white WIDTH-25 BORRAD-5 BGC-H-azul-1"
+                @click="autorizarLogin"
+              >Entrar</button>
 
             </div>
 
