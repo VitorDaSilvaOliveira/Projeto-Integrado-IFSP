@@ -7,20 +7,7 @@ import { IconesEstoque } from '#components';
 export default {
   data () {
     return {
-      // Variáveis estáticas: ----------------------------\
-      token: useToken(),
-      urlProd: useUrlProd(),
-      urlProdProducao: useUrlProdProducao(),
-      urlProdSistema: useUrlProdSistema(),
-      urlProdControladoria: useUrlProdControladoria(),
-      urlCaminhoParametros: '/Controladoria/parametros',
-      endpoint: '/',
-      hoje: formatarData(new Date()),
-      hojeEUA: formatarDataEUA(new Date()),
-      senhaDelete: 'tp190980*',
-      senhaDeleteInputadaUsuario: '',
-      anoAtual: new Date().getFullYear(),
-      // //////////////////////////////////////////////////
+
     }
   },
 
