@@ -1,6 +1,5 @@
 <script>
 import { useRouter } from 'vue-router';
-import { formatarData, formatarDataEUA } from '~/composables/visualization';
 import axios from 'axios';
 import { IconesEstoque } from '#components';
 
