@@ -1,8 +1,8 @@
 <template>
   <h1 style="font-size: 7rem;">DICIONÁRIO DE DADOS</h1>
   <iframe 
-    src="https://apiprojifsp.azurewebsites.net/DataDictionary/Element/Index" 
-    style="width: 100%; height: 90vh; border: none;"
+    src="https://apiprojifsp.azurewebsites.net/MasterData/Form/Render/produto" 
+    style="width: 100%; height: 80vh; border: none;"
   ></iframe>
 </template>
 
