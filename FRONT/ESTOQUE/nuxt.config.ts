@@ -6,11 +6,25 @@ export default defineNuxtConfig({
   modules: [
     '@nuxt/content',
     '@nuxt/eslint',
-    '@nuxt/fonts',
     '@nuxt/icon',
     '@nuxt/image',
     '@nuxt/scripts',
     '@nuxt/test-utils',
     '@nuxt/ui'
-  ]
+  ],
+
+  css: [
+    'bootstrap/dist/css/bootstrap.min.css',
+    '~/assets/main.css',
+  ],
+
+  nitro: {
+    devProxy: {
+      '/api': {
+        target: 'https://apiprojifsp.azurewebsites.net',
+        changeOrigin: true,
+        prependPath: false
+      }
+    }
+  }
 })
