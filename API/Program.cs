@@ -17,6 +17,15 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 app.UseCors();
+
+// Middleware para liberar iframe
+app.Use(async (context, next) =>
+{
+    context.Response.Headers.Remove("X-Frame-Options"); // Remove o header que bloqueia iframe
+    context.Response.Headers["Content-Security-Policy"] = "frame-ancestors *"; // Permite iframe em qualquer origem
+    await next();
+});
+
 app.UseStaticFiles();
 app.UseSession();
 
