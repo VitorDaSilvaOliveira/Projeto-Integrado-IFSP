@@ -8,5 +8,11 @@ namespace Estoque.Web.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public IActionResult Entrar(string usuario, string senha)
+        {
+            return Redirect("/Produto");
+        }
     }
 }

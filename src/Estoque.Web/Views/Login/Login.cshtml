@@ -26,6 +26,7 @@
         </div>
         <div class="formulario-login D-flex JC-center ALITEM-center PADDING-B20">
             <form method="post" action="/Login/Entrar" class="D-flex FD-column JC-flex-start HEIGHT-60 WIDTH-100">
+
                 <div class="mb-3">
                     <label for="usuario-input" class="form-label">Usuário</label>
                     <input type="text" class="form-control" id="usuario-input" name="Usuario" required/>
@@ -34,11 +35,14 @@
                     <label for="senha-input" class="form-label">Senha</label>
                     <input type="password" class="form-control" id="senha-input" name="Senha" required/>
                 </div>
+
+                @* Div esqueceu a senha e Botão de entrar *@
                 <div class="D-flex JC-space-between WIDTH-100 mt-3">
                     <a href="/Login/EsqueceuSenha">Esqueceu sua senha?</a>
                     <button type="submit" class="btn BGC-azul-2 COLOR-white WIDTH-25 BORRAD-5 BGC-H-azul-1">Entrar
                     </button>
                 </div>
+
             </form>
         </div>
     </div>
