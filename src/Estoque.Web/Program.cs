@@ -6,8 +6,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddCustomServices();
 builder.Services.AddEstoqueServices();
+builder.Services.AddPtBrLocalization();
 
 var app = builder.Build();
+
+app.UsePtBrLocalization();
 
 // Middlewares
 app.UseCors();
