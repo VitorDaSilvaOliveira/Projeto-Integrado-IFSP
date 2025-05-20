@@ -12,9 +12,10 @@ var app = builder.Build();
 // Middlewares
 app.UseCors();
 app.UseIframeSupport();
+app.UseHttpsRedirection();
 app.UseStaticFiles();
-app.UseSession();
-app.UseRouting();          
+app.UseRouting();
+app.UseSession();         
 app.UseAuthentication();   
 app.UseAuthorization();
 
