@@ -1,5 +1,6 @@
 using Estoque.Infrastructure.Services;
 using JJMasterData.Commons.Configuration;
+using JJMasterData.Commons.Logging;
 using JJMasterData.Core.Configuration;
 using JJMasterData.Web.Configuration;
 
@@ -17,5 +18,10 @@ public static class ServiceCollectionExtensions
         services.AddJJMasterDataWeb();
         services.AddJJMasterDataCommons();
         services.AddJJMasterDataCore();
+        services.AddLogging(loggingBuilder =>
+        {
+            loggingBuilder.ClearProviders();
+            loggingBuilder.AddDbLoggerProvider();
+        });
     }
 }
