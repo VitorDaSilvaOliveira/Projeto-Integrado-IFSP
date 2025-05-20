@@ -1,4 +1,5 @@
 using Estoque.Web.Extensions;
+using JJMasterData.Commons.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,7 +8,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddCustomServices();
 builder.Services.AddEstoqueServices();
 builder.Services.AddPtBrLocalization();
-
+builder.Logging.AddDbLoggerProvider();
 var app = builder.Build();
 
 app.UsePtBrLocalization();
