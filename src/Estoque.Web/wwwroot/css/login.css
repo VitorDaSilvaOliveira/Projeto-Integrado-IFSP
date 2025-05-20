@@ -1,0 +1,116 @@
+﻿.D-flex {
+    display: flex;
+}
+
+.FD-column {
+    flex-direction: column;
+}
+
+.JC-center {
+    justify-content: center;
+}
+
+.JC-space-between {
+    justify-content: space-between;
+}
+
+.ALITEM-center {
+    align-items: center;
+}
+
+.HEIGHT-100vh {
+    height: 100vh;
+}
+
+.HEIGHT-100 {
+    height: 100%;
+}
+
+.WIDTH-100 {
+    width: 100%;
+}
+
+.BGC-azul-2 {
+    background-color: #005f99;
+}
+
+.BGC-H-azul-1:hover {
+    background-color: #004477;
+}
+
+.COLOR-white {
+    color: white;
+}
+
+.BORRAD-5 {
+    border-radius: 5px;
+}
+
+.BORRAD-8 {
+    border-radius: 8px;
+}
+
+.BOR-grey-1 {
+    border: 1px solid #ccc;
+}
+
+.caixa-esquerda {
+    width: 35%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.caixa-direita {
+    width: 65%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.formulario-login {
+    width: 62.5%;
+    height: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 20px;
+}
+
+@media only screen and (max-width: 768px) {
+    .caixa-esquerda
+
+    {
+        width: 100%;
+    }
+
+    .caixa-direita {
+        display: none;
+    }
+
+    .formulario-login {
+        width: 80%;
+        height: 80%;
+    }
+
+}
+
+@media only screen and (min-width: 769px) and (max-width: 1100px) {
+    .caixa-esquerda
+
+    {
+        width: 45%;
+    }
+
+    .caixa-direita {
+        width: 55%;
+    }
+
+    .formulario-login {
+        width: 70%;
+        height: 75%;
+    }
+
+}

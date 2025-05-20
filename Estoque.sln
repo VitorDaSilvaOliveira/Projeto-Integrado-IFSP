@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.36105.23
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Estoque.Web", "src\Estoque.Web\Estoque.Web.csproj", "{F6BA8FBC-7949-4FC2-9E55-01A24B06B9ED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Estoque.Domain", "src\Estoque.Domain\Estoque.Domain.csproj", "{1F0545DC-C04A-431A-A4C9-8B4F63973AC6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Estoque.Infrastructure", "src\Estoque.Infrastructure\Estoque.Infrastructure.csproj", "{261B8C58-B579-4D03-8A6D-52AA5C459DCF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F6BA8FBC-7949-4FC2-9E55-01A24B06B9ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6BA8FBC-7949-4FC2-9E55-01A24B06B9ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6BA8FBC-7949-4FC2-9E55-01A24B06B9ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6BA8FBC-7949-4FC2-9E55-01A24B06B9ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F0545DC-C04A-431A-A4C9-8B4F63973AC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F0545DC-C04A-431A-A4C9-8B4F63973AC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F0545DC-C04A-431A-A4C9-8B4F63973AC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F0545DC-C04A-431A-A4C9-8B4F63973AC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{261B8C58-B579-4D03-8A6D-52AA5C459DCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{261B8C58-B579-4D03-8A6D-52AA5C459DCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{261B8C58-B579-4D03-8A6D-52AA5C459DCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{261B8C58-B579-4D03-8A6D-52AA5C459DCF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
