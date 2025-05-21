@@ -1,3 +1,37 @@
 ﻿body {
     font-family: 'Nunito Sans', sans-serif !important;
 }
+
+[data-bs-theme="light"] nav {
+    background-color: #f8f9fa;
+    color: #212529;
+}
+
+[data-bs-theme="dark"] nav {
+    background-color: #212529;
+    color: #f8f9fa;
+}
+
+/* Ajusta link se precisar */
+[data-bs-theme="dark"] .nav-link {
+    color: #f8f9fa;
+}
+
+[data-bs-theme="light"] .nav-link {
+    color: #212529;
+}
+
+[data-bs-theme="light"] #navbarDefault {
+    background-color: #343a40; 
+    color: #fff;
+}
+
+[data-bs-theme="dark"] #navbarDefault {
+    background-color: #2a2f36;
+    color: #f8f9fa;
+}
+
+[data-bs-theme="dark"] #navbarDefault .navbar-brand,
+[data-bs-theme="dark"] #navbarDefault .text-white {
+    color: #f8f9fa;
+}
