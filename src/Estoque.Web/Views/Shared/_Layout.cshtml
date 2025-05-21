@@ -1,36 +1,44 @@
 ﻿<!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-bs-theme="light">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>@ViewData["Title"]</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="~/css/home.css" asp-append-version="true"/>
 
     <partial name="_MasterDataStylesheets"/>
     @await RenderSectionAsync("Stylesheets", required: false)
     <partial name="_MasterDataScripts"/>
 </head>
 <body>
-<header class="navbar navbar-top fixed-top navbar-expand bg-dark" id="navbarDefault">
+<header class="navbar navbar-top fixed-top navbar-expand" id="navbarDefault">
     <div class="container-fluid">
         <a class="navbar-brand text-white" href="#">Estoque</a>
 
-        <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+        <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarContent">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse justify-content-between" id="navbarContent">
-            <div class="navbar-nav">
-            </div>
-            <div class="text-white">Bem-vindo(a)</div>
+        <div class="text-white d-flex align-items-center gap-2">
+            <input type="checkbox" class="btn-check" id="themeControlToggle" autocomplete="off" style="display:none;"/>
+
+            <label class="mb-0 theme-control-toggle-label theme-control-toggle-dark" for="themeControlToggle"
+                   data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="Mudar tema" title="Mudar tema"
+                   style="cursor:pointer; font-size: 1.2rem; color: #ffc107;">
+                <span class="fa-solid fa-sun"></span>
+            </label>
+
+            <span>Bem-vindo(a)</span>
         </div>
     </div>
 </header>
 
 <div class="d-flex" style="min-height: 100vh; padding-top: 56px;">
-    <nav class="bg-light border-end"
+    <nav class="border-end"
          style="position: fixed; top: 56px; left: 0; width: 250px; height: calc(100vh - 56px); overflow-y: auto; z-index: 1030;">
         <ul class="navbar-nav flex-column p-3" id="navbarVerticalNav">
             <li class="nav-item">
@@ -39,8 +47,8 @@
                         <div class="d-flex align-items-center" style="gap: 0.5rem;">
                             <span class="nav-link-icon"><span class="fa fa-box"></span></span>
                             <span class="nav-link-text-wrapper">
-                            <span class="nav-link-text text-wrap">Produtos</span>
-                        </span>
+                                <span class="nav-link-text text-wrap">Produtos</span>
+                            </span>
                         </div>
                     </a>
                 </div>
@@ -51,8 +59,8 @@
                         <div class="d-flex align-items-center" style="gap: 0.5rem;">
                             <span class="nav-link-icon"><span class="fa fa-arrow-down"></span></span>
                             <span class="nav-link-text-wrapper">
-                            <span class="nav-link-text text-wrap">Entrada de Produtos</span>
-                        </span>
+                                <span class="nav-link-text text-wrap">Entrada de Produtos</span>
+                            </span>
                         </div>
                     </a>
                 </div>
@@ -63,8 +71,8 @@
                         <div class="d-flex align-items-center" style="gap: 0.5rem;">
                             <span class="nav-link-icon"><span class="fa fa-truck"></span></span>
                             <span class="nav-link-text-wrapper">
-                            <span class="nav-link-text text-wrap">Fornecedores</span>
-                        </span>
+                                <span class="nav-link-text text-wrap">Fornecedores</span>
+                            </span>
                         </div>
                     </a>
                 </div>
@@ -78,3 +86,4 @@
 
 </body>
 </html>
+<script src="~/js/home.js" asp-append-version="true"></script>
