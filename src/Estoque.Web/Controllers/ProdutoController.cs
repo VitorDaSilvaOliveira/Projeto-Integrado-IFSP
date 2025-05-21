@@ -18,4 +18,18 @@ public class ProdutoController(ProdutoService produtoService) : Controller
         ViewBag.FormViewProduto = resultGridProdutoAsync.Content;
         return View();
     }
+    
+    [Route("Entrada")]
+    public async Task<IActionResult> EntradaProduto()
+    {
+        var formViewEntradaAsync = await produtoService.GetFormViewEntradaAsync();
+
+        var resultGridEntradaAsync = await formViewEntradaAsync.GetResultAsync();
+
+        if (resultGridEntradaAsync is IActionResult actionResultGridEntradaAsync)
+            return actionResultGridEntradaAsync;
+
+        ViewBag.FormViewEntrada = resultGridEntradaAsync.Content;
+        return View();
+    }
 }

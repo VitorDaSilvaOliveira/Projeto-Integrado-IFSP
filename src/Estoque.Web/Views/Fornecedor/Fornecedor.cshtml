@@ -1,10 +1,10 @@
 ﻿@using JJMasterData.Web.Extensions
 @{
     // ReSharper disable once Razor.LayoutNotResolved
-    Layout = "_MasterDataLayout";
+    Layout = "_Layout";
 }
 
 @using (Html.BeginMasterDataForm())
 {
-    @Html.Raw(ViewBag.FormViewEntrada)
+    @Html.Raw(ViewBag.FormViewFornecedor)
 }

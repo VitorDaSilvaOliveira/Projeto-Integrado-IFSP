@@ -1,52 +1,80 @@
-﻿@* <!DOCTYPE html>
-<html lang="en">
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>@ViewData["Title"] - MasterdataTeste</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
-    <link rel="stylesheet" href="~/MasterdataTeste.styles.css" asp-append-version="true"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
+
+    <partial name="_MasterDataStylesheets"/>
+    @await RenderSectionAsync("Stylesheets", required: false)
+    <partial name="_MasterDataScripts"/>
 </head>
 <body>
-<header>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-        <div class="container-fluid">
-            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MasterdataTeste</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Produto" asp-action="Index">Produtos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                    </li>
-                </ul>
+<header class="navbar navbar-top fixed-top navbar-expand bg-dark" id="navbarDefault">
+    <div class="container-fluid">
+        <a class="navbar-brand text-white" href="#">Estoque</a>
+
+        <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-between" id="navbarContent">
+            <div class="navbar-nav">
             </div>
+            <div class="text-white">Bem-vindo(a)</div>
         </div>
-    </nav>
+    </div>
 </header>
-<div class="container">
-    <main role="main" class="pb-3">
+
+<div class="d-flex" style="min-height: 100vh; padding-top: 56px;">
+    <nav class="bg-light border-end"
+         style="position: fixed; top: 56px; left: 0; width: 250px; height: calc(100vh - 56px); overflow-y: auto; z-index: 1030;">
+        <ul class="navbar-nav flex-column p-3" id="navbarVerticalNav">
+            <li class="nav-item">
+                <div class="nav-item-wrapper">
+                    <a class="nav-link label-1" aria-current="page" href="@Url.Action("Produto", "Produto")">
+                        <div class="d-flex align-items-center" style="gap: 0.5rem;">
+                            <span class="nav-link-icon"><span class="fa fa-box"></span></span>
+                            <span class="nav-link-text-wrapper">
+                            <span class="nav-link-text text-wrap">Produtos</span>
+                        </span>
+                        </div>
+                    </a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <div class="nav-item-wrapper">
+                    <a class="nav-link label-1" aria-current="page" href="@Url.Action("EntradaProduto", "Produto")">
+                        <div class="d-flex align-items-center" style="gap: 0.5rem;">
+                            <span class="nav-link-icon"><span class="fa fa-arrow-down"></span></span>
+                            <span class="nav-link-text-wrapper">
+                            <span class="nav-link-text text-wrap">Entrada de Produtos</span>
+                        </span>
+                        </div>
+                    </a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <div class="nav-item-wrapper">
+                    <a class="nav-link label-1" aria-current="page" href="@Url.Action("Fornecedor", "Fornecedor")">
+                        <div class="d-flex align-items-center" style="gap: 0.5rem;">
+                            <span class="nav-link-icon"><span class="fa fa-truck"></span></span>
+                            <span class="nav-link-text-wrapper">
+                            <span class="nav-link-text text-wrap">Fornecedores</span>
+                        </span>
+                        </div>
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <main class="flex-grow-1 p-4" style="margin-left: 250px; padding-top: 56px;">
         @RenderBody()
     </main>
 </div>
 
-<footer class="border-top footer text-muted">
-    <div class="container">
-        &copy; 2025 - MasterdataTeste - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-    </div>
-</footer>
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="~/js/site.js" asp-append-version="true"></script>
-@await RenderSectionAsync("Scripts", required: false)
 </body>
-</html> *@
+</html>

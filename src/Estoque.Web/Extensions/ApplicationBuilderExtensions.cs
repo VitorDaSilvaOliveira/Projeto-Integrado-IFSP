@@ -4,16 +4,6 @@ namespace Estoque.Web.Extensions;
 
 public static class ApplicationBuilderExtensions
 {
-    public static void UseIframeSupport(this WebApplication app)
-    {
-        app.Use(async (context, next) =>
-        {
-            context.Response.Headers.Remove("X-Frame-Options");
-            context.Response.Headers.ContentSecurityPolicy = "frame-ancestors *";
-            await next();
-        });
-    }
-    
     public static async Task UseSeedingAsync(this WebApplication app, ILogger logger)
     {
         try

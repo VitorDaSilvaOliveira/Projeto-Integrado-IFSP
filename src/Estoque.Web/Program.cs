@@ -13,7 +13,6 @@ app.UsePtBrLocalization();
 
 // Middlewares
 app.UseCors();
-app.UseIframeSupport();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
