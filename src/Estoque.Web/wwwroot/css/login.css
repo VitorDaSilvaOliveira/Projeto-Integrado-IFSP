@@ -1,4 +1,7 @@
-﻿.D-flex {
+﻿body {
+    font-family: 'Nunito Sans', sans-serif !important;
+}
+.D-flex {
     display: flex;
 }
 
