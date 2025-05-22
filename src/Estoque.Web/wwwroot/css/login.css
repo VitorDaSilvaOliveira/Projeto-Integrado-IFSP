@@ -1,6 +1,28 @@
 ﻿body {
     font-family: 'Nunito Sans', sans-serif !important;
 }
+
+label.form-label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.3rem;
+}
+
+input.form-control {
+    border-radius: 8px; /* suaviza borda */
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+input.form-control:focus {
+    box-shadow: 0 0 8px rgba(0, 95, 153, 0.6);
+    border-color: #005f99;
+    outline: none;
+}
+
 .D-flex {
     display: flex;
 }
@@ -34,16 +56,19 @@
 }
 
 .BGC-azul-2 {
-    background-color: #005f99;
+    background-color: white;
+    border-color: #004477;
+    font-weight: 700;
+    transition: background-color 0.3s ease;
 }
 
 .BGC-H-azul-1:hover {
     background-color: #004477;
-    color: white;
+    color: white !important;
 }
 
 .COLOR-white {
-    color: white;
+    color: #004477;
 }
 
 .BORRAD-5 {
@@ -78,9 +103,10 @@
     width: 62.5%;
     height: 70%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding-bottom: 20px;
+    padding: 0 1rem 20px 1rem; /* padding horizontal */
 }
 
 @media only screen and (max-width: 768px) {
