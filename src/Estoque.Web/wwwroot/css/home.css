@@ -12,7 +12,6 @@
     color: #f8f9fa;
 }
 
-/* Ajusta link se precisar */
 [data-bs-theme="dark"] .nav-link {
     color: #f8f9fa;
 }
@@ -33,5 +32,13 @@
 
 [data-bs-theme="dark"] #navbarDefault .navbar-brand,
 [data-bs-theme="dark"] #navbarDefault .text-white {
+    color: #f8f9fa;
+}
+
+[data-bs-theme="light"] .fa-book {
+    color: #212529;
+}
+
+[data-bs-theme="dark"] .fa-book {
     color: #f8f9fa;
 }
