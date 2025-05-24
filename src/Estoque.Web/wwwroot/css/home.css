@@ -1,5 +1,5 @@
-﻿body {
-    font-family: 'Nunito Sans', sans-serif !important;
+﻿[data-bs-theme="light"] main {
+    background-color: #F5F5F5;
 }
 
 [data-bs-theme="light"] nav {

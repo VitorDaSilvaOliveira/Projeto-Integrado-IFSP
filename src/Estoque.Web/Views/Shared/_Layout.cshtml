@@ -1,125 +1,19 @@
 ﻿<!DOCTYPE html>
 <html lang="pt-BR" data-bs-theme="light">
-<head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>@ViewData["Title"]</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
-          rel="stylesheet">
-    <link rel="stylesheet" href="~/css/home.css" asp-append-version="true"/>
-
-    <partial name="_MasterDataStylesheets"/>
-    @await RenderSectionAsync("Stylesheets", required: false)
-    <partial name="_MasterDataScripts"/>
-</head>
+<partial name="_HeadPartial"/>
+@await RenderSectionAsync("Stylesheets", required: false)
 <body>
-<header class="navbar navbar-top fixed-top navbar-expand" id="navbarDefault">
-    <div class="container-fluid">
-        <a class="navbar-brand text-white" href="#">Estoque</a>
-
-        <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarContent">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="text-white d-flex align-items-center gap-2">
-            <input type="checkbox" class="btn-check" id="themeControlToggle" autocomplete="off" style="display:none;"/>
-
-            <label class="mb-0 theme-control-toggle-label theme-control-toggle-dark" for="themeControlToggle"
-                   data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="Mudar tema" title="Mudar tema"
-                       style="cursor:pointer; font-size: 1.2rem; color: #ffc107; position: relative; top: 2px;">
-                <span class="fa-solid fa-sun sun-icon"></span>
-            </label>
-
-            <div class="dropdown">
-                <a class="nav-link" id="navbarDropdownNindeDots" href="#" role="button" data-bs-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false" style="color: #ffc107;">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="2" cy="2" r="2" fill="currentColor"></circle>
-                        <circle cx="2" cy="8" r="2" fill="currentColor"></circle>
-                        <circle cx="2" cy="14" r="2" fill="currentColor"></circle>
-                        <circle cx="8" cy="8" r="2" fill="currentColor"></circle>
-                        <circle cx="8" cy="14" r="2" fill="currentColor"></circle>
-                        <circle cx="14" cy="8" r="2" fill="currentColor"></circle>
-                        <circle cx="14" cy="14" r="2" fill="currentColor"></circle>
-                        <circle cx="8" cy="2" r="2" fill="currentColor"></circle>
-                        <circle cx="14" cy="2" r="2" fill="currentColor"></circle>
-                    </svg>
-                </a>
-                <!-- Aqui mais pra frente se criara uma regra para so o admin ver o dicionario, é pra facilitar nossa navegacao -->
-                <div class="dropdown-menu dropdown-menu-end navbar-dropdown-caret py-0 dropdown-nine-dots shadow border"
-                     aria-labelledby="navbarDropdownNindeDots">
-                    <div class="card bg-body-emphasis position-relative border-0">
-                        <div class="card-body pt-3 px-3 pb-0 overflow-auto scrollbar"
-                             style="height: 20rem; width:20rem">
-                            <div class="row text-center align-items-center gx-0 gy-0">
-                                <div class="col-4">
-                                    <a class="d-block bg-body-secondary-hover p-2 rounded-3 text-center text-decoration-none mb-3"
-                                       href="/DataDictionary" target="_blank">
-                                        <span class="fa-solid fa-book" style="font-size: 30px;"></span>
-                                        <p class="mb-0 text-body-emphasis text-truncate fs-10 mt-1 pt-1">Dicionário</p>
-                                    </a>
-                                </div>
-                                <!-- Mais col-4 se quiserem -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <span>Bem-vindo(a)</span>
-        </div>
-    </div>
-</header>
+<partial name="_NavbarPartial"/>
 
 <div class="d-flex" style="min-height: 100vh; padding-top: 56px;">
-    <nav class="border-end"
-         style="position: fixed; top: 56px; left: 0; width: 250px; height: calc(100vh - 56px); overflow-y: auto; z-index: 1030;">
-        <ul class="navbar-nav flex-column p-3" id="navbarVerticalNav">
-            <li class="nav-item">
-                <div class="nav-item-wrapper">
-                    <a class="nav-link label-1" aria-current="page" href="@Url.Action("Produto", "Produto")">
-                        <div class="d-flex align-items-center" style="gap: 0.5rem;">
-                            <span class="nav-link-icon"><span class="fa fa-box"></span></span>
-                            <span class="nav-link-text-wrapper">
-                                <span class="nav-link-text text-wrap">Produtos</span>
-                            </span>
-                        </div>
-                    </a>
-                </div>
-            </li>
-            <li class="nav-item">
-                <div class="nav-item-wrapper">
-                    <a class="nav-link label-1" aria-current="page" href="@Url.Action("EntradaProduto", "Produto")">
-                        <div class="d-flex align-items-center" style="gap: 0.5rem;">
-                            <span class="nav-link-icon"><span class="fa fa-arrow-down"></span></span>
-                            <span class="nav-link-text-wrapper">
-                                <span class="nav-link-text text-wrap">Entrada de Produtos</span>
-                            </span>
-                        </div>
-                    </a>
-                </div>
-            </li>
-            <li class="nav-item">
-                <div class="nav-item-wrapper">
-                    <a class="nav-link label-1" aria-current="page" href="@Url.Action("Fornecedor", "Fornecedor")">
-                        <div class="d-flex align-items-center" style="gap: 0.5rem;">
-                            <span class="nav-link-icon"><span class="fa fa-truck"></span></span>
-                            <span class="nav-link-text-wrapper">
-                                <span class="nav-link-text text-wrap">Fornecedores</span>
-                            </span>
-                        </div>
-                    </a>
-                </div>
-            </li>
-        </ul>
-    </nav>
+    <partial name="_SidebarPartial"/>
+        
     <main class="flex-grow-1 p-4" style="margin-left: 250px; padding-top: 56px;">
         @RenderBody()
     </main>
 </div>
 
+<partial name="_ScriptsPartial"/>
+@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
-<script src="~/js/home.js" asp-append-version="true"></script>
