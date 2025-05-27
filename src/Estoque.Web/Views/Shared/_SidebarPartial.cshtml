@@ -1,53 +1,53 @@
-﻿    <nav class="border-end"
-         style="position: fixed; top: 56px; left: 0; width: 250px; height: calc(100vh - 56px); overflow-y: auto;">
-        <ul class="navbar-nav flex-column p-3" id="navbarVerticalNav">
-            <li class="nav-item">
-                <div class="nav-item-wrapper">
-                    <a class="nav-link label-1" aria-current="page" href="@Url.Action("Home", "Home")">
-                        <div class="d-flex align-items-center" style="gap: 0.5rem; font-size: 0.95rem">
-                            <span class="nav-link-icon"><span class="fa fa-house"></span></span>
-                            <span class="nav-link-text-wrapper">
-                                <span class="nav-link-text text-wrap">Home</span>
-                            </span>
-                        </div>
-                    </a>
-                </div>
-            </li>
-            <li class="nav-item">
-                <div class="nav-item-wrapper">
-                    <a class="nav-link label-1" aria-current="page" href="@Url.Action("Produto", "Produto")">
-                        <div class="d-flex align-items-center" style="gap: 0.5rem; font-size: 0.95rem">
-                            <span class="nav-link-icon"><span class="fa fa-box"></span></span>
-                            <span class="nav-link-text-wrapper">
-                                <span class="nav-link-text text-wrap">Produtos</span>
-                            </span>
-                        </div>
-                    </a>
-                </div>
-            </li>
-            <li class="nav-item">
-                <div class="nav-item-wrapper">
-                    <a class="nav-link label-1" aria-current="page" href="@Url.Action("EntradaProduto", "Produto")">
-                        <div class="d-flex align-items-center" style="gap: 0.5rem; font-size: 0.95rem">
-                            <span class="nav-link-icon"><span class="fa fa-arrow-down"></span></span>
-                            <span class="nav-link-text-wrapper">
-                                <span class="nav-link-text text-wrap">Entrada de Produtos</span>
-                            </span>
-                        </div>
-                    </a>
-                </div>
-            </li>
-            <li class="nav-item">
-                <div class="nav-item-wrapper">
-                    <a class="nav-link label-1" aria-current="page" href="@Url.Action("Fornecedor", "Fornecedor")">
-                        <div class="d-flex align-items-center" style="gap: 0.5rem; font-size: 0.95rem">
-                            <span class="nav-link-icon"><span class="fa fa-truck"></span></span>
-                            <span class="nav-link-text-wrapper">
-                                <span class="nav-link-text text-wrap">Fornecedores</span>
-                            </span>
-                        </div>
-                    </a>
-                </div>
-            </li>
-        </ul>
-    </nav>
+﻿<nav class="border-end"
+     style="position: fixed; top: 56px; left: 0; width: 250px; height: calc(100vh - 56px); overflow-y: auto;">
+    <ul class="navbar-nav flex-column p-3" id="navbarVerticalNav">
+        <li class="nav-item">
+            <div class="nav-item-wrapper">
+                <a class="nav-link label-1 @(ViewContext.RouteData.Values["action"].ToString() == "Home" ? "active" : "")" href="@Url.Action("Home", "Home")">
+                    <div class="d-flex align-items-center" style="gap: 1.0rem; font-size: 0.90rem; padding-left: 1rem;">
+                        <span class="nav-link-icon"><span class="fa fa-house"></span></span>
+                        <span class="nav-link-text-wrapper">
+                            <span class="nav-link-text text-wrap">Home</span>
+                        </span>
+                    </div>
+                </a>
+            </div>
+        </li>
+        <li class="nav-item">
+            <div class="nav-item-wrapper">
+                <a class="nav-link label-1 @(ViewContext.RouteData.Values["action"].ToString() == "Produto" ? "active" : "")" href="@Url.Action("Produto", "Produto")">
+                    <div class="d-flex align-items-center" style="gap: 1.0rem; font-size: 0.90rem; padding-left: 1rem;">
+                        <span class="nav-link-icon"><span class="fa fa-box"></span></span>
+                        <span class="nav-link-text-wrapper">
+                            <span class="nav-link-text text-wrap">Produtos</span>
+                        </span>
+                    </div>
+                </a>
+            </div>
+        </li>
+        <li class="nav-item">
+            <div class="nav-item-wrapper">
+                <a class="nav-link label-1 @(ViewContext.RouteData.Values["action"].ToString() == "EntradaProduto" ? "active" : "")" href="@Url.Action("EntradaProduto", "Produto")">
+                    <div class="d-flex align-items-center" style="gap: 1.0rem; font-size: 0.90rem; padding-left: 1rem;">
+                        <span class="nav-link-icon"><span class="fa fa-arrow-down"></span></span>
+                        <span class="nav-link-text-wrapper">
+                            <span class="nav-link-text text-wrap">Entrada de Produtos</span>
+                        </span>
+                    </div>
+                </a>
+            </div>
+        </li>
+        <li class="nav-item">
+            <div class="nav-item-wrapper">
+                <a class="nav-link label-1 @(ViewContext.RouteData.Values["action"].ToString() == "Fornecedor" ? "active" : "")" href="@Url.Action("Fornecedor", "Fornecedor")">
+                    <div class="d-flex align-items-center" style="gap: 1.0rem; font-size: 0.90rem; padding-left: 1rem;">
+                        <span class="nav-link-icon"><span class="fa fa-truck"></span></span>
+                        <span class="nav-link-text-wrapper">
+                            <span class="nav-link-text text-wrap">Fornecedores</span>
+                        </span>
+                    </div>
+                </a>
+            </div>
+        </li>
+    </ul>
+</nav>
