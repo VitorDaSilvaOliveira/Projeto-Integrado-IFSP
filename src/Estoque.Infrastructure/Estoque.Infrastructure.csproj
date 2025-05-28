@@ -8,5 +8,6 @@
   <ItemGroup>
   <PackageReference Include="JJMasterData.Commons" Version="4.4.9" />
   <PackageReference Include="JJMasterData.Core" Version="4.4.9" />
+  <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.5" />
   </ItemGroup>
 </Project>
