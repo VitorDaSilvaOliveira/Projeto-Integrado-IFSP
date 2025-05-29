@@ -24,7 +24,7 @@
     <div id="left-box" class="caixa-esquerda D-flex FD-column ALITEM-center HEIGHT-100vh">
         <div class="formulario-login D-flex FD-column JC-center ALITEM-center PADDING-B20 WIDTH-100">
             <div class="logo-container" style="margin-top: 150px;">
-                <img src="~/img/logo.png" alt="Logo" width="100" height="100"/>
+                <img src="~/img/logo.png" alt="Logo" width="150" height="150" style="margin-bottom: 25px;"/>
             </div>
             <div class="mb-4 WIDTH-100">
                 <a href="/Google"
@@ -36,9 +36,9 @@
             </div>
 
             <div class="position-relative w-100 px-3" style="max-width: 100%;">
-                <hr class="bg-body-secondary mt-2 mb-2" style="border-width: 1px;">
+                
                 <div class="position-absolute top-50 start-50 translate-middle px-1"
-                     style="font-size: 0.85rem; white-space: nowrap; max-width: 90vw; overflow: hidden; text-overflow: ellipsis;background-color: #F5F5F5">
+                     style="font-size: 0.85rem;color: #9e9d9d; white-space: nowrap; max-width: 90vw; overflow: hidden; text-overflow: ellipsis;margin-top: -10px;">
                     ou entre com seus dados
                 </div>
             </div>
@@ -60,7 +60,7 @@
                         <div class="form-check D-flex ALITEM-center" style="gap: 0.25rem;">
                             <input class="form-check-input" type="checkbox" id="lembrar-me" name="LembrarMe"
                                    style="transform: scale(0.85); margin-top: 1px;">
-                            <label class="form-check-label" for="lembrar-me" style="font-size: 0.85rem;">
+                            <label class="form-check-label" for="lembrar-me" style="font-size: 0.85rem; color: #9e9d9d;">
                                 Lembrar-me
                             </label>
                         </div>
@@ -84,8 +84,38 @@
     <!-- Imagem lateral -->
     <div id="right-box" class="caixa-direita">
         <img src="~/img/prateleiras-galpao.jpg" class="HEIGHT-100 WIDTH-100" style="opacity: 0.8;" alt="Imagem Galpão"/>
+        
     </div>
+
+
+
+
+
+
+
+
 </div>
+
+
+<button id="theme-toggle" style="position: absolute; top: 20px; left: 400px; background: none; border: none; 
+font-size: 1.5rem; color: #FFC107;">☀️</button>
+
+<script>
+  const botao = document.getElementById("theme-toggle");
+
+  botao.addEventListener("click", () => {
+    document.body.classList.toggle("light-mode");
+
+    if (document.body.classList.contains("light-mode")) {
+      botao.textContent = "🌙";
+    } else {
+      botao.textContent = "☀️";
+    }
+  });
+</script>
+
+
+
 
 </body>
 </html>
