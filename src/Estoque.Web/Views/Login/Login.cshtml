@@ -4,27 +4,32 @@
 }
 
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br" data-bs-theme="light">
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>@ViewBag.Title</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/cosmo/bootstrap.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="~/css/login.css" asp-append-version="true"/>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
-          rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-          integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 </head>
 <body>
+<input type="checkbox" class="btn-check" id="themeControlToggle" autocomplete="off" style="display: none;"/>
 
+<label class="mb-0 theme-control-toggle-label theme-control-toggle-dark" for="themeControlToggle"
+       data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="Mudar tema" title="Mudar tema"
+       style="cursor: pointer; font-size: 1.3rem; color: #ffc107; position: absolute; top: 20px; left: 20px; z-index: 1000;">
+    <span class="fa-solid fa-sun sun-icon"></span>
+</label>
 <div class="D-flex JC-center ALITEM-center HEIGHT-100vh">
     <!-- Formulário de login -->
     <div id="left-box" class="caixa-esquerda D-flex FD-column ALITEM-center HEIGHT-100vh">
         <div class="formulario-login D-flex FD-column JC-center ALITEM-center PADDING-B20 WIDTH-100">
             <div class="logo-container" style="margin-top: 150px;">
-                <img src="~/img/logo.png" alt="Logo" width="100" height="100"/>
+                <img src="~/img/logo.png" alt="Logo" width="100" height="100" style="position: relative; top: -50px;"/>
             </div>
             <div class="mb-4 WIDTH-100">
                 <a href="/Google"
@@ -37,8 +42,8 @@
 
             <div class="position-relative w-100 px-3" style="max-width: 100%;">
                 <hr class="bg-body-secondary mt-2 mb-2" style="border-width: 1px;">
-                <div class="position-absolute top-50 start-50 translate-middle px-1"
-                     style="font-size: 0.85rem; white-space: nowrap; max-width: 90vw; overflow: hidden; text-overflow: ellipsis;background-color: #F5F5F5">
+                <div class="position-absolute top-50 start-50 translate-middle px-1 divider-label"
+                     style="font-size: 0.85rem; white-space: nowrap; max-width: 90vw; overflow: hidden; text-overflow: ellipsis;">
                     ou entre com seus dados
                 </div>
             </div>
@@ -70,7 +75,7 @@
                         </a>
                     </div>
 
-                        <button type="submit" class="btn BGC-azul-2 COLOR-white w-100 BORRAD-5 BGC-H-azul-1"
+                    <button type="submit" class="btn BGC-azul-2 COLOR-white w-100 BORRAD-5 BGC-H-azul-1"
                             style="font-size: 0.85rem;">
                         Entrar
                     </button>
@@ -86,6 +91,6 @@
         <img src="~/img/prateleiras-galpao.jpg" class="HEIGHT-100 WIDTH-100" style="opacity: 0.8;" alt="Imagem Galpão"/>
     </div>
 </div>
-
+<partial name="_ScriptsPartial"/>
 </body>
 </html>
