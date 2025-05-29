@@ -16,9 +16,5 @@
   <ItemGroup>
     <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
     <PackageReference Include="JJMasterData.Web" Version="4.4.9" />
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
   </ItemGroup>
-
-  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="https://raw.githubusercontent.com/JJConsulting/JJMasterData/main/jjmasterdata.json" /></VisualStudio></ProjectExtensions>
-
 </Project>
