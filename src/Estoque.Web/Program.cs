@@ -1,13 +1,19 @@
-using Estoque.Domain.Contexts;
-using Estoque.Domain.Models;
+using Estoque.Infrastructure.Data;
 using Estoque.Web.Extensions;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Testando api com SwashBucle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+builder.Services.AddDbContext<EstoqueDbContext>(options =>
+{
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        optionsBuilder => { optionsBuilder.MigrationsAssembly("Estoque.Infrastructure"); }
+    );
+});
 
 // Serviços
 builder.Services.AddControllersWithViews();
@@ -16,17 +22,17 @@ builder.Services.AddEstoqueServices();
 builder.Services.AddPtBrLocalization();
 var app = builder.Build();
 
-// Identity
-builder.Services.AddDbContext<AppDbContext>(
-    options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Home/Error");
+    app.UseHsts();
+}
+
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => { options.SignIn.RequireConfirmedAccount = true; }
+).AddEntityFrameworkStores<EstoqueDbContext>().AddDefaultTokenProviders();
 
 builder.Services.AddAuthentication();
 builder.Services.AddAuthorization();
-
-builder.Services.AddIdentityApiEndpoints<Usuario>()
-    .AddEntityFrameworkStores<AppDbContext>();
-
-app.MapIdentityApi<Usuario>();
 
 app.UsePtBrLocalization();
 
@@ -35,8 +41,8 @@ app.UseCors();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
-app.UseSession();         
-app.UseAuthentication();   
+app.UseSession();
+app.UseAuthentication();
 app.UseAuthorization();
 
 // Endpoints
@@ -45,11 +51,5 @@ app.MapCustomEndpoints();
 // Seeding
 var logger = app.Services.GetRequiredService<ILogger<Program>>();
 await app.UseSeedingAsync(logger);
-
-// Swagger
-app.UseSwagger();
-app.UseSwaggerUI();
-app.MapSwagger();
-
 
 app.Run();
