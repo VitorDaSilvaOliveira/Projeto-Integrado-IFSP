@@ -7,8 +7,9 @@
 }
 
 [data-bs-theme="dark"] body {
-    background-color: #121212;
+    background-color: #0f111a;
 }
+
 [data-bs-theme="dark"] label.form-label {
     color: #ccc; 
 }
