@@ -1,5 +1,20 @@
 ﻿body {
     font-family: 'Nunito Sans', sans-serif !important;
+}
+
+[data-bs-theme="light"] body {
+    background-color: #F5F5F5;
+}
+
+[data-bs-theme="dark"] body {
+    background-color: #0f111a;
+}
+
+[data-bs-theme="dark"] label.form-label {
+    color: #ccc; 
+}
+
+[data-bs-theme="light"] .divider-label {
     background-color: #F5F5F5;
 }
 
@@ -17,8 +32,8 @@ input.form-control {
 }
 
 input.form-control:focus {
-    box-shadow: 0 0 8px rgba(0, 95, 153, 0.6);
-    border-color: #005f99;
+    box-shadow: 0 0 8px rgba(216, 192, 116);
+    border-color: #d8c074;
     outline: none;
 }
 
@@ -55,19 +70,18 @@ input.form-control:focus {
 }
 
 .BGC-azul-2 {
-    background-color: #F5F5F5;
-    border-color: #004477;
+    border-color: #d8c074;
     font-weight: 700;
     transition: background-color 0.3s ease;
 }
 
 .BGC-H-azul-1:hover {
-    background-color: #004477;
+    background-color: #d8c074;
     color: white !important;
 }
 
 .COLOR-white {
-    color: #004477;
+    color: #d8c074;
 }
 
 .BORRAD-5 {
@@ -109,9 +123,7 @@ input.form-control:focus {
 }
 
 @media only screen and (max-width: 768px) {
-    .caixa-esquerda
-
-    {
+    .caixa-esquerda {
         width: 100%;
     }
 
@@ -127,9 +139,7 @@ input.form-control:focus {
 }
 
 @media only screen and (min-width: 769px) and (max-width: 1100px) {
-    .caixa-esquerda
-
-    {
+    .caixa-esquerda {
         width: 45%;
     }
 

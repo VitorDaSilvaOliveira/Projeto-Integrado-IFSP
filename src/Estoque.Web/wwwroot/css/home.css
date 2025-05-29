@@ -3,10 +3,6 @@
     color: #212529;
 }
 
-[data-bs-theme="dark"] nav {
-    background-color: #2c2d32;
-    color: #f8f9fa;
-}
 
 [data-bs-theme="dark"] .nav-link {
     color: #f8f9fa;
@@ -17,11 +13,11 @@
 }
 
 [data-bs-theme="light"] #navbarDefault {
-    background-color: #343a40;
+    background-color: #d8c074;
 }
 
 [data-bs-theme="dark"] #navbarDefault {
-    background-color: #2a2f36;
+    background-color: #8c8453;
 }
 
     [data-bs-theme="dark"] #navbarDefault .navbar-brand,
