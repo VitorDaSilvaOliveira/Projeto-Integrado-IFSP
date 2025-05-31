@@ -631,54 +631,41 @@ O projeto tem como objetivo o desenvolvimento de um sistema de controle de estoq
 \subsection{Requisitos Funcionais}
 
 \begin{quadro}[htb]
-\caption{\label{quadro_rf}Requisitos Funcionais (RF01 a RF08)}
-\begin{tabular}{|p{1.0cm}|p{2.6cm}|p{4.0cm}|p{7.0cm}|}
-    \hline
-    \textbf{Código} & \textbf{Atores} & \textbf{Nome} & \textbf{Descrição} \\ \hline
+\caption{\label{quadro_rf}Requisitos Funcionais}
+\begin{tabular}{|c|p{10cm}|c|}
+	\hline
+\textbf{Requisito} & \textbf{Descrição} \\ \hline
+ RF01 & Cadastro de Itens.   \\ \hline
+ RF02  & Registros de Entrada e Saída.    \\ \hline
+ RF03    & Consulta.     \\ \hline
+ RF04  & Listagem.    \\ \hline
+ RF05  & Atualização.    \\ \hline
+ RF06  & Remoção.      \\ \hline
+ RF07  & Histórico de Movimentação.       \\ \hline
+ RF08  & Relatórios.       \\ \hline
 
-    RF01 & Administrador & Cadastro de Produtos & O sistema deve permitir que o administrador cadastre novos produtos no estoque, incluindo nome, código, categoria, preço, quantidade, marca, modelo, estoque inicial. Produtos com estoque zero devem ser marcados como "Esgotado". \\ \hline
-
-    RF02 & Administrador & Atualização de Produtos & O sistema deve permitir que o administrador atualize informações de produtos já cadastrados, como preço, quantidade, data de validade e status ("Esgotado" se estoque = 0), mantendo histórico de alterações. \\ \hline
-
-    RF03 & Administrador & Exclusão de Produtos & O sistema deve permitir que o administrador remova produtos do estoque quando necessário, com confirmação e registro em log. \\ \hline
-
-    RF04 & Administrador & Controle de Entradas & O sistema deve registrar entradas de produtos no estoque (reposição), atualizando automaticamente a quantidade disponível e registrando data, hora, responsável, fornecedor e nota fiscal. \\ \hline
-
-    RF05 & Administrador/Vendedor & Controle de Saídas & O sistema deve registrar saídas de produtos (vendas ou perdas), reduzindo a quantidade em estoque e validando se há estoque suficiente antes da venda. Deve permitir cancelamento com restauração de estoque. \\ \hline
-
-    RF06 & Administrador & Relatórios de Estoque & O sistema deve gerar relatórios de estoque (atual, histórico mensal), incluindo: produtos esgotados, produtos com baixa quantidade, mais vendidos e histórico de movimentações com filtros por período. \\ \hline
-
-    RF07 & Sistema & Alertas de Estoque & O sistema deve enviar alertas visuais e por e-mail quando um produto estiver abaixo do nível mínimo configurado, esgotado ou próximo da data de validade. \\ \hline
-
-    RF08 & Administrador & Categorização de Produtos & O sistema deve permitir a categorização hierárquica de produtos (ex.: hardware > placas > gráficas) com possibilidade de múltiplas categorias por produto. \\ \hline
-
+         
 \end{tabular}
 \end{quadro}
-
 
 \subsection{Requisitos Não Funcionais}
 
 \begin{quadro}[htb]
-\caption{\label{quadro_rnf}Requisitos Não Funcionais (RNF01 a RNF06)}
-\begin{tabular}{|p{1.2cm}|p{2.8cm}|p{3.0cm}|p{8.6cm}|}
-    \hline
-    \textbf{Código} & \textbf{Atores} & \textbf{Nome} & \textbf{Descrição} \\ \hline
+\caption{\label{quadro_rnf}Requisitos Não Funcionais}
+\begin{tabular}{|c|p{10cm}|c|}
+	\hline
+\textbf{Requisito} & \textbf{Descrição} \\ \hline
+ RNF01 & Usabilidade de Interface.   \\ \hline
+ RNF02  & Desempenho.    \\ \hline
+ RNF03    & Segurança .     \\ \hline
+ RNF04  & Backups.    \\ \hline
+ RNF05  & Atualização.    \\ \hline
+ RNF06  & Escalabilidade.      \\ \hline
+ RNF07  & Portabilidade .       \\ \hline
 
-    RNF01 & Desenvolvedores & Usabilidade & O sistema deve possuir uma interface simples, intuitiva e de fácil navegação, facilitando o uso tanto em computadores quanto em dispositivos móveis. \\ \hline
-
-    RNF02 & Desenvolvedores & Desempenho & O sistema deve apresentar tempo de resposta satisfatório, com carregamento de páginas e listagens em no máximo 2 segundos em conexões regulares. \\ \hline
-
-    RNF03 & Sistema & Segurança & O sistema deve implementar autenticação de usuários, controle de sessões e validação de entrada de dados para prevenir falhas como injeção de código e acessos não autorizados. \\ \hline
-
-    RNF04 & Sistema & Backup & O sistema deve realizar backups periódicos automáticos para garantir a integridade e recuperação dos dados em caso de falhas ou perdas. \\ \hline
-
-    RNF05 & Desenvolvedores & Escalabilidade & O sistema deve ser projetado de forma modular, permitindo futuras expansões e adaptações sem reestruturações complexas. \\ \hline
-
-    RNF06 & Desenvolvedores & Portabilidade & O sistema deve ser compatível com diferentes navegadores modernos e adaptável a diferentes tamanhos de tela (responsivo). \\ \hline
-
+         
 \end{tabular}
 \end{quadro}
-
 
 
 \section{Histórias de Usuário}
