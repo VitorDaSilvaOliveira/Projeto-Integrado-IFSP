@@ -614,20 +614,33 @@ O projeto tem como objetivo o desenvolvimento de um sistema de controle de estoq
 
 
 \begin{quadro}[htb]
-\caption{\label{quadro_regras}Regras de Negócio}
-\begin{tabular}{|c|p{10cm}|c|}
-	\hline
-\textbf{Regra} & \textbf{Descrição} & \textbf{Prioridade} \\ \hline
- RN01 & Um produto precisa de nome, marca, modelo e preço para ser cadastrado.    & Média     \\ \hline
- RN02  & Não é permitido cadastrar produtos com nome duplicado da mesma marca e modelo.   & Média    \\ \hline
- RN03    & O campo de estoque inicial deve ser informado no momento do cadastro.   & Média     \\ \hline
- RN04  & A quantidade de produtos vendidos não pode ser superior à quantidade em estoque.  & Média    \\ \hline
- RN05  & O sistema deve permitir reposição de estoque.   & Média    \\ \hline
- RN06  & Produtos com estoque igual a zero devem ser marcados como "Esgotado" no sistema.   & Média    \\ \hline
- RN07  & A venda só pode ser finalizada se houver estoque disponível para todos os itens do pedido.   & Média    \\ \hline
- RN08  & Cada venda deve gerar um comprovante com data, hora, produtos, quantidades e valor total.   & Média    \\ \hline
- RN09  & O sistema deve registrar todas as movimentações de entrada e saída de estoque com data e responsável.  & Média    \\ \hline
-         
+\caption{\label{quadro_rn}Regras de Negócio (RN01 a RN12)}
+\begin{tabular}{|p{1.2cm}|p{4.0cm}|p{7.5cm}|p{2.0cm}|}
+    \hline
+    \textbf{Código} & \textbf{Nome} & \textbf{Descrição} & \textbf{Requisito Relacionado} \\ \hline
+
+    RN01 & Cadastro de Produtos & Produtos devem ter: nome, marca, modelo, preço, estoque inicial, código SKU único, categoria principal e pelo menos um depósito associado. Nome+marca+modelo não podem ser duplicados. & RF01, RF15 \\ \hline
+
+    RN02 & Atualização de Estoque & Qualquer entrada/saída deve atualizar automaticamente o estoque e recalcular o valor total em estoque. Se estoque igual a zero, produto deve ser marcado como "Esgotado". Transações devem ser atômicas. & RF04, RF05 \\ \hline
+
+    RN03 & Níveis de Estoque & Produtos devem ter nível mínimo, ideal e máximo configuráveis. Abaixo do mínimo gera alerta amarelo, esgotado vermelho. Acima do ideal azul. & RF07 \\ \hline
+
+    RN04 & Rastreabilidade & Todas as movimentações devem registrar: data, hora, responsável, produto(s), quantidade, valor unitário, valor total, depósito, documento fiscal (se aplicável) e motivo. & RF11 \\ \hline
+
+    RN06 & Controle de Acesso & Administradores: acesso completo; Vendedores: apenas consultas e registro de vendas. & RF17 \\ \hline
+
+    RN07 & Validação de Venda & Vendas só podem ser registradas se houver estoque suficiente para todos os itens. & RF14 \\ \hline
+
+    RN08 & Comprovante & Comprovante deve ter: número único, data/hora, itens (código, descrição, quantidade, valor unitário, subtotal), totais, desconto, valor final, forma de pagamento, vendedor e dados da empresa. & RF14 \\ \hline
+
+    RN09 & Transferências & Transferências entre depósitos devem ser confirmadas pelo depósito destino antes de atualizar estoques. & RF12 \\ \hline
+
+    RN10 & Backup & Backups diários incrementais e semanais completos. Notificar falhas imediatamente. & RF16 \\ \hline
+
+    RN11 & Auditoria & Todas as exclusões e alterações de preço/estoque devem registrar IP, usuário, data/hora e valores antes/depois. & RF17 \\ \hline
+
+    RN12 & Relatórios Mensais & Gerar automaticamente no primeiro dia útil do mês, com comparação mês anterior e acumulado anual. Enviar por e-mail aos gestores. & RF18 \\ \hline
+
 \end{tabular}
 \end{quadro}
 
@@ -635,13 +648,13 @@ O projeto tem como objetivo o desenvolvimento de um sistema de controle de estoq
 
 
 
+
 \subsection{Requisitos Funcionais}
 
 
-
 \begin{quadro}[htb]
-\caption{\label{quadro_rf}Requisitos Funcionais (RF01 a RF08)}
-\begin{tabular}{|p{1.0cm}|p{2.6cm}|p{4.0cm}|p{7.0cm}|}
+\caption{\label{quadro_rf1}Requisitos Funcionais (RF01 a RF09)}
+\begin{tabular}{|p{1.0cm}|p{2.8cm}|p{4.2cm}|p{7.0cm}|}
     \hline
     \textbf{Código} & \textbf{Atores} & \textbf{Nome} & \textbf{Descrição} \\ \hline
 
@@ -661,11 +674,44 @@ O projeto tem como objetivo o desenvolvimento de um sistema de controle de estoq
 
     RF08 & Administrador & Categorização de Produtos & O sistema deve permitir a categorização hierárquica de produtos (ex.: hardware > placas > gráficas) com possibilidade de múltiplas categorias por produto. \\ \hline
 
+    RF09 & Todos & Busca Avançada de Produtos & O sistema deve permitir a busca de produtos por nome, código, marca, modelo, categoria, localização, status ou combinação destes, com resultados em tempo real. \\ \hline
+
+
 \end{tabular}
 \end{quadro}
 
+\FloatBarrier
+
+
+\begin{quadro}[htb]
+\caption{\label{quadro_rf2}Requisitos Funcionais (RF10 a RF18)}
+\begin{tabular}{|p{1.0cm}|p{2.8cm}|p{4.2cm}|p{7.0cm}|}
+    \hline
+    \textbf{Código} & \textbf{Atores} & \textbf{Nome} & \textbf{Descrição} \\ \hline
+
+    RF10 & Administrador & Gerenciamento de Fornecedores & O sistema deve permitir o cadastro e gerenciamento de fornecedores, incluindo informações de contato, produtos fornecidos, prazos de entrega e histórico de compras. \\ \hline
+
+    RF11 & Administrador & Histórico de Movimentações & O sistema deve armazenar o histórico completo de entradas e saídas de produtos com data, hora, responsável, valor unitário, valor total, depósito de origem/destino e motivo (venda, perda, ajuste). \\ \hline
+
+    RF12 & Administrador & Múltiplos Depósitos & O sistema deve permitir o gerenciamento de estoque em diferentes depósitos/filiais com transferências entre eles, registrando data, responsável e motivo. \\ \hline
+
+    RF13 & Vendedor & Consulta de Estoque & O sistema deve permitir que vendedores consultem a disponibilidade de produtos em tempo real, incluindo status "Esgotado", localização e previsão de reposição. \\ \hline
+
+    RF14 & Vendedor & Registro de Vendas & O sistema deve permitir que vendedores registrem vendas apenas se houver estoque suficiente para todos os itens, gerando comprovante com data, hora, produtos, quantidades, descontos, valor total e forma de pagamento. \\ \hline
+
+    RF15 & Sistema & Validação de Cadastro & O sistema deve impedir cadastro de produtos com nome, marca e modelo duplicados, sugerindo similaridades existentes. \\ \hline
+
+    RF16 & Administrador & Backup e Restauração & O sistema deve permitir backup completo dos dados (produtos, movimentações, configurações) com agendamento e restauração pontual. \\ \hline
+
+    RF17 & Administrador & Autenticação e Controle de Acesso & O sistema deve ter autenticação segura com níveis de acesso (admin e vendedor) e registro de atividades críticas. \\ \hline
+
+    RF18 & Administrador & Relatórios Mensais & O sistema deve gerar relatórios mensais automáticos com: estoque atual valorizado, produtos mais vendidos (quantidade e valor), giro de estoque, produtos sem movimentação e comparação com meses anteriores. \\ \hline
+
+\end{tabular}
+\end{quadro}
 
 \FloatBarrier
+
 
 
 \subsection{Requisitos Não Funcionais}
@@ -673,27 +719,32 @@ O projeto tem como objetivo o desenvolvimento de um sistema de controle de estoq
 
 
 \begin{quadro}[htb]
-\caption{\label{quadro_rnf}Requisitos Não Funcionais (RNF01 a RNF06)}
-\begin{tabular}{|p{1.2cm}|p{2.8cm}|p{3.0cm}|p{8.6cm}|}
+\caption{\label{quadro_rnf}Requisitos Não Funcionais (RNF01 a RNF08)}
+\begin{tabular}{|p{1.2cm}|p{3.5cm}|p{11.0cm}|}
     \hline
-    \textbf{Código} & \textbf{Atores} & \textbf{Nome} & \textbf{Descrição} \\ \hline
+    \textbf{Código} & \textbf{Módulo} & \textbf{Descrição} \\ \hline
 
-    RNF01 & Desenvolvedores & Usabilidade & O sistema deve possuir uma interface simples, intuitiva e de fácil navegação, facilitando o uso tanto em computadores quanto em dispositivos móveis. \\ \hline
+    RNF01 & Desempenho & O sistema deve responder às requisições em até 2 segundos (consultas simples) e 5 segundos (relatórios complexos), mesmo durante validações de estoque ou geração de comprovantes. \\ \hline
 
-    RNF02 & Desenvolvedores & Desempenho & O sistema deve apresentar tempo de resposta satisfatório, com carregamento de páginas e listagens em no máximo 2 segundos em conexões regulares. \\ \hline
+    RNF02 & Escalabilidade & O sistema deve suportar até 10.000 produtos, 5.000 movimentações diárias e 500 usuários simultâneos, com possibilidade de expansão horizontal. \\ \hline
 
-    RNF03 & Sistema & Segurança & O sistema deve implementar autenticação de usuários, controle de sessões e validação de entrada de dados para prevenir falhas como injeção de código e acessos não autorizados. \\ \hline
+    RNF03 & Portabilidade & O sistema deve funcionar em navegadores modernos (Chrome, Firefox, Edge, Safari) e ser responsivo para dispositivos móveis e tablets. Versão desktop otimizada para Windows e macOS. \\ \hline
 
-    RNF04 & Sistema & Backup & O sistema deve realizar backups periódicos automáticos para garantir a integridade e recuperação dos dados em caso de falhas ou perdas. \\ \hline
+    RNF04 & Segurança & O sistema deve seguir a LGPD, com criptografia de dados sensíveis, autenticação de dois fatores para administradores, logs de acesso e auditoria de alterações críticas. \\ \hline
 
-    RNF05 & Desenvolvedores & Escalabilidade & O sistema deve ser projetado de forma modular, permitindo futuras expansões e adaptações sem reestruturações complexas. \\ \hline
+    RNF05 & Disponibilidade & O sistema deve ter disponibilidade de 99,9\% com redundância, backups diários e recuperação de desastres em até 4 horas. \\ \hline
 
-    RNF06 & Desenvolvedores & Portabilidade & O sistema deve ser compatível com diferentes navegadores modernos e adaptável a diferentes tamanhos de tela (responsivo). \\ \hline
+    RNF06 & Usabilidade & Interface intuitiva para cadastros complexos, atalhos de teclado, busca rápida e relatórios exportáveis em PDF/Excel. \\ \hline
+
+    RNF07 & Integração & API REST para integração com ERPs e sistemas fiscais. \\ \hline
+
+    RNF08 & Internacionalização & Suporte a múltiplos idiomas (PT-BR, EN) e formatos de data/moeda configuráveis. \\ \hline
 
 \end{tabular}
 \end{quadro}
 
 \FloatBarrier
+
 
 
 
