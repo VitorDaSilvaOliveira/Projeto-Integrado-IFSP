@@ -59,3 +59,10 @@
     background-color: transparent !important;
     box-shadow: none !important;
 }
+[data-bs-theme="light"] .sidebar-section-title {
+    color: #525b75; 
+}
+
+[data-bs-theme="dark"] .sidebar-section-title {
+    color: #ccc; 
+}
