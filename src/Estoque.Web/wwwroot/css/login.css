@@ -35,7 +35,8 @@ label.form-label {
     background-color: #fff; 
     color: #333;
     border: 1px solid #ccc;
-    font-size: 0.85rem; 
+    font-size: 0.85rem;
+    border-radius: 0.45rem;
 }
 
 [data-bs-theme="light"] input.form-control:focus {
@@ -50,6 +51,7 @@ label.form-label {
     color: #ccc;
     border: 1px solid #31374a;
     font-size: 0.85rem;
+    border-radius: 0.45rem;
 }
 
 [data-bs-theme="dark"] input.form-control:focus {
@@ -59,7 +61,13 @@ label.form-label {
      color: #fff;
 }
 
-a.custom-link {
+[data-bs-theme="light"] a.custom-link {
+    color: #f1c40f !important;
+    text-decoration: none;
+    transition: text-decoration 0.3s ease;
+}
+
+[data-bs-theme="dark"] a.custom-link {
     color: #d8c074 !important;
     text-decoration: none;
     transition: text-decoration 0.3s ease;
@@ -101,19 +109,28 @@ a.custom-link:hover {
     width: 100%;
 }
 
+/* Estilo base */
 .BGC-azul-2 {
-    border-color: #d8c074;
+    border-color: var(--amarelo);
     font-weight: 700;
     transition: background-color 0.3s ease;
 }
 
 .BGC-H-azul-1:hover {
-    background-color: #d8c074;
+    background-color: var(--amarelo);
     color: white !important;
 }
 
 .COLOR-white {
-    color: #d8c074;
+    color: var(--amarelo);
+}
+
+:root {
+    --amarelo: #f1c40f; 
+}
+
+[data-bs-theme="dark"] {
+    --amarelo: #d8c074;
 }
 
 .BORRAD-5 {
@@ -188,13 +205,14 @@ a.custom-link:hover {
     border: 1px solid #ddd;
     background-color: #F5F5F5;
     color: #333;
-    border-radius: 5px;
+    border-radius: 0.45rem;
     padding: 0.5rem 1rem;
+    font-weight: 600;
     transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .google-btn:hover {
-    background-color: #f1f1f1;
+    background-color: #d1d0d0;
     text-decoration: none;
 }
 
