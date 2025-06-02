@@ -11,7 +11,7 @@
 }
 
 [data-bs-theme="dark"] label.form-label {
-    color: #ccc; 
+    color: #ccc;
 }
 
 [data-bs-theme="light"] .divider-label {
@@ -35,6 +35,15 @@ input.form-control:focus {
     box-shadow: 0 0 8px rgba(216, 192, 116);
     border-color: #d8c074;
     outline: none;
+}
+a.custom-link {
+    color: #d8c074 !important;
+    text-decoration: none;
+    transition: text-decoration 0.3s ease;
+}
+
+a.custom-link:hover {
+    text-decoration: underline;
 }
 
 .D-flex {
@@ -151,5 +160,4 @@ input.form-control:focus {
         width: 70%;
         height: 75%;
     }
-
 }

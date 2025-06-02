@@ -13,11 +13,11 @@
 }
 
 [data-bs-theme="light"] #navbarDefault {
-    background-color: #d8c074;
+    background-color: #222834;
 }
 
 [data-bs-theme="dark"] #navbarDefault {
-    background-color: #8c8453;
+    background-color: #222834;
 }
 
     [data-bs-theme="dark"] #navbarDefault .navbar-brand,
@@ -42,14 +42,14 @@
 [data-bs-theme="light"] .nav-link.active,
 [data-bs-theme="light"] .nav-link.active .fa,
 [data-bs-theme="light"] .nav-link.active .nav-link-text {
-    color: #003cc7;
+    color: #d8c074;
     font-weight: bold;
 }
 
 [data-bs-theme="dark"] .nav-link.active,
 [data-bs-theme="dark"] .nav-link.active .fa,
 [data-bs-theme="dark"] .nav-link.active .nav-link-text {
-    color: #85a9ff;
+    color: #d8c074;
     font-weight: bold;
 }
 #navbarDropdownNindeDots:hover,

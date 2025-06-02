@@ -1,11 +1,10 @@
 using Estoque.Infrastructure.Data;
 using Estoque.Web.Extensions;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddDbContext<EstoqueDbContext>(options =>
 {
@@ -16,24 +15,29 @@ builder.Services.AddDbContext<EstoqueDbContext>(options =>
 });
 
 // Serviços
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews(options =>
+{
+    options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+
+});
+
 builder.Services.AddCustomServices();
 builder.Services.AddEstoqueServices();
 builder.Services.AddPtBrLocalization();
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => { options.SignIn.RequireConfirmedAccount = true; }
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => { options.SignIn.RequireConfirmedAccount = false; }
 ).AddEntityFrameworkStores<EstoqueDbContext>().AddDefaultTokenProviders();
+
+builder.Services.AddAuthentication();
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
+    app.UseExceptionHandler("/Index/Error");
     app.UseHsts();
 }
-
-builder.Services.AddAuthentication();
-builder.Services.AddAuthorization();
 
 app.UsePtBrLocalization();
 
