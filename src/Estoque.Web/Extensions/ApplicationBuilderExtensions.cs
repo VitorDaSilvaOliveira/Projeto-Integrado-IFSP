@@ -21,9 +21,16 @@ public static class ApplicationBuilderExtensions
     {
         app.MapDataDictionary();
         app.MapMasterData();
-    
+
+    // Rota para áreas
+    app.MapControllerRoute(
+        name: "areas",
+        pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
+        // Rota padrão (sem área)
         app.MapControllerRoute(
-            name: "default",
-            pattern: "{controller=Login}/{action=Login}");
+        name: "default",
+        pattern: "{controller=SignIn}/{action=Index}/{id?}",
+        defaults: new { area = "Identity" });
     }
 }
