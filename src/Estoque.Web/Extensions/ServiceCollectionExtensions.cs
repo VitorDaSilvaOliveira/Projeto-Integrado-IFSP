@@ -13,6 +13,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ProdutoService>();
         services.AddScoped<EntradaService>();
         services.AddScoped<FornecedorService>();
+        services.AddScoped<AuthService>();
     }
 
     public static void AddCustomServices(this IServiceCollection services)

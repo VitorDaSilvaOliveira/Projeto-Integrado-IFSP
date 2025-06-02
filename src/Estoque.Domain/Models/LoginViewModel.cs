@@ -4,10 +4,10 @@ namespace Estoque.Domain.Models;
 
 public class LoginViewModel
 {
-    [Required(ErrorMessage = "O usuário é obrigatório")]
-    public string Usuario { get; set; }
+    [Required(ErrorMessage = "O campo Login é obrigatório")]
+    public string Login { get; set; }
 
-    [Required(ErrorMessage = "A senha é obrigatória")]
+    [Required(ErrorMessage = "O campo Senha é obrigatório")]
     [DataType(DataType.Password)]
     public string Senha { get; set; }
 
