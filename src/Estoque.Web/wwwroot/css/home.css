@@ -3,13 +3,16 @@
     color: #212529;
 }
 
+[data-bs-theme="dark"] nav.border-end {
+    background-color: #141824;
+}
 
 [data-bs-theme="dark"] .nav-link {
-    color: #f8f9fa;
+    color: #9fa6bc;
 }
 
 [data-bs-theme="light"] .nav-link {
-    color: #212529;
+    color: #525b75;
 }
 
 [data-bs-theme="light"] #navbarDefault {
@@ -20,15 +23,15 @@
     background-color: #222834;
 }
 
-    [data-bs-theme="dark"] #navbarDefault .navbar-brand,
-    [data-bs-theme="dark"] #navbarDefault .text-white {
-        color: #f8f9fa;
-    }
+[data-bs-theme="dark"] #navbarDefault .navbar-brand,
+[data-bs-theme="dark"] #navbarDefault .text-white {
+    color: #f8f9fa; 
+}
 
 .nav-link {
     color: #2a2f36;
     text-decoration: none;
-    border-radius: var(--estoque-border-radius);
+    border-radius: 0.45rem;
     padding: 0.5rem;
     display: block;
     transition: color 0.2s ease, background-color 0.2s ease;
@@ -36,20 +39,19 @@
 
 .nav-link:hover {
     background-color: var(--estoque-secondary-bg);
-
 }
 
 [data-bs-theme="light"] .nav-link.active,
 [data-bs-theme="light"] .nav-link.active .fa,
 [data-bs-theme="light"] .nav-link.active .nav-link-text {
-    color: #d8c074;
+    color: #f1c40f;
     font-weight: bold;
 }
 
 [data-bs-theme="dark"] .nav-link.active,
 [data-bs-theme="dark"] .nav-link.active .fa,
 [data-bs-theme="dark"] .nav-link.active .nav-link-text {
-    color: #d8c074;
+    color: white;
     font-weight: bold;
 }
 #navbarDropdownNindeDots:hover,
