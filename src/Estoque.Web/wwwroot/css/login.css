@@ -11,11 +11,15 @@
 }
 
 [data-bs-theme="dark"] label.form-label {
-    color: #ccc;
+    color: #ccc !important;
 }
 
 [data-bs-theme="light"] .divider-label {
     background-color: #F5F5F5;
+}
+
+[data-bs-theme="dark"] .divider-label {
+    background-color: #0f111a;
 }
 
 label.form-label {
@@ -27,15 +31,34 @@ label.form-label {
     margin-bottom: 0.3rem;
 }
 
-input.form-control {
-    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+[data-bs-theme="light"] input.form-control {
+    background-color: #fff; 
+    color: #333;
+    border: 1px solid #ccc;
+    font-size: 0.85rem; 
 }
 
-input.form-control:focus {
-    box-shadow: 0 0 8px rgba(216, 192, 116);
-    border-color: #d8c074;
+[data-bs-theme="light"] input.form-control:focus {
+    box-shadow: 0 0 8px rgba(219, 191, 103, 0.7);
+    border-color: #dbbf67; 
     outline: none;
+    color: #000;
 }
+
+[data-bs-theme="dark"] input.form-control {
+    background-color: #191c29;
+    color: #ccc;
+    border: 1px solid #31374a;
+    font-size: 0.85rem;
+}
+
+[data-bs-theme="dark"] input.form-control:focus {
+     box-shadow: 0 0 8px rgba(216, 192, 116, 0.7);
+     border-color: #d8c074;
+     outline: none;
+     color: #fff;
+}
+
 a.custom-link {
     color: #d8c074 !important;
     text-decoration: none;
@@ -144,7 +167,6 @@ a.custom-link:hover {
         width: 80%;
         height: 80%;
     }
-
 }
 
 @media only screen and (min-width: 769px) and (max-width: 1100px) {
@@ -160,4 +182,32 @@ a.custom-link:hover {
         width: 70%;
         height: 75%;
     }
+}
+
+.google-btn {
+    border: 1px solid #ddd;
+    background-color: #F5F5F5;
+    color: #333;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.google-btn:hover {
+    background-color: #f1f1f1;
+    text-decoration: none;
+}
+
+[data-bs-theme="dark"] .google-btn {
+    background-color: #0f111a;
+    border: 1px solid #31374a;
+    color: #ccc;
+}
+
+[data-bs-theme="dark"] .google-btn:hover {
+    background-color: #191c29;
+}
+
+.google-btn .fa-google {
+    color: #db4437;
 }

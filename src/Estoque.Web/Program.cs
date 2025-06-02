@@ -27,7 +27,7 @@ builder.Services.AddEstoqueServices();
 builder.Services.AddPtBrLocalization();
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => { options.SignIn.RequireConfirmedAccount = false; }
-).AddEntityFrameworkStores<EstoqueDbContext>().AddDefaultTokenProviders();
+).AddRoles<IdentityRole>().AddEntityFrameworkStores<EstoqueDbContext>().AddDefaultTokenProviders();
 
 builder.Services.AddAuthentication();
 builder.Services.AddAuthorization();
