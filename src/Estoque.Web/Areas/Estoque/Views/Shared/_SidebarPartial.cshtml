@@ -3,7 +3,7 @@
     <ul class="navbar-nav flex-column p-3" id="navbarVerticalNav">
         <li class="nav-item">
             <div class="nav-item-wrapper">
-                <a class="nav-link label-1 @(ViewContext.RouteData.Values["action"].ToString() == "Index" ? "active" : "")" href="@Url.Action("Index", "Home")">
+                <a class="nav-link label-1 @(ViewContext.RouteData.Values["controller"].ToString() == "Home" ? "active" : "")" href="@Url.Action("Index", "Home", new { area = "Estoque" })">
                     <div class="d-flex align-items-center" style="gap: 1.0rem; font-size: 0.90rem; padding-left: 1rem;">
                         <span class="nav-link-icon"><span class="fa fa-house"></span></span>
                         <span class="nav-link-text-wrapper">
@@ -15,7 +15,7 @@
         </li>
         <li class="nav-item">
             <div class="nav-item-wrapper">
-                <a class="nav-link label-1 @(ViewContext.RouteData.Values["action"].ToString() == "Produto" ? "active" : "")" href="@Url.Action("Produto", "Produto")">
+                <a class="nav-link label-1 @(ViewContext.RouteData.Values["controller"].ToString() == "Produto" ? "active" : "")" href="@Url.Action("Index", "Produto", new { area = "Estoque" })">
                     <div class="d-flex align-items-center" style="gap: 1.0rem; font-size: 0.90rem; padding-left: 1rem;">
                         <span class="nav-link-icon"><span class="fa fa-box"></span></span>
                         <span class="nav-link-text-wrapper">
@@ -27,7 +27,7 @@
         </li>
         <li class="nav-item">
             <div class="nav-item-wrapper">
-                <a class="nav-link label-1 @(ViewContext.RouteData.Values["action"].ToString() == "EntradaProduto" ? "active" : "")" href="@Url.Action("EntradaProduto", "Produto")">
+                <a class="nav-link label-1 @(ViewContext.RouteData.Values["controller"].ToString() == "Entrada" ? "active" : "")" href="@Url.Action("Index", "Entrada", new { area = "Estoque" })">
                     <div class="d-flex align-items-center" style="gap: 1.0rem; font-size: 0.90rem; padding-left: 1rem;">
                         <span class="nav-link-icon"><span class="fa fa-arrow-down"></span></span>
                         <span class="nav-link-text-wrapper">
@@ -39,7 +39,7 @@
         </li>
         <li class="nav-item">
             <div class="nav-item-wrapper">
-                <a class="nav-link label-1 @(ViewContext.RouteData.Values["action"].ToString() == "Fornecedor" ? "active" : "")" href="@Url.Action("Fornecedor", "Fornecedor")">
+                <a class="nav-link label-1 @(ViewContext.RouteData.Values["controller"].ToString() == "Fornecedor" ? "active" : "")" href="@Url.Action("Index", "Fornecedor", new { area = "Estoque" })">
                     <div class="d-flex align-items-center" style="gap: 1.0rem; font-size: 0.90rem; padding-left: 1rem;">
                         <span class="nav-link-icon"><span class="fa fa-truck"></span></span>
                         <span class="nav-link-text-wrapper">

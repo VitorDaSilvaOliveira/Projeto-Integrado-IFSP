@@ -1,12 +1,13 @@
 ﻿using Estoque.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Estoque.Web.Controllers;
+namespace Estoque.Web.Areas.Estoque.Controllers;
 
+[Area("Estoque")]
 public class ProdutoController(ProdutoService produtoService) : Controller
 {
     [Route("Produto")]
-    public async Task<IActionResult> Produto()
+    public async Task<IActionResult> Index()
     {
         var formViewProdutoAsync = await produtoService.GetFormViewProdutoAsync();
         
@@ -16,20 +17,6 @@ public class ProdutoController(ProdutoService produtoService) : Controller
             return actionResultGridProdutoAsync;
         
         ViewBag.FormViewProduto = resultGridProdutoAsync.Content;
-        return View();
-    }
-    
-    [Route("Entrada")]
-    public async Task<IActionResult> EntradaProduto()
-    {
-        var formViewEntradaAsync = await produtoService.GetFormViewEntradaAsync();
-
-        var resultGridEntradaAsync = await formViewEntradaAsync.GetResultAsync();
-
-        if (resultGridEntradaAsync is IActionResult actionResultGridEntradaAsync)
-            return actionResultGridEntradaAsync;
-
-        ViewBag.FormViewEntrada = resultGridEntradaAsync.Content;
         return View();
     }
 }

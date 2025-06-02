@@ -1,12 +1,13 @@
 ﻿using Estoque.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Estoque.Web.Controllers;
+namespace Estoque.Web.Areas.Estoque.Controllers;
 
+[Area("Estoque")]
 public class FornecedorController(FornecedorService fornecedorService)  : Controller
 {
     [Route("Fornecedor")]
-    public async Task<IActionResult> Fornecedor()
+    public async Task<IActionResult> Index()
     {
         var formViewFornecedorAsync = await fornecedorService.GetFormViewFornecedorAsync();
         

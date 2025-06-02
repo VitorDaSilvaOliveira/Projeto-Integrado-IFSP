@@ -10,10 +10,5 @@ public class ProdutoService(IComponentFactory componentFactory)
         formView.ShowTitle = true;
         return formView;
     }
-    public async Task<JJFormView> GetFormViewEntradaAsync()
-    {
-        var formView = await componentFactory.FormView.CreateAsync("entradas");
-        formView.ShowTitle = true;
-        return formView;
-    }
+
 }

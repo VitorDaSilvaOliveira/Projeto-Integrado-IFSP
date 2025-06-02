@@ -2,6 +2,7 @@ using Estoque.Infrastructure.Data;
 using Estoque.Web.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,7 +19,7 @@ builder.Services.AddDbContext<EstoqueDbContext>(options =>
 builder.Services.AddControllersWithViews(options =>
 {
     options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
-
+    options.Filters.Add(new AuthorizeFilter());
 });
 
 builder.Services.AddCustomServices();
