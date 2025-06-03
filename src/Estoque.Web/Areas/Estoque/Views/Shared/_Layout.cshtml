@@ -1,19 +1,21 @@
 ﻿<!DOCTYPE html>
 <html lang="pt-BR" data-bs-theme="light">
-<partial name="_HeadPartial"/>
+@await Html.PartialAsync("~/Areas/Estoque/Views/Shared/_HeadPartial.cshtml")
+
 @await RenderSectionAsync("Stylesheets", required: false)
 <body>
-<partial name="_NavbarPartial"/>
+    @await Html.PartialAsync("~/Areas/Estoque/Views/Shared/_NavbarPartial.cshtml")
 
-<div class="d-flex" style="min-height: 100vh; padding-top: 56px;">
-    <partial name="_SidebarPartial"/>
-        
-    <main class="flex-grow-1 p-4" style="margin-left: 250px; padding-top: 56px;">
-        @RenderBody()
-    </main>
-</div>
+    <div class="d-flex" style="min-height: 100vh; padding-top: 56px;">
+        @await Html.PartialAsync("~/Areas/Estoque/Views/Shared/_SidebarPartial.cshtml")
 
-<partial name="_ScriptsPartial"/>
-@await RenderSectionAsync("Scripts", required: false)
+        <main class="flex-grow-1 p-4" style="margin-left: 250px; padding-top: 56px;">
+            @RenderBody()
+        </main>
+    </div>
+
+    @await Html.PartialAsync("~/Areas/Estoque/Views/Shared/_ScriptsPartial.cshtml")
+
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
