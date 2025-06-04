@@ -435,8 +435,7 @@ contribuirão para a evolução do \abnTeX.
 % inserir lista de abreviaturas e siglas
 % ---
 \begin{siglas}
-  \item[ABNT] Associação Brasileira de Normas Técnicas
-  \item[abnTeX] ABsurdas Normas para TeX
+  \item[RDBMS] Sistema de gerenciamento de banco de dados relacional
 \end{siglas}
 % ---
 
@@ -593,6 +592,23 @@ Em um contexto muito próximo ao estoque de uma loja de eletrônicos, está o co
 \section{Metodologia de Gestão}
 
 \subsection{Kanban}
+
+A equipe optou pela utilização do método \textbf{Kanban} para o gerenciamento das atividades do projeto. Essa metodologia permite o acompanhamento visual focando na entrega contínua e em tempo real das tarefas.Add commentMore actions
+
+O quadro Kanban utilizado possui as seguintes colunas:
+
+\begin{itemize}
+    \item \textbf{Backlog – Código:} Armazena ideias e funcionalidades relacionadas à implementação do código que ainda não foram iniciadas.
+    \item \textbf{Backlog – Documentação:} Armazena tarefas de documentação que ainda não foram iniciadas.
+    \item \textbf{Design:} Etapa dedicada à elaboração de pesquisas.
+    \item \textbf{A Fazer:} Tarefas já priorizadas e planejadas, aguardando início.
+    \item \textbf{Em Andamento:} Tarefas em desenvolvimento.
+    \item \textbf{Revisão de Código:} Etapa de verificação e revisão do código antes da finalização.
+    \item \textbf{Fase de Teste:} Validação e testes das funcionalidades desenvolvidas.
+    \item \textbf{Concluído:} Tarefas finalizadas, revisadas e testadas com sucesso.
+\end{itemize}
+
+As atividades são constantemente avaliadas e realocadas entre as colunas conforme seu progresso, promovendo transparência e melhoria contínua do fluxo de trabalho.
 
 \section{Repositório da Aplicação}
 
@@ -807,19 +823,22 @@ Esta seção apresenta as principais tecnologias utilizadas no desenvolvimento d
 \subsection{Back-end}
 
 \begin{itemize}
-    \item \textbf{ASP.NET}: Framework desenvolvido pela Microsoft, utilizado para a criação de aplicações web robustas, seguras e escaláveis.
+    \item \textbf{ASP.NET}: Framework desenvolvido pela Microsoft, utilizado para a criação de aplicações web robustas, seguras e escaláveis \cite{AspNet2025}.
+
 \end{itemize}
 
 \subsection{Banco de Dados}
 
 \begin{itemize}
-    \item \textbf{Microsoft SQL Server}: Banco de dados robusto e amplamente utilizado no mercado, responsável pelo armazenamento seguro das informações da aplicação.
+    \item \textbf{Microsoft SQL Server}: O Microsoft SQL Server é um sistema de gerenciamento de banco de dados relacional (RDBMS) robusto e amplamente utilizado no mercado, responsável pelo armazenamento seguro das informações da aplicação \cite{SqlServer2025}.
+
+
 \end{itemize}
 
 \subsection{Infraestrutura}
 
 \begin{itemize}
-    \item \textbf{Microsoft Azure}: Plataforma de computação em nuvem utilizada para hospedar a aplicação e seus serviços relacionados. A utilização do Azure proporciona escalabilidade, segurança e alta disponibilidade.
+    \item \textbf{Microsoft Azure}: Plataforma de computação em nuvem utilizada para hospedar a aplicação e seus serviços relacionados. A utilização do Azure proporciona escalabilidade, segurança e alta disponibilidade \cite{Azure2025}.
 \end{itemize}
 
 
