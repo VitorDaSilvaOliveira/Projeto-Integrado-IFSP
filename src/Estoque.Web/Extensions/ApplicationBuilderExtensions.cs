@@ -4,33 +4,32 @@ namespace Estoque.Web.Extensions;
 
 public static class ApplicationBuilderExtensions
 {
-    public static async Task UseSeedingAsync(this WebApplication app, ILogger logger)
-    {
-        try
-        {
-            await app.UseMasterDataSeedingAsync();
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "Erro durante o seeding.");
-            throw;
-        }
-    }
+    // public static async Task UseSeedingAsync(this WebApplication app, ILogger logger)
+    // {
+    //     try
+    //     {
+    //         await app.UseMasterDataSeedingAsync();
+    //     }
+    //     catch (Exception ex)
+    //     {
+    //         logger.LogError(ex, "Erro durante o seeding.");
+    //         throw;
+    //     }
+    // }
 
     public static void MapCustomEndpoints(this WebApplication app)
     {
         app.MapDataDictionary();
         app.MapMasterData();
 
-    // Rota para áreas
-    app.MapControllerRoute(
-        name: "areas",
-        pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-
-        // Rota padrão (sem área)
         app.MapControllerRoute(
-        name: "default",
-        pattern: "{controller=SignIn}/{action=Index}/{id?}",
-        defaults: new { area = "Identity" });
+            name: "areas",
+            pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
+        // Rota padrï¿½o (sem ï¿½rea)
+        app.MapControllerRoute(
+            name: "default",
+            pattern: "{controller=SignIn}/{action=Index}/{id?}",
+            defaults: new { area = "Identity" });
     }
 }

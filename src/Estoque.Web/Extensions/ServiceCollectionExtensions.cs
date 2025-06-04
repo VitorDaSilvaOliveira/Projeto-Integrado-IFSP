@@ -11,7 +11,7 @@ public static class ServiceCollectionExtensions
     public static void AddEstoqueServices(this IServiceCollection services)
     {
         services.AddScoped<ProdutoService>();
-        services.AddScoped<EntradaService>();
+        services.AddScoped<MovimentacaoService>();
         services.AddScoped<FornecedorService>();
         services.AddScoped<AuthService>();
     }

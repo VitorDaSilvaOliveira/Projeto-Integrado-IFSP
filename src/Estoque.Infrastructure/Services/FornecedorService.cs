@@ -6,7 +6,7 @@ public class FornecedorService(IComponentFactory componentFactory)
 {
     public async Task<JJFormView> GetFormViewFornecedorAsync()
     {
-        var formView = await componentFactory.FormView.CreateAsync("fornecedor");
+        var formView = await componentFactory.FormView.CreateAsync("Fornecedor");
         formView.ShowTitle = true;
         return formView;
     }

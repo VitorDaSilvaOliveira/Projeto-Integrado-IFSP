@@ -1,0 +1,89 @@
+@{
+    Layout = "~/Areas/Estoque/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Perfil";
+}
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    var userId = HttpContextAccessor.HttpContext?.User.FindFirst("sub")?.Value
+                 ?? HttpContextAccessor.HttpContext?.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+    var avatarUrl = userId != null ? $"/Identity/Profile/Avatar?userId={userId}" : null;
+    var defaultAvatar = Url.Content("~/img/default_profile.png");
+}
+
+<div class="mt-3 pb-2 mb-2 border-bottom d-flex justify-content-between">
+    <h3>
+        <span>
+            <span class="fa fa-user ">
+            </span>
+        </span>Perfil
+        <small class="sub-title">
+        </small>
+    </h3>
+</div>
+<div class="container">
+    <div class="row gutters">
+        <div class="col-xl-3 col-sm-12 mb-3">
+            <div class="card h-100">
+                <div class="card-body text-center"> <!-- centraliza geral -->
+                    <form enctype="multipart/form-data" id="profile-picture-form" action="/Identity/Profile/SaveProfilePicture" method="post">
+                        <div class="account-settings">
+                            <div class="user-profile">
+                                <div class="user-avatar" onclick="openFilePicker()">
+                                    <input type="file" class="d-none" id="NewProfilePicture" name="NewProfilePicture">
+                                    <img
+                                        src="@avatarUrl"
+                                        onerror="this.onerror=null;this.src='@defaultAvatar';"
+                                        class="rounded-circle"
+                                        alt="Avatar grande"
+                                        style="width: 120px; height: 120px; object-fit: cover;" /> <!-- controla tamanho -->
+                                </div>
+                                <h5 class="user-name mt-3">@User.Identity?.Name</h5> <!-- espaçamento top -->
+                            </div>
+                        </div>
+                        @Html.AntiForgeryToken()
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-9 col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <form id="personal-information-form" action="/Identity/Profile/SavePersonalInformation" method="post">
+                        <div class="row gutters">
+                            <div class="col-12">
+                                <h6 class="mb-2 text-primary">Informações Pessoais</h6>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <div class="form-floating">
+                                        <input class="form-control" type="text" id="FirstName" name="FirstName" placeholder="Nome">
+                                        <label for="FirstName">Nome</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <div class="form-floating">
+                                        <input class="form-control" type="text" id="LastName" name="LastName" placeholder="Sobrenome">
+                                        <label for="LastName">Sobrenome</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 text-start">
+                            <button type="submit" class="btn btn-primary">Salvar</button>
+                            <a href=@Url.Action("Index", "Home", new { area = "Estoque" })
+                               class="btn btn-danger">Cancelar</a>
+                        </div>
+                        @Html.AntiForgeryToken()
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

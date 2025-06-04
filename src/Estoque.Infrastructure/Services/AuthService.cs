@@ -1,21 +1,20 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Identity;
 
 namespace Estoque.Infrastructure.Services;
 
 public class AuthService(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
 {
-    private readonly SignInManager<IdentityUser> _signInManager = signInManager;
-    private readonly UserManager<IdentityUser> _userManager = userManager;
-
     public async Task<(bool Success, string? ErrorMessage)> SignInAsync(string usernameOrEmail, string password, bool rememberMe)
     {
-        var user = await _userManager.FindByNameAsync(usernameOrEmail)
-                   ?? await _userManager.FindByEmailAsync(usernameOrEmail);
+        var user = await userManager.FindByNameAsync(usernameOrEmail)
+                   ?? await userManager.FindByEmailAsync(usernameOrEmail);
 
         if (user == null)
             return (false, "Tentativa de login inválida.");
 
-        var result = await _signInManager.PasswordSignInAsync(user, password, rememberMe, lockoutOnFailure: true);
+        var result = await signInManager.PasswordSignInAsync(user, password, rememberMe, lockoutOnFailure: true);
 
         if (result.Succeeded)
             return (true, null);
@@ -28,4 +27,37 @@ public class AuthService(SignInManager<IdentityUser> signInManager, UserManager<
 
         return (false, "Tentativa de login inválida.");
     }
+
+    public AuthenticationProperties ConfigureExternalAuthenticationProperties(string provider, string redirectUrl)
+    {
+        return signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
+    }
+
+    public async Task<(bool Succeeded, string ErrorMessage)> ExternalLoginSignInAsync()
+    {
+        var info = await signInManager.GetExternalLoginInfoAsync();
+        if (info == null)
+            return (false, "Erro ao obter informações do login externo.");
+
+        var email = info.Principal.FindFirstValue(ClaimTypes.Email);
+        if (string.IsNullOrEmpty(email))
+            return (false, "Email não encontrado na conta Google.");
+
+        var user = await userManager.FindByEmailAsync(email);
+        if (user == null)
+            return (false, "Usuário não encontrado. Cadastre-se primeiro.");
+
+        var result = await signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
+
+        if (result.Succeeded)
+            return (true, null);
+
+        var addLoginResult = await userManager.AddLoginAsync(user, info);
+        if (!addLoginResult.Succeeded)
+            return (false, "Falha ao vincular login externo.");
+
+        await signInManager.SignInAsync(user, isPersistent: false);
+        return (true, null);
+    }
+
 }
