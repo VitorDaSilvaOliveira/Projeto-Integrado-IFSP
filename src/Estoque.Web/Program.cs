@@ -59,20 +59,20 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.Cookie.SameSite = sameSiteModeForCookies;
         options.Cookie.SecurePolicy = securePolicyForCookies;
         options.Cookie.HttpOnly = true;
-    })
-    .AddGoogle(googleOptions =>
-    {
-        googleOptions.ClientId = builder.Configuration["GoogleKeys:ClientId"];
-        googleOptions.ClientSecret = builder.Configuration["GoogleKeys:ClientSecret"];
-        googleOptions.CallbackPath = "/Identity/SignIn/GoogleResponse";
-
-        googleOptions.Scope.Add("email");
-        googleOptions.Scope.Add("profile");
-        googleOptions.SaveTokens = true;
-
-        googleOptions.CorrelationCookie.SameSite = SameSiteMode.None;
-        googleOptions.CorrelationCookie.SecurePolicy = securePolicyForCookies;
     });
+    //.AddGoogle(googleOptions =>
+    //{
+    //    googleOptions.ClientId = builder.Configuration["GoogleKeys:ClientId"];
+    //    googleOptions.ClientSecret = builder.Configuration["GoogleKeys:ClientSecret"];
+    //    googleOptions.CallbackPath = "/Identity/SignIn/GoogleResponse";
+
+    //    googleOptions.Scope.Add("email");
+    //    googleOptions.Scope.Add("profile");
+    //    googleOptions.SaveTokens = true;
+
+    //    googleOptions.CorrelationCookie.SameSite = SameSiteMode.None;
+    //    googleOptions.CorrelationCookie.SecurePolicy = securePolicyForCookies;
+    //});
 
 // === Session ===
 builder.Services.AddDistributedMemoryCache();
