@@ -30,4 +30,29 @@ public class SignInController(AuthService authService) : Controller
         ModelState.AddModelError(string.Empty, errorMessage ?? "Login falhou.");
         return View(model);
     }
+
+    [AllowAnonymous]
+    [HttpGet]
+    public IActionResult GoogleLogin()
+    {
+        var redirectUrl = Url.Action(nameof(GoogleResponse), "SignIn", new { area = "Identity" }, protocol: Request.Scheme, host: Request.Host.Value);
+
+        var properties = authService.ConfigureExternalAuthenticationProperties("Google", redirectUrl!);
+
+        return new ChallengeResult("Google", properties);
+    }
+
+    [AllowAnonymous]
+    [HttpGet]
+    public async Task<IActionResult> GoogleResponse()
+    {
+        var result = await authService.ExternalLoginSignInAsync();
+
+        if (result.Succeeded)
+            return RedirectToAction("Index", "Home", new { area = "Estoque" });
+
+        ModelState.AddModelError(string.Empty, "Falha ao autenticar com Google.");
+        return View("Index");
+    }
+
 }

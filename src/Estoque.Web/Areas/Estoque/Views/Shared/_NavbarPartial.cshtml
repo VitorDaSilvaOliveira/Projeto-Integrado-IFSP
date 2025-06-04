@@ -1,7 +1,16 @@
-﻿<header class="navbar navbar-top fixed-top navbar-expand" id="navbarDefault">
+﻿@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    var userId = HttpContextAccessor.HttpContext?.User.FindFirst("sub")?.Value
+                 ?? HttpContextAccessor.HttpContext?.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+    var avatarUrl = userId != null ? $"/Identity/Profile/Avatar?userId={userId}" : null;
+    var defaultAvatar = Url.Content("~/img/default_profile.png");
+}
+
+<header class="navbar navbar-top fixed-top navbar-expand" id="navbarDefault">
     <div class="container-fluid">
         <a class="navbar-brand" href="/Home/Index">
-            <img src="~/img/logo.png" alt="Logo" width="50" height="50" />
+            <img src="~/img/logo.png" alt="Logo" width="50" height="50"/>
         </a>
 
         <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse"
@@ -14,12 +23,12 @@
 
             <label class="mb-0 theme-control-toggle-label theme-control-toggle-dark" for="themeControlToggle"
                    data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="Mudar tema" title="Mudar tema"
-                       style="cursor:pointer; font-size: 1.2rem; color: #ffc107; position: relative; top: 2px;">
+                   style="cursor:pointer; font-size: 1.2rem; color: #ffc107; position: relative; top: 2px;">
                 <span class="fa-solid fa-sun sun-icon"></span>
             </label>
 
             <div class="dropdown">
-                <a class="nav-link" id="navbarDropdownNindeDots" href="#" role="button" data-bs-toggle="dropdown"
+                <a class="nav-link me-2" id="navbarDropdownNindeDots" href="#" role="button" data-bs-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false" style="color: #ffc107;">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="2" cy="2" r="2" fill="currentColor"></circle>
@@ -54,7 +63,51 @@
                 </div>
             </div>
 
-            <span>Bem-vindo(a)</span>
+            <div class="dropdown">
+                <a class="nav-link lh-1 pe-0" id="navbarDropdownUser" href="#" role="button" data-bs-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false" title="Menu do Usuário">
+                    <div class="avatar avatar-l">
+                        <img
+                            src="@avatarUrl"
+                            onerror="this.onerror=null;this.src='@defaultAvatar';"
+                            class="rounded-circle"
+                            alt="Avatar"/>
+                    </div>
+                </a>
+
+                <div class="dropdown-menu dropdown-menu-end navbar-dropdown-caret py-0 dropdown-profile shadow border"
+                     aria-labelledby="navbarDropdownUser"
+                     style="min-width: 15rem; max-height: 20rem; overflow-y: auto;">
+                    <div class="card position-relative border-0">
+                        <div class="card-body p-0">
+                            <div class="text-center pt-4 pb-3">
+                                <div class="avatar avatar-xl">
+                                    <img
+                                        src="@avatarUrl"
+                                        onerror="this.onerror=null;this.src='@defaultAvatar';"
+                                        class="rounded-circle"
+                                        alt="Avatar grande"/>
+                                </div>
+                                <h6 class="mt-2 text-body-emphasis">@User.Identity?.Name</h6>
+                            </div>
+                        </div>
+
+                        <ul class="nav flex-column mb-2 pb-1">
+                            <li class="nav-item">
+                                <a class="nav-link px-3" asp-area="Identity" asp-controller="Profile" asp-action="Index">
+                                    <span class="me-2 text-body fa fa-user"></span>Perfil
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link px-3" href="/Identity/Logout">
+                                    <span class="me-2 text-body fa fa-sign-out-alt"></span>Sair
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </header>

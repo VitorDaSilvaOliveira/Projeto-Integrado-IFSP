@@ -1,0 +1,9 @@
+@using JJMasterData.Web.Extensions
+@{
+    ViewBag.Title = "Movimentação de Produtos";
+}
+
+@using (Html.BeginMasterDataForm())
+{
+    @Html.Raw(ViewBag.FormViewMovimentacao)
+}

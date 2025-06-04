@@ -1,61 +1,133 @@
 using Estoque.Infrastructure.Data;
 using Estoque.Web.Extensions;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+var isDevelopment = builder.Environment.IsDevelopment();
 
+// === Banco de Dados ===
 builder.Services.AddDbContext<EstoqueDbContext>(options =>
-{
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("DefaultConnection"),
-        optionsBuilder => { optionsBuilder.MigrationsAssembly("Estoque.Infrastructure"); }
-    );
-});
+        sql => sql.MigrationsAssembly("Estoque.Infrastructure")
+    )
+);
 
-// Serviços
+// === Serviços MVC ===
 builder.Services.AddControllersWithViews(options =>
 {
     options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
     options.Filters.Add(new AuthorizeFilter());
 });
 
+// === Serviços Customizados ===
 builder.Services.AddCustomServices();
 builder.Services.AddEstoqueServices();
 builder.Services.AddPtBrLocalization();
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => { options.SignIn.RequireConfirmedAccount = false; }
-).AddRoles<IdentityRole>().AddEntityFrameworkStores<EstoqueDbContext>().AddDefaultTokenProviders();
+// === Identity ===
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+{
+    options.SignIn.RequireConfirmedAccount = false;
+})
+.AddRoles<IdentityRole>()
+.AddEntityFrameworkStores<EstoqueDbContext>()
+.AddDefaultTokenProviders();
 
-builder.Services.AddAuthentication();
+// === Configuração Cookies & Autenticação ===
+
+var sameSiteModeForCookies = isDevelopment ? SameSiteMode.None : SameSiteMode.Strict;
+const CookieSecurePolicy securePolicyForCookies = CookieSecurePolicy.Always; 
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.Cookie.SameSite = sameSiteModeForCookies;
+    options.Cookie.SecurePolicy = securePolicyForCookies;
+    options.Cookie.HttpOnly = true;
+    options.LoginPath = "/Identity/SignIn/Index";
+    options.AccessDeniedPath = "/Identity/SignIn/AccessDenied";
+});
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.Cookie.SameSite = sameSiteModeForCookies;
+        options.Cookie.SecurePolicy = securePolicyForCookies;
+        options.Cookie.HttpOnly = true;
+    })
+    .AddGoogle(googleOptions =>
+    {
+        googleOptions.ClientId = builder.Configuration["GoogleKeys:ClientId"];
+        googleOptions.ClientSecret = builder.Configuration["GoogleKeys:ClientSecret"];
+        googleOptions.CallbackPath = "/Identity/SignIn/GoogleResponse";
+
+        googleOptions.Scope.Add("email");
+        googleOptions.Scope.Add("profile");
+        googleOptions.SaveTokens = true;
+
+        googleOptions.CorrelationCookie.SameSite = SameSiteMode.None;
+        googleOptions.CorrelationCookie.SecurePolicy = securePolicyForCookies;
+    });
+
+// === Session ===
+builder.Services.AddDistributedMemoryCache();
+
+builder.Services.AddSession(options =>
+{
+    options.Cookie.SameSite = SameSiteMode.None;
+    options.Cookie.SecurePolicy = securePolicyForCookies;
+    options.Cookie.HttpOnly = true;
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+});
+
+// === Forwarded Headers (proxies) ===
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+    options.KnownNetworks.Clear();
+    options.KnownProxies.Clear();
+});
+
+// === Autorização ===
 builder.Services.AddAuthorization();
+
+// === Política de Cookies ===
+builder.Services.Configure<CookiePolicyOptions>(options =>
+{
+    options.MinimumSameSitePolicy = SameSiteMode.None;
+    options.Secure = CookieSecurePolicy.Always;
+});
 
 var app = builder.Build();
 
+// === Pipeline ===
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Index/Error");
     app.UseHsts();
 }
 
-app.UsePtBrLocalization();
-
-// Middlewares
-app.UseCors();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
 app.UseRouting();
+
+app.UseForwardedHeaders();
+
+app.UseCookiePolicy();
+
 app.UseSession();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
-// Endpoints
-app.MapCustomEndpoints();
+app.UsePtBrLocalization();
 
-// Seeding
-var logger = app.Services.GetRequiredService<ILogger<Program>>();
-await app.UseSeedingAsync(logger);
+app.MapCustomEndpoints();
 
 app.Run();

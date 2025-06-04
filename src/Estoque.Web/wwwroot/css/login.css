@@ -32,15 +32,16 @@ label.form-label {
 }
 
 [data-bs-theme="light"] input.form-control {
-    background-color: #fff; 
+    background-color: #fff;
     color: #333;
     border: 1px solid #ccc;
-    font-size: 0.85rem; 
+    font-size: 0.85rem;
+    border-radius: 0.5rem;
 }
 
 [data-bs-theme="light"] input.form-control:focus {
     box-shadow: 0 0 8px rgba(219, 191, 103, 0.7);
-    border-color: #dbbf67; 
+    border-color: #dbbf67;
     outline: none;
     color: #000;
 }
@@ -50,17 +51,24 @@ label.form-label {
     color: #ccc;
     border: 1px solid #31374a;
     font-size: 0.85rem;
+    border-radius: 0.5rem;
 }
 
 [data-bs-theme="dark"] input.form-control:focus {
-     box-shadow: 0 0 8px rgba(216, 192, 116, 0.7);
-     border-color: #d8c074;
-     outline: none;
-     color: #fff;
+    box-shadow: 0 0 8px rgba(216, 192, 116, 0.7);
+    border-color: #d8c074;
+    outline: none;
+    color: #fff;
 }
 
 a.custom-link {
     color: #d8c074 !important;
+    text-decoration: none;
+    transition: text-decoration 0.3s ease;
+}
+
+[data-bs-theme="light"] a.custom-link {
+    color: #f1c40f !important;
     text-decoration: none;
     transition: text-decoration 0.3s ease;
 }
@@ -107,6 +115,12 @@ a.custom-link:hover {
     transition: background-color 0.3s ease;
 }
 
+[data-bs-theme="light"] .BGC-azul-2 {
+    border-color: #f1c40f;
+    font-weight: 700;
+    transition: background-color 0.3s ease;
+}
+
 .BGC-H-azul-1:hover {
     background-color: #d8c074;
     color: white !important;
@@ -114,6 +128,15 @@ a.custom-link:hover {
 
 .COLOR-white {
     color: #d8c074;
+}
+
+[data-bs-theme="light"] .COLOR-white {
+    color: #f1c40f;
+}
+
+[data-bs-theme="light"] .BGC-H-azul-1:hover {
+    background-color: #f1c40f;
+    color: white !important;
 }
 
 .BORRAD-5 {
