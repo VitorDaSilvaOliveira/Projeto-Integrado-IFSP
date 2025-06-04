@@ -812,13 +812,9 @@ Esta seção apresenta as principais tecnologias utilizadas no desenvolvimento d
 
 \subsection{Banco de Dados}
 
-<<<<<<< Updated upstream
-SQLServer ,
-=======
 \begin{itemize}
     \item \textbf{Microsoft SQL Server}: Banco de dados robusto e amplamente utilizado no mercado, responsável pelo armazenamento seguro das informações da aplicação.
 \end{itemize}
->>>>>>> Stashed changes
 
 \subsection{Infraestrutura}
 
@@ -841,11 +837,27 @@ SQLServer ,
 
 \section{Segurança, Privacidade, Legislação}
 
-Este tópico é dedicado a explicar sobre as questões de segurança e legislação relevantes para o noss projeto.
+Este tópico é dedicado a explicar sobre as questões de segurança e legislação relevantes para o nosso projeto.
+
 
 \subsection{Critérios de Segurança e Privacidade}
 
+O sistema de gerenciamento de estoque foi projetado com critérios de segurança e privacidade para garantir a integridade das informações e proteger os dados dos usuários. As principais medidas adotadas no projeto incluem:
+
+\begin{itemize}
+    \item \textbf{Autenticação e Autorização:} O acesso ao sistema é controlado por meio de autenticação de usuários, utilizando o \textit{ASP.NET Identity}. Cada usuário precisa estar autenticado para acessar funcionalidades sensíveis, como cadastro de produtos, movimentação de estoque ou relatórios.
+
+    \item \textbf{Criptografia de Senhas:} As senhas dos usuários são armazenadas de forma criptografada (hash) no banco de dados, conforme práticas recomendadas pelo \textit{Entity Framework}.
+
+    \item \textbf{Boas Práticas de Privacidade:} Os dados pessoais dos usuários, como nome e e-mail, são utilizados apenas para fins de autenticação e gerenciamento interno, e não são compartilhados com terceiros.
+\end{itemize}
+
 \subsection{Legislação}
+
+A  Lei Geral de Proteção de Dados (LGPD - Lei nº 13.709/2018) garante transparencia diante ao uso de dados pessoais garantindo que os dados coletados sejam utilizados exclusivamente para fins de autenticação, autorização e controle de acesso ao sistema. Sendo assim, o sistema segue as diretrizes da LGPD, adotando medidas técnicas e administrativas adequadas para proteger os dados pessoais contra acessos não autorizados, perda ou vazamento. 
+
+Além da LGPD, o sistema também considera princípios estabelecidos no Marco Civil da Internet (Lei nº 12.965/2014), que estabelece garantias, direitos e deveres para o uso da internet no Brasil.
+
 
 
 
