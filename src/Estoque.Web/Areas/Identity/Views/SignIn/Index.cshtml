@@ -34,16 +34,16 @@
     <div id="left-box" class="caixa-esquerda D-flex FD-column ALITEM-center HEIGHT-100vh">
         <div class="formulario-login D-flex FD-column JC-center ALITEM-center PADDING-B20 WIDTH-100">
             <div class="logo-container" style="margin-top: 150px;">
-                <img src="~/img/logo.png" alt="Logo" width="100" height="100" style="position: relative; top: -30px;"/>
+                <img src="~/img/logo.png" alt="Logo" width="100" height="100" style="position: relative; top: -50px;"/>
             </div>
 
             <div class="mb-4 WIDTH-100">
-                <a href="@Url.Action("GoogleLogin", "SignIn", new { area = "Identity" })"
-                   class="btn google-btn w-100 d-flex align-items-center justify-content-center"
-                   style="font-size: 0.85rem;">
-                    <span class="fab fa-google me-2 fs-5"></span>
-                    Entrar com Google
-                </a>
+                    <a href="/Google"
+                       class="btn google-btn w-100 d-flex align-items-center justify-content-center"
+                       style="font-size: 0.85rem;">
+                        <span class="fab fa-google me-2 fs-5"></span>
+                        Entrar com Google
+                    </a>
             </div>
 
             <div class="position-relative w-100 px-3" style="max-width: 100%;">
@@ -71,33 +71,34 @@
 
                 <div class="D-flex FD-column WIDTH-100 mt-3">
                     <div class="D-flex JC-space-between ALITEM-center mb-3">
-                        <div class="form-check D-flex ALITEM-center" style="gap: 0.35rem;">
+                        <div class="form-check D-flex ALITEM-center" style="gap: 0.25rem;">
                             <input asp-for="LembrarMe" class="form-check-input"
-                                   style="transform: scale(0.85); margin-top: 0.50px; border-radius: 0.25rem;"/>
+                                   style="transform: scale(0.85); margin-top: 1px;"/>
                             <label asp-for="LembrarMe" class="form-check-label" style="font-size: 0.85rem;"></label>
                         </div>
+
                         <a href="/Login/EsqueceuSenha" class="custom-link"
                            style="font-size: 0.85rem;">
                             Esqueceu a senha?
                         </a>
                     </div>
-                    @if (!ViewData.ModelState.IsValid)
-                    {
-                        <div class="alert mt-3 alert-dismissible alert-danger" role="alert" style="font-size: 0.85rem;">
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            <h5 class="alert-heading" style="font-size: 0.95rem; font-weight: bold;">
-                                <span class="fa fa-exclamation-triangle me-1"></span> Dados inválidos
-                            </h5>
-                            <div class="alert-content">
-                                <ul class="mb-0">
-                                    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
-                                    {
-                                        <li>@error.ErrorMessage</li>
-                                    }
-                                </ul>
+                        @if (!ViewData.ModelState.IsValid)
+                        {
+                            <div class="alert mt-3 alert-dismissible alert-danger" role="alert" style="font-size: 0.85rem;">
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                <h5 class="alert-heading" style="font-size: 0.95rem; font-weight: bold;">
+                                    <span class="fa fa-exclamation-triangle me-1"></span> Dados inválidos
+                                </h5>
+                                <div class="alert-content">
+                                    <ul class="mb-0">
+                                        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                                        {
+                                            <li>@error.ErrorMessage</li>
+                                        }
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
-                    }
+                        }
 
                     <button type="submit" class="btn BGC-azul-2 COLOR-white w-100 BORRAD-5 BGC-H-azul-1"
                             style="font-size: 0.85rem;">

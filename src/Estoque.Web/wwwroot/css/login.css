@@ -1,5 +1,5 @@
 ﻿body {
-    font-family: "Nunito Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important;
+    font-family: 'Nunito Sans', sans-serif !important;
 }
 
 [data-bs-theme="light"] body {
@@ -35,8 +35,7 @@ label.form-label {
     background-color: #fff; 
     color: #333;
     border: 1px solid #ccc;
-    font-size: 0.85rem;
-    border-radius: 0.45rem;
+    font-size: 0.85rem; 
 }
 
 [data-bs-theme="light"] input.form-control:focus {
@@ -51,7 +50,6 @@ label.form-label {
     color: #ccc;
     border: 1px solid #31374a;
     font-size: 0.85rem;
-    border-radius: 0.45rem;
 }
 
 [data-bs-theme="dark"] input.form-control:focus {
@@ -61,13 +59,7 @@ label.form-label {
      color: #fff;
 }
 
-[data-bs-theme="light"] a.custom-link {
-    color: #f1c40f !important;
-    text-decoration: none;
-    transition: text-decoration 0.3s ease;
-}
-
-[data-bs-theme="dark"] a.custom-link {
+a.custom-link {
     color: #d8c074 !important;
     text-decoration: none;
     transition: text-decoration 0.3s ease;
@@ -109,28 +101,19 @@ a.custom-link:hover {
     width: 100%;
 }
 
-/* Estilo base */
 .BGC-azul-2 {
-    border-color: var(--amarelo);
+    border-color: #d8c074;
     font-weight: 700;
     transition: background-color 0.3s ease;
 }
 
 .BGC-H-azul-1:hover {
-    background-color: var(--amarelo);
+    background-color: #d8c074;
     color: white !important;
 }
 
 .COLOR-white {
-    color: var(--amarelo);
-}
-
-:root {
-    --amarelo: #f1c40f; 
-}
-
-[data-bs-theme="dark"] {
-    --amarelo: #d8c074;
+    color: #d8c074;
 }
 
 .BORRAD-5 {
@@ -205,14 +188,13 @@ a.custom-link:hover {
     border: 1px solid #ddd;
     background-color: #F5F5F5;
     color: #333;
-    border-radius: 0.45rem;
+    border-radius: 5px;
     padding: 0.5rem 1rem;
-    font-weight: 600;
     transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .google-btn:hover {
-    background-color: #d1d0d0;
+    background-color: #f1f1f1;
     text-decoration: none;
 }
 
