@@ -15,6 +15,7 @@ public class CustomClaimsFactory(
     {
         var identity = await base.GenerateClaimsAsync(user);
         identity.AddClaim(new Claim("LastName", user.LastName ?? string.Empty));
+        identity.AddClaim(new Claim("FirstName", user.FirstName ?? string.Empty));
         return identity;
     }
 }
