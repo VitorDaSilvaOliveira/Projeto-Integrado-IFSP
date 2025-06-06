@@ -135,12 +135,14 @@
                             <hr>
 
                             <div class="px-3 logout-button">
-                                <form id="logoutForm" action="/Account/Logout" method="post" class="w-100">
+                                <form id="logoutForm" asp-area="Identity" asp-controller="SignOut" asp-action="Index" method="post" class="w-100">
+                                    @Html.AntiForgeryToken()
                                     <button type="submit" class="btn btn-secondary w-100">
                                         <span class="me-2 fa fa-sign-out-alt"></span>Sair
                                     </button>
                                 </form>
                             </div>
+
                         </div>
                     </div>
                 </div>
