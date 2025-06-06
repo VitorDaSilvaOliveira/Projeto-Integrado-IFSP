@@ -46,6 +46,20 @@
                 </a>
             </div>
         </li>
+
+        <li class="nav-item">
+            <div class="nav-item-wrapper">
+                <a class="nav-link label-1 px-2 @(ViewContext.RouteData.Values["controller"].ToString() == "Categoria" ? "active" : "")" href="@Url.Action("Index", "Categoria", new { area = "Estoque" })">
+                    <div class="d-flex align-items-center" style="gap: 0.8rem; font-size: 0.80rem; padding-left: 1rem;">
+                        <span class="nav-link-icon"><span class="fa fa-tags"></span></span>
+                        <span class="nav-link-text-wrapper">
+                            <span class="nav-link-text text-wrap">Categorias</span>
+                        </span>
+                    </div>
+                </a>
+            </div>
+        </li>
+
         
         <li class="nav-item">
             <span class="sidebar-section-title text-uppercase fw-bold small px-3 mt-3 mb-1" style="font-size: 0.60rem; letter-spacing: 1px;">
