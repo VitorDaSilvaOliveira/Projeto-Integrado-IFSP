@@ -799,8 +799,57 @@ O projeto tem como objetivo o desenvolvimento de um sistema de controle de estoq
 
 \section{Histórias de Usuário}
 
+\begin{quadro}[htb]
+\caption{Histórias de Usuário}
+\label{quadro_hist_usuarios}
+\begin{tabular}{|c|p{10cm}|p{4cm}|}
+\hline
+\textbf{Código} & \textbf{História de Usuário} & \textbf{Requisito Funcional Relacionado} \\
+\hline
+US01 & Cadastrar novos produtos no estoque & RF01 \\ \hline
+US02 & Atualizar informações dos produtos & RF02 \\ \hline
+US03 & Remover produtos do estoque & RF03 \\ \hline
+US04 & Registrar entrada de produtos no sistema & RF04 \\ \hline
+US05 & Registrar saídas de produtos por vendas ou perdas & RF05 \\ \hline
+US06 & Gerar relatórios de estoque atual e histórico & RF06 \\ \hline
+US07 & Receber alertas de estoque baixo ou vencimento próximo & RF07 \\ \hline
+US08 & Categorizar produtos em grupos hierárquicos & RF08 \\ \hline
+US09 & Realizar busca avançada de produtos & RF09 \\ \hline
+US10 & Gerenciar informações de fornecedores & RF10 \\ \hline
+US11 & Consultar histórico completo de movimentações & RF11 \\ \hline
+US12 & Gerenciar estoques em múltiplos depósitos & RF12 \\ \hline
+US13 & Consultar estoque disponível em tempo real & RF13 \\ \hline
+US14 & Registrar uma venda de produtos & RF14 \\ \hline
+US15 & Validar cadastro para evitar duplicação de produtos & RF15 \\ \hline
+US16 & Fazer backup e restaurar dados do sistema & RF16 \\ \hline
+US17 & Autenticar usuários com controle de permissões & RF17 \\ \hline
+US18 & Gerar relatórios mensais de desempenho e movimentações & RF18 \\
+\hline
+\end{tabular}
+\legend{Fonte: Elaborado pelos autores}
+\end{quadro}
+
+\FloatBarrier
+
 \subsection{Descrição das Histórias}
 
+\begin{enumerate}
+
+\item \textbf{Cadastrar novos produtos no estoque}
+
+\textbf{Descri\c{c}\~ao:} Como um administrador do sistema, quero ter a capacidade de cadastrar novos produtos no estoque, para que eles fiquem dispon\'iveis para consulta, atualiza\c{c}\~ao, controle de entrada/sa\'ida e venda.
+
+\textbf{Requisito Funcional Relacionado:} RF01 -- Cadastro de Produtos
+
+\textbf{Crit\'erios de Aceita\c{c}\~ao:}
+\begin{itemize}
+  \item Deve existir uma interface acess\'ivel para o administrador cadastrar produtos, informando dados obrigat\'orios como nome, c\'odigo, categoria, pre\c{c}o, quantidade, marca e modelo.
+  \item Produtos com quantidade inicial igual a zero devem ser automaticamente marcados com o status ``Esgotado''.
+  \item O sistema deve validar campos obrigat\'orios e impedir o cadastro de produtos com informa\c{c}\~oes faltantes.
+  \item Ap\'os o cadastro, o produto deve aparecer imediatamente nas listagens e estar dispon\'ivel para as demais funcionalidades do sistema.
+\end{itemize}
+
+\end{enumerate}
 \section{Arquitetura}
 
 A arquitetura do sistema representa a estrutura organizacional fundamental da aplicação, incluindo seus principais componentes, suas relações, ambientes de execução e os padrões adotados para garantir a escalabilidade, manutenibilidade e segurança. Esta seção descreve a forma como o sistema foi planejado e dividido, visando facilitar tanto o desenvolvimento quanto a futura evolução da solução. São considerados aqui os aspectos lógicos e físicos do sistema, incluindo frameworks, tecnologias e infraestrutura.
