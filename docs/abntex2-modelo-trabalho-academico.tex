@@ -808,7 +808,19 @@ A arquitetura do sistema representa a estrutura organizacional fundamental da ap
 
 \subsection{Definições da Arquitetura}
 
-A arquitetura adotada no projeto segue o padrão MVC (Model-View-Controller), amplamente utilizado em aplicações web. O sistema é segmentado em camadas que se comunicam entre si de forma estruturada: interface (frontend), lógica de negócios (backend) e persistência de dados. Para isso, foram utilizadas tecnologias como ASP.NET MVC, Entity Framework, SQL Server e JJMasterData, entre outras. A definição clara dessas camadas permite maior modularidade, facilidade de manutenção e suporte à escalabilidade horizontal por meio da nuvem, com hospedagem na Azure.
+A arquitetura do projeto foi desenvolvida como uma aplicação Web, apoiando-se em tecnologias modernas para garantir robustez, escalabilidade e segurança. O sistema foi concebido com uma abordagem em camadas, utilizando principalmente tecnologias da plataforma .NET.
+
+No lado do servidor, adotamos a linguagem C\# com o framework ASP.NET MVC, facilitando a separação das responsabilidades e promovendo uma melhor organização do código através do padrão Model-View-Controller (MVC).
+
+Para o acesso a dados, utilizamos Entity Framework com LINQ, que permite uma comunicação eficiente com o banco de dados relacional e facilita a execução de consultas através de expressões C\#. A base de dados principal é gerida por Microsoft SQL Server, garantindo a persistência e segurança das informações.
+
+No front-end, a aplicação utiliza templates em ASP.NET combinados com HTML, CSS e JavaScript, proporcionando uma interface rica e responsiva. Além disso, o framework Bootstrap foi empregado para garantir que a interface se adapte a diferentes dispositivos, contribuindo com a usabilidade.
+
+Para aprimorar a interação do usuário, utilizamos a biblioteca jQuery, que facilita o tratamento de eventos e a manipulação do DOM, permitindo a criação de funcionalidades dinâmicas e responsivas.
+
+A autenticação e autorização dos usuários são tratadas por meio do ASP.NET Identity, que integra recursos robustos de controle de acesso, gerenciamento de permissões e segurança na autenticação. Esse serviço está destacado no diagrama como um componente separado e essencial para a integridade e confiabilidade do sistema.
+
+Por fim, o sistema conta ainda com o JJMaster Data, responsável pela administração e modelagem de dados mestres, contribuindo para a padronização e consistência dos dados em todas as unidades do sistema.
 
 \subsection{Diagramas da Arquitetura}
 
