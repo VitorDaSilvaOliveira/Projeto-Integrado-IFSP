@@ -803,10 +803,12 @@ O projeto tem como objetivo o desenvolvimento de um sistema de controle de estoq
 
 \section{Arquitetura}
 
+A arquitetura do sistema representa a estrutura organizacional fundamental da aplicação, incluindo seus principais componentes, suas relações, ambientes de execução e os padrões adotados para garantir a escalabilidade, manutenibilidade e segurança. Esta seção descreve a forma como o sistema foi planejado e dividido, visando facilitar tanto o desenvolvimento quanto a futura evolução da solução. São considerados aqui os aspectos lógicos e físicos do sistema, incluindo frameworks, tecnologias e infraestrutura.
 
 
 \subsection{Definições da Arquitetura}
 
+A arquitetura adotada no projeto segue o padrão MVC (Model-View-Controller), amplamente utilizado em aplicações web. O sistema é segmentado em camadas que se comunicam entre si de forma estruturada: interface (frontend), lógica de negócios (backend) e persistência de dados. Para isso, foram utilizadas tecnologias como ASP.NET MVC, Entity Framework, SQL Server e JJMasterData, entre outras. A definição clara dessas camadas permite maior modularidade, facilidade de manutenção e suporte à escalabilidade horizontal por meio da nuvem, com hospedagem na Azure.
 
 \subsection{Diagramas da Arquitetura}
 
