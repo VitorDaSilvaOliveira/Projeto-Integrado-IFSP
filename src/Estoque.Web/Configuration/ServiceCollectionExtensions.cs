@@ -16,6 +16,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ProdutoService>();
         services.AddScoped<MovimentacaoService>();
         services.AddScoped<FornecedorService>();
+        services.AddScoped<CategoriaService>();
         services.AddScoped<AuthService>();
         services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, CustomClaimsFactory>();
     }
