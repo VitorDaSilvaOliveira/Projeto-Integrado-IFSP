@@ -1,11 +1,11 @@
 ﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
 @inject IHttpContextAccessor HttpContextAccessor
-
 @{
     var userId = HttpContextAccessor.HttpContext?.User.FindFirst("sub")?.Value
                  ?? HttpContextAccessor.HttpContext?.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
-    var avatarUrl = userId != null ? $"/Identity/Profile/Avatar?userId={userId}" : null;
-    var defaultAvatar = Url.Content("~/img/default_profile.png");
+    var avatarUrl = userId != null 
+        ? Url.Action("Avatar", "Profile", new { area = "Identity", userId }) 
+        : Url.Content("~/img/default_profile.png");
 }
 
 <header class="navbar navbar-top fixed-top navbar-expand" id="navbarDefault">
@@ -69,9 +69,8 @@
                    data-bs-toggle="dropdown" data-bs-display="static" aria-haspopup="true" aria-expanded="false" title="Menu do Usuário">
                     <div class="avatar avatar-l position-relative">
                         <img src="@avatarUrl"
-                             onerror="this.onerror=null;this.src='@defaultAvatar';"
-                             class="rounded-circle"
-                             alt="Avatar"/>
+                             onerror="this.onerror=null;this.src='@Url.Content("~/img/default_profile.png")';"
+                             class="rounded-circle" alt="Avatar" />
                     </div>
                 </a>
 
@@ -82,9 +81,8 @@
                             <div class="text-center pt-4 pb-3">
                                 <div class="avatar avatar-xl">
                                     <img src="@avatarUrl"
-                                         onerror="this.onerror=null;this.src='@defaultAvatar';"
-                                         class="rounded-circle"
-                                         alt="Avatar grande"/>
+                                         onerror="this.onerror=null;this.src='@Url.Content("~/img/default_profile.png")';"
+                                         class="rounded-circle" alt="Avatar" />
                                 </div>
                                 <h6 class="mt-2 text-body-emphasis">@User.FindFirst("FirstName")?.Value @User.FindFirst("LastName")?.Value</h6>
                             </div>

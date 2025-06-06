@@ -1,17 +1,10 @@
-@using System.Security.Claims
-@inject IHttpContextAccessor HttpContextAccessor
+@model PersonalInfoViewModel
 
 @{
     Layout = "~/Areas/Estoque/Views/Shared/_Layout.cshtml";
     ViewData["Title"] = "Perfil";
 
-    var user = HttpContextAccessor.HttpContext?.User;
-    var userId = user?.FindFirst("sub")?.Value ?? user?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-    var avatarUrl = userId != null ? $"/Identity/Profile/Avatar?userId={userId}" : null;
     var defaultAvatar = Url.Content("~/img/default_profile.png");
-    var firstName = user?.FindFirst("FirstName")?.Value;
-    var lastName = user?.FindFirst("LastName")?.Value;
-    var email = user?.FindFirst(ClaimTypes.Email)?.Value;
 }
 
 <div class="mt-3 pb-2 mb-2 border-bottom d-flex justify-content-between">
@@ -20,38 +13,42 @@
 
 <div class="container">
     <div class="row gutters">
+
         <!-- Avatar e info -->
         <div class="col-xl-3 col-sm-12 mb-3">
             <div class="card h-100">
                 <div class="card-body text-center">
                     <form enctype="multipart/form-data" id="profile-picture-form" method="post"
-                          action="/Identity/Profile/SaveProfilePicture">
-                        <div class="account-settings">
-                            <div class="user-profile">
-                                <div class="user-avatar" onclick="openFilePicker()">
-                                    <input type="file" class="d-none" id="NewProfilePicture" name="NewProfilePicture">
-                                    <img src="@avatarUrl"
-                                         onerror="this.onerror=null;this.src='@defaultAvatar';"
-                                         class="rounded-circle"
-                                         alt="Avatar"
-                                         style="width: 120px; height: 120px; object-fit: cover;"/>
-                                </div>
-                                <h5 class="user-name mt-3">@firstName @lastName</h5>
-                                <h6 class="user-email mb-1" style="font-weight: normal;">@email</h6>
-                            </div>
-                        </div>
+                          asp-action="SaveProfilePicture" asp-controller="Profile" asp-area="Identity">
                         @Html.AntiForgeryToken()
+
+                        <div class="user-avatar" style="cursor:pointer; position: relative;"
+                             onclick="document.getElementById('newProfilePicture').click();">
+                            <input type="file" class="d-none" id="newProfilePicture" name="newProfilePicture"
+                                   accept="image/*"
+                                   onchange="previewAndUpload(this)"/>
+                            <img id="avatarPreview" src="@Model.AvatarUrl"
+                                 onerror="this.onerror=null;this.src='@defaultAvatar';"
+                                 class="rounded-circle"
+                                 alt="Avatar"
+                                 style="width: 120px; height: 120px; object-fit: cover;"/>
+                        </div>
                     </form>
+
+                    <h5 class="user-name mt-3">@Model.FirstName @Model.LastName</h5>
+                    <h6 class="user-email mb-1" style="font-weight: normal;">@Model.Email</h6>
                 </div>
             </div>
         </div>
 
-        <!-- Formulário -->
+        <!-- Formulário de informações pessoais -->
         <div class="col-xl-9 col-sm-12">
             <div class="card">
                 <div class="card-body">
-                    <form id="personal-information-form" method="post"
-                          action="/Identity/Profile/SavePersonalInformation">
+                    <form id="personal-information-form" method="post" asp-action="SavePersonalInformation"
+                          asp-controller="Profile" asp-area="Identity">
+                        @Html.AntiForgeryToken()
+
                         <div class="row gutters">
                             <div class="col-12">
                                 <h6 class="mb-2 text-primary">Informações Pessoais</h6>
@@ -60,9 +57,9 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <div class="form-floating">
-                                        <input class="form-control" type="text" id="FirstName" name="FirstName"
-                                               placeholder="Nome" value="@firstName"/>
-                                        <label for="FirstName">Nome</label>
+                                        <input class="form-control" type="text" id="firstName" name="firstName"
+                                               placeholder="Nome" value="@Model.FirstName"/>
+                                        <label for="firstName">Nome</label>
                                     </div>
                                 </div>
                             </div>
@@ -70,9 +67,9 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <div class="form-floating">
-                                        <input class="form-control" type="text" id="LastName" name="LastName"
-                                               placeholder="Sobrenome" value="@lastName"/>
-                                        <label for="LastName">Sobrenome</label>
+                                        <input class="form-control" type="text" id="lastName" name="lastName"
+                                               placeholder="Sobrenome" value="@Model.LastName"/>
+                                        <label for="lastName">Sobrenome</label>
                                     </div>
                                 </div>
                             </div>
@@ -82,10 +79,26 @@
                             <button type="submit" class="btn btn-primary">Salvar</button>
                             <a href="@Url.Action("Index", "Home", new { area = "Estoque" })" class="btn btn-danger">Cancelar</a>
                         </div>
-                        @Html.AntiForgeryToken()
                     </form>
                 </div>
             </div>
         </div>
+
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert mt-3 alert-dismissible alert-success" role="alert">
+                <button type="button" aria-label="Close" data-bs-dismiss="alert" class="btn-close"></button>
+                <h5 class="alert-heading">
+                    <span class="fa-regular fa-circle-check me-1"></span>Sucesso
+                </h5>
+                <div class="alert-content">
+                    @TempData["Success"]
+                </div>
+            </div>
+        }
+        <script>
+            window.profilePictureUrl = '@Url.Action("SaveProfilePicture", "Profile", new { area = "Identity" })';
+        </script>
+        <script src="~/js/profile.js" asp-append-version="true"></script>
     </div>
 </div>

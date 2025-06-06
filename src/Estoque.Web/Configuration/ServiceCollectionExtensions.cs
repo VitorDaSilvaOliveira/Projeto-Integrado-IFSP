@@ -18,6 +18,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<FornecedorService>();
         services.AddScoped<CategoriaService>();
         services.AddScoped<AuthService>();
+        services.AddScoped<UserService>();
         services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, CustomClaimsFactory>();
     }
 
