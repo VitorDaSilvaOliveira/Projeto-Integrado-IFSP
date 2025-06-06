@@ -11,6 +11,10 @@
     color: #212529;
 }
 
+[data-bs-theme="dark"] .nav-link {
+    color: #969db2;
+}
+
 [data-bs-theme="light"] #navbarDefault {
     background-color: #222834;
 }
@@ -23,6 +27,13 @@
 [data-bs-theme="light"] .nav-link.active .fa,
 [data-bs-theme="light"] .nav-link.active .nav-link-text {
     color: #f1c40f;
+    font-weight: bold;
+}
+
+[data-bs-theme="dark"] .nav-link.active,
+[data-bs-theme="dark"] .nav-link.active .fa,
+[data-bs-theme="dark"] .nav-link.active .nav-link-text {
+    color: #f8f9fa;
     font-weight: bold;
 }
 
