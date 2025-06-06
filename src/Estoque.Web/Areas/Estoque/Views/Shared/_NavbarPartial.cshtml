@@ -1,4 +1,6 @@
-﻿@inject IHttpContextAccessor HttpContextAccessor
+﻿@using System.Security.Claims
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@inject IHttpContextAccessor HttpContextAccessor
 
 @{
     var userId = HttpContextAccessor.HttpContext?.User.FindFirst("sub")?.Value
@@ -9,7 +11,7 @@
 
 <header class="navbar navbar-top fixed-top navbar-expand" id="navbarDefault">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/Home/Index">
+        <a class="navbar-brand" href="@Url.Action("Index", "Home", new { area = "Estoque" })">
             <img src="~/img/logo.png" alt="Logo" width="50" height="50"/>
         </a>
 
@@ -51,7 +53,7 @@
                             <div class="row text-center align-items-center gx-0 gy-0">
                                 <div class="col-4">
                                     <a class="d-block bg-body-secondary-hover p-2 rounded-3 text-center text-decoration-none mb-3"
-                                       href="/DataDictionary" target="_blank">
+                                       href="/DataDictionary">
                                         <span class="fa-solid fa-book" style="font-size: 30px;"></span>
                                         <p class="mb-0 text-body-emphasis text-truncate fs-10 mt-1 pt-1">Dicionário</p>
                                     </a>
@@ -64,31 +66,29 @@
             </div>
 
             <div class="dropdown">
-                <a class="nav-link lh-1 pe-0" id="navbarDropdownUser" href="#" role="button" data-bs-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false" title="Menu do Usuário">
-                    <div class="avatar avatar-l">
-                        <img
-                            src="@avatarUrl"
-                            onerror="this.onerror=null;this.src='@defaultAvatar';"
-                            class="rounded-circle"
-                            alt="Avatar"/>
+                <a class="nav-link lh-1 pe-0" id="navbarDropdownUser" href="#"
+                   data-bs-toggle="dropdown" data-bs-display="static" aria-haspopup="true" aria-expanded="false" title="Menu do Usuário">
+                    <div class="avatar avatar-l position-relative">
+                        <img src="@avatarUrl"
+                             onerror="this.onerror=null;this.src='@defaultAvatar';"
+                             class="rounded-circle"
+                             alt="Avatar"/>
                     </div>
                 </a>
 
-                <div class="dropdown-menu dropdown-menu-end navbar-dropdown-caret py-0 dropdown-profile shadow border"
+                <div class="dropdown-menu dropdown-menu-end py-0 dropdown-profile shadow-none border"
                      aria-labelledby="navbarDropdownUser"
-                     style="min-width: 15rem; max-height: 20rem; overflow-y: auto;">
+                     style="min-width: 16rem; max-height: 24rem; overflow-y: visible;">
                     <div class="card position-relative border-0">
                         <div class="card-body p-0">
                             <div class="text-center pt-4 pb-3">
                                 <div class="avatar avatar-xl">
-                                    <img
-                                        src="@avatarUrl"
-                                        onerror="this.onerror=null;this.src='@defaultAvatar';"
-                                        class="rounded-circle"
-                                        alt="Avatar grande"/>
+                                    <img src="@avatarUrl"
+                                         onerror="this.onerror=null;this.src='@defaultAvatar';"
+                                         class="rounded-circle"
+                                         alt="Avatar grande"/>
                                 </div>
-                                <h6 class="mt-2 text-body-emphasis">@User.Identity?.Name</h6>
+                                <h6 class="mt-2 text-body-emphasis">@User.Identity?.Name @User.FindFirst("LastName")?.Value</h6>
                             </div>
                         </div>
 
@@ -99,11 +99,51 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link px-3" href="/Identity/Logout">
-                                    <span class="me-2 text-body fa fa-sign-out-alt"></span>Sair
+                                <a class="nav-link px-3" href="/Identity/Email/ChangeEmail">
+                                    <span class="me-2 text-body fa fa-at"></span>Alterar Email
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link px-3" href="/Identity/ChangePassword">
+                                    <span class="me-2 text-body fa fa-key"></span>Alterar Senha
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link px-3" href="/Identity/Phone/ChangePhone">
+                                    <span class="me-2 text-body fa fa-mobile-phone"></span>Alterar Telefone
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link px-3" href="/Identity/UserAccess">
+                                    <span class="me-2 text-body fa-solid fa-clock-rotate-left"></span>Últimos Acessos
                                 </a>
                             </li>
                         </ul>
+
+                        <div class="card-footer p-0 border-top border-translucent">
+                            <ul class="nav flex-column my-3">
+                                <li class="nav-item">
+                                    <a class="nav-link px-3" href="" target="_blank">
+                                        <span class="fa fa-info-circle me-2 text-body"></span>Centro de Ajuda
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link px-3" href="">
+                                        <span class="fa fa-globe me-2 text-body"></span>Sobre
+                                    </a>
+                                </li>
+                            </ul>
+
+                            <hr>
+
+                            <div class="px-3 logout-button">
+                                <form id="logoutForm" action="/Account/Logout" method="post" class="w-100">
+                                    <button type="submit" class="btn btn-secondary w-100">
+                                        <span class="me-2 fa fa-sign-out-alt"></span>Sair
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

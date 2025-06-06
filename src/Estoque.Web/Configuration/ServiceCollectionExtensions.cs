@@ -1,10 +1,13 @@
+using Estoque.Domain.Entities;
+using Estoque.Infrastructure.Factory;
 using Estoque.Infrastructure.Services;
 using JJMasterData.Commons.Configuration;
 using JJMasterData.Commons.Logging;
 using JJMasterData.Core.Configuration;
 using JJMasterData.Web.Configuration;
+using Microsoft.AspNetCore.Identity;
 
-namespace Estoque.Web.Extensions;
+namespace Estoque.Web.Configuration;
 
 public static class ServiceCollectionExtensions
 {
@@ -14,6 +17,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<MovimentacaoService>();
         services.AddScoped<FornecedorService>();
         services.AddScoped<AuthService>();
+        services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, CustomClaimsFactory>();
     }
 
     public static void AddCustomServices(this IServiceCollection services)

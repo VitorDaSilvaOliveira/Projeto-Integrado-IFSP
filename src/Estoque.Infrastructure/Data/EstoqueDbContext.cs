@@ -4,7 +4,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Estoque.Infrastructure.Data;
 
-public class EstoqueDbContext(DbContextOptions<EstoqueDbContext> options) : IdentityDbContext(options)
+public class EstoqueDbContext : IdentityDbContext<ApplicationUser>
 {
+    public EstoqueDbContext(DbContextOptions<EstoqueDbContext> options) : base(options) {}
     public DbSet<Produto> Produtos { get; set; }
 }

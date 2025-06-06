@@ -1,10 +1,16 @@
 ﻿using System.Security.Claims;
+using Estoque.Domain.Entities;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 
 namespace Estoque.Infrastructure.Services;
 
-public class AuthService(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
+public class AuthService(
+    SignInManager<ApplicationUser> signInManager,
+    UserManager<ApplicationUser> userManager,
+    IUserClaimsPrincipalFactory<ApplicationUser> claimsPrincipalFactory,
+    IHttpContextAccessor httpContextAccessor)
 {
     public async Task<(bool Success, string? ErrorMessage)> SignInAsync(string usernameOrEmail, string password, bool rememberMe)
     {
@@ -13,20 +19,19 @@ public class AuthService(SignInManager<IdentityUser> signInManager, UserManager<
 
         if (user == null)
             return (false, "Tentativa de login inválida.");
+        
+        if (!await userManager.CheckPasswordAsync(user, password))
+            return (false, "Tentativa de login inválida.");
 
-        var result = await signInManager.PasswordSignInAsync(user, password, rememberMe, lockoutOnFailure: true);
+        var principal = await claimsPrincipalFactory.CreateAsync(user);
 
-        if (result.Succeeded)
-            return (true, null);
+        await signInManager.SignOutAsync();
+        await httpContextAccessor.HttpContext!.SignInAsync(IdentityConstants.ApplicationScheme, principal,
+            new AuthenticationProperties { IsPersistent = rememberMe });
 
-        if (result.IsLockedOut)
-            return (false, "O usuário está bloqueado.");
-
-        if (result.IsNotAllowed)
-            return (false, "O usuário não tem permissão para efetuar login.");
-
-        return (false, "Tentativa de login inválida.");
+        return (true, null);
     }
+
 
     public AuthenticationProperties ConfigureExternalAuthenticationProperties(string provider, string redirectUrl)
     {
