@@ -9,7 +9,7 @@
     var userId = user?.FindFirst("sub")?.Value ?? user?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
     var avatarUrl = userId != null ? $"/Identity/Profile/Avatar?userId={userId}" : null;
     var defaultAvatar = Url.Content("~/img/default_profile.png");
-    var firstName = user?.Identity?.Name;
+    var firstName = user?.FindFirst("FirstName")?.Value;
     var lastName = user?.FindFirst("LastName")?.Value;
     var email = user?.FindFirst(ClaimTypes.Email)?.Value;
 }
