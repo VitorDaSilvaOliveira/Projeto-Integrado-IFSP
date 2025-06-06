@@ -7,6 +7,8 @@ public class ProfileController : Controller
 {
     public IActionResult Index()
     {
+        var claims = User.Claims.ToList();
+
         return View();
     }
 }

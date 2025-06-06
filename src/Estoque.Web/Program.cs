@@ -1,5 +1,7 @@
+using Estoque.Domain.Entities;
 using Estoque.Infrastructure.Data;
-using Estoque.Web.Extensions;
+using Estoque.Infrastructure.Factory;
+using Estoque.Web.Configuration;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
@@ -25,19 +27,19 @@ builder.Services.AddControllersWithViews(options =>
     options.Filters.Add(new AuthorizeFilter());
 });
 
-// === Serviços Customizados ===
-builder.Services.AddCustomServices();
-builder.Services.AddEstoqueServices();
-builder.Services.AddPtBrLocalization();
-
 // === Identity ===
-builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {
     options.SignIn.RequireConfirmedAccount = false;
 })
 .AddRoles<IdentityRole>()
 .AddEntityFrameworkStores<EstoqueDbContext>()
 .AddDefaultTokenProviders();
+
+// === Serviços Customizados ===
+builder.Services.AddCustomServices();
+builder.Services.AddEstoqueServices();
+builder.Services.AddPtBrLocalization();
 
 // === Configuração Cookies & Autenticação ===
 

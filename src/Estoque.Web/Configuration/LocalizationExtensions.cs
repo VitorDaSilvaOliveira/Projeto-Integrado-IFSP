@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Options;
 
-namespace Estoque.Web.Extensions;
+namespace Estoque.Web.Configuration;
 
 public static class LocalizationExtensions
 {
