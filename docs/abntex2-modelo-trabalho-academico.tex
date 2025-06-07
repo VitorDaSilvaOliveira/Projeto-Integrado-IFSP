@@ -862,6 +862,19 @@ US18 & Gerar relatórios mensais de desempenho e movimentações & RF18 \\
   \item O sistema deve validar as alterações para evitar informações inconsistentes ou duplicadas.
 \end{itemize}
 
+\item \textbf{Remover produtos do estoque}
+
+\textbf{Descrição:} Como administrador, quero remover produtos obsoletos ou descontinuados do estoque, para manter a base de dados limpa e atualizada.
+
+\textbf{Requisito Funcional Relacionado:} RF03 -- Remoção de Produtos
+
+\textbf{Critérios de Aceitação:}
+\begin{itemize}
+  \item O sistema deve permitir a exclusão apenas de produtos sem movimentações registradas.
+  \item Para produtos com histórico, deve ser possível inativá-los, mantendo os dados acessíveis para consulta.
+  \item Um aviso de confirmação deve ser exibido antes da remoção.
+\end{itemize}
+
 \end{enumerate}
 \section{Arquitetura}
 
