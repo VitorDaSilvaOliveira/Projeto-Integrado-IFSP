@@ -97,16 +97,18 @@
 % ---
 \titulo{VIP PENHA}
 \autor{
- {\large IFSP - Instituto Federal de Educação, Ciência e Tecnologia} \\
- {\large Câmpus São Paulo} \\[1.0cm]
-  Beatrizzz Muniz de Barros                         SP3161315 \\
-  Gean Carlos de Sousa Bandeira             SP3030075 \\
-  Khalil Khalid Abou Anche                       SP3121925 \\
-  Marcelo Flores Valdez                            SP3039056 \\
-  Matheus Prando Appolinario Barbosa   SP3121747 \\
-  Rafael Valverde Zanata Da Silva             SP3119866 \\
-  Vitor Da Silva Oliveira                            SP3120589 \\
+  {\large IFSP - Instituto Federal de Educação, Ciência e Tecnologia} \\
+  {\large Câmpus São Paulo} \\[1cm]
+  \makebox[0.60\textwidth][l]{BEATRIZ MUNIZ DE BARROS} \makebox[0.20\textwidth][r]{SP3161315}\\
+  \makebox[0.60\textwidth][l]{GEAN CARLOS DE SOUSA BANDEIRA} \makebox[0.20\textwidth][r]{SP3030075}\\
+  \makebox[0.60\textwidth][l]{KHALIL KHALID ABOU ANCHE} \makebox[0.20\textwidth][r]{SP3121925}\\
+  \makebox[0.60\textwidth][l]{MARCELO FLORES VALDEZ} \makebox[0.20\textwidth][r]{SP3039056}\\
+  \makebox[0.60\textwidth][l]{MATHEUS PRANDO APPOLINARIO BARBOSA} \makebox[0.20\textwidth][r]{SP3121747}\\
+  \makebox[0.60\textwidth][l]{RAFAEL VALVERDE ZANATA DA SILVA} \makebox[0.20\textwidth][r]{SP3119866}\\
+  \makebox[0.60\textwidth][l]{VITOR DA SILVA OLIVEIRA} \makebox[0.20\textwidth][r]{SP3020589}\\
 }
+
+
 \local{São Paulo - SP - Brasil}
 \data{2025}
 \orientador{Marcelo Tavares de Santana}
@@ -217,13 +219,42 @@
 % ---
 % Capa
 % ---
-\imprimircapa
+
+
+
 % ---
 
 % ---
 % Folha de rosto
 % (o * indica que haverá a ficha bibliográfica)
+\begin{capa}
 
+  \begin{center}
+    {\ABNTEXchapterfont\large\imprimirautor}
+
+    \vspace*{\fill}\vspace*{\fill}
+    \begin{center}
+      \ABNTEXchapterfont\bfseries\Large\imprimirtitulo
+    \end{center}
+    \vspace*{\fill}
+    
+    \hspace{.45\textwidth}
+    \begin{minipage}{.5\textwidth}
+    \end{minipage}%
+
+    \vspace*{1.5cm} % Aumenta o espaço após o preâmbulo
+
+    \vspace*{0.8cm} % Diminui o espaço antes da data
+
+  \end{center}
+
+  \begin{center}
+    {\large\imprimirlocal}
+    \par
+    {\large\imprimirdata}
+  \end{center}
+
+\end{capa}
 
 \begin{folhadeaprovacao}
 
@@ -240,19 +271,27 @@
     \begin{minipage}{.5\textwidth}
         \imprimirpreambulo
     \end{minipage}%
-    \vspace*{\fill}
-   \end{center}
-        
 
-   \begin{center}
-    \vspace*{0.5cm}
+    \vspace*{1.5cm} % Aumenta o espaço após o preâmbulo
+
+    \begin{center}
+        IFSP - Instituto Federal de Educação, Ciência e Tecnologia \\
+        Câmpus São Paulo \\
+        Tecnologia em Análise e Desenvolvimento de Sistemas
+    \end{center}
+
+    \vspace*{0.8cm} % Diminui o espaço antes da data
+
+  \end{center}
+
+  \begin{center}
     {\large\imprimirlocal}
     \par
     {\large\imprimirdata}
-    \vspace*{1cm}
   \end{center}
-  
+
 \end{folhadeaprovacao}
+
 % ---
 
 % ---
