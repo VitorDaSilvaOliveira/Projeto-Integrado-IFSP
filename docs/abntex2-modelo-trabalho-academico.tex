@@ -1068,13 +1068,13 @@ No lado do servidor, adotamos a linguagem C\# com o framework ASP.NET MVC, facil
 
 Para o acesso a dados, utilizamos Entity Framework com LINQ, que permite uma comunicação eficiente com o banco de dados relacional e facilita a execução de consultas através de expressões C\#. A base de dados principal é gerida por Microsoft SQL Server, garantindo a persistência e segurança das informações.
 
-No front-end, a aplicação utiliza templates em ASP.NET combinados com HTML, CSS e JavaScript, proporcionando uma interface rica e responsiva. Além disso, o framework Bootstrap foi empregado para garantir que a interface se adapte a diferentes dispositivos, contribuindo com a usabilidade.
+No front-end, a aplicação utiliza Razor Views (.cshtml), combinadas com HTML, CSS e JavaScript, para renderização dinâmica das páginas diretamente no servidor. O uso de Bootstrap assegura uma interface responsiva e compatível com diferentes dispositivos. Para manipulação do DOM e criação de interações dinâmicas, utilizamos jQuery, ampliando a usabilidade da aplicação.
 
 Para aprimorar a interação do usuário, utilizamos a biblioteca jQuery, que facilita o tratamento de eventos e a manipulação do DOM, permitindo a criação de funcionalidades dinâmicas e responsivas.
 
 A autenticação e autorização dos usuários são tratadas por meio do ASP.NET Identity, que integra recursos robustos de controle de acesso, gerenciamento de permissões e segurança na autenticação. Esse serviço está destacado no diagrama como um componente separado e essencial para a integridade e confiabilidade do sistema.
 
-Por fim, o sistema conta ainda com o JJMaster Data, responsável pela administração e modelagem de dados mestres, contribuindo para a padronização e consistência dos dados em todas as unidades do sistema.
+Além disso, o sistema utiliza o framework JJMasterData, uma solução que permite a criação dinâmica de formulários e estruturas de dados em tempo de execução. Com ele, é possível configurar cadastros e regras de negócio diretamente pela interface, sem necessidade de mudanças no código, trazendo mais flexibilidade e agilidade na evolução do sistema.
 
 \subsection{Diagramas da Arquitetura}
 
@@ -1100,13 +1100,13 @@ Esta seção apresenta as principais tecnologias utilizadas no desenvolvimento d
 
 \begin{itemize}
 
-   \item \textbf{Razor}: Engine de templates do ASP.NET utilizada para gerar as views da aplicação. Permite a criação de páginas HTML dinâmicas por meio da integração entre C\# e marcação HTML, facilitando a renderização de conteúdo no lado do servidor \cite{Razor}.
+   \item \textbf{Razor Views}: Arquivos .cshtml que utilizam a engine Razor do ASP.NET para gerar páginas HTML dinâmicas. Essa abordagem permite mesclar código C\# com marcação HTML de forma fluida, facilitando a renderização de conteúdo no lado do servidor e a reutilização de componentes visuais \cite{Razor}.
 
-   \item \textbf{HTML, CSS e JavaScript}: Tecnologias fundamentais para a construção da camada de apresentação do sistema. O HTML estrutura o conteúdo das páginas, o CSS define o estilo visual e o JavaScript adiciona interatividade ao front-end.
+   \item \textbf{HTML, CSS e JavaScript}: Tecnologias fundamentais para a construção da camada de apresentação do sistema. O HTML estrutura o conteúdo das páginas, o CSS define o estilo visual e o JavaScript adiciona interatividade ao front-end \cite{FrontEnd}.
 
-   \item \textbf{Bootstrap}: Framework front-end baseado em HTML, CSS e JS que oferece componentes prontos e responsivos, facilitando a criação de interfaces modernas, padronizadas e adaptáveis a diferentes dispositivos.
+   \item \textbf{Bootstrap}: Framework front-end baseado em HTML, CSS e JS que oferece componentes prontos e responsivos, facilitando a criação de interfaces modernas, padronizadas e adaptáveis a diferentes dispositivos \cite{Bootstrap}.
 
-   \item \textbf{jQuery}: Biblioteca JavaScript que simplifica a manipulação do DOM, o tratamento de eventos e requisições AJAX. Foi utilizada para agilizar o desenvolvimento de funcionalidades interativas no front-end da aplicação.
+   \item \textbf{jQuery}: Biblioteca JavaScript que simplifica a manipulação do DOM, o tratamento de eventos e requisições AJAX. Foi utilizada para agilizar o desenvolvimento de funcionalidades interativas no front-end da aplicação \cite{JQuery}.
 
 \end{itemize}
 
@@ -1293,7 +1293,9 @@ Na figura 11 podemos verificar uma análise em um cenário pessimista, em que o 
 \includegraphics[width=1.0\textwidth]{Figuras/CenarioPessimista.png}
 
 \chapter{Considerações Finais}
-teste
+Ao longo do desenvolvimento deste projeto, que culminou na criação de um sistema de controle de estoque para um estabelecimento comercial, foi possível constatar de soluções tecnológicas para otimizar processos e garantir a eficiência operacional em ambientes comerciais. A iniciativa de desenvolver este sistema surgiu da necessidade de modernizar a gestão  em um cenário de mercado cada vez mais competitivo.
+O sistema proposto representa uma ferramenta estratégica para a loja, Via Penha permitindo o cadastro detalhado de produtos, o controle preciso de entradas e saídas de mercadorias, e a geração de relatórios gerenciais. Essas funcionalidades são cruciais para reduzir erros manuais, tempo dedicado à organização do estoque e, consequentemente, aprimorar a tomada de decisões. A implementação de uma metodologia ágil, como o Kanban, foi de grande ajuda para a organização do projeto.
+Espera-se que a aplicação deste sistema resulte em uma melhoria substancial na gestão do estoque do estabelecimento, contribuindo para a redução de perdas, a otimização do fluxo de trabalho e por consequência ganhos econômicos. Além disso, este projeto demonstra o potencial das tecnologias da informação para resolver desafios práticos do cotidiano de empreendimentos. A contínua evolução e aprimoramento de tais sistemas é essencial para que empreendimentos e empresas   possam manter sua competitividade e prosperar no mercado atual.
 
 \section{Dificuldades, escolhas}
 
