@@ -1,18 +1,9 @@
-﻿@model TModel
-
+﻿@using JJMasterData.Web.Extensions
 @{
-    Layout = null;
+    ViewBag.Title = "Log";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <title>title</title>
-</head>
-<body>
-<div>
-      
-</div>
-</body>
-</html>
+@using (Html.BeginMasterDataForm())
+{
+    @Html.Raw(ViewBag.FormViewLog)
+}
