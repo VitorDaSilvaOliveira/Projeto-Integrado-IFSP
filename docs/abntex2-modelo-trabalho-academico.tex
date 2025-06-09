@@ -1068,13 +1068,13 @@ No lado do servidor, adotamos a linguagem C\# com o framework ASP.NET MVC, facil
 
 Para o acesso a dados, utilizamos Entity Framework com LINQ, que permite uma comunicação eficiente com o banco de dados relacional e facilita a execução de consultas através de expressões C\#. A base de dados principal é gerida por Microsoft SQL Server, garantindo a persistência e segurança das informações.
 
-No front-end, a aplicação utiliza Razor Views (.cshtml), combinadas com HTML, CSS e JavaScript, para renderização dinâmica das páginas diretamente no servidor. O uso de Bootstrap assegura uma interface responsiva e compatível com diferentes dispositivos. Para manipulação do DOM e criação de interações dinâmicas, utilizamos jQuery, ampliando a usabilidade da aplicação.
+No front-end, a aplicação utiliza templates em ASP.NET combinados com HTML, CSS e JavaScript, proporcionando uma interface rica e responsiva. Além disso, o framework Bootstrap foi empregado para garantir que a interface se adapte a diferentes dispositivos, contribuindo com a usabilidade.
 
 Para aprimorar a interação do usuário, utilizamos a biblioteca jQuery, que facilita o tratamento de eventos e a manipulação do DOM, permitindo a criação de funcionalidades dinâmicas e responsivas.
 
 A autenticação e autorização dos usuários são tratadas por meio do ASP.NET Identity, que integra recursos robustos de controle de acesso, gerenciamento de permissões e segurança na autenticação. Esse serviço está destacado no diagrama como um componente separado e essencial para a integridade e confiabilidade do sistema.
 
-Além disso, o sistema utiliza o framework JJMasterData, uma solução que permite a criação dinâmica de formulários e estruturas de dados em tempo de execução. Com ele, é possível configurar cadastros e regras de negócio diretamente pela interface, sem necessidade de mudanças no código, trazendo mais flexibilidade e agilidade na evolução do sistema.
+Por fim, o sistema conta ainda com o JJMaster Data, responsável pela administração e modelagem de dados mestres, contribuindo para a padronização e consistência dos dados em todas as unidades do sistema.
 
 \subsection{Diagramas da Arquitetura}
 
@@ -1100,13 +1100,13 @@ Esta seção apresenta as principais tecnologias utilizadas no desenvolvimento d
 
 \begin{itemize}
 
-   \item \textbf{Razor Views}: Arquivos .cshtml que utilizam a engine Razor do ASP.NET para gerar páginas HTML dinâmicas. Essa abordagem permite mesclar código C\# com marcação HTML de forma fluida, facilitando a renderização de conteúdo no lado do servidor e a reutilização de componentes visuais \cite{Razor}.
+   \item \textbf{Razor}: Engine de templates do ASP.NET utilizada para gerar as views da aplicação. Permite a criação de páginas HTML dinâmicas por meio da integração entre C\# e marcação HTML, facilitando a renderização de conteúdo no lado do servidor \cite{Razor}.
 
-   \item \textbf{HTML, CSS e JavaScript}: Tecnologias fundamentais para a construção da camada de apresentação do sistema. O HTML estrutura o conteúdo das páginas, o CSS define o estilo visual e o JavaScript adiciona interatividade ao front-end \cite{FrontEnd}.
+   \item \textbf{HTML, CSS e JavaScript}: Tecnologias fundamentais para a construção da camada de apresentação do sistema. O HTML estrutura o conteúdo das páginas, o CSS define o estilo visual e o JavaScript adiciona interatividade ao front-end.
 
-   \item \textbf{Bootstrap}: Framework front-end baseado em HTML, CSS e JS que oferece componentes prontos e responsivos, facilitando a criação de interfaces modernas, padronizadas e adaptáveis a diferentes dispositivos \cite{Bootstrap}.
+   \item \textbf{Bootstrap}: Framework front-end baseado em HTML, CSS e JS que oferece componentes prontos e responsivos, facilitando a criação de interfaces modernas, padronizadas e adaptáveis a diferentes dispositivos.
 
-   \item \textbf{jQuery}: Biblioteca JavaScript que simplifica a manipulação do DOM, o tratamento de eventos e requisições AJAX. Foi utilizada para agilizar o desenvolvimento de funcionalidades interativas no front-end da aplicação \cite{JQuery}.
+   \item \textbf{jQuery}: Biblioteca JavaScript que simplifica a manipulação do DOM, o tratamento de eventos e requisições AJAX. Foi utilizada para agilizar o desenvolvimento de funcionalidades interativas no front-end da aplicação.
 
 \end{itemize}
 
@@ -1217,7 +1217,34 @@ Paralelamente, é elaborada a fase de análise e documentação, cujo objetivo �
 \chapter{Viabilidade Financeira}
 
 \subsection{Custos}
-O custo do projeto aqui.
+
+O detalhamento dos custos de desenvolvimento apresentado na tabela 2 reflete os investimentos necessários em mão de obra para o projeto. Dividido em diferentes perfis técnicos, o esforço estimado para cada função é expresso em horas e dias de trabalho. Os valores correspondentes à mão de obra total, calculados com base na multiplicação do esforço estimado pela taxa horária de cada perfil, oferecem uma visão clara dos custos associados a cada etapa do desenvolvimento. Além disso, a duração total do projeto, estabelecida em 9 meses, permite uma análise mais abrangente dos custos mensais e totais de mão de obra, facilitando o planejamento financeiro e a gestão de recursos do projeto.
+
+\begin{table}[hbtp]
+    \centering
+    \caption{Detalhamento dos Custos de Desenvolvimento.}
+    \label{tab:custos_desenvolvimento_simples}
+    \begin{tabular}{|l|c|c|c|c|c|}
+        \hline
+        \textbf{Função} & \textbf{Quant.} & \textbf{Horas/Dia} & \textbf{Dias} & \textbf{Valor/Hora (R\$)} & \textbf{Total (R\$)} \\
+        \hline
+        Product Owner (PO)    & 1 & 6 & 180 & 25,00 & 27.000,00 \\
+        \hline
+        DBA (MySQL/Azure)     & 1 & 6 & 180 & 22,00 & 23.760,00 \\
+        \hline
+        Desenvolvedor Front-end & 1 & 6 & 180 & 18,00 & 19.440,00 \\
+        \hline
+        Desenvolvedor Back-end  & 2 & 6 & 180 & 20,00 & 43.200,00 \\
+        \hline
+        Especialista em SI    & 1 & 6 & 180 & 23,00 & 24.840,00 \\
+        \hline
+        QA (Testes)           & 1 & 6 & 180 & 16,00 & 17.280,00 \\
+        \hline
+        \textbf{Total} & \textbf{7} & - & - & - & \textbf{155.520,00} \\
+        \hline
+    \end{tabular}
+    \fonte{Duração do projeto: 9 meses (180 dias úteis). Custo MO mensal: R\$ 17.280,00. Elaborado pelos autores com base em pesquisa de mercado.}
+\end{table}
 
 \subsection{Receitas}
 
