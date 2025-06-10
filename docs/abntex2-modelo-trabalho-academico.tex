@@ -1224,6 +1224,134 @@ Os testes foram realizados dentro de módulos em nosso sistema:
     \item \textbf{Comportamento de telas}: o comportamento de botões, navegação, preenchimento de campos e alterações de estados da tela foram testados, alcançando, assim, a melhor experiência possível para o usuário.
 \end{itemize}
 
+\subsubsection{Casos de teste}
+\begin{table}[htbp]
+
+\caption{Casos de Teste Funcionais - Módulo de Autenticação}
+\begin{tabular}{|p{1cm}|p{1.4cm}|p{3.3cm}|p{2.3cm}|p{3.5cm}|p{3.5cm}|}
+\hline
+\textbf{ID} & \textbf{Funcio-nalidade} & \textbf{Descrição do Teste} & \textbf{Pré-condições} & \textbf{Passos} & \textbf{Resultado Esperado} \\
+\hline
+TF001 & Login & Verificar se o sistema permite login com credenciais válidas & Usuário cadastrado no sistema & 
+1. Acessar a página de login
+2. Inserir nome de usuário válido
+3. Inserir senha válida
+4. Clicar no botão ``Entrar'' & 
+O sistema deve autenticar o usuário e redirecionar para a página inicial do sistema \\
+\hline
+TF002 & Login & Verificar se o sistema impede login com senha incorreta & Usuário cadastrado no sistema & 
+1. Acessar a página de login
+2. Inserir nome de usuário válido
+3. Inserir senha incorreta
+4. Clicar no botão ``Entrar'' & 
+O sistema deve exibir mensagem de erro indicando credenciais inválidas \\
+\hline
+TF003 & Logout & Verificar se o sistema permite que o usuário faça logout & Usuário autenticado no sistema & 
+1. Clicar na opção de logout no menu
+2. Confirmar a ação se solicitado & 
+O sistema deve encerrar a sessão e redirecionar para a página de login \\
+\hline
+\end{tabular}
+\legend{Fonte: Elaborado pelos autores}
+\end{table}
+\FloatBarrier
+\begin{table}[htbp]
+
+\caption{Casos de Teste Funcionais - Módulo de Cadastro de Produtos}
+\begin{tabular}{|p{1cm}|p{1.5cm}|p{3.3cm}|p{2.2cm}|p{3.5cm}|p{3.5cm}|}
+\hline
+\textbf{ID} & \textbf{Funcio-nalidade} & \textbf{Descrição do Teste} & \textbf{Pré-condições} & \textbf{Passos} & \textbf{Resultado Esperado} \\
+\hline
+TF004 & Cadastro de Produto & Verificar se o sistema permite cadastrar um novo produto com dados válidos & Usuário autenticado com permissões de cadastro & 
+1. Acessar o módulo de cadastro de produtos
+2. Clicar em ``Novo Produto''
+3. Preencher todos os campos obrigatórios
+4. Clicar em ``Salvar'' & 
+O sistema deve cadastrar o produto e exibir mensagem de sucesso \\
+\hline
+TF005 & Cadastro de Produto & Verificar se o sistema impede cadastro de produto com código duplicado & Produto já cadastrado no sistema & 
+1. Acessar o módulo de cadastro de produtos
+2. Clicar em ``Novo Produto''
+3. Inserir código já existente
+4. Preencher demais campos
+5. Clicar em ``Salvar'' & 
+O sistema deve exibir mensagem de erro indicando que o código já existe \\
+\hline
+TF006 & Edição de Produto & Verificar se o sistema permite editar dados de um produto existente & Produto cadastrado no sistema & 
+1. Acessar o módulo de produtos
+2. Localizar o produto desejado
+3. Clicar em ``Editar''
+4. Modificar campos desejados
+5. Clicar em ``Salvar'' & 
+O sistema deve atualizar os dados do produto e exibir mensagem de sucesso \\
+\hline
+\end{tabular}
+\legend{Fonte: Elaborado pelos autores}
+\end{table}
+\FloatBarrier
+\begin{table}[htbp]
+
+\caption{Casos de Teste Funcionais - Módulo de Movimentação de Estoque}
+\begin{tabular}{|p{1cm}|p{1.7cm}|p{3.3cm}|p{2.2cm}|p{3.5cm}|p{3.5cm}|}
+\hline
+\textbf{ID} & \textbf{Funcio-nalidade} & \textbf{Descrição do Teste} & \textbf{Pré-condições} & \textbf{Passos} & \textbf{Resultado Esperado} \\
+\hline
+TF007 & Entrada de Estoque & Verificar se o sistema registra corretamente a entrada de produtos no estoque & Produto cadastrado no sistema & 
+1. Acessar o módulo de movimentação
+2. Selecionar ``Entrada de Estoque''
+3. Selecionar o produto
+4. Informar quantidade
+5. Informar data e fornecedor
+6. Clicar em ``Registrar'' & 
+O sistema deve registrar a entrada e atualizar o saldo do produto \\
+\hline
+TF008 & Saída de Estoque & Verificar se o sistema registra corretamente a saída de produtos do estoque & Produto cadastrado com saldo disponível & 
+1. Acessar o módulo de movimentação
+2. Selecionar ``Saída de Estoque''
+3. Selecionar o produto
+4. Informar quantidade (menor que o saldo)
+5. Informar data e destino
+6. Clicar em ``Registrar'' & 
+O sistema deve registrar a saída e atualizar o saldo do produto \\
+\hline
+TF009 & Saída de Estoque & Verificar se o sistema impede saída maior que o saldo disponível & Produto cadastrado com saldo disponível & 
+1. Acessar o módulo de movimentação
+2. Selecionar ``Saída de Estoque''
+3. Selecionar o produto
+4. Informar quantidade maior que o saldo
+5. Informar data e destino
+6. Clicar em ``Registrar'' & 
+O sistema deve exibir mensagem de erro indicando saldo insuficiente \\
+\hline
+\end{tabular}
+\legend{Fonte: Elaborado pelos autores}
+\end{table}
+\FloatBarrier
+\begin{table}[htbp]
+
+\caption{Casos de Teste Funcionais - Módulo de Relatórios}
+\begin{tabular}{|p{1cm}|p{1.5cm}|p{3.3cm}|p{2.3cm}|p{3.5cm}|p{3.5cm}|}
+\hline
+\textbf{ID} & \textbf{Funcio-nalidade} & \textbf{Descrição do Teste} & \textbf{Pré-condições} & \textbf{Passos} & \textbf{Resultado Esperado} \\
+\hline
+TF010 & Relatório de Saldo & Verificar se o sistema gera relatório de saldo atual de estoque & Produtos cadastrados com movimentações & 
+1. Acessar o módulo de relatórios
+2. Selecionar ``Relatório de Saldo''
+3. Definir filtros (opcional)
+4. Clicar em ``Gerar'' & 
+O sistema deve exibir relatório com saldo atual de todos os produtos \\
+\hline
+TF011 & Relatório de Movimentações & Verificar se o sistema gera relatório de movimentações por período & Movimentações registradas no sistema & 
+1. Acessar o módulo de relatórios
+2. Selecionar ``Relatório de Movimentações''
+3. Definir período
+4. Clicar em ``Gerar'' & 
+O sistema deve exibir relatório com todas as movimentações do período \\
+\hline
+\end{tabular}
+\legend{Fonte: Elaborado pelos autores}
+\end{table}
+
 
 
 \section{Segurança, Privacidade, Legislação}
