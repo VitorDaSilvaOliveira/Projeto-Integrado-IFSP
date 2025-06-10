@@ -31,7 +31,7 @@
 \documentclass[
 	% -- opções da classe memoir --
 	12pt,				% tamanho da fonte
-	openany,			% capítulos começam em pág ímpar (insere página vazia caso preciso)
+	openright,			% capítulos começam em pág ímpar (insere página vazia caso preciso)
 	twoside,			% para impressão em recto e verso. Oposto a oneside
 	a4paper,			% tamanho do papel. 
 	% -- opções da classe abntex2 --
@@ -41,6 +41,8 @@
 	%subsubsection=TITLE,% títulos de subsubseções convertidos em letras maiúsculas
 	% -- opções do pacote babel --
 	english,			% idioma adicional para hifenização
+	french,				% idioma adicional para hifenização
+	spanish,			% idioma adicional para hifenização
 	brazil				% o último idioma é o principal do documento
 	]{abntex2}
 
@@ -95,20 +97,18 @@
 % ---
 % Informações de dados para CAPA e FOLHA DE ROSTO
 % ---
-\titulo{VIP PENHA}
+\titulo{A definir}
 \autor{
-  {\large IFSP - Instituto Federal de Educação, Ciência e Tecnologia} \\
-  {\large Câmpus São Paulo} \\[1cm]
-  \makebox[0.60\textwidth][l]{BEATRIZ MUNIZ DE BARROS} \makebox[0.20\textwidth][r]{SP3161315}\\
-  \makebox[0.60\textwidth][l]{GEAN CARLOS DE SOUSA BANDEIRA} \makebox[0.20\textwidth][r]{SP3030075}\\
-  \makebox[0.60\textwidth][l]{KHALIL KHALID ABOU ANCHE} \makebox[0.20\textwidth][r]{SP3121925}\\
-  \makebox[0.60\textwidth][l]{MARCELO FLORES VALDEZ} \makebox[0.20\textwidth][r]{SP3039056}\\
-  \makebox[0.60\textwidth][l]{MATHEUS PRANDO APPOLINARIO BARBOSA} \makebox[0.20\textwidth][r]{SP3121747}\\
-  \makebox[0.60\textwidth][l]{RAFAEL VALVERDE ZANATA DA SILVA} \makebox[0.20\textwidth][r]{SP3119866}\\
-  \makebox[0.60\textwidth][l]{VITOR DA SILVA OLIVEIRA} \makebox[0.20\textwidth][r]{SP3020589}\\
+ {\large IFSP - Instituto Federal de Educação, Ciência e Tecnologia} \\
+ {\large Câmpus São Paulo} \\[1.0cm]
+  Beatriz Muniz de Barros                         SP3161315 \\
+  Gean Carlos de Sousa Bandeira             SP3030075 \\
+  Khalil Khalid Abou Anche                       SP3121925 \\
+  Marcelo Flores Valdez                            SP3039056 \\
+  Matheus Prando Appolinario Barbosa   SP3121747 \\
+  Rafael Valverde Zanata Da Silva             SP3119866 \\
+  Vitor Da Silva Oliveira                            SP3120589 \\
 }
-
-
 \local{São Paulo - SP - Brasil}
 \data{2025}
 \orientador{Marcelo Tavares de Santana}
@@ -119,7 +119,9 @@
 }
 \tipotrabalho{Projeto Integrado I}
 \preambulo{
- Projeto desenvolvido como parte das atividades da disciplina Projeto Integrado, apresentado ao Instituto Federal de Educação, Ciência e Tecnologia de São Paulo, Câmpus São Paulo, curso de Tecnologia em Análise e Desenvolvimento de Sistemas.
+  Desenho da aplicação para disciplina P1IA5 -- Projeto Integrado I,
+  apresentado ao Instituto Federal de Educação, Ciência e Tecnologia de São Paulo
+  como requisito parcial para a obtenção do título de Tecnólogo em Análise e Desenvolvimento de Sistemas.
 }
 % ---
 
@@ -175,10 +177,6 @@
 \renewcommand*{\cftquadroaftersnum}{\hfill--\hfill}
 
 \setfloatlocations{quadro}{hbtp} % Ver https://github.com/abntex/abntex2/issues/176
-
-% Evitar página em branco após o resumo
-\let\oldcleardoublepage\cleardoublepage
-\let\cleardoublepage\clearpage
 % ---
 
 % --- 
@@ -217,43 +215,83 @@
 % ---
 % Capa
 % ---
-
-
-
+\imprimircapa
 % ---
 
 % ---
 % Folha de rosto
 % (o * indica que haverá a ficha bibliográfica)
-\begin{capa}
+% ---
+\imprimirfolhaderosto*
+% ---
 
-  \begin{center}
-    {\ABNTEXchapterfont\large\imprimirautor}
+% ---
+% Inserir a ficha bibliografica
+% ---
 
-    \vspace*{\fill}\vspace*{\fill}
-    \begin{center}
-      \ABNTEXchapterfont\bfseries\Large\imprimirtitulo
-    \end{center}
-    \vspace*{\fill}
-    
-    \hspace{.45\textwidth}
-    \begin{minipage}{.5\textwidth}
-    \end{minipage}%
+% Isto é um exemplo de Ficha Catalográfica, ou ``Dados internacionais de
+% catalogação-na-publicação''. Você pode utilizar este modelo como referência. 
+% Porém, provavelmente a biblioteca da sua universidade lhe fornecerá um PDF
+% com a ficha catalográfica definitiva após a defesa do trabalho. Quando estiver
+% com o documento, salve-o como PDF no diretório do seu projeto e substitua todo
+% o conteúdo de implementação deste arquivo pelo comando abaixo:
+%
+% \begin{fichacatalografica}
+%     \includepdf{fig_ficha_catalografica.pdf}
+% \end{fichacatalografica}
 
-    \vspace*{1.5cm} % Aumenta o espaço após o preâmbulo
+\begin{fichacatalografica}
+	\sffamily
+	\vspace*{\fill}					% Posição vertical
+	\begin{center}					% Minipage Centralizado
+	\fbox{\begin{minipage}[c][8cm]{13.5cm}		% Largura
+	\small
+	\imprimirautor
+	%Sobrenome, Nome do autor
+	
+	\hspace{0.5cm} \imprimirtitulo  / \imprimirautor. --
+	\imprimirlocal, \imprimirdata-
+	
+	\hspace{0.5cm} \thelastpage p. : il. (algumas color.) ; 30 cm.\\
+	
+	\hspace{0.5cm} \imprimirorientadorRotulo~\imprimirorientador\\
+	
+	\hspace{0.5cm}
+	\parbox[t]{\textwidth}{\imprimirtipotrabalho~--~\imprimirinstituicao,
+	\imprimirdata.}\\
+	
+	\hspace{0.5cm}
+		1. Palavra-chave1.
+		2. Palavra-chave2.
+		2. Palavra-chave3.
+		I. Orientador.
+		II. Universidade xxx.
+		III. Faculdade de xxx.
+		IV. Título 			
+	\end{minipage}}
+	\end{center}
+\end{fichacatalografica}
+% ---
 
-    \vspace*{0.8cm} % Diminui o espaço antes da data
+% ---
+% Inserir errata
+% ---
 
-  \end{center}
+% ---
 
-  \begin{center}
-    {\large\imprimirlocal}
-    \par
-    {\large\imprimirdata}
-  \end{center}
+% ---
+% Inserir folha de aprovação
+% ---
 
-\end{capa}
-
+% Isto é um exemplo de Folha de aprovação, elemento obrigatório da NBR
+% 14724/2011 (seção 4.2.1.3). Você pode utilizar este modelo até a aprovação
+% do trabalho. Após isso, substitua todo o conteúdo deste arquivo por uma
+% imagem da página assinada pela banca com o comando abaixo:
+%
+% \begin{folhadeaprovacao}
+% \includepdf{folhadeaprovacao_final.pdf}
+% \end{folhadeaprovacao}
+%
 \begin{folhadeaprovacao}
 
   \begin{center}
@@ -269,27 +307,26 @@
     \begin{minipage}{.5\textwidth}
         \imprimirpreambulo
     \end{minipage}%
+    \vspace*{\fill}
+   \end{center}
+        
+   Trabalho aprovado. \imprimirlocal, 24 de novembro de 2012:
 
-    \vspace*{1.5cm} % Aumenta o espaço após o preâmbulo
-
-    \begin{center}
-        IFSP - Instituto Federal de Educação, Ciência e Tecnologia \\
-        Câmpus São Paulo \\
-        Tecnologia em Análise e Desenvolvimento de Sistemas
-    \end{center}
-
-    \vspace*{0.8cm} % Diminui o espaço antes da data
-
-  \end{center}
-
-  \begin{center}
+   \assinatura{\textbf{\imprimirorientador} \\ Orientador} 
+   \assinatura{\textbf{Professor} \\ Convidado 1}
+   \assinatura{\textbf{Professor} \\ Convidado 2}
+   %\assinatura{\textbf{Professor} \\ Convidado 3}
+   %\assinatura{\textbf{Professor} \\ Convidado 4}
+      
+   \begin{center}
+    \vspace*{0.5cm}
     {\large\imprimirlocal}
     \par
     {\large\imprimirdata}
+    \vspace*{1cm}
   \end{center}
-
+  
 \end{folhadeaprovacao}
-
 % ---
 
 % ---
@@ -298,29 +335,68 @@
 
 % ---
 
+% ---
+% Agradecimentos
+% ---
+\begin{agradecimentos}
+Os agradecimentos principais são direcionados à Gerald Weber, Miguel Frasson,
+Leslie H. Watter, Bruno Parente Lima, Flávio de Vasconcellos Corrêa, Otavio Real
+Salvador, Renato Machnievscz\footnote{Os nomes dos integrantes do primeiro
+projeto abn\TeX\ foram extraídos de
+\url{http://codigolivre.org.br/projects/abntex/}} e todos aqueles que
+contribuíram para que a produção de trabalhos acadêmicos conforme
+as normas ABNT com \LaTeX\ fosse possível.
+
+Agradecimentos especiais são direcionados ao Centro de Pesquisa em Arquitetura
+da Informação\footnote{\url{http://www.cpai.unb.br/}} da Universidade de
+Brasília (CPAI), ao grupo de usuários
+\emph{latex-br}\footnote{\url{http://groups.google.com/group/latex-br}} e aos
+novos voluntários do grupo
+\emph{\abnTeX}\footnote{\url{http://groups.google.com/group/abntex2} e
+\url{http://www.abntex.net.br/}}~que contribuíram e que ainda
+contribuirão para a evolução do \abnTeX.
+
+\end{agradecimentos}
+% ---
+
+% ---
+% Epígrafe
+% ---
+\begin{epigrafe}
+    \vspace*{\fill}
+	\begin{flushright}
+		\textit{``Não vos amoldeis às estruturas deste mundo, \\
+		mas transformai-vos pela renovação da mente, \\
+		a fim de distinguir qual é a vontade de Deus: \\
+		o que é bom, o que Lhe é agradável, o que é perfeito.\\
+		(Bíblia Sagrada, Romanos 12, 2)}
+	\end{flushright}
+\end{epigrafe}
+% ---
 
 % ---
 % RESUMOS
 % ---
 
-
 % resumo em português
-
 \setlength{\absparsep}{18pt} % ajusta o espaçamento dos parágrafos do resumo
 \begin{resumo}
-Este projeto visa a criação de um sistema de controle de estoque para a loja de eletrônicos VIP PENHA. Em um cenário de rápido avanço tecnológico e crescente competitividade de mercado, a gestão eficiente de recursos é necessário para empreendimentos. Nosso sistema foi desenvolvido para otimizar o controle de produtos, tornando a operação mais eficiente.
-A problemática central abordada é a falta de controle de estoque e os erros de processos manuais na "VIP PENHA", que tem enfrentado desafios devido à sua expansão. A solução proposta é um sistema unificado que permitirá o cadastro de produtos, o controle de entradas e saídas de mercadorias, e a geração automática de relatórios gerenciais. Isso resultará na redução de erros manuais, na diminuição do tempo gasto na gestão do estoque e na melhoria da tomada de decisões estratégicas, oferecendo uma perspectiva clara sobre o desempenho do inventário.
-Para o desenvolvimento do sistema, foram realizadas pesquisas sobre gestão de estoque e sistemas de informação, utilizando uma metodologia de trabalho ágil, o Kanban. O projeto abrange o detalhamento de funcionalidades, requisitos técnicos, arquitetura do sistema (front-end, back-end, banco de dados e infraestrutura), tecnologias empregadas, planos de testes e considerações sobre segurança e privacidade. 
+ Segundo a \citeonline[3.1-3.2]{NBR6028:2003}, o resumo deve ressaltar o
+ objetivo, o método, os resultados e as conclusões do documento. A ordem e a extensão
+ destes itens dependem do tipo de resumo (informativo ou indicativo) e do
+ tratamento que cada item recebe no documento original. O resumo deve ser
+ precedido da referência do documento, com exceção do resumo inserido no
+ próprio documento. (\ldots) As palavras-chave devem figurar logo abaixo do
+ resumo, antecedidas da expressão Palavras-chave:, separadas entre si por
+ ponto e finalizadas também por ponto.
 
- \textbf{Palavras-chave}: Sistema de estoque. Gestão de produtos. Automação. Relatórios gerenciais. Kanban. 
+ \textbf{Palavras-chave}: latex. abntex. editoração de texto.
 \end{resumo}
 
 % resumo em inglês
 \begin{resumo}[Abstract]
  \begin{otherlanguage*}{english}
-  This project aims to develop an inventory control system for the electronics store VIP PENHA. In an era of rapid technological advancement and increasing market competitiveness, efficient resource management is crucial for business success. Our system was designed to optimize product control and enhance operational efficiency.
-The core problem addressed is the inadequate inventory control and errors inherent in manual processes at "VIP PENHA," a challenge exacerbated by its recent expansion. The proposed solution is a unified system enabling product registration, precise management of goods inflow and outflow, and automated generation of management reports. This will lead to a reduction in manual errors, decreased time spent on inventory management, and improved strategic decision-making, providing a clear overview of inventory performance.
-For the system's development, comprehensive research into inventory management and information systems was conducted, employing an agile methodology, specifically Kanban. The project encompasses the detailed specification of functionalities, technical requirements, system architecture (front-end, back-end, database, and infrastructure), utilized technologies, testing plans, and considerations regarding security and privacy.
+   This is the english abstract.
 
    \vspace{\onelineskip}
  
@@ -337,7 +413,7 @@ For the system's development, comprehensive research into inventory management a
 % ---
 \pdfbookmark[0]{\listfigurename}{lof}
 \listoffigures*
-\clearpage
+\cleardoublepage
 % ---
 
 % ---
@@ -356,10 +432,23 @@ For the system's development, comprehensive research into inventory management a
 \cleardoublepage
 % ---
 
-% --
-% inserir lista de símbolos
+% ---
+% inserir lista de abreviaturas e siglas
+% ---
+\begin{siglas}
+  \item[RDBMS] Sistema de gerenciamento de banco de dados relacional
+\end{siglas}
 % ---
 
+% ---
+% inserir lista de símbolos
+% ---
+\begin{simbolos}
+  \item[$ \Gamma $] Letra grega Gama
+  \item[$ \Lambda $] Lambda
+  \item[$ \zeta $] Letra grega minúscula zeta
+  \item[$ \in $] Pertence
+\end{simbolos}
 % ---
 
 % ---
@@ -421,8 +510,7 @@ Para resolver esses problemas, propomos o desenvolvimento de um sistema uniformi
 \section{Justificativa}
 Diante das transformações que vêm ocorrendo no ambiente corporativo, especialmente com o avanço contínuo das tecnologias, torna-se urgente que as empresas que ainda não iniciaram esse processo comecem a repensar suas práticas. Adotar ferramentas digitais é fundamental não só para garantir a segurança dos processos internos e uma operação mais estruturada, mas também para assegurar que o negócio consiga acompanhar as exigências do mercado atual e preserve sua relevância diante da concorrência. A integração tecnológica proporciona maior agilidade operacional, embasa decisões estratégicas com dados e minimiza falhas, tornando-se um grande diferencial competitivo.
 
-Para entender melhor esse panorama, é importante observar o estágio em que se encontram os pequenos negócios no Brasil, nesse contexto, compreender o nível de maturidade digital das empresas brasileiras torna-se essencial. Segundo o estudo Mapa de Digitalização das Micro e Pequenas Empresas Brasileiras de 2024, desenvolvido pela Fundação Getulio Vargas (FGV) em parceria com a  \citeonline{ABDIMaturidade2024}, o índice médio de maturidade digital dos pequenos negócios é de 35 pontos, em uma escala de 0 a 80, indicando um nível de 43,75\% de maturidade. A pesquisa aponta também que apenas 27\% das empresas possuem um sistema de gestão que integra as bases de dados de todas as áreas do negócio . Nesse contexto, investir na digitalização deixa de ser uma escolha e passa a ser um grande diferencial, capaz de colocar a empresa em posição de destaque frente à maioria dos concorrentes no cenário nacional.
-
+Para entender melhor esse panorama, é importante observar o estágio em que se encontram os pequenos negócios no Brasil, nesse contexto, compreender o nível de maturidade digital das empresas brasileiras torna-se essencial. Segundo o estudo Mapa de Digitalização das Micro e Pequenas Empresas Brasileiras de 2024, desenvolvido pela Fundação Getulio Vargas (FGV) em parceria com a Agência Brasileira de Desenvolvimento Industrial (ABDI), o índice médio de maturidade digital dos pequenos negócios é de 35 pontos, em uma escala de 0 a 80, indicando um nível de 43,75\% de maturidade. A pesquisa aponta também que apenas 27\% das empresas possuem um sistema de gestão que integra as bases de dados de todas as áreas do negócio. Nesse contexto, investir na digitalização deixa de ser uma escolha e passa a ser um grande diferencial, capaz de colocar a empresa em posição de destaque frente à maioria dos concorrentes no cenário nacional.
 
 Além disso, considerando o contexto específico da gestão de estoque, a adoção de ferramentas tecnológicas exerce um papel fundamental na administração das operações logísticas, ao garantir mais controle e visibilidade do fluxo das entradas e saídas dos produtos. Também reduz drasticamente os erros operacionais, perda de informações, além de permitir um planejamento mais eficiente dos recursos. Tendo os dados precisos e atualizados constantemente, é possível realizar análises extremamente precisas em todos os setores, como a reposição, o armazenamento e as movimentações dos produtos.
 
@@ -465,6 +553,13 @@ O MarketUP é uma solução gratuita e bastante completa, oferecendo controle de
 \end{tabular}
 \end{quadro}
 
+
+% ----------------------------------------------------------
+% PARTE
+% ----------------------------------------------------------
+\part{X}
+% ----------------------------------------------------------
+
 % ---
 % Capitulo com exemplos de comandos inseridos de arquivo externo 
 % ---
@@ -473,23 +568,23 @@ O MarketUP é uma solução gratuita e bastante completa, oferecendo controle de
 
 \chapter{Revisão da Literatura}
 O presente capítulo tem como objetivo apresentar estudos, teorias e contribuições acadêmicas relacionados à gestão de estoque em empresas.
-\section{Histórico do Gerenciamento de Estoque}
-A gestão de estoque é uma prática que acompanha a humanidade há milênios, realizar uma armazenagem inteligente dos recursos se mostrou essencial para a nossa espécie desde o seu primórdio. Um exemplo é o Período Uruk, nele foram desenvolvidas várias técnicas de gestão, como o uso de imagens e símbolos para administrar a estocagem de grãos, frutas e produtos, o que impulsionou essa sociedade a grandes avanços e ao desenvolvimento de um dos primeiros sistemas de escrita da história. \cite{Albright1996}
+\section{Histórico do Gerênciamento de Estoque}
+A gestão de estoque é uma prática que acompanha a humanidade há milênios, realizar uma armazenagem inteligente dos recursos se mostrou essencial para a nossa espécie desde o seu primórdio. Um exemplo é o Período Uruk, nele foram desenvolvidas várias técnicas de gestão, como o uso de imagens e símbolos para administrar a estocagem de grãos, frutas e produtos, o que impulsionou essa sociedade a grandes avanços e ao desenvolvimento de um dos primeiros sistemas de escrita da história.
 
-Durante a revolução industrial, com a produção em larga escala, houve um grande aumento na necessidade de melhores práticas de gerenciamento de estoque. O aumento da demanda de abastecimento contínuo do mercado levou ao desenvolvimento de melhores técnicas de controle e armazenamento dos produtos. \cite{DIAS2021}
+Durante a revolução industrial, com a produção em larga escala, houve um grande aumento na necessidade de melhores práticas de gerenciamento de estoque. O aumento da demanda de abastecimento contínuo do mercado levou ao desenvolvimento de melhores técnicas de controle e armazenamento dos produtos.
 
 Em meados do século XX, com o avanço da computação e o surgimento de sistemas informatizados, houve uma verdadeira revolução na gestão de estoque. O uso de softwares para a administração como o Material Requirements Planning (MRP), desenvolvido na década de 1960, e posteriormente o Enterprise Resource Planning (ERP), introduzido nos anos 1990, criando uma nova era na administração de estoque com o uso de dados e automação de processos.
 
 Entende-se portanto, que, ao decorrer de toda a história humana, houve uma constante evolução das práticas de gestão de estoque, desde procedimentos mais analógicos como escritas em tábuas de argila até a digitalização dos sistemas de estoque. Entender todo esse percurso histórico é fundamental para reconhecer quais são os desafios que ainda serão enfrentados e entender o tamanho da complexidade dos atuais sistemas.
 
-\section{Atualidades do Gerenciamento de Estoque}
-Atualmente, o processo de gerência de estoque se encontra em níveis muito altos de integração tecnológica, várias ferramentas extremamente modernas são aliadas nessa importante tarefa. Um exemplo que tende a crescer exponencialmente é o uso de inteligências artificiais, segundo a \citeonline{IBMAI}: “A IA aprimora o gerenciamento de estoque tradicional por meio da aplicação de análise de dados, aprendizado de máquina (ML) e análise preditiva de dados.”
+\section{Atualidades do Gerênciamento de Estoque}
+Atualmente, o processo de gerência de estoque se encontra em níveis muito altos de integração tecnológica, várias ferramentas extremamente modernas são aliadas nessa importante tarefa. Um exemplo que tende a crescer exponencialmente é o uso de inteligências artificiais, segundo a IBM: “A IA aprimora o gerenciamento de estoque tradicional por meio da aplicação de análise de dados, aprendizado de máquina (ML) e análise preditiva de dados.”
 
-Outro conceito amplamente utilizado é o IoT (Internet Of Things), que é a “rede de objetos físicos incorporados a sensores, software e outras tecnologias com o objetivo de conectar e trocar dados com outros dispositivos e sistemas pela internet”[³] \citeonline{OracleIoT}. O uso de sensores e marcadores tecnológicos  são uma tendência das grandes empresas e ampliam o controle do estoque.
+Outro conceito amplamente utilizado é o IoT (Internet Of Things), que é a “rede de objetos físicos incorporados a sensores, software e outras tecnologias com o objetivo de conectar e trocar dados com outros dispositivos e sistemas pela internet”[³]. O uso de sensores e marcadores tecnológicos  são uma tendência das grandes empresas e ampliam o controle do estoque.
 
 Em resumo, uma administração de estoque correta e moderna deve ter seus alicerces inseridos na tecnologia e em soluções de integração entre objetos físicos e o software do sistema. A utilização da IA também agrega muito valor para a gerência do estoque, ao permitir previsões mais precisas, automação de processos e respostas rápidas às demandas do mercado. A utilização dessas ferramentas reduzem falhas humanas, otimizam recursos e fortalecem a capacidade competitiva das empresas. Diante desse cenário, é esperado que a transformação digital continue a evoluir e a redefinir o papel do gerenciamento de estoque, tornando-o cada vez mais estratégico para o sucesso empresarial.
 
-\section{Outros contextos do Gerenciamento de Estoque}
+\section{Outros contextos do Gerênciamento de Estoque}
 Em um contexto muito próximo ao estoque de uma loja de eletrônicos, está o comércio eletrônico (e-commerce), nele uma boa gestão de estoque assume um papel também muito importante. Com consumidores tendo uma demanda cada vez maior de realizar compras on-line e também prazos mais curtos de entrega, manter o controle do estoque é essencial, de uma forma a evitar tanto a falta de produtos devido a um número alto de compras, quanto um excesso de mercadorias sem fluxo. Plataformas digitais de ERP permitem que empresas monitorem a disponibilidade dos produtos , antecipem reposições e otimizem rotas de entrega. Todas essas práticas reforçam a importância da tecnologia no controle de estoque mundo virtual, que é altamente dinâmico e competitivo.
 
 \chapter{Gestão do Projeto}
@@ -566,11 +661,20 @@ O repositório está hospedado no GitHub e pode ser acessado pelo seguinte link:
     \centering
     \includegraphics[width=0.3\textwidth]{Figuras/QR-CODE-GitHub.png}
     \caption{QR Code para o repositório no GitHub}
-    
+    \label{fig:qrcode-github}
 \end{figure}
 \begin{center}
     \href{https://github.com/VitorDaSilvaOliveira/Projeto-Integrado-IFSP}{https://github.com/VitorDaSilvaOliveira/Projeto-Integrado-IFSP}
 \end{center}
+
+
+
+
+% ----------------------------------------------------------
+% PARTE
+% ----------------------------------------------------------
+\part{Z}
+% ----------------------------------------------------------
 
 % ---
 % primeiro capitulo de Resultados
@@ -594,7 +698,7 @@ O projeto tem como objetivo o desenvolvimento de um sistema de controle de estoq
 
 
 \begin{quadro}[htb]
-\caption{\label{quadro_rn1}Regras de Negócio (RN01 a RN04)}
+\caption{\label{quadro_rn}Regras de Negócio (RN01 a RN12)}
 \begin{tabular}{|p{1.2cm}|p{4.0cm}|p{7.5cm}|p{2.0cm}|}
     \hline
     \textbf{Código} & \textbf{Nome} & \textbf{Descrição} & \textbf{Requisito Relacionado} \\ \hline
@@ -607,35 +711,19 @@ O projeto tem como objetivo o desenvolvimento de um sistema de controle de estoq
 
     RN04 & Rastreabilidade & Todas as movimentações devem registrar: data, hora, responsável, produto(s), quantidade, valor unitário, valor total, depósito, documento fiscal (se aplicável) e motivo. & RF11 \\ \hline
 
-    
+    RN06 & Controle de Acesso & Administradores: acesso completo; Vendedores: apenas consultas e registro de vendas. & RF17 \\ \hline
 
-\end{tabular}
-\end{quadro}
+    RN07 & Validação de Venda & Vendas só podem ser registradas se houver estoque suficiente para todos os itens. & RF14 \\ \hline
 
-\FloatBarrier
+    RN08 & Comprovante & Comprovante deve ter: número único, data/hora, itens (código, descrição, quantidade, valor unitário, subtotal), totais, desconto, valor final, forma de pagamento, vendedor e dados da empresa. & RF14 \\ \hline
 
+    RN09 & Transferências & Transferências entre depósitos devem ser confirmadas pelo depósito destino antes de atualizar estoques. & RF12 \\ \hline
 
-\begin{quadro}[htb]
-\caption{\label{quadro_rn2}Regras de Negócio (RN05 a RN11)}
-\begin{tabular}{|p{1.2cm}|p{4.0cm}|p{7.5cm}|p{2.0cm}|}
-    \hline
-    \textbf{Código} & \textbf{Nome} & \textbf{Descrição} & \textbf{Requisito Relacionado} \\ \hline
+    RN10 & Backup & Backups diários incrementais e semanais completos. Notificar falhas imediatamente. & RF16 \\ \hline
 
- 
+    RN11 & Auditoria & Todas as exclusões e alterações de preço/estoque devem registrar IP, usuário, data/hora e valores antes/depois. & RF17 \\ \hline
 
-    RN05 & Controle de Acesso & Administradores: acesso completo; Vendedores: apenas consultas e registro de vendas. & RF17 \\ \hline
-
-    RN06 & Validação de Venda & Vendas só podem ser registradas se houver estoque suficiente para todos os itens. & RF14 \\ \hline
-
-    RN07 & Comprovante & Comprovante deve ter: número único, data/hora, itens (código, descrição, quantidade, valor unitário, subtotal), totais, desconto, valor final, forma de pagamento, vendedor e dados da empresa. & RF14 \\ \hline
-
-    RN08 & Transferências & Transferências entre depósitos devem ser confirmadas pelo depósito destino antes de atualizar estoques. & RF12 \\ \hline
-
-    RN09 & Backup & Backups diários incrementais e semanais completos. Notificar falhas imediatamente. & RF16 \\ \hline
-
-    RN10 & Auditoria & Todas as exclusões e alterações de preço/estoque devem registrar IP, usuário, data/hora e valores antes/depois. & RF17 \\ \hline
-
-    RN11 & Relatórios Mensais & Gerar automaticamente no primeiro dia útil do mês, com comparação mês anterior e acumulado anual. Enviar por e-mail aos gestores. & RF18 \\ \hline
+    RN12 & Relatórios Mensais & Gerar automaticamente no primeiro dia útil do mês, com comparação mês anterior e acumulado anual. Enviar por e-mail aos gestores. & RF18 \\ \hline
 
 \end{tabular}
 \end{quadro}
@@ -647,8 +735,9 @@ O projeto tem como objetivo o desenvolvimento de um sistema de controle de estoq
 
 \subsection{Requisitos Funcionais}
 
+
 \begin{quadro}[htb]
-\caption{\label{quadro_rf1}Requisitos Funcionais (RF01 a RF02)}
+\caption{\label{quadro_rf1}Requisitos Funcionais (RF01 a RF09)}
 \begin{tabular}{|p{1.0cm}|p{2.8cm}|p{4.2cm}|p{7.0cm}|}
     \hline
     \textbf{Código} & \textbf{Atores} & \textbf{Nome} & \textbf{Descrição} \\ \hline
@@ -657,31 +746,11 @@ O projeto tem como objetivo o desenvolvimento de um sistema de controle de estoq
 
     RF02 & Administrador & Atualização de Produtos & O sistema deve permitir que o administrador atualize informações de produtos já cadastrados, como preço, quantidade, data de validade e status ("Esgotado" se estoque = 0), mantendo histórico de alterações. \\ \hline
 
-   
+    RF03 & Administrador & Exclusão de Produtos & O sistema deve permitir que o administrador remova produtos do estoque quando necessário, com confirmação e registro em log. \\ \hline
 
-   
+    RF04 & Administrador & Controle de Entradas & O sistema deve registrar entradas de produtos no estoque (reposição), atualizando automaticamente a quantidade disponível e registrando data, hora, responsável, fornecedor e nota fiscal. \\ \hline
 
-    
-
-
-\end{tabular}
-\end{quadro}
-
-
-
-
-\begin{quadro}[htb]
-\caption{\label{quadro_rf2}Requisitos Funcionais (RF3 a RF12)}
-\begin{tabular}{|p{1.0cm}|p{2.8cm}|p{4.2cm}|p{7.0cm}|}
-    \hline
-    \textbf{Código} & \textbf{Atores} & \textbf{Nome} & \textbf{Descrição} \\ \hline
-
-      RF03 & Administrador & Exclusão de Produtos & O sistema deve permitir que o administrador remova produtos do estoque quando necessário, com confirmação e registro em log. \\ \hline
-
-
-     RF04 & Administrador & Controle de Entradas & O sistema deve registrar entradas de produtos no estoque (reposição), atualizando automaticamente a quantidade disponível e registrando data, hora, responsável, fornecedor e nota fiscal. \\ \hline
-
-    RF05 & Administrador & Controle de Saídas & O sistema deve registrar saídas de produtos (vendas ou perdas), reduzindo a quantidade em estoque e validando se há estoque suficiente antes da venda. Deve permitir cancelamento com restauração de estoque. \\ \hline
+    RF05 & Administrador/Vendedor & Controle de Saídas & O sistema deve registrar saídas de produtos (vendas ou perdas), reduzindo a quantidade em estoque e validando se há estoque suficiente antes da venda. Deve permitir cancelamento com restauração de estoque. \\ \hline
 
     RF06 & Administrador & Relatórios de Estoque & O sistema deve gerar relatórios de estoque (atual, histórico mensal), incluindo: produtos esgotados, produtos com baixa quantidade, mais vendidos e histórico de movimentações com filtros por período. \\ \hline
 
@@ -691,24 +760,24 @@ O projeto tem como objetivo o desenvolvimento de um sistema de controle de estoq
 
     RF09 & Todos & Busca Avançada de Produtos & O sistema deve permitir a busca de produtos por nome, código, marca, modelo, categoria, localização, status ou combinação destes, com resultados em tempo real. \\ \hline
 
-    RF10 & Administrador & Gerenciamento de Fornecedores & O sistema deve permitir o cadastro e gerenciamento de fornecedores, incluindo informações de contato, produtos fornecidos, prazos de entrega e histórico de compras. \\ \hline
-
-    RF11 & Administrador & Histórico de Movimentações & O sistema deve armazenar o histórico completo de entradas e saídas de produtos com data, hora, responsável, valor unitário, valor total, depósito de origem/destino e motivo (venda, perda, ajuste). \\ \hline
-
-    RF12 & Administrador & Múltiplos Depósitos & O sistema deve permitir o gerenciamento de estoque em diferentes depósitos/filiais com transferências entre eles, registrando data, responsável e motivo. \\ \hline
-
-    
 
 \end{tabular}
 \end{quadro}
 
 \FloatBarrier
 
+
 \begin{quadro}[htb]
-\caption{\label{quadro_rf3}Requisitos Funcionais (RF13 a RF18)}
+\caption{\label{quadro_rf2}Requisitos Funcionais (RF10 a RF18)}
 \begin{tabular}{|p{1.0cm}|p{2.8cm}|p{4.2cm}|p{7.0cm}|}
     \hline
     \textbf{Código} & \textbf{Atores} & \textbf{Nome} & \textbf{Descrição} \\ \hline
+
+    RF10 & Administrador & Gerenciamento de Fornecedores & O sistema deve permitir o cadastro e gerenciamento de fornecedores, incluindo informações de contato, produtos fornecidos, prazos de entrega e histórico de compras. \\ \hline
+
+    RF11 & Administrador & Histórico de Movimentações & O sistema deve armazenar o histórico completo de entradas e saídas de produtos com data, hora, responsável, valor unitário, valor total, depósito de origem/destino e motivo (venda, perda, ajuste). \\ \hline
+
+    RF12 & Administrador & Múltiplos Depósitos & O sistema deve permitir o gerenciamento de estoque em diferentes depósitos/filiais com transferências entre eles, registrando data, responsável e motivo. \\ \hline
 
     RF13 & Vendedor & Consulta de Estoque & O sistema deve permitir que vendedores consultem a disponibilidade de produtos em tempo real, incluindo status "Esgotado", localização e previsão de reposição. \\ \hline
 
@@ -722,8 +791,6 @@ O projeto tem como objetivo o desenvolvimento de um sistema de controle de estoq
 
     RF18 & Administrador & Relatórios Mensais & O sistema deve gerar relatórios mensais automáticos com: estoque atual valorizado, produtos mais vendidos (quantidade e valor), giro de estoque, produtos sem movimentação e comparação com meses anteriores. \\ \hline
 
-  
-
 \end{tabular}
 \end{quadro}
 
@@ -736,7 +803,7 @@ O projeto tem como objetivo o desenvolvimento de um sistema de controle de estoq
 
 
 \begin{quadro}[htb]
-\caption{\label{quadro_rnf1}Requisitos Não Funcionais (RNF01 a RNF02)}
+\caption{\label{quadro_rnf}Requisitos Não Funcionais (RNF01 a RNF08)}
 \begin{tabular}{|p{1.2cm}|p{3.5cm}|p{11.0cm}|}
     \hline
     \textbf{Código} & \textbf{Módulo} & \textbf{Descrição} \\ \hline
@@ -745,24 +812,7 @@ O projeto tem como objetivo o desenvolvimento de um sistema de controle de estoq
 
     RNF02 & Escalabilidade & O sistema deve suportar até 10.000 produtos, 5.000 movimentações diárias e 500 usuários simultâneos, com possibilidade de expansão horizontal. \\ \hline
 
-    
-
- 
-
-\end{tabular}
-\end{quadro}
-
-\FloatBarrier
-
-\begin{quadro}[htb]
-\caption{\label{quadro_rnf2}Requisitos Não Funcionais (RNF03 a RNF08)}
-\begin{tabular}{|p{1.2cm}|p{3.5cm}|p{11.0cm}|}
-    \hline
-    \textbf{Código} & \textbf{Módulo} & \textbf{Descrição} \\ \hline
-
-
     RNF03 & Portabilidade & O sistema deve funcionar em navegadores modernos (Chrome, Firefox, Edge, Safari) e ser responsivo para dispositivos móveis e tablets. Versão desktop otimizada para Windows e macOS. \\ \hline
-
 
     RNF04 & Segurança & O sistema deve seguir a LGPD, com criptografia de dados sensíveis, autenticação de dois fatores para administradores, logs de acesso e auditoria de alterações críticas. \\ \hline
 
@@ -817,8 +867,6 @@ US18 & Gerar relatórios mensais de desempenho e movimentações & RF18 \\
 \FloatBarrier
 
 \subsection{Descrição das Histórias}
-
-Neste tópico será detalhado a descrição das Histórias de Usuário
 
 \begin{enumerate}
 
@@ -1071,19 +1119,21 @@ No lado do servidor, adotamos a linguagem C\# com o framework ASP.NET MVC, facil
 
 Para o acesso a dados, utilizamos Entity Framework com LINQ, que permite uma comunicação eficiente com o banco de dados relacional e facilita a execução de consultas através de expressões C\#. A base de dados principal é gerida por Microsoft SQL Server, garantindo a persistência e segurança das informações.
 
-No front-end, a aplicação utiliza Razor Views (.cshtml), combinadas com HTML, CSS e JavaScript, para renderização dinâmica das páginas diretamente no servidor. O uso de Bootstrap assegura uma interface responsiva e compatível com diferentes dispositivos. Para manipulação do DOM e criação de interações dinâmicas, utilizamos jQuery, ampliando a usabilidade da aplicação.
+No front-end, a aplicação utiliza templates em ASP.NET combinados com HTML, CSS e JavaScript, proporcionando uma interface rica e responsiva. Além disso, o framework Bootstrap foi empregado para garantir que a interface se adapte a diferentes dispositivos, contribuindo com a usabilidade.
 
 Para aprimorar a interação do usuário, utilizamos a biblioteca jQuery, que facilita o tratamento de eventos e a manipulação do DOM, permitindo a criação de funcionalidades dinâmicas e responsivas.
 
 A autenticação e autorização dos usuários são tratadas por meio do ASP.NET Identity, que integra recursos robustos de controle de acesso, gerenciamento de permissões e segurança na autenticação. Esse serviço está destacado no diagrama como um componente separado e essencial para a integridade e confiabilidade do sistema.
 
-Além disso, o sistema utiliza o framework JJMasterData, uma solução que permite a criação dinâmica de formulários e estruturas de dados em tempo de execução. Com ele, é possível configurar cadastros e regras de negócio diretamente pela interface, sem necessidade de mudanças no código, trazendo mais flexibilidade e agilidade na evolução do sistema.
+Por fim, o sistema conta ainda com o JJMaster Data, responsável pela administração e modelagem de dados mestres, contribuindo para a padronização e consistência dos dados em todas as unidades do sistema.
 
 \subsection{Diagramas da Arquitetura}
 
 Foram construídos diagramas de Componentes e de Implementação para visualizar a estrutura do projeto. O diagrama de componentes descreve a estrutura modular da aplicação, evidenciando os elementos lógicos e suas interações internas. Já o diagrama de implantação representa a distribuição física desses componentes em ambientes de execução, detalhando a infraestrutura utilizada e as conexões entre os ambientes.
 
+
 \subsubsection{Diagrama de Componentes}
+
 
 \includegraphics[width=1.0\textwidth]{Figuras/Componentes.png}
 
@@ -1103,13 +1153,13 @@ Esta seção apresenta as principais tecnologias utilizadas no desenvolvimento d
 
 \begin{itemize}
 
-   \item \textbf{Razor Views}: Arquivos .cshtml que utilizam a engine Razor do ASP.NET para gerar páginas HTML dinâmicas. Essa abordagem permite mesclar código C\# com marcação HTML de forma fluida, facilitando a renderização de conteúdo no lado do servidor e a reutilização de componentes visuais \cite{Razor}.
+   \item \textbf{Razor}: Engine de templates do ASP.NET utilizada para gerar as views da aplicação. Permite a criação de páginas HTML dinâmicas por meio da integração entre C\# e marcação HTML, facilitando a renderização de conteúdo no lado do servidor.
 
-   \item \textbf{HTML, CSS e JavaScript}: Tecnologias fundamentais para a construção da camada de apresentação do sistema. O HTML estrutura o conteúdo das páginas, o CSS define o estilo visual e o JavaScript adiciona interatividade ao front-end \cite{FrontEnd}.
+   \item \textbf{HTML, CSS e JavaScript}: Tecnologias fundamentais para a construção da camada de apresentação do sistema. O HTML estrutura o conteúdo das páginas, o CSS define o estilo visual e o JavaScript adiciona interatividade ao front-end.
 
-   \item \textbf{Bootstrap}: Framework front-end baseado em HTML, CSS e JS que oferece componentes prontos e responsivos, facilitando a criação de interfaces modernas, padronizadas e adaptáveis a diferentes dispositivos \cite{Bootstrap}.
+   \item \textbf{Bootstrap}: Framework front-end baseado em HTML, CSS e JS que oferece componentes prontos e responsivos, facilitando a criação de interfaces modernas, padronizadas e adaptáveis a diferentes dispositivos.
 
-   \item \textbf{jQuery}: Biblioteca JavaScript que simplifica a manipulação do DOM, o tratamento de eventos e requisições AJAX. Foi utilizada para agilizar o desenvolvimento de funcionalidades interativas no front-end da aplicação \cite{JQuery}.
+   \item \textbf{jQuery}: Biblioteca JavaScript que simplifica a manipulação do DOM, o tratamento de eventos e requisições AJAX. Foi utilizada para agilizar o desenvolvimento de funcionalidades interativas no front-end da aplicação.
 
 \end{itemize}
 
@@ -1118,13 +1168,13 @@ Esta seção apresenta as principais tecnologias utilizadas no desenvolvimento d
 
 \begin{itemize}
 
-  \item \textbf{C\# com ASP.NET MVC}: Linguagem e framework utilizados na construção do back-end da aplicação, seguindo o padrão arquitetural Model-View-Controller (MVC), que organiza o código de forma modular, separando lógica de negócios, visualização e controle \cite{AspNet2025}.
+  \item \textbf{C\# com ASP.NET MVC}: Linguagem e framework utilizados na construção do back-end da aplicação, seguindo o padrão arquitetural Model-View-Controller (MVC), que organiza o código de forma modular, separando lógica de negócios, visualização e controle.
 
-  \item \textbf{Entity Framework com LINQ}: Conjunto de tecnologias para acesso a dados em .NET. O Entity Framework permite o mapeamento objeto-relacional (ORM), e o LINQ facilita a realização de consultas ao banco de dados de forma legível e integrada ao C\# \cite{EfCore}.
+  \item \textbf{Entity Framework com LINQ}: Conjunto de tecnologias para acesso a dados em .NET. O Entity Framework permite o mapeamento objeto-relacional (ORM), e o LINQ facilita a realização de consultas ao banco de dados de forma legível e integrada ao C\#.
 
-  \item \textbf{ASP.NET Identity}: Sistema de autenticação e controle de acesso da Microsoft utilizado para gerenciar usuários, perfis e permissões de forma segura e integrada ao projeto \cite{Identity}.
+  \item \textbf{ASP.NET Identity}: Sistema de autenticação e controle de acesso da Microsoft utilizado para gerenciar usuários, perfis e permissões de forma segura e integrada ao projeto. \cite{AspNet2025}.
 
-  \item \textbf{JJMasterData}: Ferramenta de administração e modelagem de dados que permite a criação dinâmica de formulários e telas de cadastro com base nas entidades do sistema, otimizando o desenvolvimento da interface administrativa \cite{JJMasterdata}.
+  \item \textbf{JJMaster Data}: Ferramenta de administração e modelagem de dados que permite a criação dinâmica de formulários e telas de cadastro com base nas entidades do sistema, otimizando o desenvolvimento da interface administrativa.
 
 \end{itemize}
 
@@ -1144,27 +1194,9 @@ Esta seção apresenta as principais tecnologias utilizadas no desenvolvimento d
 
 
 
-\section{Testes e Manutenção}
-Com a evolução da tecnologia, diversas práticas foram desenvolvidas visando um melhor desenvolvimento e manutenção de um projeto. Desde o início do processo de criação de um sistema, questões como escalabilidade, manutenibilidade e usabilidade devem ser consideradas para garantir a longevidade e qualidade do software.
-
-\subsection{Manutenção do Sistema}
-
-A manutenção de software é um processo essencial que ocorre após a implantação da aplicação, seu objetivo é garantir o funcionamento contínuo e eficiente do sistema. Durante o desenvolvimento deste projeto, foram realizadas manutenções de diferentes tipos:
-
-\begin{itemize}
-    \item \textbf{Manutenção Corretiva}: correção de falhas no uso do sistema, foram encontrados algumas ações do sistema em inconformidade com as regras de negócio estabelecidas, algumas inconsistências nos formulários. Também foram identificadas algumas chamadas incorretas no código C\#  
-    \item \textbf{Manutenção Evolutiva}: conforme se deu o desenvolvimento, percebemos que algumas outras necessidades surgiram, como mudança em alguns campos e em alguns fluxos, como por exemplo o campo de observação da movimentação.
-    \item \textbf{Manutenção Adaptativa}: atualizações para garantir compatibilidade com novas versões de bibliotecas e frameworks utilizados, como o Bootstrap e componentes do ASP.NET. Além de portabilidades que permitem a compatibilidade com o uso do site por celulares, como a tela de login.
-    \item \textbf{Manutenção Preventiva}: otimização de consultas do banco de dados, revisões e refatorações do código fonte e técnicas de proteção de rotas e requisições.
-\end{itemize}
-
-Durante todo o processo de manutenção também foi usado em larga escala o versionamento via Git, essencial  para o controle de todas as mudanças do projeto. O versionamento com o registro de correções e da evolução do sistema, salvo no histórico de commits do GitHub, foi de grande importância para o desenvolvimento em equipe.
-
-O conjunto dessas ações contribuiu para a estabilidade, escalabilidade e segurança geral do sistema, garantindo assim uma maior satisfação dos Stakeholders.
+\section{Testes de Manutenção}
 
 \subsection{Plano de Testes}
-
-A execução de testes é fundamental para o bom desenvolvimento de uma aplicação, eles devem ser continuamente realizados ao longo de toda construção dos processos de um sistema e também após a sua implementação. A testagem permite uma verificação precisa da qualidade de um software, ajuda a capturar falhas de execução de processos e a atestar que as funcionalidades estão sendo executadas de maneira correta.
 
 \subsection{Análise Estatística}
 
@@ -1203,19 +1235,18 @@ Além da LGPD, o sistema também considera princípios estabelecidos no Marco Ci
 
 O modelo de banco de dados é responsável por organizar e estruturar as informações utilizadas no sistema, garantindo integridade, consistência e facilidade no acesso aos dados. Nesta seção, são apresentados o Modelo Entidade-Relacionamento (MER), o Diagrama Entidade-Relacionamento (DER) e o Dicionário de Dados. O MER e o DER representam graficamente as entidades, atributos e relacionamentos do sistema, enquanto o dicionário de dados descreve detalhadamente cada campo presente no banco, incluindo tipo, tamanho e função. O modelo foi projetado para gerenciar de forma eficiente o controle de estoque, permitindo registrar entradas, saídas, usuários, produtos, fornecedores e categorias.
 
-\subsection{Modelo Entidade Relacionamento}
-Nessa sessão será apresentado o MER - Modelo Entidade Relacionamento
+\subsection{MER}
 
 \includegraphics[width=1.0\textwidth]{Figuras/MERestoque.png}
 
 
-\subsection{Diagrama Entidade Relacionamento}
-Nessa sessão será apresentado o DER - Diagrama Entidade Relacionamento
+\subsection{DER}
 
 \includegraphics[width=1.0\textwidth]{Figuras/DERestoque.png}
 
 
-% coloca o dicionário de dados?  \subsection{Dicionário de Dados}
+
+\subsection{Dicionário de Dados}
 
 \section{Cronograma}
 
@@ -1233,97 +1264,21 @@ Por fim, inicia-se a fase da criação do MVP (Produto Mínimo Viável) (Entrega
 
 Paralelamente, é elaborada a fase de análise e documentação, cujo objetivo é consolidar os dados obtidos até aqui. (Entrega do marco dia 18/07/2025). Esta seção inclui a elaboração da introdução do trabalho, apresentando os objetivos, o problema e a solução proposta. Também se realiza uma breve revisão da literatura, com a recuperação do histórico e contexto do tema. No que se refere à gestão do projeto, descreve-se a organização da equipe e a metodologia adotada. A seção de desenvolvimento do projeto apresenta o escopo definido, seguido pela análise de viabilidade financeira, com a estimativa de custos envolvidos. Por fim, as considerações finais trazem as principais dificuldades encontradas, decisões tomadas e funcionalidades ou ideias descartadas durante o processo.
 
-% \subsection{Análise da duração do projeto}
+\subsection{Análise da duração do projeto}
 
 \chapter{Viabilidade Financeira}
 
 \subsection{Custos}
+O custo do projeto aqui.
 
-A Tabela 2 apresenta uma análise pormenorizada e multidimensional dos custos de desenvolvimento, detalhando o investimento fundamental em mão de obra, que representa o principal ativo do projeto. Sua estrutura, ao desagregar os custos por perfil técnico — como desenvolvedores sênior, analistas de qualidade e gestores de projeto —, permite identificar com precisão onde o capital está sendo alocado. A cada uma dessas funções é atribuída uma estimativa de esforço em horas de trabalho, fornecendo uma base quantitativa para o planejamento. A metodologia de cálculo, que se destaca pela transparência e objetividade, consiste na multiplicação do esforço previsto pela taxa horária específica de cada especialista, garantindo uma apuração fiel à realidade do mercado e evitando as distorções de estimativas genéricas.
+\subsection{Receitas}
 
-Esta abordagem, portanto, transcende um simples levantamento numérico. Ela não só oferece clareza sobre os custos inerentes a cada fase do desenvolvimento, mas, ao ser projetada sobre a duração total de 9 meses, transforma-se em uma poderosa ferramenta de gestão estratégica e preditiva. A projeção temporal permite uma análise aprofundada da distribuição dos custos mensais e globais, oferecendo previsibilidade e permitindo a antecipação de picos de investimento. Com isso, a gestão pode mitigar riscos financeiros, como desvios orçamentários, antes que se concretizem.
-
-Consequentemente, a tabela constitui um pilar para um planejamento financeiro robusto, que justifica o orçamento perante stakeholders e estabelece uma linha de base para o controle rigoroso das despesas, viabilizando a alocação otimizada de recursos e assegurando a sustentabilidade operacional do projeto.
-
-\begin{table}[hbtp]
-    \centering
-    \caption{Detalhamento dos Custos de Desenvolvimento.}
-    \label{tab:custos_desenvolvimento_simples}
-    \begin{tabular}{|l|c|c|c|c|c|}
-        \hline
-        \textbf{Função} & \textbf{Quant.} & \textbf{Horas/Dia} & \textbf{Dias} & \textbf{Valor/Hora (R\$)} & \textbf{Total (R\$)} \\
-        \hline
-        Product Owner (PO)    & 1 & 6 & 180 & 25,00 & 27.000,00 \\
-        \hline
-        DBA (MySQL/Azure)     & 1 & 6 & 180 & 22,00 & 23.760,00 \\
-        \hline
-        Desenvolvedor Front-end & 1 & 6 & 180 & 18,00 & 19.440,00 \\
-        \hline
-        Desenvolvedor Back-end  & 2 & 6 & 180 & 20,00 & 43.200,00 \\
-        \hline
-        Especialista em SI    & 1 & 6 & 180 & 23,00 & 24.840,00 \\
-        \hline
-        QA (Testes)           & 1 & 6 & 180 & 16,00 & 17.280,00 \\
-        \hline
-        \textbf{Total} & \textbf{7} & - & - & - & \textbf{155.520,00} \\
-        \hline
-    \end{tabular}
-    Duração do projeto: 9 meses (180 dias úteis). Custo MO mensal: R\$ 17.280,00.
-\fonte{Elaborado pelos autores.}
-\end{table}
-
-Na tabela 3 é representada a estrutura mensal da empresa, detalhando os custos associados às instalações, equipamentos e serviços de TI. No item 2.1, destacam-se os gastos com aluguel de espaço e mobiliário, totalizando 0 reais por mês. Já no item 2.2, referente à aquisição de equipamentos, observa-se que não há custos neste momento. No entanto, no item 2.3, estão listados os custos mensais de serviços de TI.
-
-\begin{table}[hbtp]
-\centering
-\caption{Estrutura Mensal da Empresa.}
-\label{tab:estrutura_mensal}
-\begin{tabular}{lcr}
-\toprule
-\textbf{Item} & \textbf{Quantidade} & \textbf{Valor (R\$)} \\
-\midrule
-\multicolumn{3}{l}{\textbf{2. Estrutura da empresa (mensal)}} \\
-\addlinespace % Adiciona um pequeno espaço vertical
-\quad 2.1. Instalações - Aluguel & - & 0,00 \\
-\addlinespace
-\multicolumn{3}{l}{\quad 2.2. Equipamentos (TI e Outros)} \\
-\qquad - Computadores/notebooks & 0 & 0,00 \\
-\qquad - Servidores proprietários & 0 & 0,00 \\
-\qquad - Outros (mobiliário, etc.) & 0 & 0,00 \\
-\addlinespace
-\multicolumn{3}{l}{\quad 2.3. Serviços de TI} \\
-\qquad - Ferramentas de desenvolvimento & - & 0,00 \\
-\qquad - Hospedagem e banco de dados & - & 0,00 \\
-\midrule
-\textbf{Total mensal} & & \textbf{R\$ 0,00} \\
-\bottomrule
-\end{tabular}
-\fonte{Elaborado pelos autores.}
-\end{table}
+\subsection{Cenários}
 
 
-\subsection{Cenário realista}
-Na figura 9 no cenário realista, em que o ponto de equilíbrio é alcançado em cerca de 15 meses, considerando um investimento inicial de R\$ 155.520 e receita mensal média de R\$ 30.600.
-\begin{center}
-  \includegraphics[width=0.9\textwidth]{Figuras/CenarioRealista.png}
-\end{center}
-
-\subsection{Cenários otimista}
-Na figura 10 no cenário otimista, o ponto de equilíbrio é alcançado em cerca de 9 meses, com receitas 25\% acima do projetado.
-\begin{center}
-  \includegraphics[width=0.9\textwidth]{Figuras/CenarioOtimista.png}
-\end{center}
-
-\subsection{Cenários pessimista}
-Na figura 11 no cenário pessimista, o ponto de equilíbrio é alcançado em cerca de 37 meses, com receitas 20\% abaixo do projetado.
-\begin{center}
-  \includegraphics[width=0.9\textwidth]{Figuras/CenarioPessimista.png}
-\end{center}
 
 \chapter{Considerações Finais}
-Ao longo do desenvolvimento deste projeto, que culminou na criação de um sistema de controle de estoque para um estabelecimento comercial, foi possível constatar de soluções tecnológicas para otimizar processos e garantir a eficiência operacional em ambientes comerciais. A iniciativa de desenvolver este sistema surgiu da necessidade de modernizar a gestão  em um cenário de mercado cada vez mais competitivo.
-O sistema proposto representa uma ferramenta estratégica para a loja, Via Penha permitindo o cadastro detalhado de produtos, o controle preciso de entradas e saídas de mercadorias, e a geração de relatórios gerenciais. Essas funcionalidades são cruciais para reduzir erros manuais, tempo dedicado à organização do estoque e, consequentemente, aprimorar a tomada de decisões. A implementação de uma metodologia ágil, como o Kanban, foi de grande ajuda para a organização do projeto.
-Espera-se que a aplicação deste sistema resulte em uma melhoria substancial na gestão do estoque do estabelecimento, contribuindo para a redução de perdas, a otimização do fluxo de trabalho e por consequência ganhos econômicos. Além disso, este projeto demonstra o potencial das tecnologias da informação para resolver desafios práticos do cotidiano de empreendimentos. A contínua evolução e aprimoramento de tais sistemas é essencial para que empreendimentos e empresas   possam manter sua competitividade e prosperar no mercado atual.
+teste
 
 \section{Dificuldades, escolhas}
 
