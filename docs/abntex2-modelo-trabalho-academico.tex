@@ -1379,58 +1379,68 @@ Espera-se que a aplicação deste sistema resulte em uma melhoria substancial na
 
 \section{Dificuldades, escolhas}
 
-\section{Processo AS IS E TO BE}
+\section{Processo AS IS e TO BE}
 
-Processo AS IS (Situação Atual)
+\subsection{Processo AS IS (Situação Atual)}
 
-Descrição Geral: A loja faz controle de estoque manualmente, por anotações em papel feitas pelo dono.
+\subsection*{Descrição Geral}
+A loja faz controle de estoque manualmente, por anotações em papel feitas pelo dono.
 
-Etapas do Processo:
+\subsection*{Etapas do Processo}
 
-1. Recebimento de produtos (entrada): O dono recebe os produtos de fornecedores. Ele anota em um caderno: nome do produto, quantidade recebida, data e fornecedor. 
+\begin{enumerate}
+    \item \textbf{Recebimento de produtos (entrada)}: O dono recebe os produtos de fornecedores. Ele anota em um caderno: nome do produto, quantidade recebida, data e fornecedor.
+    
+    \item \textbf{Venda de produtos (saída)}: Ao vender um produto, o dono anota à mão no mesmo caderno: nome do produto, quantidade vendida, data e valor da venda.
+    
+    \item \textbf{Controle de estoque}: O dono consulta o caderno para verificar a quantidade de produtos disponíveis. Não há atualização automática; o controle depende da leitura e interpretação das anotações.
+    
+    \item \textbf{Relatório mensal}: O dono folheia o caderno, soma manualmente as entradas e saídas e tenta fazer um resumo no final do mês. Processo demorado e sujeito a erros.
+\end{enumerate}
 
-2. Venda de produtos (saída): Ao vender um produto, o dono anota à mão no mesmo caderno: nome do produto, quantidade vendida, data e valor da venda.
+\subsection*{Problemas Identificados}
 
-3.Controle de estoque: O dono consulta o caderno para verificar a quantidade de produtos disponíveis. Não há atualização automática; o controle depende da leitura e interpretação das anotações.
+\begin{itemize}
+    \item Alto risco de erro humano.
+    \item Dificuldade em rastrear movimentações específicas.
+    \item Falta de relatórios precisos.
+    \item Perda ou danos ao caderno comprometem todo o controle.
+    \item Nenhuma visibilidade em tempo real do estoque.
+\end{itemize}
 
-4. Relatório mensal: O dono folheia o caderno, soma manualmente as entradas e saídas e tenta fazer um resumo no final do mês. Processo demorado e sujeito a erros.
+\subsection{Processo TO BE (Situação Proposta com Sistema)}
 
-Problemas Identificados:
+\subsection*{Descrição Geral}
+Será implementado um sistema informatizado para registrar entradas, saídas e gerar relatórios mensais automaticamente.
 
-• Alto risco de erro humano.
-• Dificuldade em rastrear movimentações específicas.
-• Falta de relatórios precisos.
-• Perda ou danos ao caderno comprometem todo o controle.
-• Nenhuma visibilidade em tempo real do estoque.
+\subsection*{Etapas do Processo com o Sistema}
 
-Processo TO BE (Situação Proposta com Sistema)
+\begin{enumerate}
+    \item \textbf{Recebimento de produtos (entrada)}: O dono ou funcionário acessa o sistema. Registra os produtos recebidos: nome, quantidade, fornecedor, data, nota fiscal. O estoque é atualizado automaticamente.
 
-Descrição Geral: Será implementado um sistema informatizado para registrar entradas, saídas e gerar relatórios mensais automaticamente.
+    \item \textbf{Venda de produtos (saída)}: No momento da venda, o produto é registrado como “vendido” no sistema. O sistema subtrai automaticamente a quantidade vendida do estoque.
 
-Etapas do Processo com o Sistema:
+    \item \textbf{Controle de estoque}: O sistema exibe em tempo real o estoque disponível de cada item. Alertas de baixo estoque podem ser configurados.
 
-1. Recebimento de produtos (entrada): O dono ou funcionário acessa o sistema. Registra os produtos recebidos: nome, quantidade, fornecedor, data, nota fiscal. O estoque é atualizado automaticamente.
+    \item \textbf{Relatório mensal de movimentações}: Ao fim do mês (ou sob demanda), o sistema gera automaticamente um relatório com:
+    \begin{itemize}
+        \item Total de entradas por produto.
+        \item Total de saídas por produto.
+        \item Saldo atual.
+        \item Produtos mais vendidos.
+        \item Histórico por período.
+    \end{itemize}
+\end{enumerate}
 
-2 .Venda de produtos (saída): No momento da venda, o produto é registrado como “vendido” no sistema. O sistema subtrai automaticamente a quantidade vendida do estoque.
+\subsection*{Benefícios Esperados}
 
-3. Controle de estoque: O sistema exibe em tempo real o estoque disponível de cada item. Alertas de baixo estoque podem ser configurados.
-
-4.Relatório mensal de movimentações: Ao fim do mês (ou sob demanda), o sistema gera automaticamente um relatório com:
-
-o Total de entradas por produto.
-o Total de saídas por produto.
-o Saldo atual.
-o Produtos mais vendidos.
-o Histórico por período.
-
-Benefícios Esperados:
-
-• Redução de erros manuais.
-• Facilidade no rastreamento de movimentações.
-• Economia de tempo.
-• Maior controle e visibilidade sobre o estoque.
-• Dados organizados e acessíveis a qualquer momento.
-
+\begin{itemize}
+    \item Redução de erros manuais.
+    \item Facilidade no rastreamento de movimentações.
+    \item Economia de tempo.
+    \item Maior controle e visibilidade sobre o estoque.
+    \item Dados organizados e acessíveis a qualquer momento.
+\end{itemize}
 
 % ---
 
