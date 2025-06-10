@@ -27,11 +27,12 @@
                             <input type="file" class="d-none" id="newProfilePicture" name="newProfilePicture"
                                    accept="image/*"
                                    onchange="previewAndUpload(this)"/>
-                            <img id="avatarPreview" src="@Model.AvatarUrl"
+                            <img id="avatarPreview"
+                                 src="@Model.AvatarUrl"
                                  onerror="this.onerror=null;this.src='@defaultAvatar';"
-                                 class="rounded-circle"
+                                 class="rounded-circle avatar-hover"
                                  alt="Avatar"
-                                 style="width: 120px; height: 120px; object-fit: cover;"/>
+                                 style="width: 120px; height: 120px; object-fit: cover;" />
                         </div>
                     </form>
 
@@ -100,5 +101,6 @@
             window.profilePictureUrl = '@Url.Action("SaveProfilePicture", "Profile", new { area = "Identity" })';
         </script>
         <script src="~/js/profile.js" asp-append-version="true"></script>
+        <link rel="stylesheet" href="~/css/profile.css" asp-append-version="true"/>
     </div>
 </div>
