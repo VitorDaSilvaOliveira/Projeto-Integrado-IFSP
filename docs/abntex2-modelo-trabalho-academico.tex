@@ -1221,9 +1221,12 @@ Paralelamente, é elaborada a fase de análise e documentação, cujo objetivo �
 
 \subsection{Custos}
 
-Com certeza. Aqui está uma versão mais formal, iniciando com a palavra solicitada:
+A Tabela 2 apresenta uma análise pormenorizada e multidimensional dos custos de desenvolvimento, detalhando o investimento fundamental em mão de obra, que representa o principal ativo do projeto. Sua estrutura, ao desagregar os custos por perfil técnico — como desenvolvedores sênior, analistas de qualidade e gestores de projeto —, permite identificar com precisão onde o capital está sendo alocado. A cada uma dessas funções é atribuída uma estimativa de esforço em horas de trabalho, fornecendo uma base quantitativa para o planejamento. A metodologia de cálculo, que se destaca pela transparência e objetividade, consiste na multiplicação do esforço previsto pela taxa horária específica de cada especialista, garantindo uma apuração fiel à realidade do mercado e evitando as distorções de estimativas genéricas.
 
-O detalhamento dos custos de desenvolvimento, apresentado na Tabela 2, segmenta o investimento em mão de obra por perfil técnico. O custo total é apurado a partir da multiplicação do esforço estimado em horas pela taxa horária de cada função. Tal análise, distribuída ao longo dos 9 meses de duração do projeto, revela-se fundamental para o planejamento financeiro e a gestão precisa dos recursos alocados.
+Esta abordagem, portanto, transcende um simples levantamento numérico. Ela não só oferece clareza sobre os custos inerentes a cada fase do desenvolvimento, mas, ao ser projetada sobre a duração total de 9 meses, transforma-se em uma poderosa ferramenta de gestão estratégica e preditiva. A projeção temporal permite uma análise aprofundada da distribuição dos custos mensais e globais, oferecendo previsibilidade e permitindo a antecipação de picos de investimento. Com isso, a gestão pode mitigar riscos financeiros, como desvios orçamentários, antes que se concretizem.
+
+Consequentemente, a tabela constitui um pilar para um planejamento financeiro robusto, que justifica o orçamento perante stakeholders e estabelece uma linha de base para o controle rigoroso das despesas, viabilizando a alocação otimizada de recursos e assegurando a sustentabilidade operacional do projeto.
+
 \begin{table}[hbtp]
     \centering
     \caption{Detalhamento dos Custos de Desenvolvimento.}
@@ -1247,53 +1250,57 @@ O detalhamento dos custos de desenvolvimento, apresentado na Tabela 2, segmenta 
         \textbf{Total} & \textbf{7} & - & - & - & \textbf{155.520,00} \\
         \hline
     \end{tabular}
-    \fonte{Duração do projeto: 9 meses (180 dias úteis). Custo MO mensal: R\$ 17.280,00. Elaborado pelos autores com base em pesquisa de mercado.}
+    Duração do projeto: 9 meses (180 dias úteis). Custo MO mensal: R\$ 17.280,00.
+\fonte{Elaborado pelos autores.}
 \end{table}
 
 Na tabela 3 é representada a estrutura mensal da empresa, detalhando os custos associados às instalações, equipamentos e serviços de TI. No item 2.1, destacam-se os gastos com aluguel de espaço e mobiliário, totalizando 0 reais por mês. Já no item 2.2, referente à aquisição de equipamentos, observa-se que não há custos neste momento. No entanto, no item 2.3, estão listados os custos mensais de serviços de TI.
 
 \begin{table}[hbtp]
-    \centering
-    \caption{Estrutura Mensal da Empresa.}
-    \label{tab:estrutura_mensal}
-    \begin{tabular}{|l|c|r|}
-        \hline
-        \textbf{Item} & \textbf{Quantidade} & \textbf{Valor (R\$)} \\
-        \hline
-        \multicolumn{3}{|l|}{\textbf{2. Estrutura da empresa (mensal)}} \\
-        \hline
-        \hspace{1em} 2.1. Instalações - Aluguel (espaço e mobiliário) & - & R\$ 0,00 \\
-        \hline
-        \hspace{1em} 2.2. Equipamentos (TI e Outros) -> Aquisição & & \\
-        \hspace{2em} - Computadores/notebooks & 0 & R\$ 0,00 \\
-        \hspace{2em} - Servidores proprietários & 0 & R\$ 0,00 \\
-        \hspace{2em} - Outros (mobiliário, etc.) & 0 & R\$ 0,00 \\
-        \hline
-        \hspace{1em} 2.3. Serviços de TI & & \\
-        \hspace{2em} - Ferramentas de desenvolvimento & - & R\$ 0,00 \\
-        \hspace{2em} - Hospedagem e banco de dados & - & R\$ 0,00 \\
-        \hline
-        \textbf{Total mensal} & & \textbf{R\$ 0,00} \\
-        \hline
-    \end{tabular}
-    \fonte{Elaborado pelos autores.}
+\centering
+\caption{Estrutura Mensal da Empresa.}
+\label{tab:estrutura_mensal}
+\begin{tabular}{lcr}
+\toprule
+\textbf{Item} & \textbf{Quantidade} & \textbf{Valor (R\$)} \\
+\midrule
+\multicolumn{3}{l}{\textbf{2. Estrutura da empresa (mensal)}} \\
+\addlinespace % Adiciona um pequeno espaço vertical
+\quad 2.1. Instalações - Aluguel & - & 0,00 \\
+\addlinespace
+\multicolumn{3}{l}{\quad 2.2. Equipamentos (TI e Outros)} \\
+\qquad - Computadores/notebooks & 0 & 0,00 \\
+\qquad - Servidores proprietários & 0 & 0,00 \\
+\qquad - Outros (mobiliário, etc.) & 0 & 0,00 \\
+\addlinespace
+\multicolumn{3}{l}{\quad 2.3. Serviços de TI} \\
+\qquad - Ferramentas de desenvolvimento & - & 0,00 \\
+\qquad - Hospedagem e banco de dados & - & 0,00 \\
+\midrule
+\textbf{Total mensal} & & \textbf{R\$ 0,00} \\
+\bottomrule
+\end{tabular}
+\fonte{Elaborado pelos autores.}
 \end{table}
 
 
-
-%\subsection{Receitas}
-
 \subsection{Cenário realista}
-Na figura 9 podemos verificar uma análise em um cenário realista, em que o ponto de equilíbrio é alcançado em cerca de 15 meses, considerando um investimento inicial de R\$ 155.520 e receita mensal média de R\$ 30.600.
-\includegraphics[width=1.0\textwidth]{Figuras/CenarioRealista.png}
+Na figura 9 no cenário realista, em que o ponto de equilíbrio é alcançado em cerca de 15 meses, considerando um investimento inicial de R\$ 155.520 e receita mensal média de R\$ 30.600.
+\begin{center}
+  \includegraphics[width=0.9\textwidth]{Figuras/CenarioRealista.png}
+\end{center}
 
 \subsection{Cenários otimista}
-Na figura 10 podemos verificar uma análise em um cenário otimista, em que o ponto de equilíbrio é alcançado em cerca de 9 meses, com receitas 25\% acima do projetado.
-\includegraphics[width=1.0\textwidth]{Figuras/CenarioOtimista.png}
+Na figura 10 no cenário otimista, o ponto de equilíbrio é alcançado em cerca de 9 meses, com receitas 25\% acima do projetado.
+\begin{center}
+  \includegraphics[width=0.9\textwidth]{Figuras/CenarioOtimista.png}
+\end{center}
 
 \subsection{Cenários pessimista}
-Na figura 11 podemos verificar uma análise em um cenário pessimista, em que o ponto de equilíbrio é alcançado em cerca de 37 meses, com receitas 20\% abaixo do projetado.
-\includegraphics[width=1.0\textwidth]{Figuras/CenarioPessimista.png}
+Na figura 11 no cenário pessimista, o ponto de equilíbrio é alcançado em cerca de 37 meses, com receitas 20\% abaixo do projetado.
+\begin{center}
+  \includegraphics[width=0.9\textwidth]{Figuras/CenarioPessimista.png}
+\end{center}
 
 \chapter{Considerações Finais}
 Ao longo do desenvolvimento deste projeto, que culminou na criação de um sistema de controle de estoque para um estabelecimento comercial, foi possível constatar de soluções tecnológicas para otimizar processos e garantir a eficiência operacional em ambientes comerciais. A iniciativa de desenvolver este sistema surgiu da necessidade de modernizar a gestão  em um cenário de mercado cada vez mais competitivo.
