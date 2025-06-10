@@ -34,7 +34,6 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 })
 .AddRoles<IdentityRole>()
 .AddEntityFrameworkStores<EstoqueDbContext>()
-.AddErrorDescriber<Estoque.Infrastructure.Services.IdentityErrorDescriberPtBr>()
 .AddDefaultTokenProviders();
 
 // === Serviços Customizados ===

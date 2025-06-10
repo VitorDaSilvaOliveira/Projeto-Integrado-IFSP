@@ -40,20 +40,3 @@
 [data-bs-theme="dark"] .sidebar-custom {
     background-color: #141824 !important;
 }
-.icon-wrapper {
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 4px;
-}
-
-.icon-wrapper span {
-    font-size: 30px;
-}
-
-.item-label {
-    margin-top: 0;
-    padding-top: 0;
-    font-size: 0.75rem;
-}
