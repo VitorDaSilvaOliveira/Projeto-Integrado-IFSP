@@ -1,0 +1,9 @@
+﻿@using JJMasterData.Web.Extensions
+@{
+    ViewBag.Title = "Log";
+}
+
+@using (Html.BeginMasterDataForm())
+{
+    @Html.Raw(ViewBag.FormViewLog)
+}
