@@ -1224,7 +1224,7 @@ Os testes foram realizados dentro de módulos em nosso sistema:
     \item \textbf{Comportamento de telas}: o comportamento de botões, navegação, preenchimento de campos e alterações de estados da tela foram testados, alcançando, assim, a melhor experiência possível para o usuário.
 \end{itemize}
 
-\subsubsection{Casos de teste}
+\subsubsection{Casos de teste Funcionais}
 \begin{table}[htbp]
 
 \caption{Casos de Teste Funcionais - Módulo de Autenticação}
@@ -1351,8 +1351,46 @@ O sistema deve exibir relatório com todas as movimentações do período \\
 \end{tabular}
 \legend{Fonte: Elaborado pelos autores}
 \end{table}
+\subsubsection{Casos de teste não Funcionais}
+\FloatBarrier
 
-
+\begin{table}[htbp]
+\centering
+\caption{Casos de Teste Não Funcionais - Desempenho}
+\begin{tabular}{|p{1.3cm}|p{3.3cm}|p{3.5cm}|p{2.5cm}|p{4.5cm}|}
+\hline
+\textbf{ID} & \textbf{Descrição} & \textbf{Critérios de Aceitação} & \textbf{Ferramentas} & \textbf{Resultado Esperado} \\
+\hline
+TNF001 & Tempo de resposta para consulta de produtos & Tempo de resposta deve ser menor que 2 segundos para até 100 produtos & Cronômetro & O sistema deve responder às consultas de produtos dentro do limite de tempo estabelecido, mesmo com um grande volume de dados \\
+\hline
+TNF002 & Tempo de geração de relatório de movimentações & Relatório com até 1000 registros deve ser gerado em menos de 5 segundos & Cronômetro  & O sistema deve gerar relatórios de movimentação dentro do limite de tempo estabelecido, mesmo com grande volume de dados \\
+\hline
+TNF003 & Capacidade de processamento simultâneo & Sistema deve suportar até 50 usuários simultâneos sem degradação de desempenho &  ferramenta similar de teste de carga & O sistema deve manter o tempo de resposta aceitável mesmo com múltiplos usuários realizando operações simultaneamente \\
+\hline
+TNF004 & Tempo de carregamento inicial da aplicação & A aplicação deve carregar completamente em menos de 3 segundos em conexão & Cronômetro  & A interface do usuário deve estar completamente carregada e operacional dentro do limite de tempo estabelecido \\
+\hline
+\end{tabular}
+\legend{Fonte: Elaborado pelos autores}
+\end{table}
+\FloatBarrier
+\begin{table}[htbp]
+\centering
+\caption{Casos de Teste Não Funcionais - Usabilidade}
+\begin{tabular}{|p{1.3cm}|p{3.3cm}|p{3.5cm}|p{2.5cm}|p{4.5cm}|}
+\hline
+\textbf{ID} & \textbf{Descrição} & \textbf{Critérios de Aceitação} & \textbf{Ferramentas} & \textbf{Resultado Esperado} \\
+\hline
+TNF009 & Facilidade de uso para novos usuários & Usuários sem treinamento devem conseguir realizar tarefas básicas em até 5 minutos & Teste com usuários reais e cronômetro & Novos usuários devem conseguir realizar operações básicas sem necessidade de treinamento extensivo \\
+\hline
+TNF010 & Clareza das mensagens de erro & Mensagens de erro devem ser claras e indicar como resolver o problema & Avaliação qualitativa com usuários & As mensagens de erro devem ser compreensíveis e fornecer orientações para resolução \\
+\hline
+TNF011 & Responsividade em dispositivos móveis & Interface deve se adaptar corretamente a diferentes tamanhos de tela & Teste em diferentes dispositivos ou simuladores & A interface deve ser utilizável e visualmente adequada em smartphones, tablets e desktops \\
+\hline
+TNF012 & Acessibilidade & Sistema deve atender aos requisitos básicos de acessibilidade  & Ferramentas de análise de acessibilidade & O sistema deve ser utilizável por pessoas com deficiências motoras \\
+\hline
+\end{tabular}
+\legend{Fonte: Elaborado pelos autores}
+\end{table}
 
 \section{Segurança, Privacidade, Legislação}
 
