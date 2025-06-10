@@ -1,0 +1,9 @@
+﻿@using JJMasterData.Web.Extensions
+@{
+    ViewBag.Title = "Gerenciador de Usuários";
+}
+
+@using (Html.BeginMasterDataForm())
+{
+    @Html.Raw(ViewBag.FormViewUser)
+}
