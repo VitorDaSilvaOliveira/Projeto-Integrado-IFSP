@@ -325,7 +325,7 @@ For the system's development, comprehensive research into inventory management a
    \vspace{\onelineskip}
  
    \noindent 
-   \textbf{Keywords}: latex. abntex. text editoration.
+   \textbf{Keywords}: Inventory system. Product management. Automation. Management reports. Kanban.
  \end{otherlanguage*}
 \end{resumo}
 
@@ -558,9 +558,9 @@ A seguir, apresentamos as funções da equipe no projeto, com os respectivos mem
 \centering
 \begin{tabular}{|l|l|l|}
 \hline
-\textbf{SDM} & \textbf{SMR} & \textbf{Team Member} \\ \hline
-Vitor        & Beatriz      & Malheus             \\ \hline
-             & Rafael       & Klaith              \\ \hline
+\textbf{PO} & \textbf{Flow manager} & \textbf{Team Member} \\ \hline
+Vitor        & Beatriz      & Matheus             \\ \hline
+             &              & Khalil         \\ \hline
              &              & Gean                \\ \hline
              &              & Marcelo             \\ \hline
              &              & Rafael              \\ \hline
@@ -573,14 +573,14 @@ Vitor        & Beatriz      & Malheus             \\ \hline
 \subsection{Responsabilidades de cada papel}
 
 \begin{itemize}
-    \item \textbf{SDM (Software Development Manager)}: 
-    Responsável por gerenciar as equipes de desenvolvimento, garantindo que o desenvolvimento do software esteja alinhado com os objetivos do projeto. Ele toma decisões sobre o planejamento, coordenação e execução das atividades técnicas e gerenciais.
+    \item \textbf{PO (Product Owner)}: 
+    Responsável por representar os interesses do cliente e das partes interessadas. No contexto Kanban, o PO prioriza as tarefas no backlog e garante que o trabalho mais valioso seja entregue primeiro, alinhando as entregas com os objetivos do projeto.
     
-   \item \textbf{SMR (Software Methodology Responsible)}: 
-    Responsável por zelar pela aplicação correta da metodologia Kanban. Atua monitorando o fluxo contínuo de tarefas, identificando gargalos, promovendo a melhoria contínua e incentivando a transparência e colaboração na equipe.
-
-    \item \textbf{Team Member}: 
-    São os desenvolvedores que realizam o trabalho técnico e colaboram na entrega de funcionalidades e tarefas específicas dentro do projeto. Eles atuam na implementação, testes, revisão de código e outras atividades técnicas.
+    \item \textbf{Flow Manager}: 
+    Responsável por acompanhar e otimizar o fluxo de trabalho da equipe. Atua identificando gargalos, promovendo a melhoria contínua, monitorando métricas como lead time e WIP, além de incentivar a transparência, colaboração e boas práticas no uso do Kanban.
+    
+    \item \textbf{Team Members}: 
+    São os membros da equipe de desenvolvimento que executam o trabalho técnico. Isso inclui análise, implementação, testes e revisão de código. Eles colaboram continuamente para manter o fluxo de trabalho saudável e entregar valor com qualidade.
 \end{itemize}
 
 
@@ -1173,7 +1173,7 @@ Esta seção apresenta as principais tecnologias utilizadas no desenvolvimento d
 \subsection{Infraestrutura}
 
 \begin{itemize}
-    \item \textbf{Microsoft Azure}: Plataforma de computação em nuvem utilizada para hospedar a aplicação e seus serviços relacionados. A utilização do Azure proporciona escalabilidade, segurança e alta disponibilidade \cite{Azure2025}.
+    \item \textbf{Microsoft Azure}: Plataforma de computação em nuvem utilizada para hospedar a aplicação e seus serviços relacionados. A utilização do Azure proporciona escalabilidade, segurança e alta disponibilidade \cite{Azure2025}. O Azure está sendo utilizado como plataforma principal para a hospedagem de todos os componentes do sistema, abrangendo o banco de dados, o back-end e o front-end.
 \end{itemize}
 
 
@@ -1186,13 +1186,13 @@ Com a evolução da tecnologia, diversas práticas foram desenvolvidas visando u
 A manutenção de software é um processo essencial que ocorre após a implantação da aplicação, seu objetivo é garantir o funcionamento contínuo e eficiente do sistema. Durante o desenvolvimento deste projeto, foram realizadas manutenções de diferentes tipos:
 
 \begin{itemize}
-    \item \textbf{Manutenção Corretiva}: correção de falhas no uso do sistema, foram encontrados algumas ações do sistema em inconformidade com as regras de negócio estabelecidas, algumas inconsistências nos formulários. Também foram identificadas algumas chamadas incorretas no código C\#  
-    \item \textbf{Manutenção Evolutiva}: conforme se deu o desenvolvimento, percebemos que algumas outras necessidades surgiram, como mudança em alguns campos e em alguns fluxos, como por exemplo o campo de observação da movimentação.
+    \item \textbf{Manutenção Corretiva}: correção de falhas no uso do sistema, foram encontradas algumas ações do sistema em inconformidade com as regras de negócio estabelecidas, algumas inconsistências nos formulários. Também foram identificadas algumas chamadas incorretas no código C\#  
+    \item \textbf{Manutenção Evolutiva}: conforme se deu o desenvolvimento, percebemos que algumas outras necessidades surgiram, como mudanças em campos e fluxos do sistema, como por exemplo o campo de observação da movimentação.
     \item \textbf{Manutenção Adaptativa}: atualizações para garantir compatibilidade com novas versões de bibliotecas e frameworks utilizados, como o Bootstrap e componentes do ASP.NET. Além de portabilidades que permitem a compatibilidade com o uso do site por celulares, como a tela de login.
     \item \textbf{Manutenção Preventiva}: otimização de consultas do banco de dados, revisões e refatorações do código fonte e técnicas de proteção de rotas e requisições.
 \end{itemize}
 
-Durante todo o processo de manutenção também foi usado em larga escala o versionamento via Git, essencial  para o controle de todas as mudanças do projeto. O versionamento com o registro de correções e da evolução do sistema, salvo no histórico de commits do GitHub, foi de grande importância para o desenvolvimento em equipe.
+Durante todo o processo de manutenção também foi usado em larga escala o versionamento via Git, essencial para o controle de todas as mudanças do projeto. O versionamento com o registro de correções e da evolução do sistema, salvo no histórico de commits do GitHub, foi de grande importância para o desenvolvimento em equipe.
 
 O conjunto dessas ações contribuiu para a estabilidade, escalabilidade e segurança geral do sistema, garantindo assim uma maior satisfação dos Stakeholders.
 
@@ -1200,17 +1200,35 @@ O conjunto dessas ações contribuiu para a estabilidade, escalabilidade e segur
 
 A execução de testes é fundamental para o bom desenvolvimento de uma aplicação, eles devem ser continuamente realizados ao longo de toda construção dos processos de um sistema e também após a sua implementação. A testagem permite uma verificação precisa da qualidade de um software, ajuda a capturar falhas de execução de processos e a atestar que as funcionalidades estão sendo executadas de maneira correta.
 
-\subsection{Análise Estatística}
+\subsubsection{Estratégia de Testes}
 
-\subsection{Testes Funcionais}
+A estratégia de testes adotada neste projeto foi centrada em testes manuais exploratórios, realizados ao longo de todo o processo de desenvolvimento. A cada nova funcionalidade implementada, foram conduzidos testes com foco na verificação do comportamento esperado, análise de validações, usabilidade e integridade dos dados.
 
-\subsection{Testes Não Funcionais}
+O foco principal foi validar os seguintes aspectos:
+\begin{itemize}
+    \item Navegação entre telas e fluxos do sistema.
+    \item Validação de formulários com campos obrigatórios e regras de negócio.
+    \item Conferência do correto salvamento, atualização e exclusão de dados no banco de dados.
+    \item Verificação de mensagens de erro e alertas ao usuário.
+\end{itemize}
+
+Como parte da organização, os testes foram documentados por meio de registros no GitHub, vinculando as falhas encontradas aos commits de correção, o que favoreceu o acompanhamento da evolução da qualidade do sistema.
+
+\subsubsection{Escopo dos testes}
+
+Os testes foram realizados dentro de módulos em nosso sistema:
+
+\begin{itemize}
+    \item \textbf{Login}: foi testada a obrigatóriedade dos campos de usuário e senha, caso os campos não estejam preenchidos um alerta surgirá, não permitindo o avanço, caso os campos sejam preenchidos o sistema conferirá o usuário e a senha e então permitirá ou não o acesso do usuário.
+    \item \textbf{Operações do Banco de Dados}: o cadastro de produtos, movimentações, categorias de produtos, fornecedores e usuários foram testados a fim de garatir que o for feito por meio das telas do nosso sistema de fato criem registros no banco de dados.
+    \item \textbf{Comportamento de telas}: o comportamento de botões, navegação, preenchimento de campos e alterações de estados da tela foram testados, alcançando, assim, a melhor experiência possível para o usuário.
+\end{itemize}
+
 
 
 \section{Segurança, Privacidade, Legislação}
 
 Este tópico é dedicado a explicar sobre as questões de segurança e legislação relevantes para o nosso projeto.
-
 
 \subsection{Critérios de Segurança e Privacidade}
 
@@ -1327,9 +1345,9 @@ Na tabela 3 é representada a estrutura mensal da empresa, detalhando os custos 
 \addlinespace
 \multicolumn{3}{l}{\quad 2.3. Serviços de TI} \\
 \qquad - Ferramentas de desenvolvimento & - & 0,00 \\
-\qquad - Hospedagem e banco de dados & - & 0,00 \\
+\qquad - Hospedagem e banco de dados & - &99,83 \\
 \midrule
-\textbf{Total mensal} & & \textbf{R\$ 0,00} \\
+\textbf{Total mensal} & & \textbf{R\$ 99,83} \\
 \bottomrule
 \end{tabular}
 \fonte{Elaborado pelos autores.}
