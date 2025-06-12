@@ -35,7 +35,7 @@ public class UserController(UserManager<ApplicationUser> userManager, UserServic
 
         var user = new ApplicationUser(model.FirstName, model.LastName)
         {
-            UserName = model.Username,
+            UserName = model.UserName,
             Email = model.Email,
             PhoneNumber = model.PhoneNumber
         };
@@ -59,6 +59,28 @@ public class UserController(UserManager<ApplicationUser> userManager, UserServic
 
         foreach (var error in result.Errors)
             ModelState.AddModelError(string.Empty, error.Description);
+
+        return View(model);
+    }
+    
+    [HttpGet]
+    public async Task<IActionResult> UserDetails(Guid userId)
+    {
+        var user = await userManager.FindByIdAsync(userId.ToString());
+
+        if (user == null)
+            return NotFound();
+
+        var model = new UserViewModel
+        {
+            Id = user.Id,
+            UserName = user.UserName,
+            Email = user.Email,
+            PhoneNumber = user.PhoneNumber,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            AvatarUrl = user.AvatarFileName,
+        };
 
         return View(model);
     }
