@@ -4,8 +4,10 @@ namespace Estoque.Domain.Models;
 
 public class UserViewModel
 {
+    public string Id { get; set; }
+    
     [Required(ErrorMessage = "O campo Nome de Usuário é obrigatório.")]
-    public string Username { get; set; }
+    public string UserName { get; set; }
 
     [Required]
     public string FirstName { get; set; }
@@ -29,4 +31,5 @@ public class UserViewModel
     [Compare("Password")]
     [DataType(DataType.Password)]
     public string ConfirmPassword { get; set; }
+    public string AvatarUrl { get; set; }
 }

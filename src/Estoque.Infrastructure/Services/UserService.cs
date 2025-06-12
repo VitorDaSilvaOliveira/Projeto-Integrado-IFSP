@@ -22,6 +22,13 @@ public class UserService(EstoqueDbContext context, IWebHostEnvironment env, ICom
             UrlRedirect = "/Admin/User/CreateUser"
         });
         
+        formView.GridView.TableActions.Add(new UrlRedirectAction
+        {
+            Name = "Editar",
+            Icon = IconType.Edit,
+            UrlRedirect = "/Admin/User/UserDetails?userId={Id}"
+        });
+        
         return formView;
     }
     

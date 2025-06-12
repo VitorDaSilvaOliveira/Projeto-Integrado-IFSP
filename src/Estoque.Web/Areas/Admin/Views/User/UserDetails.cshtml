@@ -1,0 +1,167 @@
+﻿@model UserViewModel
+
+@{
+    ViewData["Title"] = "Informações Pessoais";
+    var defaultAvatar = Url.Content("~/img/default_profile.png");
+
+}
+
+<div class="border-bottom pb-2 mb-2">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item">
+                <a href="@Url.Action("User", "User", new { area = "Admin" })">
+                    Gerenciador de Usuários
+                </a>
+            </li>
+            <li class="breadcrumb-item">
+
+            </li>
+            <li class="breadcrumb-item active">
+                Informações Pessoais
+            </li>
+        </ol>
+    </nav>
+</div>
+<nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <a href="/Admin/User/UserDetails?userId=@Model.Id" class="nav-link active" type="button" role="tab"
+           aria-controls="UserDetails">
+            <icon>
+                <span class="fa fa-user ">
+                </span></icon>
+            Informações Pessoais
+        </a>
+
+        <a href="/Admin/UserRoles?userId=@Model.Id" class="nav-link " type="button" role="tab"
+           aria-controls="UserRoles">
+            <icon>
+                <span class="fa-regular fa-address-card ">
+                </span></icon>
+            Perfis
+        </a>
+        <a href="/Admin/User/ResetPassword?userId=@Model.Id" class="nav-link " type="button" role="tab"
+           aria-controls="ResetPassword">
+            <icon>
+                <span class="fa fa-key ">
+                </span></icon>
+            Redefinir senha
+        </a>
+    </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane fade show active" id="UserDetails" role="tabpanel">
+        <div class="container">
+            <div class="row gutters">
+                <div class="col-xl-3 col-sm-12 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="user-profile text-center">
+                                <div class="user-avatar mb-3" onclick="openFilePicker()">
+                                    <img src="/uploads/avatars/@Model.AvatarUrl"
+                                         onerror="this.onerror=null;this.src='@defaultAvatar';"
+                                         class="rounded-circle"
+                                         alt="Avatar"
+                                         style="width: 120px; height: 120px; object-fit: cover;" />
+                                    </div>
+                                <h5 class="user-name mb-3">@Model.FirstName</h5>
+
+                                <div class="status mb-3">
+                                    <span class="fa fa-circle fa-lg" style="color:green; font-size: 0.9rem;"></span>
+                                    @* <span class="fw-bold" style="font-size: 0.9rem;">@Model.UserStatus</span> *@
+                                </div>
+
+                                <a class="btn btn-secondary fw-bold mt-3" href="/Admin/Impersonate?userId=@Model.Id">
+                                    <i class="fa fa-user-secret"></i>
+                                    Impersonate
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-9 col-sm-12">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <form asp-action="UserDetails" method="post" novalidate>
+                                @Html.AntiForgeryToken()
+
+                                <input type="hidden" name="Id" value="@Model.Id"/>
+                                @* <input type="hidden" name="UserStatus" value="@Model.UserStatus" /> *@
+
+                                <div class="row gutters">
+                                    <div class="col-sm-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Nome do Usuário <span
+                                                    class="required-symbol">*</span></label>
+                                            <input class="form-control" type="text" name="UserName"
+                                                   value="@Model.UserName">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Email <span
+                                                    class="required-symbol">*</span></label>
+                                            <input class="form-control" type="email" name="Email" value="@Model.Email">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="PhoneNumber">Número de Telefone</label>
+                                            <span class="fa fa-question-circle help-description"
+                                                  data-bs-toggle="tooltip"
+                                                  data-bs-html="true"
+                                                  aria-label="+55 99999-9999"
+                                                  data-bs-original-title="+55 99999-9999">
+                                            </span>
+                                            <input class="form-control"
+                                                   type="text"
+                                                   name="PhoneNumber"
+                                                   value="@Model.PhoneNumber"
+                                                   maxlength="19"
+                                                   inputmode="text">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="mb-3">
+                                            <label class="form-label">Nome <span
+                                                    class="required-symbol">*</span></label>
+                                            <input class="form-control" type="text" name="FirstName"
+                                                   value="@Model.FirstName">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="mb-3">
+                                            <label class="form-label">Sobrenome <span
+                                                    class="required-symbol">*</span></label>
+                                            <input class="form-control" type="text" name="LastName"
+                                                   value="@Model.LastName">
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-sm-12 mb-3">
+                                    <button type="submit" class="btn btn-primary">
+                                        Salvar
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function enableDisableFields(element) {
+        const dateField = document.getElementById('dateField');
+        dateField.style.display = element.checked ? 'none' : 'block';
+    }
+</script>
