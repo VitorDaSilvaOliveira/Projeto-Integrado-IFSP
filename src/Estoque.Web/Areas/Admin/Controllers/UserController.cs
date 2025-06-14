@@ -1,4 +1,5 @@
-﻿using Estoque.Domain.Entities;
+﻿using System.Security.Claims;
+using Estoque.Domain.Entities;
 using Estoque.Domain.Models;
 using Estoque.Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
@@ -7,9 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace Estoque.Web.Areas.Admin.Controllers;
 
 [Area("Admin")]
-public class UserController(UserManager<ApplicationUser> userManager, UserService userService) : Controller
+public class UserController(UserManager<ApplicationUser> userManager, UserService userService, AuthService authService,SignInManager<ApplicationUser> signInManager) : Controller
 {
-    public async Task<IActionResult> User()
+    public async Task<IActionResult> Index()
     {
         var formViewUserAsync = await userService.GetFormViewUserAsync();
         var resultGridUserAsync = await formViewUserAsync.GetResultAsync();
@@ -54,7 +55,7 @@ public class UserController(UserManager<ApplicationUser> userManager, UserServic
             }
 
             TempData["Success"] = "Usuário criado com sucesso!";
-            return RedirectToAction("User");
+            return RedirectToAction("Index");
         }
 
         foreach (var error in result.Errors)
@@ -83,5 +84,23 @@ public class UserController(UserManager<ApplicationUser> userManager, UserServic
         };
 
         return View(model);
+    }
+    
+    [HttpGet]
+    public async Task<IActionResult> Impersonate(Guid userId)
+    {
+        var user = await userManager.FindByIdAsync(userId.ToString());
+
+        if (user == null)
+            return NotFound();
+
+        HttpContext.Session.SetString("OriginalUserId", User.FindFirst(ClaimTypes.NameIdentifier)?.Value!);
+        
+        var userPrincipal = await signInManager.CreateUserPrincipalAsync(user);
+        
+        await signInManager.SignOutAsync(); 
+        await signInManager.SignInAsync(user, isPersistent: false);
+
+        return RedirectToAction("Index", "Home", new { area = "Estoque" });
     }
 }
