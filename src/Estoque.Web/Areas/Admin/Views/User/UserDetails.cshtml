@@ -3,19 +3,18 @@
 @{
     ViewData["Title"] = "Informações Pessoais";
     var defaultAvatar = Url.Content("~/img/default_profile.png");
-
 }
 
 <div class="border-bottom pb-2 mb-2">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb mb-0">
             <li class="breadcrumb-item">
-                <a href="@Url.Action("User", "User", new { area = "Admin" })">
+                <a href="@Url.Action("Index", "User", new { area = "Admin" })">
                     Gerenciador de Usuários
                 </a>
             </li>
             <li class="breadcrumb-item">
-
+                @Model.FirstName @Model.LastName
             </li>
             <li class="breadcrumb-item active">
                 Informações Pessoais
@@ -62,8 +61,8 @@
                                          onerror="this.onerror=null;this.src='@defaultAvatar';"
                                          class="rounded-circle"
                                          alt="Avatar"
-                                         style="width: 120px; height: 120px; object-fit: cover;" />
-                                    </div>
+                                         style="width: 120px; height: 120px; object-fit: cover;"/>
+                                </div>
                                 <h5 class="user-name mb-3">@Model.FirstName</h5>
 
                                 <div class="status mb-3">
@@ -71,7 +70,7 @@
                                     @* <span class="fw-bold" style="font-size: 0.9rem;">@Model.UserStatus</span> *@
                                 </div>
 
-                                <a class="btn btn-secondary fw-bold mt-3" href="/Admin/Impersonate?userId=@Model.Id">
+                                <a class="btn btn-secondary fw-bold mt-3"    href="@Url.Action("Impersonate", "User", new { area = "Admin", userId = Model.Id })">
                                     <i class="fa fa-user-secret"></i>
                                     Impersonate
                                 </a>
