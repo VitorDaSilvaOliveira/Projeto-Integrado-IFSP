@@ -1,3 +1,42 @@
-﻿@{
-    ViewData["Title"] = "Home";
+﻿@using System.Security.Claims
+@using Estoque.Domain.Entities
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    ViewBag.Title = "Home";
 }
+
+@functions {
+
+    private async Task<string> GetUserFirstName()
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var user = await UserManager.FindByIdAsync(userId!);
+        return user?.FirstName ?? "Usuário";
+    }
+
+}
+
+@{
+    var name = await GetUserFirstName();
+    var hour = DateTime.Now.Hour;
+    var greeting = hour switch
+    {
+        >= 6 and < 12 => "Bom Dia",
+        >= 12 and < 18 => "Boa Tarde",
+        _ => "Boa Noite"
+    };
+}
+
+<div class="container-fluid mt-5">
+    <div class="row mb-4">
+        <div class="col">
+            <h2 class="text-primary">@greeting, @name.</h2>
+        </div>
+        <span class="fw-light overflow-hidden">
+            Bem-vindo(a) ao Estoque Vip Penha.
+        <span class="typed-text fw-bold" data-typed-text='["Vip Penha Estoque", "as últimas novidades."]'></span>
+        </span>
+    </div>
+</div>

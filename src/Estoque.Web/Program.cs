@@ -105,6 +105,7 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
     options.MinimumSameSitePolicy = SameSiteMode.None;
     options.Secure = CookieSecurePolicy.Always;
 });
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
@@ -117,10 +118,9 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseForwardedHeaders();
 
 app.UseRouting();
-
-app.UseForwardedHeaders();
 
 app.UseCookiePolicy();
 

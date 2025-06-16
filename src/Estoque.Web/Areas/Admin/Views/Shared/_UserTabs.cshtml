@@ -1,0 +1,29 @@
+﻿@model UserViewModel
+
+@{
+    var action = ViewContext.RouteData.Values["action"]?.ToString();
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="..."
+      crossorigin="anonymous"/>
+
+<nav class="mb-4">
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <a href="@Url.Action("UserDetails", "User", new { area = "Admin", userId = Model.Id })"
+           class="nav-link @(action == "UserDetails" ? "active" : "")"
+           role="tab" aria-controls="UserDetails">
+            <span class="fa fa-user me-1"></span> Informações Pessoais
+        </a>
+
+        <a href="@Url.Action("UserRoles", "User", new { area = "Admin", userId = Model.Id })"
+           class="nav-link @(action == "UserRoles" ? "active" : "")"
+           role="tab" aria-controls="UserRoles">
+            <span class="fa-regular fa-address-card me-1"></span> Perfis
+        </a>
+
+        <a href="@Url.Action("ResetPassword", "User", new { area = "Admin", userId = Model.Id })"
+           class="nav-link @(action == "ResetPassword" ? "active" : "")"
+           role="tab" aria-controls="ResetPassword">
+            <span class="fa fa-key me-1"></span> Redefinir senha
+        </a>
+    </div>
+</nav>

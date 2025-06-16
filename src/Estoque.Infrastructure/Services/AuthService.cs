@@ -10,7 +10,8 @@ public class AuthService(
     SignInManager<ApplicationUser> signInManager,
     UserManager<ApplicationUser> userManager,
     IUserClaimsPrincipalFactory<ApplicationUser> claimsPrincipalFactory,
-    IHttpContextAccessor httpContextAccessor)
+    IHttpContextAccessor httpContextAccessor,
+    AuditLogService auditLogService)
 {
     public async Task<(bool Success, string? ErrorMessage)> SignInAsync(string usernameOrEmail, string password, bool rememberMe)
     {
@@ -19,7 +20,7 @@ public class AuthService(
 
         if (user == null)
             return (false, "Tentativa de login inválida.");
-        
+    
         if (!await userManager.CheckPasswordAsync(user, password))
             return (false, "Tentativa de login inválida.");
 
@@ -28,11 +29,12 @@ public class AuthService(
         await signInManager.SignOutAsync();
         await httpContextAccessor.HttpContext!.SignInAsync(IdentityConstants.ApplicationScheme, principal,
             new AuthenticationProperties { IsPersistent = rememberMe });
+    
+        await auditLogService.LogAsync("Identity", "Login", "Usuário se logou", user.Id, user.UserName);
 
         return (true, null);
     }
-
-
+    
     public AuthenticationProperties ConfigureExternalAuthenticationProperties(string provider, string redirectUrl)
     {
         return signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);

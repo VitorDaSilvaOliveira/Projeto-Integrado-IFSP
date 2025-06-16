@@ -20,6 +20,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<LogService>();
         services.AddScoped<AuthService>();
         services.AddScoped<UserService>();
+        services.AddScoped<AuditLogService>();
         services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, CustomClaimsFactory>();
     }
 

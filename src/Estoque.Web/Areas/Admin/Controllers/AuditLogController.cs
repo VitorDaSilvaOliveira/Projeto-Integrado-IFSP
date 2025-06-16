@@ -4,18 +4,18 @@ using Microsoft.AspNetCore.Mvc;
 namespace Estoque.Web.Areas.Admin.Controllers;
 
 [Area("Admin")]
-public class LogController(LogService logService) : Controller
+public class AuditLogController(AuditLogService auditLogService) : Controller
 {
-    [Route("Log")]
     public async Task<IActionResult> Index()
     {
-        var formViewLogAsync = await logService.GetFormViewLogAsync();
+        var formViewLogAsync = await auditLogService.GetFormViewAuditLogAsync();
         var resultGridLogAsync = await formViewLogAsync.GetResultAsync();
 
         if (resultGridLogAsync is IActionResult actionResult)
             return actionResult;
 
-        ViewBag.FormViewLog = resultGridLogAsync.Content;
+        ViewBag.FormViewAuditLog = resultGridLogAsync.Content;
+
         return View();
     }
 }

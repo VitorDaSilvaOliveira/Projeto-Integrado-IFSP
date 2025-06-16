@@ -96,11 +96,33 @@ public class UserController(UserManager<ApplicationUser> userManager, UserServic
 
         HttpContext.Session.SetString("OriginalUserId", User.FindFirst(ClaimTypes.NameIdentifier)?.Value!);
         
-        var userPrincipal = await signInManager.CreateUserPrincipalAsync(user);
+        await signInManager.CreateUserPrincipalAsync(user);
         
         await signInManager.SignOutAsync(); 
         await signInManager.SignInAsync(user, isPersistent: false);
 
         return RedirectToAction("Index", "Home", new { area = "Estoque" });
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> ResetPassword(Guid userId)
+    {
+        var user = await userManager.FindByIdAsync(userId.ToString());
+
+        if (user == null)
+            return NotFound();
+
+        var model = new UserViewModel
+        {
+            Id = user.Id,
+            UserName = user.UserName,
+            Email = user.Email,
+            PhoneNumber = user.PhoneNumber,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            AvatarUrl = user.AvatarFileName
+        };
+
+        return View(model);
     }
 }
