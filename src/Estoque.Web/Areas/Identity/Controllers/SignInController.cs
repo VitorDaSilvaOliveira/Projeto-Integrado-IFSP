@@ -1,12 +1,14 @@
-﻿using Estoque.Domain.Models;
+﻿using Estoque.Domain.Entities;
+using Estoque.Domain.Models;
 using Estoque.Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Estoque.Web.Areas.Identity.Controllers;
 
 [Area("Identity")]
-public class SignInController(AuthService authService) : Controller
+public class SignInController(AuthService authService, AuditLogService auditLogService, UserManager<ApplicationUser> userManager) : Controller
 {
     [AllowAnonymous]
     [HttpGet]
@@ -25,7 +27,9 @@ public class SignInController(AuthService authService) : Controller
         var (success, errorMessage) = await authService.SignInAsync(model.Login, model.Senha, model.LembrarMe);
 
         if (success)
+        {
             return RedirectToAction("Index", "Home", new { area = "Estoque" });
+        }
 
         ModelState.AddModelError(string.Empty, errorMessage ?? "Login falhou.");
         return View(model);
