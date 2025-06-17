@@ -630,7 +630,8 @@ O projeto tem como objetivo o desenvolvimento de um sistema de controle de estoq
 
 \begin{quadro}[htb]
 \caption{\label{quadro_rn1}Regras de Negócio (RN01 a RN04)}
-\begin{tabular}{|p{1.2cm}|p{4.0cm}|p{7.5cm}|p{2.0cm}|}
+\centering
+\begin{tabular}{|p{1.6cm}|p{4.0cm}|p{7.5cm}|p{2.0cm}|}
     \hline
     \textbf{Código} & \textbf{Nome} & \textbf{Descrição} & \textbf{Requisito Relacionado} \\ \hline
 
@@ -652,7 +653,8 @@ O projeto tem como objetivo o desenvolvimento de um sistema de controle de estoq
 
 \begin{quadro}[htb]
 \caption{\label{quadro_rn2}Regras de Negócio (RN05 a RN11)}
-\begin{tabular}{|p{1.2cm}|p{4.0cm}|p{7.5cm}|p{2.0cm}|}
+\hspace*{-1cm}
+\begin{tabular}{|p{1.6cm}|p{4.0cm}|p{7.5cm}|p{2.0cm}|}
     \hline
     \textbf{Código} & \textbf{Nome} & \textbf{Descrição} & \textbf{Requisito Relacionado} \\ \hline
 
@@ -684,7 +686,8 @@ O projeto tem como objetivo o desenvolvimento de um sistema de controle de estoq
 
 \begin{quadro}[htb]
 \caption{\label{quadro_rf1}Requisitos Funcionais (RF01 a RF02)}
-\begin{tabular}{|p{1.0cm}|p{2.8cm}|p{4.2cm}|p{7.0cm}|}
+\hspace*{-1cm}
+\begin{tabular}{|p{1.4cm}|p{2.8cm}|p{4.5cm}|p{7.0cm}|}
     \hline
     \textbf{Código} & \textbf{Atores} & \textbf{Nome} & \textbf{Descrição} \\ \hline
 
@@ -706,8 +709,8 @@ O projeto tem como objetivo o desenvolvimento de um sistema de controle de estoq
 
 
 \begin{quadro}[htb]
-\caption{\label{quadro_rf2}Requisitos Funcionais (RF3 a RF12)}
-\begin{tabular}{|p{1.0cm}|p{2.8cm}|p{4.2cm}|p{7.0cm}|}
+\caption{\label{quadro_rf2}Requisitos Funcionais (RF3 a RF11)}
+\begin{tabular}{|p{1.4cm}|p{2.8cm}|p{4.5cm}|p{7.0cm}|}
     \hline
     \textbf{Código} & \textbf{Atores} & \textbf{Nome} & \textbf{Descrição} \\ \hline
 
@@ -730,7 +733,7 @@ O projeto tem como objetivo o desenvolvimento de um sistema de controle de estoq
 
     RF11 & Administrador & Histórico de Movimentações & O sistema deve armazenar o histórico completo de entradas e saídas de produtos com data, hora, responsável, valor unitário, valor total, depósito de origem/destino e motivo (venda, perda, ajuste). \\ \hline
 
-    RF12 & Administrador & Múltiplos Depósitos & O sistema deve permitir o gerenciamento de estoque em diferentes depósitos/filiais com transferências entre eles, registrando data, responsável e motivo. \\ \hline
+    
 
     
 
@@ -740,10 +743,13 @@ O projeto tem como objetivo o desenvolvimento de um sistema de controle de estoq
 \FloatBarrier
 
 \begin{quadro}[htb]
-\caption{\label{quadro_rf3}Requisitos Funcionais (RF13 a RF18)}
-\begin{tabular}{|p{1.0cm}|p{2.8cm}|p{4.2cm}|p{7.0cm}|}
+\caption{\label{quadro_rf3}Requisitos Funcionais (RF12 a RF18)}
+\hspace*{-1cm}
+\begin{tabular}{|p{1.4cm}|p{2.8cm}|p{4.5cm}|p{7.0cm}|}
     \hline
     \textbf{Código} & \textbf{Atores} & \textbf{Nome} & \textbf{Descrição} \\ \hline
+
+    RF12 & Administrador & Múltiplos Depósitos & O sistema deve permitir o gerenciamento de estoque em diferentes depósitos/filiais com transferências entre eles, registrando data, responsável e motivo. \\ \hline
 
     RF13 & Vendedor & Consulta de Estoque & O sistema deve permitir que vendedores consultem a disponibilidade de produtos em tempo real, incluindo status "Esgotado", localização e previsão de reposição. \\ \hline
 
@@ -765,51 +771,27 @@ O projeto tem como objetivo o desenvolvimento de um sistema de controle de estoq
 \FloatBarrier
 
 
-
+\newpage
 \subsection{Requisitos Não Funcionais}
 
 
 
 \begin{quadro}[htb]
-\caption{\label{quadro_rnf1}Requisitos Não Funcionais (RNF01 a RNF02)}
-\begin{tabular}{|p{1.2cm}|p{3.5cm}|p{11.0cm}|}
+\caption{\label{quadro_rnf1}Requisitos Não Funcionais (RNF01 a RNF08)}
+\begin{center}
+\begin{tabular}{|p{2.2cm}|p{4.0cm}|p{10.0cm}|}
     \hline
     \textbf{Código} & \textbf{Módulo} & \textbf{Descrição} \\ \hline
-
     RNF01 & Desempenho & O sistema deve responder às requisições em até 2 segundos (consultas simples) e 5 segundos (relatórios complexos), mesmo durante validações de estoque ou geração de comprovantes. \\ \hline
-
     RNF02 & Escalabilidade & O sistema deve suportar até 10.000 produtos, 5.000 movimentações diárias e 500 usuários simultâneos, com possibilidade de expansão horizontal. \\ \hline
-
-    
-
- 
-
-\end{tabular}
-\end{quadro}
-
-\FloatBarrier
-
-\begin{quadro}[htb]
-\caption{\label{quadro_rnf2}Requisitos Não Funcionais (RNF03 a RNF08)}
-\begin{tabular}{|p{1.2cm}|p{3.5cm}|p{11.0cm}|}
-    \hline
-    \textbf{Código} & \textbf{Módulo} & \textbf{Descrição} \\ \hline
-
-
     RNF03 & Portabilidade & O sistema deve funcionar em navegadores modernos (Chrome, Firefox, Edge, Safari) e ser responsivo para dispositivos móveis e tablets. Versão desktop otimizada para Windows e macOS. \\ \hline
-
-
     RNF04 & Segurança & O sistema deve seguir a LGPD, com criptografia de dados sensíveis, autenticação de dois fatores para administradores, logs de acesso e auditoria de alterações críticas. \\ \hline
-
     RNF05 & Disponibilidade & O sistema deve ter disponibilidade de 99,9\% com redundância, backups diários e recuperação de desastres em até 4 horas. \\ \hline
-
     RNF06 & Usabilidade & Interface intuitiva para cadastros complexos, atalhos de teclado, busca rápida e relatórios exportáveis em PDF/Excel. \\ \hline
-
     RNF07 & Integração & API REST para integração com ERPs e sistemas fiscais. \\ \hline
-
     RNF08 & Internacionalização & Suporte a múltiplos idiomas (PT-BR, EN) e formatos de data/moeda configuráveis. \\ \hline
-
 \end{tabular}
+\end{center}
 \end{quadro}
 
 \FloatBarrier
@@ -817,6 +799,7 @@ O projeto tem como objetivo o desenvolvimento de um sistema de controle de estoq
 
 
 
+\newpage
 \section{Histórias de Usuário}
 
 \begin{quadro}[htb]
