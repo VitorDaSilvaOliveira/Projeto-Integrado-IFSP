@@ -1,5 +1,6 @@
-﻿<!DOCTYPE html>
-<html lang="pt-BR" data-bs-theme="light">
+﻿@using JJMasterData.Core.UI
+<!DOCTYPE html>
+<html lang="pt-BR" data-bs-theme="light"data-bs-version="@BootstrapHelper.Version">
 @await Html.PartialAsync("~/Areas/Estoque/Views/Shared/_HeadPartial.cshtml")
 
 @await RenderSectionAsync("Stylesheets", required: false)
@@ -9,7 +10,7 @@
 <div class="d-flex" style="min-height: 100vh; padding-top: 56px;">
     @await Html.PartialAsync("~/Areas/Estoque/Views/Shared/_SidebarPartial.cshtml")
 
-    <main class="flex-grow-1 p-4" style="margin-left: 250px; padding-top: 56px;">
+    <main class="container-fluid p-4" style="margin-left: 250px; padding-top: 56px;">
         @RenderBody()
     </main>
 </div>

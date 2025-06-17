@@ -1,0 +1,22 @@
+.img-flag{
+  width: 20px;
+  height: auto;
+}
+
+@media (max-width: 350px) {
+    .hide-on-xs {
+        display: none !important;
+    }
+}
+.language-small-only {
+    display: none !important;
+}
+
+@media (max-width: 350px) {
+    .language-small-only {
+        display: flex !important;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+}
