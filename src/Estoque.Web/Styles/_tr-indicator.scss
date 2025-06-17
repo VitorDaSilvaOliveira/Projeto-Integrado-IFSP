@@ -1,0 +1,9 @@
+.tr-indicator{
+  display:none;
+}
+.htmx-request .tr-indicator{
+  display:table-row;
+}
+.htmx-request.tr-indicator{
+  display:table-row;
+}

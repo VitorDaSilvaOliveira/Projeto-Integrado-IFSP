@@ -1,0 +1,15 @@
+﻿$prefix: "estoque-";
+
+@import "customizations";
+@import "notifications";
+@import "select-language";
+@import "infinity-menu";
+@import "customer-logo";
+@import "infinity-logo";
+@import "profile.scss";
+@import "clickable-card";
+@import "error";
+@import "tr-indicator";
+@import "menu-editor-card";
+
+@import "../../Masterdata/Styles/jjmasterdata.scss";

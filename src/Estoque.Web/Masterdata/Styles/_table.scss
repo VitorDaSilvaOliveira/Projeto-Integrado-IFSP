@@ -1,0 +1,89 @@
+﻿
+.table .table-action {
+  text-align: center;
+  vertical-align: middle;
+  width: 3.575rem;
+}
+
+.table .jj-checkbox {
+  vertical-align: middle;
+  text-align: center;
+  width: 3.575rem;
+}
+
+.table .jj-checkbox i {
+  padding-top: 0.1875rem;
+  float: right;
+}
+
+.table .jj-checkbox .dropdown-toggle {
+  margin-left: 0.1875rem;
+}
+
+.table .tr-hover-action {
+  cursor: pointer;
+}
+
+.table .tr-hover-action:hover td:first-child:before {
+  font-family: 'FontAwesome';
+  content: "\f142";
+  position: absolute;
+  left: 0;
+  font-size: 1.25em;
+}
+
+
+/* Table Head Fixed Style  */
+
+table.table-fixed-header {
+  border-collapse: collapse;
+}
+
+table.table-fixed-header th {
+  position: -webkit-sticky;
+  position: sticky;
+  top: var(--md-sticky-top-height);
+  z-index: 2;
+  background: var(--md-sticky-top-color);
+}
+
+table.table-fixed-header th[scope=row] {
+  position: -webkit-sticky;
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  vertical-align: top;
+}
+
+table.table-fixed-header:nth-of-type(2) th:not([scope=row]):first-child {
+  left: 0;
+  z-index: 3;
+}
+
+.table-fixed-header th[scope=row] + td {
+  min-width: 24em;
+}
+
+.table-fixed-header th[scope=row] {
+  min-width: 20em;
+}
+
+.table-gallery td {
+  padding-right: 10px;
+}
+
+.table-sm > :not(caption) > * > *{
+  padding: 0.25rem 0.25rem !important;
+}
+
+:root{
+  --md-sticky-top-height: 0;
+}
+
+:root:not([data-bs-theme=dark]){
+  --md-sticky-top-color: #eee !important;
+}
+
+:root, [data-bs-theme=dark] {
+  --md-sticky-top-color: #242833 !important;
+}

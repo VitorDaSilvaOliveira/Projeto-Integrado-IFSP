@@ -15,7 +15,7 @@
 </PropertyGroup>
 
 <ItemGroup>
-  <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
+  <PackageReference Include="AspNetCore.SassCompiler" Version="1.89.2" />
   <PackageReference Include="JJMasterData.Web" Version="4.4.10" />
   <PackageReference Include="Microsoft.AspNetCore.Authentication.Abstractions" Version="2.3.0" />
   <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="8.0.15" />
