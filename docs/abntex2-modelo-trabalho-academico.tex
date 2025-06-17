@@ -1225,6 +1225,8 @@ Os testes foram realizados dentro de módulos em nosso sistema:
     \item \textbf{Comportamento de telas}: o comportamento de botões, navegação, preenchimento de campos e alterações de estados da tela foram testados, alcançando, assim, a melhor experiência possível para o usuário.
 \end{itemize}
 
+\newpage
+
 \subsubsection{Casos de teste Funcionais}
 \begin{table}[htbp]
 
@@ -1255,11 +1257,13 @@ O sistema deve encerrar a sessão e redirecionar para a página de login \\
 \end{tabular}
 \legend{Fonte: Elaborado pelos autores}
 \end{table}
+
 \FloatBarrier
+
 \begin{table}[htbp]
 
 \caption{Casos de Teste Funcionais - Módulo de Cadastro de Produtos}
-\begin{tabular}{|p{1cm}|p{1.5cm}|p{3.3cm}|p{2.2cm}|p{3.5cm}|p{3.5cm}|}
+\begin{tabular}{|p{1cm}|p{1.7cm}|p{3.2cm}|p{2.1cm}|p{3.5cm}|p{3.5cm}|}
 \hline
 \textbf{ID} & \textbf{Funcio-nalidade} & \textbf{Descrição do Teste} & \textbf{Pré-condições} & \textbf{Passos} & \textbf{Resultado Esperado} \\
 \hline
@@ -1289,7 +1293,9 @@ O sistema deve atualizar os dados do produto e exibir mensagem de sucesso \\
 \end{tabular}
 \legend{Fonte: Elaborado pelos autores}
 \end{table}
+
 \FloatBarrier
+
 \begin{table}[htbp]
 
 \caption{Casos de Teste Funcionais - Módulo de Movimentação de Estoque}
@@ -1327,11 +1333,13 @@ O sistema deve exibir mensagem de erro indicando saldo insuficiente \\
 \end{tabular}
 \legend{Fonte: Elaborado pelos autores}
 \end{table}
+
 \FloatBarrier
+
 \begin{table}[htbp]
 
 \caption{Casos de Teste Funcionais - Módulo de Relatórios}
-\begin{tabular}{|p{1cm}|p{1.5cm}|p{3.3cm}|p{2.3cm}|p{3.5cm}|p{3.5cm}|}
+\begin{tabular}{|p{1cm}|p{1.5cm}|p{3.2cm}|p{2.1cm}|p{3.5cm}|p{3.5cm}|}
 \hline
 \textbf{ID} & \textbf{Funcio-nalidade} & \textbf{Descrição do Teste} & \textbf{Pré-condições} & \textbf{Passos} & \textbf{Resultado Esperado} \\
 \hline
@@ -1352,27 +1360,9 @@ O sistema deve exibir relatório com todas as movimentações do período \\
 \end{tabular}
 \legend{Fonte: Elaborado pelos autores}
 \end{table}
-\subsubsection{Casos de teste não Funcionais}
-\FloatBarrier
 
-\begin{table}[htbp]
-\centering
-\caption{Casos de Teste Não Funcionais - Desempenho}
-\begin{tabular}{|p{1.3cm}|p{3.3cm}|p{3.5cm}|p{2.5cm}|p{4.5cm}|}
-\hline
-\textbf{ID} & \textbf{Descrição} & \textbf{Critérios de Aceitação} & \textbf{Ferramentas} & \textbf{Resultado Esperado} \\
-\hline
-TNF001 & Tempo de resposta para consulta de produtos & Tempo de resposta deve ser menor que 2 segundos para até 100 produtos & Cronômetro & O sistema deve responder às consultas de produtos dentro do limite de tempo estabelecido, mesmo com um grande volume de dados \\
-\hline
-TNF002 & Tempo de geração de relatório de movimentações & Relatório com até 1000 registros deve ser gerado em menos de 5 segundos & Cronômetro  & O sistema deve gerar relatórios de movimentação dentro do limite de tempo estabelecido, mesmo com grande volume de dados \\
-\hline
-TNF003 & Capacidade de processamento simultâneo & Sistema deve suportar até 50 usuários simultâneos sem degradação de desempenho &  ferramenta similar de teste de carga & O sistema deve manter o tempo de resposta aceitável mesmo com múltiplos usuários realizando operações simultaneamente \\
-\hline
-TNF004 & Tempo de carregamento inicial da aplicação & A aplicação deve carregar completamente em menos de 3 segundos em conexão & Cronômetro  & A interface do usuário deve estar completamente carregada e operacional dentro do limite de tempo estabelecido \\
-\hline
-\end{tabular}
-\legend{Fonte: Elaborado pelos autores}
-\end{table}
+\FloatBarrier
+\subsubsection{Casos de teste não Funcionais}
 \FloatBarrier
 \begin{table}[htbp]
 \centering
@@ -1392,6 +1382,27 @@ TNF012 & Acessibilidade & Sistema deve atender aos requisitos básicos de acessi
 \end{tabular}
 \legend{Fonte: Elaborado pelos autores}
 \end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{Casos de Teste Não Funcionais - Desempenho}
+\begin{tabular}{|p{1.3cm}|p{3.3cm}|p{3.5cm}|p{2.5cm}|p{4.5cm}|}
+\hline
+\textbf{ID} & \textbf{Descrição} & \textbf{Critérios de Aceitação} & \textbf{Ferramentas} & \textbf{Resultado Esperado} \\
+\hline
+TNF001 & Tempo de resposta para consulta de produtos & Tempo de resposta deve ser menor que 2 segundos para até 100 produtos & Cronômetro & O sistema deve responder às consultas de produtos dentro do limite de tempo estabelecido, mesmo com um grande volume de dados \\
+\hline
+TNF002 & Tempo de geração de relatório de movimentações & Relatório com até 1000 registros deve ser gerado em menos de 5 segundos & Cronômetro  & O sistema deve gerar relatórios de movimentação dentro do limite de tempo estabelecido, mesmo com grande volume de dados \\
+\hline
+TNF003 & Capacidade de processamento simultâneo & Sistema deve suportar até 20 usuários simultâneos sem degradação de desempenho &  ferramenta similar de teste de carga & O sistema deve manter o tempo de resposta aceitável mesmo com múltiplos usuários realizando operações simultaneamente \\
+\hline
+TNF004 & Tempo de carregamento inicial da aplicação & A aplicação deve carregar completamente em menos de 5 segundos em conexão & Cronômetro  & A interface do usuário deve estar completamente carregada e operacional dentro do limite de tempo estabelecido \\
+\hline
+\end{tabular}
+\legend{Fonte: Elaborado pelos autores}
+\end{table}
+
+
 
 \section{Segurança, Privacidade, Legislação}
 
@@ -1543,11 +1554,12 @@ Na figura 11 no cenário pessimista, o ponto de equilíbrio é alcançado em cer
 
 \chapter{Considerações Finais}
 Ao longo do desenvolvimento deste projeto, que culminou na criação de um sistema de controle de estoque para um estabelecimento comercial, foi possível constatar de soluções tecnológicas para otimizar processos e garantir a eficiência operacional em ambientes comerciais. A iniciativa de desenvolver este sistema surgiu da necessidade de modernizar a gestão  em um cenário de mercado cada vez mais competitivo.
-O sistema proposto representa uma ferramenta estratégica para a loja, Via Penha permitindo o cadastro detalhado de produtos, o controle preciso de entradas e saídas de mercadorias, e a geração de relatórios gerenciais. Essas funcionalidades são cruciais para reduzir erros manuais, tempo dedicado à organização do estoque e, consequentemente, aprimorar a tomada de decisões. A implementação de uma metodologia ágil, como o Kanban, foi de grande ajuda para a organização do projeto.
+O sistema proposto representa uma ferramenta estratégica para a loja, Vip Penha permitindo o cadastro detalhado de produtos, o controle preciso de entradas e saídas de mercadorias, e a geração de relatórios gerenciais. Essas funcionalidades são necesarias para reduzir erros manuais, tempo dedicado à organização do estoque e, consequentemente, aprimorar a tomada de decisões. A implementação de uma metodologia ágil, como o Kanban, foi de grande ajuda para a organização do projeto.
 Espera-se que a aplicação deste sistema resulte em uma melhoria substancial na gestão do estoque do estabelecimento, contribuindo para a redução de perdas, a otimização do fluxo de trabalho e por consequência ganhos econômicos. Além disso, este projeto demonstra o potencial das tecnologias da informação para resolver desafios práticos do cotidiano de empreendimentos. A contínua evolução e aprimoramento de tais sistemas é essencial para que empreendimentos e empresas   possam manter sua competitividade e prosperar no mercado atual.
 
 \section{Dificuldades, escolhas e descartes}
-
+Durante o desenvolvimento do projeto, enfrentamos desafios inerentes à complexidade de um sistema de controle de estoque, nas etapas iniciais de modelagem e arquitetura. Uma das primeiras dificuldades surgiu na elaboração do Diagrama de Entidade-Relacionamento (DER) e do diagrama de componentes. A primeira tentativa de construir esses diagramas revelou a necessidade de um aprofundamento maior das relações entre as entidades do sistema e na definição clara dos módulos e suas interações. Este processo inicial de tentativa foi crucial para refinar nossa visão e garantir uma base sólida para o desenvolvimento 
+Uma escolha crucial foi unificar o histórico de movimentações de produtos em uma única tabela, em vez de usar tabelas separadas para entradas e saídas. Essa decisão visou simplificar e otimizar a consulta e a unificação dos dados, melhorando o desempenho e a consistência.
 
 % ---
 % Apêndices
