@@ -1,0 +1,69 @@
+﻿@using JJMasterData.Commons.Util
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@inject DateService DateService
+
+@for (var index = 0; index < Model.RolesWithUsers!.Count; index++)
+{
+    var rolesWithUsers = Model.RolesWithUsers[index];
+    var role = rolesWithUsers.Role;
+    var users = rolesWithUsers.Users;
+    var isLast = index == Model.RolesWithUsers.Count - 1;
+
+    <tr
+        @if (isLast && ViewData.ContainsKey("NextPage"))
+        {
+        <text>
+        hx-get="@Url.Action("LoadMore", new { Page = ViewData["NextPage"] })"
+        hx-trigger="revealed"
+        hx-indicator=".tr-indicator"
+        hx-include="[name='SearchText']"
+        hx-swap="afterend"
+        </text>
+        }>
+        <td class="name align-middle ps-3">
+            @if (role.Name == "Admin")
+            {
+                <span class="fa-solid fa-crown text-warning"></span>
+            }
+            @role.Name
+
+        </td>
+        <td class="align-middle white-space-nowrap ps-3 py-4">
+            @foreach (var user in users)
+            {
+                var avatarUrl = user.Id != null
+                    ? Url.Action("Avatar", "Profile", new { area = "Identity", userId = user.Id })
+                    : Url.Content("~/img/default_profile.png");
+
+                <div class="d-inline-block me-2" title="@user.UserName">
+                    <img src="@avatarUrl"
+                         onerror="this.onerror=null;this.src='@Url.Content("~/img/default_profile.png")';"
+                         class="rounded-circle"
+                         alt="Avatar"
+                         style="width:32px; height:32px;" />
+                </div>
+            }
+        </td>
+        <td class="creationDate align-middle ps-3">@role.CreationDate</td>
+        <td class="lastModifiedDate align-middle ps-3"> @((role?.LastModifiedDate != null)
+                ? DateService.GetPhrase(role.LastModifiedDate.Value)
+                : " ")</td>
+        <td class="table-action">
+            <a asp-action="RoleDetails"
+               asp-route-roleId="@role.Id"
+               data-bs-toggle="tooltip"
+               title="Editar">
+                <i class="fa fa-pen-to-square"></i>
+            </a>
+        </td>
+        <td class="table-action">
+            <a href="javascript:void(0);"
+               data-bs-toggle="tooltip"
+               title="Apagar"
+               onclick="deleteRole('@role.Id')"
+               @(User.IsInRole("Admin") || User.IsInRole("Guest") ? "disabled" : "")>
+                <i class="fa fa-trash-can"></i>
+            </a>
+        </td>
+    </tr>
+}

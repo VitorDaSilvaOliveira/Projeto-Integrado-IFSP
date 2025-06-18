@@ -1,0 +1,134 @@
+﻿@using JJMasterData.Commons.Util
+@inject DateService DateService
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Perfis";
+    int? nextPage = null;
+    if (ViewData.ContainsKey("NextPage"))
+    {
+        nextPage = ViewData["NextPage"] as int?;
+    }
+}
+
+<div class="mt-3 pb-2 mb-2 border-bottom d-flex justify-content-between">
+    <h3>
+      <span>
+        <span class="fa-solid fa-id-card ">
+        </span>
+      </span>Perfis
+        <small class="sub-title">
+        </small>
+    </h3>
+</div>
+
+<div id="roles-table">
+    <div class="row align-items-center justify-content-between g-3 mb-4">
+        <div class="col-auto">
+            <div class="d-flex align-items-center">
+                <div class="dropdown me-2">
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                        <span class="fas fa-plus me-2"></span>Adicionar
+                    </button>
+                    <div class="dropdown-menu p-3" style="min-width: 250px;">
+                        <form asp-action="Create" method="post" id="create-role-inline-form">
+                            <div class="mb-2">
+                                <input class="form-control" name="NewRoleName" placeholder="Nome"/>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Novo Perfil</button>
+                            <span class="text-danger field-validation-error">
+                                <span id="error-message-add" style="display:inline"></span>
+                            </span>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col col-auto">
+            <div class="search-box">
+                <input name="SearchText"
+                       class="form-control search-input search"
+                       type="search"
+                       placeholder="Procurar..."
+                       hx-get="@Url.Action("LoadMore", new { Page = 1 })"
+                       hx-trigger="input changed delay:500ms, search"
+                       hx-target="#roles-tbody"
+                       hx-swap="innerHTML"
+                       hx-include="[name='SearchText']"
+                       hx-indicator=".tr-indicator"
+                       aria-label="Search"/>
+                <span class="fas fa-search search-box-icon"></span>
+            </div>
+        </div>
+
+        <div class="table-responsive mt-3">
+            <table class="table table-sm fs-12 mb-0">
+                <thead>
+                <tr>
+                    <th class="sort" data-sort="name">Nome</th>
+                    <th>Membros</th>
+                    <th class="sort" data-sort="creationDate">Data da Criação</th>
+                    <th class="sort" data-sort="lastModifiedDate">Última Alteração</th>
+                    <th class="no-sort"></th>
+                    <th class="no-sort"></th>
+                </tr>
+                </thead>
+                <tbody class="list" id="roles-tbody">
+                <partial name="_Rows"/>
+                <table-placeholder columns="6"/>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>SpinnerOverlay.visible = false</script>
+
+    <script>
+        $("#create-role-inline-form").submit(function (e) {
+            e.preventDefault();
+
+            var formData = $(this).serialize();
+
+            $.ajax({
+                url: '@Url.Action("Create")',
+                type: 'POST',
+                data: formData,
+                success: function (response) {
+                    $('.dropdown.show .dropdown-toggle').dropdown('hide');
+                    location.reload();
+                },
+                error: function (xhr) {
+                    var errorMessage = JSON.parse(xhr.responseText).errors[0];
+                    $("#error-message-add").text(errorMessage);
+                }
+            });
+        });
+
+        function deleteRole(roleId) {
+            showConfirmationDialog({
+                description: 'Tem certeza que quer deletar esse perfil?',
+                cancelLabel: 'Não',
+                confirmLabel: 'Sim',
+                confirmCallback: async function () {
+                    try {
+                        const response = await fetch(`@Url.Action("Delete")?roleId=${roleId}`, {
+                            method: 'POST'
+                        });
+
+                        const result = await response.json();
+
+                        if (result.success) {
+                            location.reload();
+                        }
+                    } catch (e) {
+                        console.error(e);
+                    }
+                }
+            });
+        }
+    </script>
+}

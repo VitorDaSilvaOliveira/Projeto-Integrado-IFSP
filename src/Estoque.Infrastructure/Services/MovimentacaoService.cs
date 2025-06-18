@@ -1,8 +1,9 @@
-﻿using JJMasterData.Core.UI.Components;
+﻿using JJMasterData.Core.Events.Abstractions;
+using JJMasterData.Core.UI.Components;
 
 namespace Estoque.Infrastructure.Services;
 
-public class MovimentacaoService(IComponentFactory componentFactory)
+public class MovimentacaoService(IComponentFactory componentFactory) : IFormEventHandler
 {
     public async Task<JJFormView> GetFormViewMovimentacaoAsync()
     {

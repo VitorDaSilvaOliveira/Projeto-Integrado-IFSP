@@ -28,11 +28,11 @@ builder.Services.AddControllersWithViews(options =>
 });
 
 // === Identity ===
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
 {
     options.SignIn.RequireConfirmedAccount = false;
 })
-.AddRoles<IdentityRole>()
+.AddRoles<ApplicationRole>()
 .AddEntityFrameworkStores<EstoqueDbContext>()
 .AddErrorDescriber<Estoque.Infrastructure.Services.IdentityErrorDescriberPtBr>()
 .AddDefaultTokenProviders();
