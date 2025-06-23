@@ -98,6 +98,9 @@ public class ProfileController(
 
         var avatarBytes = userService.GetUserAvatarBytes(userId);
 
-        return File(avatarBytes, "image/png");
+        if (avatarBytes == null || avatarBytes.Length == 0)
+            return NotFound("Avatar não encontrado.");
+
+        return File(fileContents: avatarBytes, "image/png");
     }
 }

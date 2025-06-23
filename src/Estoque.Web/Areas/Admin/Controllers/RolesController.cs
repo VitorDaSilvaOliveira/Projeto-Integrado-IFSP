@@ -7,9 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Estoque.Web.Areas.Admin.Controllers;
 
 [Area("Admin")]
-public class RolesController(
-    RoleManager<ApplicationRole> roleManager,
-    UserManager<ApplicationUser> userManager)
+public class RolesController(RoleManager<ApplicationRole> roleManager, UserManager<ApplicationUser> userManager)
     : Controller
 {
     public async Task<IActionResult> Index()
@@ -17,6 +15,7 @@ public class RolesController(
         var vm = await GetRolesViewModel();
         return View(vm);
     }
+
     private async Task<RolesIndexViewModel> GetRolesViewModel()
     {
         var roles = roleManager.Roles.ToList();
@@ -40,7 +39,6 @@ public class RolesController(
     }
 
     [HttpPost]
-    [ValidateAntiForgeryToken]
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Create(string newRoleName)
     {
@@ -59,24 +57,24 @@ public class RolesController(
     }
 
     [HttpPost]
-    [ValidateAntiForgeryToken]
     [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> Delete(string roleId)
+    public async Task<IActionResult> DeleteRole(string roleId)
     {
+        if (string.IsNullOrWhiteSpace(roleId))
+            return BadRequest("ID inválido.");
+
         var role = await roleManager.FindByIdAsync(roleId);
-
         if (role == null)
-            return NotFound();
+            return NotFound("Perfil não encontrado.");
 
-        if (role.Name == "Admin" || role.Name == "Guest")
-            return BadRequest(new { success = false, errors = new[] { "Esse perfil não pode ser excluído." } });
+        if (role.Name is "Admin" or "Guest")
+            return BadRequest("Esse perfil não pode ser excluído.");
 
         var result = await roleManager.DeleteAsync(role);
-
         if (!result.Succeeded)
-            return BadRequest(new { success = false, errors = result.Errors.Select(e => e.Description) });
+            return BadRequest("Erro ao deletar o perfil.");
 
-        return Json(new { success = true });
+        return RedirectToAction("Index");
     }
 
     public async Task<IActionResult> RoleDetails(string roleId)
@@ -95,6 +93,7 @@ public class RolesController(
 
         return View(vm);
     }
+
     public async Task<IActionResult> LoadMore(int page, string? searchText)
     {
         var vm = await GetRolesViewModel();

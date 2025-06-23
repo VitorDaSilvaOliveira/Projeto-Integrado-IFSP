@@ -40,7 +40,7 @@
                          onerror="this.onerror=null;this.src='@Url.Content("~/img/default_profile.png")';"
                          class="rounded-circle"
                          alt="Avatar"
-                         style="width:32px; height:32px;" />
+                         style="width:32px; height:32px;"/>
                 </div>
             }
         </td>
@@ -57,13 +57,19 @@
             </a>
         </td>
         <td class="table-action">
-            <a href="javascript:void(0);"
-               data-bs-toggle="tooltip"
-               title="Apagar"
-               onclick="deleteRole('@role.Id')"
-               @(User.IsInRole("Admin") || User.IsInRole("Guest") ? "disabled" : "")>
-                <i class="fa fa-trash-can"></i>
-            </a>
+            <form method="post" action="@Url.Action("DeleteRole", "Roles", new { area = "Admin" })"
+                  onsubmit="return confirm('Tem certeza que quer deletar esse perfil?');"
+                  style="display:inline;">
+                <input type="hidden" name="roleId" value="@role.Id"/>
+                @Html.AntiForgeryToken()
+                <button type="submit" class="btn btn-link p-0 m-0 align-baseline"
+                        data-bs-toggle="tooltip"
+                        title="Apagar"
+                        @(!User.IsInRole("Admin") ? "disabled=\"disabled\"" : "")>
+                    <i class="fa fa-trash-can text-primary"></i>
+                </button>
+            </form>
         </td>
     </tr>
 }
+<link rel="stylesheet" href="~/css/role.css" asp-append-version="true"/>

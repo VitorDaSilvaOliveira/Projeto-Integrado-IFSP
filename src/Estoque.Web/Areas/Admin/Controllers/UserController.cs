@@ -72,7 +72,7 @@ public class UserController(UserManager<ApplicationUser> userManager, UserServic
         if (user == null)
             return NotFound();
 
-        var model = new UserViewModel
+        var model = new EditUserViewModel
         {
             Id = user.Id,
             UserName = user.UserName,
@@ -84,6 +84,37 @@ public class UserController(UserManager<ApplicationUser> userManager, UserServic
         };
 
         return View(model);
+    }
+    
+    [HttpPost]
+    public async Task<IActionResult> UserDetails(EditUserViewModel model)
+    {
+        if (!ModelState.IsValid)
+            return View(model);
+
+        var user = await userManager.FindByIdAsync(model.Id.ToString());
+
+        if (user == null)
+            return NotFound();
+
+        user.FirstName = model.FirstName;
+        user.LastName = model.LastName;
+        user.UserName = model.UserName;
+        user.Email = model.Email;
+        user.PhoneNumber = model.PhoneNumber;
+
+        var result = await userManager.UpdateAsync(user);
+
+        if (!result.Succeeded)
+        {
+            foreach (var error in result.Errors)
+                ModelState.AddModelError(string.Empty, error.Description);
+
+            return View(model);
+        }
+
+        TempData["Success"] = "Informações do usuário atualizadas com sucesso!";
+        return RedirectToAction("UserDetails", new { userId = user.Id });
     }
     
     [HttpGet]
@@ -112,7 +143,7 @@ public class UserController(UserManager<ApplicationUser> userManager, UserServic
         if (user == null)
             return NotFound();
 
-        var model = new UserViewModel
+        var model = new EditUserViewModel
         {
             Id = user.Id,
             UserName = user.UserName,
