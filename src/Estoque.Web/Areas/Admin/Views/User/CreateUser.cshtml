@@ -91,18 +91,8 @@
     </div>
 }
 
-@if (TempData["Success"] != null)
-{
-    <div class="alert mt-3 alert-dismissible alert-success" role="alert">
-        <button type="button" aria-label="Close" data-bs-dismiss="alert" class="btn-close"></button>
-        <h5 class="alert-heading">
-            <span class="fa-regular fa-circle-check me-1"></span>Sucesso
-        </h5>
-        <div class="alert-content">
-            @TempData["Success"]
-        </div>
-    </div>
-}
+@await Html.PartialAsync("_Sucess")
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

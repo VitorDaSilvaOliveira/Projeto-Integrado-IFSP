@@ -1,4 +1,4 @@
-﻿@model UserViewModel
+﻿@model EditUserViewModel
 
 @{
     ViewData["Title"] = "Informações Pessoais";
@@ -71,7 +71,7 @@
                                     <div class="col-sm-4">
                                         <div class="mb-3">
                                             <label class="form-label">Nome do Usuário <span
-                                                    class="required-symbol">*</span></label>
+                                                                                          class="required-symbol">*</span></label>
                                             <input class="form-control" type="text" name="UserName"
                                                    value="@Model.UserName"/>
                                         </div>
@@ -80,7 +80,7 @@
                                     <div class="col-sm-4">
                                         <div class="mb-3">
                                             <label class="form-label">Email <span
-                                                    class="required-symbol">*</span></label>
+                                                                                class="required-symbol">*</span></label>
                                             <input class="form-control" type="email" name="Email" value="@Model.Email"/>
                                         </div>
                                     </div>
@@ -106,7 +106,7 @@
                                     <div class="col-sm-3">
                                         <div class="mb-3">
                                             <label class="form-label">Nome <span
-                                                    class="required-symbol">*</span></label>
+                                                                               class="required-symbol">*</span></label>
                                             <input class="form-control" type="text" name="FirstName"
                                                    value="@Model.FirstName"/>
                                         </div>
@@ -115,7 +115,7 @@
                                     <div class="col-sm-3">
                                         <div class="mb-3">
                                             <label class="form-label">Sobrenome <span
-                                                    class="required-symbol">*</span></label>
+                                                                                    class="required-symbol">*</span></label>
                                             <input class="form-control" type="text" name="LastName"
                                                    value="@Model.LastName"/>
                                         </div>
@@ -136,5 +136,7 @@
         </div>
     </div>
 </div>
+@await Html.PartialAsync("_Sucess")
+
 
 
