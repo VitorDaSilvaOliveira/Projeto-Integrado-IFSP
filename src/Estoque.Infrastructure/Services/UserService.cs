@@ -1,5 +1,6 @@
 ﻿using Estoque.Infrastructure.Data;
 using JJMasterData.Core.DataDictionary;
+using JJMasterData.Core.DataDictionary.Models;
 using JJMasterData.Core.DataDictionary.Models.Actions;
 using JJMasterData.Core.UI.Components;
 using Microsoft.AspNetCore.Hosting;
@@ -17,6 +18,7 @@ public class UserService(EstoqueDbContext context, IWebHostEnvironment env, ICom
         {
             Name = "Adicionar",
             Icon = IconType.PlusCircle,
+            Color = BootstrapColor.Primary,
             Text = "Adicionar",
             ShowAsButton = true,
             UrlRedirect = "/Admin/User/CreateUser"
