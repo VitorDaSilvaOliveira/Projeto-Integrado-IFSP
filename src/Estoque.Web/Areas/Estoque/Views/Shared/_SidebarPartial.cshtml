@@ -1,84 +1,133 @@
-﻿<nav class="border-end sidebar-custom"
-     style="position: fixed; top: 56px; left: 0; width: 250px; height: calc(100vh - 56px); overflow-y: auto;">
-    <ul class="navbar-nav flex-column p-3" id="navbarVerticalNav">
+﻿<style>
+    .navbar-vertical.collapsed {
+        width: 60px; /* ou menos, dependendo do seu layout */
+    }
 
-        <li class="nav-item">
-            <div class="nav-item-wrapper">
-                <a class="nav-link label-1 px-2 @(ViewContext.RouteData.Values["controller"].ToString() == "Home" ? "active" : "")" href="@Url.Action("Index", "Home", new { area = "Estoque" })">
-                    <div class="d-flex align-items-center" style="gap: 0.8rem; font-size: 0.80rem; padding-left: 1rem;">
-                        <span class="nav-link-icon"><span class="fa fa-house"></span></span>
-                        <span class="nav-link-text-wrapper">
-                            <span class="nav-link-text text-wrap">Home</span>
-                        </span>
+    .navbar-vertical.collapsed .nav-link-text-wrapper,
+    .navbar-vertical.collapsed .navbar-vertical-label,
+    .navbar-vertical.collapsed .navbar-vertical-line,
+    .navbar-vertical.collapsed .navbar-vertical-footer-text {
+        display: none !important;
+    }
+
+</style>
+<nav class="navbar navbar-vertical navbar-expand-lg">
+    <div class="collapse navbar-collapse">
+        <div class="navbar-vertical-content">
+            <ul class="navbar-nav flex-column" id="navbarVerticalNav">
+                <li class="nav-item">
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link label-1 px-2 @(ViewContext.RouteData.Values["controller"].ToString() == "Home" ? "active" : "")"
+                           href="@Url.Action("Index", "Home", new { area = "Estoque" })">
+                            <div class="d-flex align-items-center"
+                                 style="gap: 0.8rem; font-size: 0.80rem; padding-left: 1rem;">
+                                <span class="nav-link-icon"><span class="fa fa-house"></span></span>
+                                <span class="nav-link-text-wrapper">
+                                    <span class="nav-link-text text-wrap">Home</span>
+                                </span>
+                            </div>
+                        </a>
                     </div>
-                </a>
-            </div>
-        </li>
+                </li>
 
-        <li class="nav-item">
-            <span class="sidebar-section-title text-uppercase fw-bold small px-3 mt-3 mb-1" style="font-size: 0.60rem;letter-spacing: 1px;">
-                Cadastros
-            </span>
-        </li>
+                <li class="nav-item"><p class="navbar-vertical-label text-wrap">Cadastros</p>
+                    <hr class="navbar-vertical-line">
+                </li>
 
-        <li class="nav-item">
-            <div class="nav-item-wrapper">
-                <a class="nav-link label-1 px-2 @(ViewContext.RouteData.Values["controller"].ToString() == "Produto" ? "active" : "")" href="@Url.Action("Index", "Produto", new { area = "Estoque" })">
-                    <div class="d-flex align-items-center" style="gap: 0.8rem; font-size: 0.80rem; padding-left: 1rem;">
-                        <span class="nav-link-icon"><span class="fa fa-box"></span></span>
-                        <span class="nav-link-text-wrapper">
-                            <span class="nav-link-text text-wrap">Produtos</span>
-                        </span>
+                <li class="nav-item">
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link label-1 px-2 @(ViewContext.RouteData.Values["controller"].ToString() == "Produto" ? "active" : "")"
+                           href="@Url.Action("Index", "Produto", new { area = "Estoque" })">
+                            <div class="d-flex align-items-center"
+                                 style="gap: 0.8rem; font-size: 0.80rem; padding-left: 1rem;">
+                                <span class="nav-link-icon"><span class="fa fa-box"></span></span>
+                                <span class="nav-link-text-wrapper">
+                                    <span class="nav-link-text text-wrap">Produtos</span>
+                                </span>
+                            </div>
+                        </a>
                     </div>
-                </a>
-            </div>
-        </li>
+                </li>
 
-        <li class="nav-item">
-            <div class="nav-item-wrapper">
-                <a class="nav-link label-1 px-2 @(ViewContext.RouteData.Values["controller"].ToString() == "Fornecedor" ? "active" : "")" href="@Url.Action("Index", "Fornecedor", new { area = "Estoque" })">
-                    <div class="d-flex align-items-center" style="gap: 0.8rem; font-size: 0.80rem; padding-left: 1rem;">
-                        <span class="nav-link-icon"><span class="fa fa-truck"></span></span>
-                        <span class="nav-link-text-wrapper">
-                            <span class="nav-link-text text-wrap">Fornecedores</span>
-                        </span>
+                <li class="nav-item">
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link label-1 px-2 @(ViewContext.RouteData.Values["controller"].ToString() == "Fornecedor" ? "active" : "")"
+                           href="@Url.Action("Index", "Fornecedor", new { area = "Estoque" })">
+                            <div class="d-flex align-items-center"
+                                 style="gap: 0.8rem; font-size: 0.80rem; padding-left: 1rem;">
+                                <span class="nav-link-icon"><span class="fa fa-truck"></span></span>
+                                <span class="nav-link-text-wrapper">
+                                    <span class="nav-link-text text-wrap">Fornecedores</span>
+                                </span>
+                            </div>
+                        </a>
                     </div>
-                </a>
-            </div>
-        </li>
+                </li>
 
-        <li class="nav-item">
-            <div class="nav-item-wrapper">
-                <a class="nav-link label-1 px-2 @(ViewContext.RouteData.Values["controller"].ToString() == "Categoria" ? "active" : "")" href="@Url.Action("Index", "Categoria", new { area = "Estoque" })">
-                    <div class="d-flex align-items-center" style="gap: 0.8rem; font-size: 0.80rem; padding-left: 1rem;">
-                        <span class="nav-link-icon"><span class="fa fa-tags"></span></span>
-                        <span class="nav-link-text-wrapper">
-                            <span class="nav-link-text text-wrap">Categorias</span>
-                        </span>
+                <li class="nav-item">
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link label-1 px-2 @(ViewContext.RouteData.Values["controller"].ToString() == "Categoria" ? "active" : "")"
+                           href="@Url.Action("Index", "Categoria", new { area = "Estoque" })">
+                            <div class="d-flex align-items-center"
+                                 style="gap: 0.8rem; font-size: 0.80rem; padding-left: 1rem;">
+                                <span class="nav-link-icon"><span class="fa fa-tags"></span></span>
+                                <span class="nav-link-text-wrapper">
+                                    <span class="nav-link-text text-wrap">Categorias</span>
+                                </span>
+                            </div>
+                        </a>
                     </div>
-                </a>
-            </div>
-        </li>
+                </li>
 
-        
-        <li class="nav-item">
-            <span class="sidebar-section-title text-uppercase fw-bold small px-3 mt-3 mb-1" style="font-size: 0.60rem; letter-spacing: 1px;">
-                Movimentações
-            </span>
-        </li>
-        
-        <li class="nav-item">
-            <div class="nav-item-wrapper">
-                <a class="nav-link label-1 px-2 @(ViewContext.RouteData.Values["controller"].ToString() == "Movimentacao" ? "active" : "")" href="@Url.Action("Index", "Movimentacao", new { area = "Estoque" })">
-                    <div class="d-flex align-items-center" style="gap: 0.8rem; font-size: 0.80rem; padding-left: 1rem;">
-                        <span class="nav-link-icon"><span class="fa-solid fa-right-left"></span></span>
-                        <span class="nav-link-text-wrapper">
-                            <span class="nav-link-text text-wrap">Entrada e Saída</span>
-                        </span>
+
+                <li class="nav-item"><p class="navbar-vertical-label text-wrap">Movimentações</p>
+                    <hr class="navbar-vertical-line">
+                </li>
+
+                <li class="nav-item">
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link label-1 px-2 @(ViewContext.RouteData.Values["controller"].ToString() == "Movimentacao" ? "active" : "")"
+                           href="@Url.Action("Index", "Movimentacao", new { area = "Estoque" })">
+                            <div class="d-flex align-items-center"
+                                 style="gap: 0.8rem; font-size: 0.80rem; padding-left: 1rem;">
+                                <span class="nav-link-icon"><span class="fa-solid fa-right-left"></span></span>
+                                <span class="nav-link-text-wrapper">
+                                    <span class="nav-link-text text-wrap">Entrada e Saída</span>
+                                </span>
+                            </div>
+                        </a>
                     </div>
-                </a>
-            </div>
-        </li>
-
-    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="navbar-vertical-footer">
+        <button id="verticalToggleBtn"
+                class="btn navbar-vertical-toggle border-0 fw-semibold w-100 white-space-nowrap d-flex align-items-center">
+            <span class="toggle-icon fa-solid fa-angle-left fs-8"></span>
+            <span class="navbar-vertical-footer-text ms-2">Visualização Recolhida</span>
+        </button>
+    </div>
 </nav>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const toggleBtn = document.getElementById("verticalToggleBtn");
+        const navbar = document.querySelector(".navbar-vertical");
+        const toggleIcon = toggleBtn.querySelector(".toggle-icon");
+        const footerText = toggleBtn.querySelector(".navbar-vertical-footer-text");
+
+        toggleBtn.addEventListener("click", function () {
+            navbar.classList.toggle("collapsed");
+
+            if (navbar.classList.contains("collapsed")) {
+                toggleIcon.classList.remove("fa-angle-left");
+                toggleIcon.classList.add("fa-angle-right");
+            } else {
+                toggleIcon.classList.remove("fa-angle-right");
+                toggleIcon.classList.add("fa-angle-left");
+                footerText.textContent = "Visualização Recolhida";
+            }
+        });
+    });
+</script>
+

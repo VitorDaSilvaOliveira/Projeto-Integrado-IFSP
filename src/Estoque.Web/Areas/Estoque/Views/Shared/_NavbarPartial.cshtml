@@ -8,125 +8,132 @@
         : Url.Content("~/img/default_profile.png");
 }
 
-<header class="navbar navbar-top fixed-top navbar-expand" id="navbarDefault">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="@Url.Action("Index", "Home", new { area = "Estoque" })">
-            <img src="~/img/logo.png" alt="Logo" width="50" height="50"/>
-        </a>
+<nav class="navbar navbar-top fixed-top navbar-expand" id="navbarDefault">
+    <div class="collapse navbar-collapse justify-content-between">
 
-        <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarContent">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+        <!-- Logo -->
+        <div class="d-flex align-items-center">
+            <!-- Botão Hamburguer visível só no mobile -->
+            <button class="btn navbar-toggler d-lg-none me-2" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#navbarVerticalCollapse"
+                    aria-controls="navbarVerticalCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        <div class="text-white d-flex align-items-center gap-2">
-            <input type="checkbox" class="btn-check" id="themeControlToggle" autocomplete="off" style="display:none;"/>
+            <!-- Logo -->
+            <a class="navbar-logo" href="@Url.Action("Index", "Home", new { area = "Estoque" })">
+                <img src="~/img/logo.png" alt="Logo" width="50" height="50" />
+            </a>
+        </div>
 
-            <label class="mb-0 theme-control-toggle-label theme-control-toggle-dark" for="themeControlToggle"
-                   data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="Mudar tema" title="Mudar tema"
-                   style="cursor:pointer; font-size: 1.2rem; color: #ffc107; position: relative; top: 2px;">
-                <span class="fa-solid fa-sun sun-icon"></span>
-            </label>
+            <!-- Direita: Ícones e avatar -->
+            <ul class="navbar-nav navbar-nav-icons flex-row">
 
-            @if (User.IsInRole("Admin"))
-            {
-                <div class="dropdown">
-                    <a class="nav-link me-2" id="navbarDropdownNindeDots" href="#" role="button"
-                       data-bs-toggle="dropdown"
-                       aria-haspopup="true" aria-expanded="false" style="color: #ffc107;">
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="2" cy="2" r="2" fill="currentColor"></circle>
-                            <circle cx="2" cy="8" r="2" fill="currentColor"></circle>
-                            <circle cx="2" cy="14" r="2" fill="currentColor"></circle>
-                            <circle cx="8" cy="8" r="2" fill="currentColor"></circle>
-                            <circle cx="8" cy="14" r="2" fill="currentColor"></circle>
-                            <circle cx="14" cy="8" r="2" fill="currentColor"></circle>
-                            <circle cx="14" cy="14" r="2" fill="currentColor"></circle>
-                            <circle cx="8" cy="2" r="2" fill="currentColor"></circle>
-                            <circle cx="14" cy="2" r="2" fill="currentColor"></circle>
-                        </svg>
+                <!-- Tema -->
+                <li class="nav-item">
+                    <div class="theme-control-toggle position-relative">
+                        <input class="form-check-input ms-0 theme-control-toggle-input" type="checkbox"
+                               data-theme-control="phoenixTheme" value="dark" id="themeControlToggle" hidden />
+                        <label class="mb-0 theme-control-toggle-label" for="themeControlToggle"
+                               data-bs-toggle="tooltip" data-bs-placement="bottom" title="Mudar Tema">
+                            <span id="themeIcon" class="fa-solid fa-sun"></span>
+                        </label>
+                    </div>
+                </li>
+
+                <!-- Notificações -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link text-center position-relative" href="#" role="button"
+                       data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                       data-bs-auto-close="outside">
+                        <i class="fas fa-lg fa-bell" style="color: #969db2;"></i>
                     </a>
-                    <div
-                        class="dropdown-menu dropdown-menu-end navbar-dropdown-caret py-0 dropdown-nine-dots shadow border"
-                        aria-labelledby="navbarDropdownNindeDots">
-                        <div class="card bg-body-emphasis position-relative border-0">
-                            <div class="card-body pt-3 px-3 pb-0 overflow-auto scrollbar"
-                                 style="height: 20rem; width:20rem">
-                                <div class="row text-center align-items-center gx-0 gy-0">
-                                    <div class="col-4">
-                                        <a class="d-block bg-body-secondary-hover p-2 rounded-3 text-center text-decoration-none mb-3"
-                                           href="/DataDictionary">
-                                            <div class="icon-wrapper">
-                                                <span class="fa-solid fa-book"></span>
+                    <div class="dropdown-menu dropdown-menu-end notification-dropdown-menu py-0 shadow border navbar-dropdown-caret">
+                        <div class="card mb-0 position-relative border-0">
+                            <div class="card-body p-0">
+                                <div class="scrollbar-overlay" style="height: 27rem;" data-simplebar>
+                                    <div class="simplebar-content mt-3">
+                                        <div class="row justify-content-center align-items-center g-5">
+                                            <div class="col-12 text-center">
+                                                <p class="fs-6 mb-0">Nenhuma notificação nova</p>
                                             </div>
-                                            <p class="item-label mb-0 text-body-emphasis text-truncate fs-10">
-                                                Dicionário</p>
-                                        </a>
+                                        </div>
                                     </div>
-                                    <div class="col-4">
-                                        <a class="d-block bg-body-secondary-hover p-2 rounded-3 text-center text-decoration-none mb-3"
-                                           href="@Url.Action("Index", "User", new { area = "Admin" })">
-                                            <div class="icon-wrapper">
-                                                <span class="fa-solid fa-users"></span>
-                                            </div>
-                                            <p class="item-label mb-0 text-body-emphasis text-truncate fs-10">
-                                                Usuários</p>
-                                        </a>
-                                    </div>
-                                    <div class="col-4">
-                                        <a class="d-block bg-body-secondary-hover p-2 rounded-3 text-center text-decoration-none mb-3"
-                                           href="@Url.Action("Index", "Roles", new { area = "Admin" })">
-                                            <div class="icon-wrapper">
-                                                <span class="fa-solid fa-id-card"></span>
-                                            </div>
-                                            <p class="item-label mb-0 text-body-emphasis text-truncate fs-10">
-                                                Perfis</p>
-                                        </a>
-                                    </div>
-                                    <div class="col-4">
-                                        <a class="d-block bg-body-secondary-hover p-2 rounded-3 text-center text-decoration-none mb-3"
-                                           href="@Url.Action("Index", "AuditLog", new { area = "Admin" })">
-                                            <div class="icon-wrapper">
-                                                <span class="fa-solid fa-bars-staggered"></span>
-                                            </div>
-                                            <p class="item-label mb-0 text-body-emphasis text-truncate fs-10">
-                                                Auditoria</p>
-                                        </a>
-                                    </div>
-                                    <div class="col-4">
-                                        <a class="d-block bg-body-secondary-hover p-2 rounded-3 text-center text-decoration-none mb-3"
-                                           href="@Url.Action("Index", "Log", new { area = "Admin" })">
-                                            <div class="icon-wrapper">
-                                                <span class="fa fa-film"></span>
-                                            </div>
-                                            <p class="item-label mb-0 text-body-emphasis text-truncate fs-10">Log</p>
-                                        </a>
-                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer p-0 border-top border-translucent">
+                                <div class="my-2 text-center fw-bold fs-10 text-body-tertiary text-opacity-85">
+                                    <a class="fw-bolder" href="/Notifications">Histórico de Notificações</a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            }
+                </li>
 
-            <div class="dropdown">
-                <a class="nav-link lh-1 pe-0" id="navbarDropdownUser" href="#"
-                   data-bs-toggle="dropdown" data-bs-display="static" aria-haspopup="true" aria-expanded="false"
-                   title="Menu do Usuário">
-                    <div class="avatar avatar-l position-relative">
-                        <img src="@avatarUrl"
-                             onerror="this.onerror=null;this.src='@Url.Content("~/img/default_profile.png")';"
-                             class="rounded-circle" alt="Avatar"/>
-                    </div>
-                </a>
+                <!-- Admin Menu -->
+                @if (User.IsInRole("Admin"))
+                {
+                    <li class="nav-item dropdown">
+                        <a class="nav-link me-2" id="navbarDropdownNineDots" href="#" role="button"
+                           data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: #ffc107;">
+                            <i class="fa-solid fa-th"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end navbar-dropdown-caret py-0 dropdown-nine-dots shadow border">
+                            <div class="card bg-body-emphasis position-relative border-0">
+                                <div class="card-body pt-3 px-3 pb-0 overflow-auto scrollbar" style="height: 20rem; width:20rem">
+                                    <div class="row text-center align-items-center gx-0 gy-0">
+                                        <div class="col-4">
+                                            <a class="d-block p-2 rounded-3 text-center text-decoration-none mb-3" href="/DataDictionary">
+                                                <span class="fa-solid fa-book"></span>
+                                                <p class="mb-0 fs-10">Dicionário</p>
+                                            </a>
+                                        </div>
+                                        <div class="col-4">
+                                            <a class="d-block p-2 rounded-3 text-center text-decoration-none mb-3" href="@Url.Action("Index", "User", new { area = "Admin" })">
+                                                <span class="fa-solid fa-users"></span>
+                                                <p class="mb-0 fs-10">Usuários</p>
+                                            </a>
+                                        </div>
+                                        <div class="col-4">
+                                            <a class="d-block p-2 rounded-3 text-center text-decoration-none mb-3" href="@Url.Action("Index", "Roles", new { area = "Admin" })">
+                                                <span class="fa-solid fa-id-card"></span>
+                                                <p class="mb-0 fs-10">Perfis</p>
+                                            </a>
+                                        </div>
+                                        <div class="col-4">
+                                            <a class="d-block p-2 rounded-3 text-center text-decoration-none mb-3" href="@Url.Action("Index", "AuditLog", new { area = "Admin" })">
+                                                <span class="fa-solid fa-bars-staggered fa-xl"></span>
+                                                <p class="mb-0 fs-10">Auditoria</p>
+                                            </a>
+                                        </div>
+                                        <div class="col-4">
+                                            <a class="d-block p-2 rounded-3 text-center text-decoration-none mb-3" href="@Url.Action("Index", "Log", new { area = "Admin" })">
+                                                <span class="fa fa-film fa-xl"></span>
+                                                <p class="mb-0 fs-10">Log</p>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                }
 
-                <div class="dropdown-menu dropdown-menu-end navbar-dropdown-caret py-0 dropdown-profile shadow border"
-                     aria-labelledby="navbarDropdownUser"
-                     style="min-width: 16rem; max-height: 24rem; overflow: visible;">
-
-                    <div class="card position-relative border-0">
-                        <div class="card-body p-0">
-                            <div class="text-center pt-4 pb-3">
+                <!-- Avatar -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link lh-1 pe-0" id="navbarDropdownUser" href="#" data-bs-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false" title="Menu do Usuário">
+                        <div class="avatar avatar-l position-relative">
+                            <img src="@avatarUrl"
+                                 onerror="this.onerror=null;this.src='@Url.Content("~/img/default_profile.png")';"
+                                 class="rounded-circle" alt="Avatar" />
+                        </div>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end navbar-dropdown-caret py-0 dropdown-profile shadow border"
+                         aria-labelledby="navbarDropdownUser"
+                         style="min-width: 16rem; max-height: 24rem; overflow: visible;">
+                        <div class="card position-relative border-0">
+                            <div class="card-body p-0 text-center pt-4 pb-3">
                                 <div class="avatar avatar-xl">
                                     <img src="@avatarUrl"
                                          onerror="this.onerror=null;this.src='@Url.Content("~/img/default_profile.png")';"
@@ -136,69 +143,34 @@
                                     @User.FindFirst("FirstName")?.Value @User.FindFirst("LastName")?.Value
                                 </h6>
                             </div>
-                        </div>
-
-                        <!-- Scroll interno elegante -->
-                        <div class="overflow-auto scrollbar" style="max-height: 20rem;">
-                            <ul class="nav flex-column mb-2 pb-1">
-                                <li class="nav-item">
-                                    <a class="nav-link px-3" asp-area="Identity" asp-controller="Profile" asp-action="Index">
-                                        <span class="me-2 text-body fa fa-user"></span>Perfil
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link px-3" href="/Identity/Email/ChangeEmail">
-                                        <span class="me-2 text-body fa fa-at"></span>Alterar Email
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link px-3" href="/Identity/ChangePassword">
-                                        <span class="me-2 text-body fa fa-key"></span>Alterar Senha
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link px-3" href="/Identity/Phone/ChangePhone">
-                                        <span class="me-2 text-body fa fa-mobile-phone"></span>Alterar Telefone
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link px-3" href="/Identity/UserAccess">
-                                        <span class="me-2 text-body fa-solid fa-clock-rotate-left"></span>Últimos Acessos
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="card-footer p-0 border-top border-translucent">
-                            <ul class="nav flex-column my-3">
-                                <li class="nav-item">
-                                    <a class="nav-link px-3" href="" target="_blank">
-                                        <span class="fa fa-info-circle me-2 text-body"></span>Centro de Ajuda
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link px-3" href="javascript:('/Admin/About/Offcanvas')">
-                                        <span class="fa fa-globe me-2 text-body"></span>Sobre
-                                    </a>
-                                </li>
-                            </ul>
-
-                            <hr />
-
-                            <div class="px-3 logout-button">
-                                <form id="logoutForm" asp-area="Identity" asp-controller="SignOut" asp-action="Index"
-                                      method="post" class="w-100">
-                                    @Html.AntiForgeryToken()
-                                    <button type="submit" class="btn btn-secondary d-flex flex-center w-100">
-                                        <span class="me-2 fa fa-sign-out-alt"></span>Sair
-                                    </button>
-                                </form>
+                            <div class="overflow-auto scrollbar" style="max-height: 20rem;">
+                                <ul class="nav flex-column mb-2 pb-1">
+                                    <li class="nav-item"><a class="nav-link px-3" asp-area="Identity" asp-controller="Profile" asp-action="Index"><span class="me-2 fa fa-user"></span>Perfil</a></li>
+                                    <li class="nav-item"><a class="nav-link px-3" href="/Identity/Email/ChangeEmail"><span class="me-2 fa fa-at"></span>Alterar Email</a></li>
+                                    <li class="nav-item"><a class="nav-link px-3" href="/Identity/ChangePassword"><span class="me-2 fa fa-key"></span>Alterar Senha</a></li>
+                                    <li class="nav-item"><a class="nav-link px-3" href="/Identity/Phone/ChangePhone"><span class="me-2 fa fa-mobile-phone"></span>Alterar Telefone</a></li>
+                                    <li class="nav-item"><a class="nav-link px-3" href="/Identity/UserAccess"><span class="me-2 fa-solid fa-clock-rotate-left"></span>Últimos Acessos</a></li>
+                                </ul>
+                            </div>
+                            <div class="card-footer p-0 border-top border-translucent">
+                                <ul class="nav flex-column my-3">
+                                    <li class="nav-item"><a class="nav-link px-3" href="" target="_blank"><span class="fa fa-info-circle me-2 text-body"></span>Centro de Ajuda</a></li>
+                                    <li class="nav-item"><a class="nav-link px-3" href="javascript:('/Admin/About/Offcanvas')"><span class="fa fa-globe me-2 text-body"></span>Sobre</a></li>
+                                </ul>
+                                <hr />
+                                <div class="px-3 logout-button">
+                                    <form id="logoutForm" asp-area="Identity" asp-controller="SignOut" asp-action="Index" method="post" class="w-100">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="btn btn-secondary d-flex flex-center w-100">
+                                            <span class="me-2 fa fa-sign-out-alt"></span>Sair
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                </li>
 
-        </div>
+            </ul>
     </div>
-</header>
+</nav>
