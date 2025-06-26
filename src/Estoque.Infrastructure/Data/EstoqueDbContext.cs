@@ -9,4 +9,5 @@ public class EstoqueDbContext : IdentityDbContext<ApplicationUser, ApplicationRo
     public EstoqueDbContext(DbContextOptions<EstoqueDbContext> options) : base(options) {}
     public DbSet<Produto> Produtos { get; set; }
     public DbSet<AuditLog> AuditLogs { get; set; }
+    public DbSet<Notificacao> Notificacoes { get; set; }
 }
