@@ -49,16 +49,15 @@
                     <i class="fas fa-lg fa-bell" style="color: #969db2;"></i>
                 </a>
                 <div
-                    class="dropdown-menu dropdown-menu-end notification-dropdown-menu py-0 shadow border navbar-dropdown-caret">
+                    class="dropdown-menu dropdown-menu-end notification-dropdown-menu py-0 shadow border navbar-dropdown-caret" style="max-width: 350px; word-wrap: break-word;">
                     <div class="card mb-0 position-relative border-0">
                         <div class="card-body p-0">
                             <div class="scrollbar-overlay" style="height: 27rem;" data-simplebar>
-                                <div class="simplebar-content mt-3">
-                                    <div class="row justify-content-center align-items-center g-5">
-                                        <div class="col-12 text-center">
-                                            <p class="fs-6 mb-0">Nenhuma notificação nova</p>
-                                        </div>
-                                    </div>
+                                <div class="simplebar-content mt-3" id="notificacoes-container">
+                                    @await Html.PartialAsync(
+                                        "~/Areas/Estoque/Views/Shared/_NotificacoesDropdown.cshtml",
+                                        ViewBag.Notificacoes as List<Estoque.Domain.Entities.Notificacao> ?? []
+                                    )
                                 </div>
                             </div>
                         </div>
@@ -205,7 +204,6 @@
                     </div>
                 </div>
             </li>
-
         </ul>
     </div>
 </nav>
