@@ -21,6 +21,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<AuthService>();
         services.AddScoped<UserService>();
         services.AddScoped<AuditLogService>();
+        services.AddScoped<HomeService>();
         services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, CustomClaimsFactory>();
     }
 

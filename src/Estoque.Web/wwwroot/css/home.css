@@ -12,3 +12,8 @@
     color: #f1c40f;
     font-weight: bold;
 }
+
+.card-body canvas {
+    width: 100% !important;
+    height: 250px !important;
+}
