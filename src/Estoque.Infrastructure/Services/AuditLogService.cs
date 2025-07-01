@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
 using Estoque.Domain.Entities;
 using Estoque.Infrastructure.Data;
+using Estoque.Infrastructure.Utils;
 using JJMasterData.Core.UI.Components;
 using Microsoft.AspNetCore.Http;
 
@@ -17,11 +18,14 @@ public class AuditLogService(EstoqueDbContext context, IHttpContextAccessor http
     
     public async Task LogAsync(string area, string action, string details = "", string? userId = null, string? userName = null)
     {
-        if (string.IsNullOrEmpty(userId))
-            userId = httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
-
         var httpContext = httpContextAccessor.HttpContext;
         var user = httpContext?.User;
+
+        if (string.IsNullOrEmpty(userId))
+            userId = user?.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if (string.IsNullOrEmpty(userName))
+            userName = user?.Identity?.Name;
 
         var ip = httpContext?.Connection.RemoteIpAddress?.ToString();
 
@@ -30,7 +34,7 @@ public class AuditLogService(EstoqueDbContext context, IHttpContextAccessor http
             UserId = userId,
             UserName = userName,
             IpAddress = ip,
-            AccessedAt = DateTime.Now,
+            AccessedAt = LocalTime.Now(),
             Area = area,
             Action = action,
             Details = details

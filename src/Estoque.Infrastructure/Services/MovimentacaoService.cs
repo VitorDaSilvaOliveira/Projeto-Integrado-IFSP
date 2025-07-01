@@ -1,9 +1,11 @@
 ﻿using Estoque.Domain.Entities;
 using Estoque.Domain.Enums;
 using Estoque.Infrastructure.Data;
+using Estoque.Infrastructure.Utils;
 using JJMasterData.Core.Events.Abstractions;
 using JJMasterData.Core.Events.Args;
 using JJMasterData.Core.UI.Components;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -12,7 +14,9 @@ namespace Estoque.Infrastructure.Services;
 public class MovimentacaoService(
     IComponentFactory componentFactory,
     EstoqueDbContext context,
-    ILogger<MovimentacaoService> logger) : IFormEventHandler
+    ILogger<MovimentacaoService> logger,
+    AuditLogService auditLogService,
+    SignInManager<ApplicationUser> signInManager) : IFormEventHandler
 {
     public async Task<JJFormView> GetFormViewMovimentacaoAsync()
     {
@@ -42,6 +46,9 @@ public class MovimentacaoService(
         var produto = await context.Produtos
             .FirstOrDefaultAsync(p => p.IdProduto == produtoId);
 
+        var user = signInManager.Context.User;
+        var userName = user?.Identity?.Name ?? "Anônimo";
+
         if (produto == null)
             logger.LogError("Produto não encontrado.");
 
@@ -51,19 +58,39 @@ public class MovimentacaoService(
         {
             produto.QuantidadeEstoque -= quantidade;
 
+            await auditLogService.LogAsync(
+                "Estoque",
+                "Movimentação de Saída",
+                $"Saída de {quantidade} unidades do produto '{produto.Nome}' (ID: {produto.IdProduto}). Novo estoque: {produto.QuantidadeEstoque}.",
+                userId,
+                userName
+            );
+
+
             if (produto.QuantidadeEstoque < produto.EstoqueMinimo)
                 await NotificarEstoqueBaixo(produto, userId);
         }
         else if (tipoMovimentacao == TipoMovimentacao.Entrada)
+        {
             produto.QuantidadeEstoque += quantidade;
+
+            await auditLogService.LogAsync(
+                "Estoque",
+                "Movimentação de Entrada",
+                $"Entrada de {quantidade} unidades do produto '{produto.Nome}' (ID: {produto.IdProduto}). Novo estoque: {produto.QuantidadeEstoque}.",
+                userId,
+                userName
+            );
+        }
     }
-    
+
     private async Task NotificarEstoqueBaixo(Produto produto, string? userId)
     {
         var notificacao = new Notificacao
         {
-            Mensagem = $"⚠️ Estoque do produto '{produto.Nome}' abaixo do mínimo! ({produto.QuantidadeEstoque} unidades restantes)",
-            Data = DateTime.Now,
+            Mensagem =
+                $"⚠️ Estoque do produto '{produto.Nome}' abaixo do mínimo! ({produto.QuantidadeEstoque} unidades restantes)",
+            Data = LocalTime.Now(),
             IdUser = userId
         };
 

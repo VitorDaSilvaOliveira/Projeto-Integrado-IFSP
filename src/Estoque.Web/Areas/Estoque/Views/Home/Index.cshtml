@@ -1,5 +1,6 @@
 ﻿@using System.Security.Claims
 @using Estoque.Domain.Entities
+@using Estoque.Infrastructure.Utils
 @using Microsoft.AspNetCore.Identity
 @inject UserManager<ApplicationUser> UserManager
 
@@ -20,7 +21,7 @@
 
 @{
     var name = await GetUserFirstName();
-    var hour = DateTime.Now.Hour;
+    var hour = LocalTime.Now().Hour;
     var greeting = hour switch
     {
         >= 6 and < 12 => "Bom Dia",

@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using Estoque.Domain.Enums;
 using Estoque.Infrastructure.Data;
+using Estoque.Infrastructure.Utils;
 using Microsoft.EntityFrameworkCore;
 
 namespace Estoque.Infrastructure.Services;
@@ -26,7 +27,7 @@ public class HomeService(EstoqueDbContext context)
 
     public async Task<(List<string> labels, List<int> entradas, List<int> saidas)> GetMovimentacoesUltimosMesesAsync()
     {
-        var hoje = DateTime.Now;
+        var hoje = LocalTime.Now();
         var primeiroMes = new DateTime(hoje.Year, hoje.Month, 1).AddMonths(-3);
 
         var movimentacoes = await context.Movimentacoes
@@ -62,7 +63,7 @@ public class HomeService(EstoqueDbContext context)
 
     public async Task<IEnumerable<object>> GetEstoqueMensalAsync()
     {
-        var hoje = DateTime.Now;
+        var hoje = LocalTime.Now();
         var anoAtual = hoje.Year;
 
         var movimentacoes = await context.Movimentacoes
