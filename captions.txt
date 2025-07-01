@@ -1,0 +1,9 @@
+2025-05-08|Criação do Projeto
+2025-05-10|Início da Documentação
+2025-05-17|Fase Inicial de Desenvolvimento
+2025-05-21|Estruturação do Sistema
+2025-05-25|Layout do Sistema
+2025-05-30|Avanço da Documentação
+2025-06-03|Implementando Novas Funções
+2025-06-12|Reta Final da Documentação
+2025-06-23|Ajustes finais no Sistema
