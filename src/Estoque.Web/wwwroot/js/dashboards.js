@@ -11,12 +11,12 @@
             labels: movData.labels.map(l => l.toUpperCase()),
             datasets: [
                 {
-                    label: 'Entradas',
+                    label: textTranslated.entries,
                     data: movData.entradas,
                     backgroundColor: '#3b82f6'
                 },
                 {
-                    label: 'Saídas',
+                    label: textTranslated.exits,
                     data: movData.saidas,
                     backgroundColor: '#ef4444'
                 }
@@ -29,7 +29,7 @@
             plugins: {
                 tooltip: {
                     callbacks: {
-                        label: ctx => `${ctx.dataset.label}: ${ctx.raw} unidades`
+                        label: ctx => `${ctx.dataset.label}: ${ctx.raw} ${textTranslated.units}`
                     }
                 }
             }
@@ -64,7 +64,7 @@
         data: {
             labels: labelsReal,
             datasets: [{
-                label: 'Estoque Total',
+                label: textTranslated.totalStock,
                 data: valoresEstoque,
                 borderColor: '#0ea5e9',
                 backgroundColor: 'rgba(14, 165, 233, 0.2)',

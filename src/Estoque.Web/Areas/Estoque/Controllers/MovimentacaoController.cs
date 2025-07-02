@@ -1,14 +1,10 @@
-﻿using Estoque.Domain.Entities;
-using Estoque.Domain.Enums;
-using Estoque.Infrastructure.Data;
-using Estoque.Infrastructure.Services;
+﻿using Estoque.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Estoque.Web.Areas.Estoque.Controllers;
 
 [Area("Estoque")]
-public class MovimentacaoController(MovimentacaoService movimentacaoService, EstoqueDbContext context) : Controller
+public class MovimentacaoController(MovimentacaoService movimentacaoService) : Controller
 {
     public async Task<IActionResult> Index()
     {
@@ -22,9 +18,4 @@ public class MovimentacaoController(MovimentacaoService movimentacaoService, Est
         ViewBag.FormViewMovimentacao = resultGridMovimentacaoAsync.Content;
         return View();
     }
-    
- 
-
-
-    
 }

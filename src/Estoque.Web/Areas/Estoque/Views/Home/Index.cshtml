@@ -2,7 +2,10 @@
 @using Estoque.Domain.Entities
 @using Estoque.Infrastructure.Utils
 @using Microsoft.AspNetCore.Identity
+@using Estoque.Lib.Resources
+@using Microsoft.Extensions.Localization
 @inject UserManager<ApplicationUser> UserManager
+@inject IStringLocalizer<EstoqueResources> Localizer
 
 @{
     ViewBag.Title = "Home";
@@ -22,11 +25,12 @@
 @{
     var name = await GetUserFirstName();
     var hour = LocalTime.Now().Hour;
+
     var greeting = hour switch
     {
-        >= 6 and < 12 => "Bom Dia",
-        >= 12 and < 18 => "Boa Tarde",
-        _ => "Boa Noite"
+        >= 6 and < 12 => Localizer["GoodDay"],
+        >= 12 and < 18 => Localizer["GoodAfternoon"],
+        _ => Localizer["GoodNight"]
     };
 }
 
@@ -37,7 +41,7 @@
             <h2 class="text-primary">@greeting, @name.</h2>
         </div>
         <span class="fw-light overflow-hidden">
-            Bem-vindo(a) ao Estoque Vip Penha.
+            @Localizer["Welcome"]
             <span class="typed-text fw-bold" data-typed-text='["Vip Penha Estoque", "as últimas novidades."]'></span>
         </span>
     </div>
@@ -57,7 +61,7 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-center">
                         <div>
-                            <h5 class="mb-3">Produtos por Categoria</h5>
+                            <h5 class="mb-3">@Localizer["ProductsByCategory"]</h5>
                         </div>
                     </div>
                     <div class="d-flex justify-content-center p-1">
@@ -72,7 +76,7 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-center">
                         <div>
-                            <h5 class="mb-3">Evolução Mensal do Estoque</h5>
+                            <h5 class="mb-3">@Localizer["MonthlyStockEvolution"]</h5>
                         </div>
                     </div>
                     <div class="d-flex justify-content-center p-1">
@@ -83,4 +87,13 @@
         </div>
     </div>
 </div>
+<script>
+    const textTranslated = {
+        entries: "@Localizer["Entries"]",
+        exits: "@Localizer["Exits"]",
+        totalStock: "@Localizer["TotalStock"]",
+        units: "@Localizer["Units"]"
+    };
+</script>
 
+<script src="~/js/dashboards.js" asp-append-version="true"></script>

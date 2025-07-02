@@ -1,26 +1,4 @@
-﻿document.addEventListener('DOMContentLoaded', () => {
-    const toggle = document.getElementById('themeControlToggle');
-    const html = document.documentElement;
-    const icon = document.getElementById('themeIcon');
-
-    const applyTheme = (theme) => {
-        html.setAttribute('data-bs-theme', theme);
-        localStorage.setItem('theme', theme);
-        icon.className = `fa-solid ${theme === 'dark' ? 'fa-moon' : 'fa-sun'}`;
-    };
-
-    // Tema salvo ou default
-    let savedTheme = localStorage.getItem('theme') || 'light';
-    toggle.checked = savedTheme === 'dark';
-    applyTheme(savedTheme);
-
-    toggle.addEventListener('change', () => {
-        const newTheme = toggle.checked ? 'dark' : 'light';
-        applyTheme(newTheme);
-    });
-});
-
-const toggle = document.getElementById('themeControlToggle');
+﻿const toggle = document.getElementById('themeControlToggle');
 const html = document.documentElement;
 const label = toggle.nextElementSibling;
 

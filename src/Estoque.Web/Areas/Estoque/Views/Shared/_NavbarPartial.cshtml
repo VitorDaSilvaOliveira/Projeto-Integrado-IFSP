@@ -1,11 +1,12 @@
-﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
-@inject IHttpContextAccessor HttpContextAccessor
+﻿@inject IHttpContextAccessor HttpContextAccessor
 @{
     var userId = HttpContextAccessor.HttpContext?.User.FindFirst("sub")?.Value
                  ?? HttpContextAccessor.HttpContext?.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
     var avatarUrl = userId != null
         ? Url.Action("Avatar", "Profile", new { area = "Identity", userId })
         : Url.Content("~/img/default_profile.png");
+
+    var currentCulture = System.Globalization.CultureInfo.CurrentUICulture.Name;
 }
 
 <nav class="navbar navbar-top fixed-top navbar-expand" id="navbarDefault">
@@ -41,6 +42,33 @@
                 </div>
             </li>
 
+            <li class="nav-item dropdown hide-on-xs">
+                <button id="language-button" data-bs-placement="bottom" title="Idioma" type="button" class="nav-link"
+                        aria-expanded="false" data-bs-toggle="dropdown">
+                    <span class="fas fa-lg fa-globe-americas" style="color: #969db2;"></span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end navbar-dropdown-caret" href="#">
+                    <li>
+                        <form method="post" asp-area="Estoque" asp-controller="Language" asp-action="SetLanguage" class="m-0 p-0">
+                            <input type="hidden" name="returnUrl" value="@(Context.Request.Path + Context.Request.QueryString)" />
+                            <button type="submit" class="dropdown-item @(currentCulture == "en-US" ? "active" : "")"
+                                    name="culture" value="en-US">
+                                <span class="fi fi-us"></span><span>&nbsp;United States</span>
+                            </button>
+                        </form>
+                    </li>
+                    <li>
+                        <form method="post" asp-area="Estoque" asp-controller="Language" asp-action="SetLanguage" class="m-0 p-0">
+                            <input type="hidden" name="returnUrl" value="@(Context.Request.Path + Context.Request.QueryString)" />
+                            <button type="submit" class="dropdown-item @(currentCulture == "pt-BR" ? "active" : "")"
+                                    name="culture" value="pt-BR">
+                                <span class="fi fi-br"></span><span>&nbsp;Brasil</span>
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </li>
+            
             <!-- Notificações -->
             <li class="nav-item dropdown">
                 <a class="nav-link text-center position-relative" href="#" role="button"
@@ -49,7 +77,8 @@
                     <i class="fas fa-lg fa-bell" style="color: #969db2;"></i>
                 </a>
                 <div
-                    class="dropdown-menu dropdown-menu-end notification-dropdown-menu py-0 shadow border navbar-dropdown-caret" style="max-width: 350px; word-wrap: break-word;">
+                    class="dropdown-menu dropdown-menu-end notification-dropdown-menu py-0 shadow border navbar-dropdown-caret"
+                    style="max-width: 350px; word-wrap: break-word;">
                     <div class="card mb-0 position-relative border-0">
                         <div class="card-body p-0">
                             <div class="scrollbar-overlay" style="height: 27rem;" data-simplebar>

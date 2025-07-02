@@ -121,15 +121,13 @@ app.UseStaticFiles();
 app.UseForwardedHeaders();
 
 app.UseRouting();
-
+app.UsePtBrLocalization();
 app.UseCookiePolicy();
 
 app.UseSession();
 
 app.UseAuthentication();
 app.UseAuthorization();
-
-app.UsePtBrLocalization();
 
 app.MapCustomEndpoints();
 

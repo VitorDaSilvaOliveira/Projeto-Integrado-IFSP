@@ -8,13 +8,22 @@ public static class LocalizationExtensions
 {
     public static void AddPtBrLocalization(this IServiceCollection services)
     {
-        var supportedCultures = new[] { new CultureInfo("pt-BR") };
-
         services.Configure<RequestLocalizationOptions>(options =>
         {
+            var supportedCultures = new[]
+            {
+                new CultureInfo("en-US"),
+                new CultureInfo("pt-BR")
+            };
+
             options.DefaultRequestCulture = new RequestCulture("pt-BR");
             options.SupportedCultures = supportedCultures;
             options.SupportedUICultures = supportedCultures;
+
+            options.RequestCultureProviders = new List<IRequestCultureProvider>
+            {
+                new CookieRequestCultureProvider()
+            };
         });
     }
 
