@@ -7,7 +7,7 @@
 </ItemGroup>
 
 <PropertyGroup>
-  <TargetFramework>net8.0</TargetFramework>
+  <TargetFramework>net9.0</TargetFramework>
   <Nullable>enable</Nullable>
   <ImplicitUsings>enable</ImplicitUsings>
   <UserSecretsId>aa54c91b-7bb6-40f3-a250-b5a8bccf1507</UserSecretsId>
@@ -17,11 +17,11 @@
 
 <ItemGroup>
   <PackageReference Include="AspNetCore.SassCompiler" Version="1.89.2" />
-  <PackageReference Include="JJMasterData.Web" Version="4.4.10" />
+  <PackageReference Include="JJMasterData.Web" Version="4.4.11" />
   <PackageReference Include="Microsoft.AspNetCore.Authentication.Abstractions" Version="2.3.0" />
-  <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="8.0.15" />
-  <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
-  <PackageReference Include="Swashbuckle.AspNetCore" Version="8.0.0" />
+  <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="9.0.6" />
+  <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.2" />
+  <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.1" />
 </ItemGroup>
 
 </Project>
