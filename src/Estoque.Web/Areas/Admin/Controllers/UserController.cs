@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Estoque.Web.Areas.Admin.Controllers;
 
 [Area("Admin")]
-public class UserController(UserManager<ApplicationUser> userManager, UserService userService, AuthService authService,SignInManager<ApplicationUser> signInManager) : Controller
+public class UserController(UserManager<ApplicationUser> userManager, UserService userService,SignInManager<ApplicationUser> signInManager) : Controller
 {
     public async Task<IActionResult> Index()
     {
@@ -81,6 +81,7 @@ public class UserController(UserManager<ApplicationUser> userManager, UserServic
             FirstName = user.FirstName,
             LastName = user.LastName,
             AvatarUrl = user.AvatarFileName,
+            Status = user.Status
         };
 
         return View(model);

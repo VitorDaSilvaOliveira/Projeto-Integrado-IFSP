@@ -20,7 +20,7 @@ public class AuthService(
 
         if (user == null)
             return (false, "Tentativa de login inválida.");
-    
+
         if (!await userManager.CheckPasswordAsync(user, password))
             return (false, "Tentativa de login inválida.");
 

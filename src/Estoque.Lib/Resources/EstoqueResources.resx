@@ -36,4 +36,10 @@
     <data name="Entries" xml:space="preserve">
         <value>Entradas</value>
     </data>
+    <data name="Exits" xml:space="preserve">
+        <value>Saidas</value>
+    </data>
+    <data name="CorporateName" xml:space="preserve">
+        <value>Razão Social</value>
+    </data>
 </root>

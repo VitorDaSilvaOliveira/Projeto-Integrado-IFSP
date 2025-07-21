@@ -131,4 +131,11 @@ app.UseAuthorization();
 
 app.MapCustomEndpoints();
 
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<EstoqueDbContext>();
+    dbContext.Database.Migrate();
+}
+await IdentitySeed.CreateAdminAsync(app.Services);
+
 app.Run();

@@ -25,7 +25,7 @@
         <value>Good Afternoon</value>
     </data>
     <data name="Welcome" xml:space="preserve">
-        <value>Welcome to Estoque Vip Penha.</value>
+        <value>Welcome to Stock Vip Penha.</value>
     </data>
     <data name="ProductsByCategory" xml:space="preserve">
         <value>Products by Category</value>
@@ -35,5 +35,11 @@
     </data>
     <data name="Entries" xml:space="preserve">
         <value>Entries</value>
+    </data>
+    <data name="Exits" xml:space="preserve">
+        <value>Exits</value>
+    </data>
+    <data name="CorporateName" xml:space="preserve">
+        <value>Corporate Name</value>
     </data>
 </root>

@@ -12,4 +12,5 @@ public class EstoqueDbContext : IdentityDbContext<ApplicationUser, ApplicationRo
     public DbSet<Categoria> Categorias { get; set; }
     public DbSet<Movimentacao> Movimentacoes { get; set; }
     public DbSet<Notificacao> Notificacoes { get; set; }
+    public DbSet<Fornecedor> Fornecedores { get; set; }
 }

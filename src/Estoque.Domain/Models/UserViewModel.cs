@@ -32,4 +32,5 @@ public class UserViewModel
     [DataType(DataType.Password)]
     public string ConfirmPassword { get; set; }
     public string? AvatarUrl { get; set; }
+    public int? Status { get; set; }
 }

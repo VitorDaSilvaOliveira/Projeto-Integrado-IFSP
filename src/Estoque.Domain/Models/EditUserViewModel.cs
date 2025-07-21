@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Estoque.Domain.Enums;
 
 namespace Estoque.Domain.Models;
 
@@ -19,4 +20,5 @@ public class EditUserViewModel
     public string? PhoneNumber { get; set; }
 
     public string? AvatarUrl { get; set; }
+    public UserStatus Status { get; set; }
 }
