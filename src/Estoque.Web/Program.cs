@@ -1,6 +1,5 @@
 using Estoque.Domain.Entities;
 using Estoque.Infrastructure.Data;
-using Estoque.Infrastructure.Factory;
 using Estoque.Web.Configuration;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.HttpOverrides;

@@ -42,4 +42,7 @@
     <data name="CorporateName" xml:space="preserve">
         <value>Corporate Name</value>
     </data>
+    <data name="GoodDay" xml:space="preserve">
+        <value>Good Day</value>
+    </data>
 </root>
