@@ -21,4 +21,5 @@ public class Produto
 
     [Column("Id_Categoria")] public int? IdCategoria { get; set; }
     [Column("EstoqueMinimo")] public int? EstoqueMinimo { get; set; }
+    [Column("Id_Fornecedor")] public int? Fornecedor { get; set; }
 }

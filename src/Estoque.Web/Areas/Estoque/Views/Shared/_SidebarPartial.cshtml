@@ -1,17 +1,4 @@
-﻿<style>
-    .navbar-vertical.collapsed {
-        width: 60px; /* ou menos, dependendo do seu layout */
-    }
-
-    .navbar-vertical.collapsed .nav-link-text-wrapper,
-    .navbar-vertical.collapsed .navbar-vertical-label,
-    .navbar-vertical.collapsed .navbar-vertical-line,
-    .navbar-vertical.collapsed .navbar-vertical-footer-text {
-        display: none !important;
-    }
-
-</style>
-<nav class="navbar navbar-vertical navbar-expand-lg">
+﻿<nav class="navbar navbar-vertical navbar-expand-lg">
     <div class="collapse navbar-collapse">
         <div class="navbar-vertical-content">
             <ul class="navbar-nav flex-column" id="navbarVerticalNav">
@@ -23,8 +10,8 @@
                                  style="gap: 0.8rem; font-size: 0.80rem; padding-left: 1rem;">
                                 <span class="nav-link-icon"><span class="fa fa-house"></span></span>
                                 <span class="nav-link-text-wrapper">
-                                    <span class="nav-link-text text-wrap">Home</span>
-                                </span>
+                                        <span class="nav-link-text text-wrap">Home</span>
+                                    </span>
                             </div>
                         </a>
                     </div>
@@ -42,8 +29,8 @@
                                  style="gap: 0.8rem; font-size: 0.80rem; padding-left: 1rem;">
                                 <span class="nav-link-icon"><span class="fa fa-box"></span></span>
                                 <span class="nav-link-text-wrapper">
-                                    <span class="nav-link-text text-wrap">Produtos</span>
-                                </span>
+                                        <span class="nav-link-text text-wrap">Produtos</span>
+                                    </span>
                             </div>
                         </a>
                     </div>
@@ -57,8 +44,8 @@
                                  style="gap: 0.8rem; font-size: 0.80rem; padding-left: 1rem;">
                                 <span class="nav-link-icon"><span class="fa fa-truck"></span></span>
                                 <span class="nav-link-text-wrapper">
-                                    <span class="nav-link-text text-wrap">Fornecedores</span>
-                                </span>
+                                        <span class="nav-link-text text-wrap">Fornecedores</span>
+                                    </span>
                             </div>
                         </a>
                     </div>
@@ -72,19 +59,47 @@
                                  style="gap: 0.8rem; font-size: 0.80rem; padding-left: 1rem;">
                                 <span class="nav-link-icon"><span class="fa fa-tags"></span></span>
                                 <span class="nav-link-text-wrapper">
-                                    <span class="nav-link-text text-wrap">Categorias</span>
-                                </span>
+                                        <span class="nav-link-text text-wrap">Categorias</span>
+                                    </span>
+                            </div>
+                        </a>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link label-1 px-2 @(ViewContext.RouteData.Values["controller"].ToString() == "Cliente" ? "active" : "")"
+                           href="@Url.Action("Index", "Cliente", new { area = "Estoque" })">
+                            <div class="d-flex align-items-center"
+                                 style="gap: 0.8rem; font-size: 0.80rem; padding-left: 1rem;">
+                                <span class="nav-link-icon"><span class="fa-solid fa-people-group"></span></span>
+                                <span class="nav-link-text-wrapper">
+                                        <span class="nav-link-text text-wrap">Clientes</span>
+                                    </span>
                             </div>
                         </a>
                     </div>
                 </li>
 
 
-                <li class="nav-item"><p class="navbar-vertical-label text-wrap">Movimentações</p>
+                <li class="nav-item">
+                    <p class="navbar-vertical-label text-wrap">Movimentações</p>
                     <hr class="navbar-vertical-line">
                 </li>
 
                 <li class="nav-item">
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link label-1 px-2 @(ViewContext.RouteData.Values["controller"].ToString() == "Pedido" ? "active" : "")"
+                           href="@Url.Action("Index", "Pedido", new { area = "Estoque" })">
+                            <div class="d-flex align-items-center"
+                                 style="gap: 0.8rem; font-size: 0.80rem; padding-left: 1rem;">
+                                <span class="nav-link-icon"><span class="fa-solid fa-cart-shopping"></span></span>
+                                <span class="nav-link-text-wrapper">
+                                        <span class="nav-link-text text-wrap">Pedidos</span>
+                                    </span>
+                            </div>
+                        </a>
+                    </div>
                     <div class="nav-item-wrapper">
                         <a class="nav-link label-1 px-2 @(ViewContext.RouteData.Values["controller"].ToString() == "Movimentacao" ? "active" : "")"
                            href="@Url.Action("Index", "Movimentacao", new { area = "Estoque" })">
@@ -92,17 +107,18 @@
                                  style="gap: 0.8rem; font-size: 0.80rem; padding-left: 1rem;">
                                 <span class="nav-link-icon"><span class="fa-solid fa-right-left"></span></span>
                                 <span class="nav-link-text-wrapper">
-                                    <span class="nav-link-text text-wrap">Entrada e Saída</span>
-                                </span>
+                                        <span class="nav-link-text text-wrap">Entrada e Saída</span>
+                                    </span>
                             </div>
                         </a>
                     </div>
                 </li>
-                
-                <li class="nav-item"><p class="navbar-vertical-label text-wrap">Relatórios</p>
+
+                <li class="nav-item">
+                    <p class="navbar-vertical-label text-wrap">Relatórios</p>
                     <hr class="navbar-vertical-line">
                 </li>
-                
+
             </ul>
         </div>
     </div>
@@ -119,20 +135,18 @@
         const toggleBtn = document.getElementById("verticalToggleBtn");
         const navbar = document.querySelector(".navbar-vertical");
         const toggleIcon = toggleBtn.querySelector(".toggle-icon");
-        const footerText = toggleBtn.querySelector(".navbar-vertical-footer-text");
 
         toggleBtn.addEventListener("click", function () {
             navbar.classList.toggle("collapsed");
-
             if (navbar.classList.contains("collapsed")) {
                 toggleIcon.classList.remove("fa-angle-left");
                 toggleIcon.classList.add("fa-angle-right");
             } else {
                 toggleIcon.classList.remove("fa-angle-right");
                 toggleIcon.classList.add("fa-angle-left");
-                footerText.textContent = "Visualização Recolhida";
             }
         });
     });
-</script>
 
+</script>
+<link rel="stylesheet" href="~/css/collapseSideBar.css" asp-append-version="true"/>
