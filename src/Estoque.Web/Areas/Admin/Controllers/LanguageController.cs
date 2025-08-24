@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Estoque.Web.Areas.Estoque.Controllers;
+namespace Estoque.Web.Areas.Admin.Controllers;
 
-[Area("Estoque")]
+[Area("Admin")]
 public class LanguageController : Controller
 {
     [HttpPost]

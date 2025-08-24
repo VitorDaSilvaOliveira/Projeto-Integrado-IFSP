@@ -1,6 +1,6 @@
 ﻿@inject IHttpContextAccessor HttpContextAccessor
 @{
-    var userId = HttpContextAccessor.HttpContext?.User.FindFirst("sub")?.Value
+    var userId = HttpContextAccessor!.HttpContext?.User.FindFirst("sub")?.Value
                  ?? HttpContextAccessor.HttpContext?.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
     var avatarUrl = userId != null
         ? Url.Action("Avatar", "Profile", new { area = "Identity", userId })
@@ -49,7 +49,7 @@
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end navbar-dropdown-caret" href="#">
                     <li>
-                        <form method="post" asp-area="Estoque" asp-controller="Language" asp-action="SetLanguage" class="m-0 p-0">
+                        <form method="post" asp-area="Admin" asp-controller="Language" asp-action="SetLanguage" class="m-0 p-0">
                             <input type="hidden" name="returnUrl" value="@(Context.Request.Path + Context.Request.QueryString)" />
                             <button type="submit" class="dropdown-item @(currentCulture == "en-US" ? "active" : "")"
                                     name="culture" value="en-US">
@@ -58,7 +58,7 @@
                         </form>
                     </li>
                     <li>
-                        <form method="post" asp-area="Estoque" asp-controller="Language" asp-action="SetLanguage" class="m-0 p-0">
+                        <form method="post" asp-area="Admin" asp-controller="Language" asp-action="SetLanguage" class="m-0 p-0">
                             <input type="hidden" name="returnUrl" value="@(Context.Request.Path + Context.Request.QueryString)" />
                             <button type="submit" class="dropdown-item @(currentCulture == "pt-BR" ? "active" : "")"
                                     name="culture" value="pt-BR">
