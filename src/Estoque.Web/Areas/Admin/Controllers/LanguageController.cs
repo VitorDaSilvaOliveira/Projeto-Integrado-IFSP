@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Localization;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Estoque.Web.Areas.Admin.Controllers;
@@ -6,6 +7,7 @@ namespace Estoque.Web.Areas.Admin.Controllers;
 [Area("Admin")]
 public class LanguageController : Controller
 {
+    [AllowAnonymous]
     [HttpPost]
     public IActionResult SetLanguage(string culture, string? returnUrl)
     {

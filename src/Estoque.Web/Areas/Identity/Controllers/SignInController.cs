@@ -3,6 +3,7 @@ using Estoque.Domain.Models;
 using Estoque.Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Estoque.Web.Areas.Identity.Controllers;
@@ -59,4 +60,32 @@ public class SignInController(AuthService authService, AuditLogService auditLogS
         return View("Index");
     }
 
+    [HttpGet]
+    [AllowAnonymous]
+    public IActionResult ForgotPassword()
+    {
+        return View(new ForgotPasswordViewModel());
+    }
+
+    [HttpPost]
+    [AllowAnonymous]
+    public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model, [FromServices] EmailSender emailSender)
+    {
+        if (!ModelState.IsValid)
+            return View(model);
+
+        var user = await userManager.FindByEmailAsync(model.Email);
+        if (user != null)
+        {
+            var token = await userManager.GeneratePasswordResetTokenAsync(user);
+            var resetLink = Url.Action("ResetPassword", "SignIn", new { token, email = user.Email }, Request.Scheme);
+
+            var htmlMessage = $"<p>Olá, clique no link abaixo para redefinir sua senha:</p><p><a href='{resetLink}'>Redefinir senha</a></p>";
+
+            await emailSender.SendEmailAsync(user.Email, "Redefinição de senha", htmlMessage);
+        }
+
+        ViewBag.Message = "Se o e-mail existir, um link de redefinição foi enviado.";
+        return View(model);
+    }
 }
