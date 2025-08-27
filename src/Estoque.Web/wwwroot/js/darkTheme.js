@@ -6,12 +6,12 @@ function updateThemeUI(theme) {
     if (theme === 'dark') {
         html.setAttribute('data-bs-theme', 'dark');
         toggle.checked = true;
-        label.innerHTML = '<span class="fa-solid fa-moon"></span>';
+        label.innerHTML = '<span class="bi bi-moon-fill"></span>';
         label.style.color = '#1758bc';
     } else {
         html.setAttribute('data-bs-theme', 'light');
         toggle.checked = false;
-        label.innerHTML = '<span class="fa-solid fa-sun"></span>';
+        label.innerHTML = '<span class="bi bi-sun-fill"></span>';
         label.style.color = '#ffc107';
     }
 }

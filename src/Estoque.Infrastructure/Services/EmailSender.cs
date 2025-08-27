@@ -4,24 +4,15 @@ using System.Net.Mail;
 
 namespace Estoque.Infrastructure.Services;
 
-public class EmailSender
+public class EmailSender(IConfiguration config)
 {
-    private readonly IConfiguration _config;
-
-    public EmailSender(IConfiguration config)
-    {
-        _config = config;
-    }
-
     public async Task SendEmailAsync(string toEmail, string subject, string htmlMessage)
     {
-        var emailConfig = _config.GetSection("EmailSettings");
+        var emailConfig = config.GetSection("EmailSettings");
 
-        using var client = new SmtpClient(emailConfig["Host"], int.Parse(emailConfig["Port"]))
-        {
-            Credentials = new NetworkCredential(emailConfig["UserName"], emailConfig["Password"]),
-            EnableSsl = bool.Parse(emailConfig["EnableSSL"])
-        };
+        using var client = new SmtpClient(emailConfig["Host"], int.Parse(emailConfig["Port"]));
+        client.Credentials = new NetworkCredential(emailConfig["UserName"], emailConfig["Password"]);
+        client.EnableSsl = bool.Parse(emailConfig["EnableSSL"]);
 
         var mailMessage = new MailMessage
         {

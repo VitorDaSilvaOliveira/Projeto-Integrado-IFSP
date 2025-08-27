@@ -1,0 +1,75 @@
+﻿@{
+}
+<head>
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+</head>
+<h3>
+    <i class="fas fa-cog me-2"></i> Administração
+</h3>
+<hr />
+<section class="py-0">
+    <div class="container-small">
+        <div class="scrollbar">
+            <div class="d-flex justify-content-between">
+
+                <a class="icon-nav-item" href="/DataDictionary">
+                    <div class="icon-container mb-2">
+                        <i class="fs-4 uil uil-book"></i>
+                    </div>
+                    <p class="nav-label">Formulários</p>
+                </a>
+
+                <a class="icon-nav-item" href="@Url.Action("Index", "User", new { area = "Admin" })">
+                    <div class="icon-container mb-2">
+                        <i class="fs-4 uil uil-users-alt"></i>
+                    </div>
+                    <p class="nav-label">Usuários</p>
+                </a>
+
+                <a class="icon-nav-item" href="@Url.Action("Index", "Roles", new { area = "Admin" })">
+                    <div class="icon-container mb-2">
+                        <i class="fs-4 uil uil-user-check"></i>
+                    </div>
+                    <p class="nav-label">Perfis</p>
+                </a>
+
+                <a class="icon-nav-item" href="@Url.Action("Index", "AuditLog", new { area = "Admin" })">
+                    <div class="icon-container mb-2">
+                        <i class="fs-4 uil uil-shield-check"></i>
+                    </div>
+                    <p class="nav-label">Auditoria</p>
+                </a>
+
+                <a class="icon-nav-item" href="@Url.Action("Index", "Log", new { area = "Admin" })">
+                    <div class="icon-container mb-2">
+                        <i class="fs-4 uil uil-film"></i>
+                    </div>
+                    <p class="nav-label">Log</p>
+                </a>
+
+            </div>
+        </div>
+        </div>
+
+</section>
+
+<div class="d-flex justify-content-center gap-3 mt-4">
+    <div class="card p-3 text-center">
+        <h5>Usuários Ativos</h5>
+        <p class="fs-3 text-primary">1,245</p>
+    </div>
+    <div class="card p-3 text-center">
+        <h5>Formulários Pendentes</h5>
+        <p class="fs-3 text-warning">27</p>
+    </div>
+    <div class="card p-3 text-center">
+        <h5>Erros Recentes</h5>
+        <p class="fs-3 text-danger">5</p>
+    </div>
+</div>
+
+<div class="d-flex justify-content-center gap-3 mt-4">
+    <button class="btn btn-success"><i class="uil uil-plus"></i> Criar Usuário</button>
+    <button class="btn btn-warning"><i class="uil uil-database"></i> Backup DB</button>
+    <button class="btn btn-danger"><i class="uil uil-trash"></i> Limpar Logs</button>
+</div>

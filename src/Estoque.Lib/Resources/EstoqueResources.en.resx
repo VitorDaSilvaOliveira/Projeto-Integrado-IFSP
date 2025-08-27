@@ -165,6 +165,9 @@
   <data name="Welcome" xml:space="preserve">
     <value>Welcome to Stock Vip Penha.</value>
   </data>
+  <data name="ResetPassword" xml:space="preserve">
+    <value>Reset Password</value>
+  </data>
   <data name="ForgotYourPassword" xml:space="preserve">
     <value>Forgot your Password?</value>
   </data>

@@ -3,13 +3,12 @@ using Estoque.Domain.Models;
 using Estoque.Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Estoque.Web.Areas.Identity.Controllers;
 
 [Area("Identity")]
-public class SignInController(AuthService authService, AuditLogService auditLogService, UserManager<ApplicationUser> userManager) : Controller
+public class SignInController(AuthService authService, UserManager<ApplicationUser> userManager) : Controller
 {
     [AllowAnonymous]
     [HttpGet]
@@ -86,6 +85,44 @@ public class SignInController(AuthService authService, AuditLogService auditLogS
         }
 
         ViewBag.Message = "Se o e-mail existir, um link de redefinição foi enviado.";
+        return View(model);
+    }
+
+    [HttpGet]
+    [AllowAnonymous]
+    public IActionResult ResetPassword(string token, string email)
+    {
+        if (token == null || email == null)
+            return BadRequest("Token ou e-mail inválido.");
+
+        var model = new ResetPasswordViewModel { Token = token, Email = email };
+        return View(model);
+    }
+
+    [HttpPost]
+    [AllowAnonymous]
+    public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
+    {
+        if (!ModelState.IsValid)
+            return View(model);
+
+        var user = await userManager.FindByEmailAsync(model.Email);
+        if (user == null)
+        {
+            ViewBag.SuccessMessage = "Se o e-mail for válido, sua senha foi redefinida.";
+            return View("ResetPassword");
+        }
+
+        var result = await userManager.ResetPasswordAsync(user, model.Token, model.Password);
+        if (result.Succeeded)
+        {
+            ViewBag.SuccessMessage = "Senha redefinida com sucesso! Agora você já pode fazer login.";
+            return View("ResetPassword");
+        }
+
+        foreach (var error in result.Errors)
+            ModelState.AddModelError("", error.Description);
+
         return View(model);
     }
 }

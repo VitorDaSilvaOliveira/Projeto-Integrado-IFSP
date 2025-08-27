@@ -5,18 +5,18 @@
 
 @await RenderSectionAsync("Stylesheets", required: false)
 <body>
-@await Html.PartialAsync("~/Areas/Estoque/Views/Shared/_NavbarPartial.cshtml")
+    @await Html.PartialAsync("~/Areas/Estoque/Views/Shared/_NavbarPartial.cshtml")
 
-<div class="d-flex" style="min-height: 100vh; padding-top: 56px;">
-    @await Html.PartialAsync("~/Areas/Estoque/Views/Shared/_SidebarPartial.cshtml")
+    <div class="d-flex" style="min-height: 100vh; padding-top: 56px;">
+        @await Html.PartialAsync("~/Areas/Estoque/Views/Shared/_SidebarPartial.cshtml")
 
-    <main class="container-fluid p-4">
-        @RenderBody()
-    </main>
-</div>
+        <main class="container-fluid p-4" style="margin-left: 250px;">
+            @RenderBody()
+        </main>
+    </div>
 
-@await Html.PartialAsync("~/Areas/Estoque/Views/Shared/_ScriptsPartial.cshtml")
+    @await Html.PartialAsync("~/Areas/Estoque/Views/Shared/_ScriptsPartial.cshtml")
 
-@await RenderSectionAsync("Scripts", required: false)
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
