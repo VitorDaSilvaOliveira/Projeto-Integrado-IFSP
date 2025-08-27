@@ -165,6 +165,9 @@
   <data name="Welcome" xml:space="preserve">
     <value>Bem Vindo ao Estoque Vip Penha.</value>
   </data>
+  <data name="AdminPanel" xml:space="preserve">
+    <value>Painel de Administrador</value>
+  </data>
   <data name="ResetPassword" xml:space="preserve">
     <value>Redefinir Senha</value>
   </data>

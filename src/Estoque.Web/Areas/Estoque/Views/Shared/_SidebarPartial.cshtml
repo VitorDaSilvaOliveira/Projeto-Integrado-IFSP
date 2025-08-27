@@ -1,4 +1,8 @@
-﻿<nav class="navbar navbar-vertical navbar-expand-lg">
+﻿@using Estoque.Lib.Resources
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<EstoqueResources> Localizer
+
+<nav class="navbar navbar-vertical navbar-expand-lg">
     <div class="collapse navbar-collapse">
         <div class="navbar-vertical-content">
             <ul class="navbar-nav flex-column" id="navbarVerticalNav">
@@ -201,7 +205,7 @@
             <a class="btn navbar-vertical-toggle border-0 fw-semibold w-100 white-space-nowrap d-flex align-items-center"
                href="@Url.Action("Index", "Configuration", new { area = "Admin" })">
                 <span class="bi-gear"></span>
-                <span class="navbar-vertical-footer-text ms-2">Configurações</span>
+                <span class="navbar-vertical-footer-text ms-2">@Localizer["AdminPanel"]</span>
             </a>
         </div>
     }
