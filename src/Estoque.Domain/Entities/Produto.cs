@@ -6,9 +6,9 @@ namespace Estoque.Domain.Entities;
 [Table("Produto")]
 public class Produto
 {
-    [Key] [Column("idProduto")] public int IdProduto { get; set; }
+    [Key][Column("idProduto")] public int IdProduto { get; set; }
 
-    [Column("Nome")] [StringLength(150)] public string? Nome { get; set; }
+    [Column("Nome")][StringLength(150)] public string? Nome { get; set; }
 
     [Column("Descricao")]
     [StringLength(200)]
@@ -22,4 +22,19 @@ public class Produto
     [Column("Id_Categoria")] public int? IdCategoria { get; set; }
     [Column("EstoqueMinimo")] public int? EstoqueMinimo { get; set; }
     [Column("Id_Fornecedor")] public int? Fornecedor { get; set; }
+
+    public void DarBaixaEstoque(int quantidadeParaBaixa)
+    {
+        if (quantidadeParaBaixa < 0)
+        {
+            throw new ArgumentException("A quantidade para baixa não pode ser negativa.");
+        }
+
+        if (this.QuantidadeEstoque < quantidadeParaBaixa)
+        {
+            throw new InvalidOperationException("Estoque insuficiente para realizar a baixa.");
+        }
+
+        this.QuantidadeEstoque -= quantidadeParaBaixa;
+    }
 }
