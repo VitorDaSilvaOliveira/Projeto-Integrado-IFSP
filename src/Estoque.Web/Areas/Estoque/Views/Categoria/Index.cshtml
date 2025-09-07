@@ -1,6 +1,9 @@
 ﻿@using JJMasterData.Web.Extensions
+@using Estoque.Lib.Resources
+@inject Microsoft.Extensions.Localization.IStringLocalizer<EstoqueResources> Localizer
+
 @{
-    ViewBag.Title = "Categorias";
+    ViewBag.Title = Localizer["Categorias"];
 }
 
 @using (Html.BeginMasterDataForm())
