@@ -1,9 +1,12 @@
-﻿using Estoque.Infrastructure.Data;
+﻿using Estoque.Domain.Enums;
+using Estoque.Infrastructure.Data;
 using JJMasterData.Core.DataDictionary;
 using JJMasterData.Core.DataDictionary.Models;
 using JJMasterData.Core.DataDictionary.Models.Actions;
 using JJMasterData.Core.UI.Components;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Estoque.Infrastructure.Services;
 
@@ -53,5 +56,10 @@ public class UserService(EstoqueDbContext context, IWebHostEnvironment env, ICom
             return null;
 
         return File.ReadAllBytes(avatarPath);
+    }
+
+    public async Task<int> GetActiveUsersCount()
+    {
+        return await context.Users.CountAsync(u => u.Status == UserStatus.Ativo);
     }
 }
