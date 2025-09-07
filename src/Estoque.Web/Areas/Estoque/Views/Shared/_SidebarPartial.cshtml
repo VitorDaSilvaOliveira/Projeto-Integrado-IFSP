@@ -6,40 +6,41 @@
     <div class="collapse navbar-collapse">
         <div class="navbar-vertical-content">
             <ul class="navbar-nav flex-column" id="navbarVerticalNav">
+
+                <!-- Dashboards -->
                 <li class="nav-item">
                     <a class="nav-link d-flex justify-content-between align-items-center px-2"
                        data-bs-toggle="collapse" href="#collapseHome" role="button"
                        aria-expanded="false" aria-controls="collapseHome">
-                        <span class="text-wrap">Dashboards</span>
+                        <span class="text-wrap">@Localizer["Dashboards"]</span>
                         <span class="bi bi-chevron-down"></span>
                     </a>
                     <hr class="navbar-vertical-line">
 
-                    <!-- Itens colapsáveis -->
                     <div class="collapse @(new[] { "Home", "Dashboard1", "Dashboard2" }.Contains(ViewContext.RouteData.Values["controller"].ToString()) ? "show" : "")"
                          id="collapseHome">
 
-                        <!-- Dashboard Principal -->
+                        <!-- Home -->
                         <div class="nav-item-wrapper">
                             <a class="nav-link label-1 px-2 @(ViewContext.RouteData.Values["controller"].ToString() == "Home" ? "active" : "")"
                                href="@Url.Action("Index", "Home", new { area = "Estoque" })">
-                                <div class="d-flex align-items-center" style="gap: 0.8rem; font-size: 0.80rem; padding-left: 1rem;">
+                                <div class="d-flex align-items-center" style="gap:0.8rem; font-size:0.80rem; padding-left:1rem;">
                                     <span class="nav-link-icon"><span class="bi bi-house"></span></span>
                                     <span class="nav-link-text-wrapper">
-                                        <span class="nav-link-text text-wrap">Home</span>
+                                        <span class="nav-link-text text-wrap">@Localizer["Home"]</span>
                                     </span>
                                 </div>
                             </a>
                         </div>
 
-                        <!-- Dashboard secundário (exemplo) -->
+                        <!-- Dashboard 2 -->
                         <div class="nav-item-wrapper">
                             <a class="nav-link label-1 px-2 @(ViewContext.RouteData.Values["controller"].ToString() == "Dashboard2" ? "active" : "")"
                                href="@Url.Action("Index", "Dashboard2", new { area = "Estoque" })">
-                                <div class="d-flex align-items-center" style="gap: 0.8rem; font-size: 0.80rem; padding-left: 1rem;">
+                                <div class="d-flex align-items-center" style="gap:0.8rem; font-size:0.80rem; padding-left:1rem;">
                                     <span class="nav-link-icon"><span class="bi bi-speedometer2"></span></span>
                                     <span class="nav-link-text-wrapper">
-                                        <span class="nav-link-text text-wrap">Dashboard 2</span>
+                                        <span class="nav-link-text text-wrap">@Localizer["Dashboard2"]</span>
                                     </span>
                                 </div>
                             </a>
@@ -48,11 +49,12 @@
                     </div>
                 </li>
 
+                <!-- Cadastros -->
                 <li class="nav-item">
                     <a class="nav-link d-flex justify-content-between align-items-center px-2"
                        data-bs-toggle="collapse" href="#collapseCadastros" role="button"
                        aria-expanded="false" aria-controls="collapseCadastros">
-                        <span class="text-wrap">Cadastros</span>
+                        <span class="text-wrap">@Localizer["Cadastros"]</span>
                         <span class="bi bi-chevron-down"></span>
                     </a>
                     <hr class="navbar-vertical-line">
@@ -60,53 +62,49 @@
                     <div class="collapse @(new[] { "Produto", "Fornecedor", "Categoria", "Cliente" }.Contains(ViewContext.RouteData.Values["controller"].ToString()) ? "show" : "")"
                          id="collapseCadastros">
 
-                        <!-- Produtos -->
                         <div class="nav-item-wrapper">
                             <a class="nav-link label-1 px-2 @(ViewContext.RouteData.Values["controller"].ToString() == "Produto" ? "active" : "")"
                                href="@Url.Action("Index", "Produto", new { area = "Estoque" })">
-                                <div class="d-flex align-items-center" style="gap: 0.8rem; font-size: 0.80rem; padding-left: 1rem;">
+                                <div class="d-flex align-items-center" style="gap:0.8rem; font-size:0.80rem; padding-left:1rem;">
                                     <span class="nav-link-icon"><span class="bi bi-box-seam"></span></span>
                                     <span class="nav-link-text-wrapper">
-                                        <span class="nav-link-text text-wrap">Produtos</span>
+                                        <span class="nav-link-text text-wrap">@Localizer["Produtos"]</span>
                                     </span>
                                 </div>
                             </a>
                         </div>
 
-                        <!-- Fornecedores -->
                         <div class="nav-item-wrapper">
                             <a class="nav-link label-1 px-2 @(ViewContext.RouteData.Values["controller"].ToString() == "Fornecedor" ? "active" : "")"
                                href="@Url.Action("Index", "Fornecedor", new { area = "Estoque" })">
-                                <div class="d-flex align-items-center" style="gap: 0.8rem; font-size: 0.80rem; padding-left: 1rem;">
+                                <div class="d-flex align-items-center" style="gap:0.8rem; font-size:0.80rem; padding-left:1rem;">
                                     <span class="nav-link-icon"><span class="bi bi-truck"></span></span>
                                     <span class="nav-link-text-wrapper">
-                                        <span class="nav-link-text text-wrap">Fornecedores</span>
+                                        <span class="nav-link-text text-wrap">@Localizer["Fornecedores"]</span>
                                     </span>
                                 </div>
                             </a>
                         </div>
 
-                        <!-- Categorias -->
                         <div class="nav-item-wrapper">
                             <a class="nav-link label-1 px-2 @(ViewContext.RouteData.Values["controller"].ToString() == "Categoria" ? "active" : "")"
                                href="@Url.Action("Index", "Categoria", new { area = "Estoque" })">
-                                <div class="d-flex align-items-center" style="gap: 0.8rem; font-size: 0.80rem; padding-left: 1rem;">
+                                <div class="d-flex align-items-center" style="gap:0.8rem; font-size:0.80rem; padding-left:1rem;">
                                     <span class="nav-link-icon"><span class="bi bi-tags"></span></span>
                                     <span class="nav-link-text-wrapper">
-                                        <span class="nav-link-text text-wrap">Categorias</span>
+                                        <span class="nav-link-text text-wrap">@Localizer["Categorias"]</span>
                                     </span>
                                 </div>
                             </a>
                         </div>
 
-                        <!-- Clientes -->
                         <div class="nav-item-wrapper">
                             <a class="nav-link label-1 px-2 @(ViewContext.RouteData.Values["controller"].ToString() == "Cliente" ? "active" : "")"
                                href="@Url.Action("Index", "Cliente", new { area = "Estoque" })">
-                                <div class="d-flex align-items-center" style="gap: 0.8rem; font-size: 0.80rem; padding-left: 1rem;">
+                                <div class="d-flex align-items-center" style="gap:0.8rem; font-size:0.80rem; padding-left:1rem;">
                                     <span class="nav-link-icon"><span class="bi bi-people-fill"></span></span>
                                     <span class="nav-link-text-wrapper">
-                                        <span class="nav-link-text text-wrap">Clientes</span>
+                                        <span class="nav-link-text text-wrap">@Localizer["Clientes"]</span>
                                     </span>
                                 </div>
                             </a>
@@ -115,27 +113,26 @@
                     </div>
                 </li>
 
-
+                <!-- Movimentações -->
                 <li class="nav-item">
                     <a class="nav-link d-flex justify-content-between align-items-center px-2"
                        data-bs-toggle="collapse" href="#collapseMovimentacoes" role="button"
                        aria-expanded="false" aria-controls="collapseMovimentacoes">
-                        <span class="text-wrap">Movimentações</span>
+                        <span class="text-wrap">@Localizer["Movimentacoes"]</span>
                         <span class="bi bi-chevron-down"></span>
                     </a>
                     <hr class="navbar-vertical-line">
 
-                    <!-- Itens colapsáveis -->
-                    <div class="collapse @(ViewContext.RouteData.Values["controller"].ToString() == "Pedido" || ViewContext.RouteData.Values["controller"].ToString() == "Movimentacao" ? "show" : "")"
+                    <div class="collapse @(new[] { "Pedido", "Movimentacao" }.Contains(ViewContext.RouteData.Values["controller"].ToString()) ? "show" : "")"
                          id="collapseMovimentacoes">
 
                         <div class="nav-item-wrapper">
                             <a class="nav-link label-1 px-2 @(ViewContext.RouteData.Values["controller"].ToString() == "Pedido" ? "active" : "")"
                                href="@Url.Action("Index", "Pedido", new { area = "Estoque" })">
-                                <div class="d-flex align-items-center" style="gap: 0.8rem; font-size: 0.80rem; padding-left: 1rem;">
+                                <div class="d-flex align-items-center" style="gap:0.8rem; font-size:0.80rem; padding-left:1rem;">
                                     <span class="nav-link-icon"><span class="bi bi-cart-fill"></span></span>
                                     <span class="nav-link-text-wrapper">
-                                        <span class="nav-link-text text-wrap">Pedidos</span>
+                                        <span class="nav-link-text text-wrap">@Localizer["Pedidos"]</span>
                                     </span>
                                 </div>
                             </a>
@@ -144,22 +141,24 @@
                         <div class="nav-item-wrapper">
                             <a class="nav-link label-1 px-2 @(ViewContext.RouteData.Values["controller"].ToString() == "Movimentacao" ? "active" : "")"
                                href="@Url.Action("Index", "Movimentacao", new { area = "Estoque" })">
-                                <div class="d-flex align-items-center" style="gap: 0.8rem; font-size: 0.80rem; padding-left: 1rem;">
+                                <div class="d-flex align-items-center" style="gap:0.8rem; font-size:0.80rem; padding-left:1rem;">
                                     <span class="nav-link-icon"><span class="bi bi-arrow-left-right"></span></span>
                                     <span class="nav-link-text-wrapper">
-                                        <span class="nav-link-text text-wrap">Entrada e Saída</span>
+                                        <span class="nav-link-text text-wrap">@Localizer["EntradaSaida"]</span>
                                     </span>
                                 </div>
                             </a>
                         </div>
+
                     </div>
                 </li>
 
+                <!-- Relatórios -->
                 <li class="nav-item">
                     <a class="nav-link d-flex justify-content-between align-items-center px-2"
                        data-bs-toggle="collapse" href="#collapseRelatorios" role="button"
                        aria-expanded="false" aria-controls="collapseRelatorios">
-                        <span class="text-wrap">Relatórios</span>
+                        <span class="text-wrap">@Localizer["Relatorios"]</span>
                         <span class="bi bi-chevron-down"></span>
                     </a>
                     <hr class="navbar-vertical-line">
@@ -167,27 +166,25 @@
                     <div class="collapse @(new[] { "Relatorio1", "Relatorio2" }.Contains(ViewContext.RouteData.Values["controller"].ToString()) ? "show" : "")"
                          id="collapseRelatorios">
 
-                        <!-- Relatório 1 -->
                         <div class="nav-item-wrapper">
                             <a class="nav-link label-1 px-2 @(ViewContext.RouteData.Values["controller"].ToString() == "Relatorio1" ? "active" : "")"
                                href="@Url.Action("Index", "Relatorio1", new { area = "Estoque" })">
-                                <div class="d-flex align-items-center" style="gap: 0.8rem; font-size: 0.80rem; padding-left: 1rem;">
+                                <div class="d-flex align-items-center" style="gap:0.8rem; font-size:0.80rem; padding-left:1rem;">
                                     <span class="nav-link-icon"><span class="bi bi-file-earmark-text"></span></span>
                                     <span class="nav-link-text-wrapper">
-                                        <span class="nav-link-text text-wrap">Relatório 1</span>
+                                        <span class="nav-link-text text-wrap">@Localizer["Relatorio1"]</span>
                                     </span>
                                 </div>
                             </a>
                         </div>
 
-                        <!-- Relatório 2 -->
                         <div class="nav-item-wrapper">
                             <a class="nav-link label-1 px-2 @(ViewContext.RouteData.Values["controller"].ToString() == "Relatorio2" ? "active" : "")"
                                href="@Url.Action("Index", "Relatorio2", new { area = "Estoque" })">
-                                <div class="d-flex align-items-center" style="gap: 0.8rem; font-size: 0.80rem; padding-left: 1rem;">
+                                <div class="d-flex align-items-center" style="gap:0.8rem; font-size:0.80rem; padding-left:1rem;">
                                     <span class="nav-link-icon"><span class="bi bi-file-earmark-bar-graph"></span></span>
                                     <span class="nav-link-text-wrapper">
-                                        <span class="nav-link-text text-wrap">Relatório 2</span>
+                                        <span class="nav-link-text text-wrap">@Localizer["Relatorio2"]</span>
                                     </span>
                                 </div>
                             </a>
@@ -199,6 +196,7 @@
             </ul>
         </div>
     </div>
+
     @if (User.IsInRole("Admin"))
     {
         <div class="navbar-vertical-footer">
@@ -210,4 +208,3 @@
         </div>
     }
 </nav>
-

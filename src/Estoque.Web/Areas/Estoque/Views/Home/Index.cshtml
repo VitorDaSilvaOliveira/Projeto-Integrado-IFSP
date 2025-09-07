@@ -8,7 +8,7 @@
 @inject IStringLocalizer<EstoqueResources> Localizer
 
 @{
-    ViewBag.Title = "Home";
+    ViewBag.Title = Localizer["Home"];
 }
 
 @functions {
@@ -17,7 +17,7 @@
     {
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         var user = await UserManager.FindByIdAsync(userId!);
-        return user?.FirstName ?? "Usuário";
+        return user?.FirstName ?? Localizer["User"];
     }
 
 }
@@ -42,7 +42,7 @@
         </div>
         <span class="fw-light overflow-hidden">
             @Localizer["Welcome"]
-            <span class="typed-text fw-bold" data-typed-text='["Vip Penha Estoque", "as últimas novidades."]'></span>
+            <span class="typed-text fw-bold" data-typed-text='["Vip Penha Estoque", "@Localizer["LatestNews"]"]'></span>
         </span>
     </div>
 
@@ -87,6 +87,7 @@
         </div>
     </div>
 </div>
+
 <script>
     const textTranslated = {
         entries: "@Localizer["Entries"]",

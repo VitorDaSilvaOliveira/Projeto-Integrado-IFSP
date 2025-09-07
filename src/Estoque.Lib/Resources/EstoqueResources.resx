@@ -180,4 +180,37 @@
   <data name="BackToLogin" xml:space="preserve">
     <value>Voltar ao Login</value>
   </data>
+  <data name="Categorias" xml:space="preserve">
+    <value>Categorias</value>
+  </data>
+  <data name="Cadastros" xml:space="preserve">
+    <value>Cadastros</value>
+  </data>
+  <data name="Produtos" xml:space="preserve">
+    <value>Produtos</value>
+  </data>
+  <data name="Fornecedores" xml:space="preserve">
+    <value>Fornecedores</value>
+  </data>
+  <data name="Clientes" xml:space="preserve">
+    <value>Clientes</value>
+  </data>
+  <data name="Movimentacoes" xml:space="preserve">
+    <value>Movimentações</value>
+  </data>
+  <data name="Pedidos" xml:space="preserve">
+    <value>Pedidos</value>
+  </data>
+  <data name="EntradaSaida" xml:space="preserve">
+    <value>Entrada e Saídas</value>
+  </data>
+  <data name="Relatorios" xml:space="preserve">
+    <value>Relatórios</value>
+  </data>
+  <data name="Report1" xml:space="preserve">
+    <value>Relatório 1</value>
+  </data>
+  <data name="Report2" xml:space="preserve">
+    <value>Relatório 2</value>
+  </data>
 </root>
