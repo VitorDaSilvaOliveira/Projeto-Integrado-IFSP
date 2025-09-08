@@ -79,9 +79,25 @@ public class SignInController(AuthService authService, UserManager<ApplicationUs
             var token = await userManager.GeneratePasswordResetTokenAsync(user);
             var resetLink = Url.Action("ResetPassword", "SignIn", new { token, email = user.Email }, Request.Scheme);
 
-            var htmlMessage = $"<p>Olá, clique no link abaixo para redefinir sua senha:</p><p><a href='{resetLink}'>Redefinir senha</a></p>";
-
-            await emailSender.SendEmailAsync(user.Email, "Redefinição de senha", htmlMessage);
+            var htmlMessage = $"""
+                               <html>
+                               <body style='font-family: Arial, sans-serif; font-size: 14px; color: #333; line-height: 1.5;'>
+                                   <p>Olá,</p>
+                                   <p>Clique no botão abaixo para redefinir sua senha:</p>
+                                   <p style='text-align: right; margin: 30px 0;'>
+                                       <a href='{System.Net.WebUtility.HtmlEncode(resetLink)}'
+                                          style='display: inline-block; padding: 12px 25px; color: #333; 
+                                                 background-color: #ffc107; font-weight: bold; text-decoration: none; 
+                                                 border-radius: 6px; border: 1px solid #e0a800;'>
+                                           Redefinir senha
+                                       </a>
+                                   </p>
+                                   <p>Se você não solicitou essa ação, pode ignorar este e-mail.</p>
+                               </body>
+                               </html>
+                               """;
+            
+            await emailSender.SendEmailAsync(user.Email, "Vip Penha - Redefinição de Senha", htmlMessage);
         }
 
         TempData["Success"] = "Se o e-mail existir, um link de redefinição foi enviado.";
