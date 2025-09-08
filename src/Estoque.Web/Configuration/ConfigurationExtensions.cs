@@ -79,6 +79,7 @@ public static class ConfigurationExtensions
         services.AddScoped<AuditLogService>();
         services.AddScoped<HomeService>();
         services.AddSingleton<EmailSender>();
+        services.AddScoped<PedidoService>();
         services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, CustomClaimsFactory>();
     }
 

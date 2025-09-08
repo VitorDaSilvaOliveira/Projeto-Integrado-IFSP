@@ -84,7 +84,7 @@ public class SignInController(AuthService authService, UserManager<ApplicationUs
             await emailSender.SendEmailAsync(user.Email, "Redefinição de senha", htmlMessage);
         }
 
-        ViewBag.Message = "Se o e-mail existir, um link de redefinição foi enviado.";
+        TempData["Success"] = "Se o e-mail existir, um link de redefinição foi enviado.";
         return View(model);
     }
 
@@ -109,14 +109,14 @@ public class SignInController(AuthService authService, UserManager<ApplicationUs
         var user = await userManager.FindByEmailAsync(model.Email);
         if (user == null)
         {
-            ViewBag.SuccessMessage = "Se o e-mail for válido, sua senha foi redefinida.";
+            TempData["Success"] = "Se o e-mail for válido, sua senha foi redefinida.";
             return View("ResetPassword");
         }
 
         var result = await userManager.ResetPasswordAsync(user, model.Token, model.Password);
         if (result.Succeeded)
         {
-            ViewBag.SuccessMessage = "Senha redefinida com sucesso! Agora você já pode fazer login.";
+            TempData["Success"] = "Senha redefinida com sucesso! Agora você já pode fazer login.";
             return View("ResetPassword");
         }
 

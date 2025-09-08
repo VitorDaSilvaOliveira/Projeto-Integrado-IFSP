@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Estoque.Web.Areas.Estoque.Controllers;
 
+[Area("Estoque")]
 public class PedidoController(PedidoService pedidoService) : Controller
 {
     public async Task<IActionResult> Index()
