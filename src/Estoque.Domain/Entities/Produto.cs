@@ -9,6 +9,7 @@ public class Produto
     [Key] [Column("idProduto")] public int IdProduto { get; set; }
 
     [Column("Nome")] [StringLength(150)] public string? Nome { get; set; }
+    [Column("Codigo")] [StringLength(150)] public string? Codigo { get; set; }
 
     [Column("Descricao")]
     [StringLength(200)]
@@ -21,5 +22,6 @@ public class Produto
 
     [Column("Id_Categoria")] public int? IdCategoria { get; set; }
     [Column("EstoqueMinimo")] public int? EstoqueMinimo { get; set; }
-    [Column("Id_Fornecedor")] public int? Fornecedor { get; set; }
+    
+    public virtual ICollection<ProdutoFornecedor> ProdutoFornecedores { get; set; } = new List<ProdutoFornecedor>();
 }

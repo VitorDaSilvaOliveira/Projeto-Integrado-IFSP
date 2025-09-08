@@ -1,8 +1,4 @@
-﻿@using JJMasterData.Commons.Util
-@using Microsoft.AspNetCore.Mvc.TagHelpers
-@inject DateService DateService
-
-@for (var index = 0; index < Model.RolesWithUsers!.Count; index++)
+﻿@for (var index = 0; index < Model.RolesWithUsers!.Count; index++)
 {
     var rolesWithUsers = Model.RolesWithUsers[index];
     var role = rolesWithUsers.Role;
@@ -45,9 +41,9 @@
             }
         </td>
         <td class="creationDate align-middle ps-3">@role.CreationDate</td>
-        <td class="lastModifiedDate align-middle ps-3"> @((role?.LastModifiedDate != null)
-                ? DateService.GetPhrase(role.LastModifiedDate.Value)
-                : " ")</td>
+        <td class="lastModifiedDate align-middle ps-3">
+            <date value="@role.LastModifiedDate" use-relative-time="true" />
+        </td>
         <td class="table-action">
             <a asp-action="RoleDetails"
                asp-route-roleId="@role.Id"

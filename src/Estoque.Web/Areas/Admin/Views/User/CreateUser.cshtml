@@ -73,23 +73,7 @@
     <button type="submit" class="btn btn-outline-info mb-3">Salvar</button>
 </form>
 
-@if (!ViewData.ModelState.IsValid)
-{
-    <div class="alert mt-3 alert-dismissible alert-danger" role="alert" style="font-size: 0.85rem;">
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        <h5 class="alert-heading" style="font-size: 0.95rem; font-weight: bold;">
-            <span class="fa fa-exclamation-triangle me-1"></span> Dados inválidos
-        </h5>
-        <div class="alert-content">
-            <ul class="mb-0">
-                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
-                {
-                    <li>@error.ErrorMessage</li>
-                }
-            </ul>
-        </div>
-    </div>
-}
+@await Html.PartialAsync("_Error")
 
 @await Html.PartialAsync("_Sucess")
 
