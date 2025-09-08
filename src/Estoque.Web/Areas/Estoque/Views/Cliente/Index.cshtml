@@ -1,0 +1,9 @@
+﻿@using JJMasterData.Web.Extensions
+@{
+    ViewBag.Title = "Clientes";
+}
+
+@using (Html.BeginMasterDataForm())
+{
+    @Html.Raw(ViewBag.FormViewCliente)
+}

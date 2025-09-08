@@ -70,6 +70,7 @@ public static class ConfigurationExtensions
     public static void AddEstoqueServices(this IServiceCollection services)
     {
         services.AddScoped<ProdutoService>();
+        services.AddScoped<ClienteService>();
         services.AddScoped<MovimentacaoService>();
         services.AddScoped<FornecedorService>();
         services.AddScoped<CategoriaService>();
