@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Estoque.Infrastructure.Migrations
 {
     [DbContext(typeof(EstoqueDbContext))]
-    [Migration("20250908013602_CodigoProduto")]
-    partial class CodigoProduto
+    [Migration("20250909020942_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -210,6 +210,7 @@ namespace Estoque.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nome")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NomeContato")
@@ -452,10 +453,6 @@ namespace Estoque.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasColumnName("EstoqueMinimo");
 
-                    b.Property<int?>("Fornecedor")
-                        .HasColumnType("int")
-                        .HasColumnName("Id_Fornecedor");
-
                     b.Property<int?>("IdCategoria")
                         .HasColumnType("int")
                         .HasColumnName("Id_Categoria");
@@ -476,6 +473,27 @@ namespace Estoque.Infrastructure.Migrations
                     b.HasKey("IdProduto");
 
                     b.ToTable("Produto");
+                });
+
+            modelBuilder.Entity("Estoque.Domain.Entities.ProdutoFornecedor", b =>
+                {
+                    b.Property<int>("IdProduto")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdFornecedor")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LeadTimeDias")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("PrecoFornecedor")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("IdProduto", "IdFornecedor");
+
+                    b.HasIndex("IdFornecedor");
+
+                    b.ToTable("ProdutoFornecedor");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -621,6 +639,25 @@ namespace Estoque.Infrastructure.Migrations
                     b.Navigation("Produto");
                 });
 
+            modelBuilder.Entity("Estoque.Domain.Entities.ProdutoFornecedor", b =>
+                {
+                    b.HasOne("Estoque.Domain.Entities.Fornecedor", "Fornecedor")
+                        .WithMany("ProdutoFornecedores")
+                        .HasForeignKey("IdFornecedor")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Estoque.Domain.Entities.Produto", "Produto")
+                        .WithMany("ProdutoFornecedores")
+                        .HasForeignKey("IdProduto")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Fornecedor");
+
+                    b.Navigation("Produto");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Estoque.Domain.Entities.ApplicationRole", null)
@@ -670,6 +707,16 @@ namespace Estoque.Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Estoque.Domain.Entities.Fornecedor", b =>
+                {
+                    b.Navigation("ProdutoFornecedores");
+                });
+
+            modelBuilder.Entity("Estoque.Domain.Entities.Produto", b =>
+                {
+                    b.Navigation("ProdutoFornecedores");
                 });
 #pragma warning restore 612, 618
         }

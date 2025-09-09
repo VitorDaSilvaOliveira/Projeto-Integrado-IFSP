@@ -89,6 +89,26 @@ namespace Estoque.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Cliente",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Documento = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Tipo = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    NomeContato = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Telefone = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Anexo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DataCadastro = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cliente", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Fornecedores",
                 columns: table => new
                 {
@@ -135,6 +155,7 @@ namespace Estoque.Infrastructure.Migrations
                     idProduto = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
+                    Codigo = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
                     Descricao = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     Preco = table.Column<decimal>(type: "decimal(20,2)", nullable: true),
                     QuantidadeEstoque = table.Column<int>(type: "int", nullable: true),
@@ -253,6 +274,32 @@ namespace Estoque.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Pedido",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NumeroPedido = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DataPedido = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Cliente_Id = table.Column<int>(type: "int", nullable: true),
+                    ValorTotal = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: true),
+                    Operacao = table.Column<int>(type: "int", nullable: true),
+                    DataEntrega = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Observacoes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UsuarioResponsavel = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Pedido", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Pedido_Cliente_Cliente_Id",
+                        column: x => x.Cliente_Id,
+                        principalTable: "Cliente",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Movimentacao",
                 columns: table => new
                 {
@@ -273,6 +320,62 @@ namespace Estoque.Infrastructure.Migrations
                         column: x => x.Id_Produto,
                         principalTable: "Produto",
                         principalColumn: "idProduto");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProdutoFornecedor",
+                columns: table => new
+                {
+                    IdProduto = table.Column<int>(type: "int", nullable: false),
+                    IdFornecedor = table.Column<int>(type: "int", nullable: false),
+                    PrecoFornecedor = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    LeadTimeDias = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProdutoFornecedor", x => new { x.IdProduto, x.IdFornecedor });
+                    table.ForeignKey(
+                        name: "FK_ProdutoFornecedor_Fornecedores_IdFornecedor",
+                        column: x => x.IdFornecedor,
+                        principalTable: "Fornecedores",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProdutoFornecedor_Produto_IdProduto",
+                        column: x => x.IdProduto,
+                        principalTable: "Produto",
+                        principalColumn: "idProduto",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PedidoItem",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    id_Pedido = table.Column<int>(type: "int", nullable: false),
+                    id_Produto = table.Column<int>(type: "int", nullable: false),
+                    Quantidade = table.Column<int>(type: "int", nullable: false),
+                    Desconto = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    PrecoTabela = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    PrecoVenda = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PedidoItem", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PedidoItem_Pedido_id_Pedido",
+                        column: x => x.id_Pedido,
+                        principalTable: "Pedido",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PedidoItem_Produto_id_Produto",
+                        column: x => x.id_Produto,
+                        principalTable: "Produto",
+                        principalColumn: "idProduto",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -318,6 +421,26 @@ namespace Estoque.Infrastructure.Migrations
                 name: "IX_Movimentacao_Id_Produto",
                 table: "Movimentacao",
                 column: "Id_Produto");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Pedido_Cliente_Id",
+                table: "Pedido",
+                column: "Cliente_Id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PedidoItem_id_Pedido",
+                table: "PedidoItem",
+                column: "id_Pedido");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PedidoItem_id_Produto",
+                table: "PedidoItem",
+                column: "id_Produto");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProdutoFornecedor_IdFornecedor",
+                table: "ProdutoFornecedor",
+                column: "IdFornecedor");
         }
 
         /// <inheritdoc />
@@ -345,13 +468,16 @@ namespace Estoque.Infrastructure.Migrations
                 name: "Categoria");
 
             migrationBuilder.DropTable(
-                name: "Fornecedores");
-
-            migrationBuilder.DropTable(
                 name: "Movimentacao");
 
             migrationBuilder.DropTable(
                 name: "Notificacoes");
+
+            migrationBuilder.DropTable(
+                name: "PedidoItem");
+
+            migrationBuilder.DropTable(
+                name: "ProdutoFornecedor");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -360,7 +486,16 @@ namespace Estoque.Infrastructure.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
+                name: "Pedido");
+
+            migrationBuilder.DropTable(
+                name: "Fornecedores");
+
+            migrationBuilder.DropTable(
                 name: "Produto");
+
+            migrationBuilder.DropTable(
+                name: "Cliente");
         }
     }
 }
