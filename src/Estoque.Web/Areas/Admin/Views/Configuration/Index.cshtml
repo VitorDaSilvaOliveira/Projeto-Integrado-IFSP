@@ -53,23 +53,29 @@
 
 </section>
 
-<div class="d-flex justify-content-center gap-3 mt-4">
-    <div class="card p-3 text-center">
-        <h5>Usuários Ativos</h5>
-        <p class="fs-3 text-success">@ViewBag.ActiveUsersCount</p>
-    </div>
-    <div class="card p-3 text-center">
-        <h5>Formulários Pendentes</h5>
-        <p class="fs-3 text-warning">27</p>
-    </div>
-    <div class="card p-3 text-center">
-        <h5>Erros Recentes</h5>
-        <p class="fs-3 text-danger">5</p>
-    </div>
-</div>
+<div class="container mt-5">
+    <div class="row g-4 text-center">
 
-<div class="d-flex justify-content-center gap-3 mt-4">
-    <button class="btn btn-success"><i class="uil uil-plus"></i> Criar Usuário</button>
-    <button class="btn btn-warning"><i class="uil uil-database"></i> Backup DB</button>
-    <button class="btn btn-danger"><i class="uil uil-trash"></i> Limpar Logs</button>
+        <div class="col-md-4">
+            <div class="card p-4">
+                <h6 class="text-muted">Usuários Ativos</h6>
+                <p class="fs-2 text-success fw-bold">@ViewBag.ActiveUsersCount</p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card p-4">
+                <h6 class="text-muted">Itens com Baixo Estoque</h6>
+                <p class="fs-2 text-warning fw-bold">@ViewBag.ItensBaixoEstoque</p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card p-4">
+                <h6 class="text-muted">Pedidos Pendentes</h6>
+                <p class="fs-2 text-danger fw-bold">@ViewBag.PedidosPendentes</p>
+            </div>
+        </div>
+
+    </div>
 </div>

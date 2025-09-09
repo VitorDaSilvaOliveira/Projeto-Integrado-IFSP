@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using Estoque.Domain.Enums;
 
 namespace Estoque.Domain.Entities;
 
@@ -12,7 +13,7 @@ public class Pedido
     public int? ClienteId { get; set; }
     public Cliente? Cliente { get; set; }
     public decimal? ValorTotal { get; set; }
-    public int? Status { get; set; }
+    public PedidoStatus? Status { get; set; }
     public int? Operacao { get; set; }
     public DateTime? DataEntrega { get; set; }
     public string? Observacoes { get; set; }
