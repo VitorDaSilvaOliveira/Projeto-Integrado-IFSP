@@ -213,4 +213,25 @@
   <data name="Report2" xml:space="preserve">
     <value>Relatório 2</value>
   </data>
+  <data name="InformacoesPessoais" xml:space="preserve">
+    <value>Informações Pessoais</value>
+  </data>
+  <data name="Nome" xml:space="preserve">
+    <value>Nome</value>
+  </data>
+  <data name="Sobrenome" xml:space="preserve">
+    <value>Sobrenome</value>
+  </data>
+  <data name="Perfil" xml:space="preserve">
+    <value>Perfil</value>
+  </data>
+  <data name="AlterarEmail" xml:space="preserve">
+    <value>Alterar Email</value>
+  </data>
+  <data name="AlterarSenha" xml:space="preserve">
+    <value>Alterar Senha</value>
+  </data>
+  <data name="HistoricoNotificacoes" xml:space="preserve">
+    <value>Histórico de Notificações</value>
+  </data>
 </root>

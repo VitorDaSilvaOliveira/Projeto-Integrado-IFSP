@@ -1,4 +1,7 @@
 ﻿@inject IHttpContextAccessor HttpContextAccessor
+@using Estoque.Lib.Resources
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<EstoqueResources> Localizer
 @{
     var userId = HttpContextAccessor!.HttpContext?.User.FindFirst("sub")?.Value
                  ?? HttpContextAccessor.HttpContext?.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
@@ -106,17 +109,17 @@
                                     <li class="nav-item">
                                         <a class="nav-link px-3" asp-area="Identity"
                                            asp-controller="Profile" asp-action="Index">
-                                            <span class="me-2 fa fa-user"></span>Perfil
+                                            <span class="me-2 fa fa-user"></span>@Localizer["Perfil"]
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link px-3" href="/Identity/Email/ChangeEmail">
-                                            <span class="me-2 fa fa-at"></span>Alterar Email
+                                            <span class="me-2 fa fa-at"></span>@Localizer["AlterarEmail"]
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link px-3" href="/Identity/ChangePassword">
-                                            <span class="me-2 fa fa-key"></span>Alterar Senha
+                                            <span class="me-2 fa fa-key"></span>@Localizer["AlterarSenha"]
                                         </a>
                                     </li>
                                 </ul>
@@ -161,7 +164,7 @@
                             </div>
                             <div class="card-footer p-0 border-top border-translucent">
                                 <div class="my-2 text-center fw-bold fs-10 text-body-tertiary text-opacity-85">
-                                    <a class="fw-bolder" href="/Notifications">Histórico de Notificações</a>
+                                    <a class="fw-bolder" href="/Notifications">Localizer["HistoricoNotificacoes"]</a>
                                 </div>
                             </div>
                         </div>
