@@ -3,6 +3,9 @@
 ##
 ## Get latest from `dotnet new gitignore`
 
+# appsettings.json ignorado devido ao banco de dados ser local em cada máquina
+src/Estoque.Web/appsettings.json
+
 # dotenv files
 .env
 
