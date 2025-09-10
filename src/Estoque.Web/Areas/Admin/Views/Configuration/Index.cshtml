@@ -1,4 +1,7 @@
-﻿@{
+﻿@using Estoque.Lib.Resources
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<EstoqueResources> Localizer
+@{
 }
 <head>
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
@@ -16,40 +19,40 @@
                     <div class="icon-container mb-2">
                         <i class="fs-4 uil uil-book"></i>
                     </div>
-                    <p class="nav-label">Formulários</p>
+                    <p class="nav-label">@Localizer["Forms"]</p>
                 </a>
 
                 <a class="icon-nav-item" href="@Url.Action("Index", "User", new { area = "Admin" })">
                     <div class="icon-container mb-2">
                         <i class="fs-4 uil uil-users-alt"></i>
                     </div>
-                    <p class="nav-label">Usuários</p>
+                    <p class="nav-label">@Localizer["Users"]</p>
                 </a>
 
                 <a class="icon-nav-item" href="@Url.Action("Index", "Roles", new { area = "Admin" })">
                     <div class="icon-container mb-2">
                         <i class="fs-4 uil uil-user-check"></i>
                     </div>
-                    <p class="nav-label">Perfis</p>
+                    <p class="nav-label">@Localizer["Roles"]</p>
                 </a>
 
                 <a class="icon-nav-item" href="@Url.Action("Index", "AuditLog", new { area = "Admin" })">
                     <div class="icon-container mb-2">
                         <i class="fs-4 uil uil-shield-check"></i>
                     </div>
-                    <p class="nav-label">Auditoria</p>
+                    <p class="nav-label">@Localizer["Audit"]</p>
                 </a>
 
                 <a class="icon-nav-item" href="@Url.Action("Index", "Log", new { area = "Admin" })">
                     <div class="icon-container mb-2">
                         <i class="fs-4 uil uil-film"></i>
                     </div>
-                    <p class="nav-label">Log</p>
+                    <p class="nav-label">@Localizer["Log"]</p>
                 </a>
 
             </div>
         </div>
-        </div>
+    </div>
 
 </section>
 

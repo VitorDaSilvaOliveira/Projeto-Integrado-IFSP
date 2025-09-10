@@ -234,4 +234,19 @@
   <data name="HistoricoNotificacoes" xml:space="preserve">
     <value>Histórico de Notificações</value>
   </data>
+  <data name="Forms" xml:space="preserve">
+    <value>Formulários</value>
+  </data>
+  <data name="Users" xml:space="preserve">
+    <value>Usuários</value>
+  </data>
+  <data name="Roles" xml:space="preserve">
+    <value>Perfis</value>
+  </data>
+  <data name="Audit" xml:space="preserve">
+    <value>Auditoria</value>
+  </data>
+  <data name="Log" xml:space="preserve">
+    <value>Log</value>
+  </data>
 </root>
