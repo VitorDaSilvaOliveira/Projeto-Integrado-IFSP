@@ -17,6 +17,7 @@ public class EstoqueDbContext : IdentityDbContext<ApplicationUser, ApplicationRo
     public DbSet<Pedido> Pedidos { get; set; }
     public DbSet<PedidoItem> PedidosItens { get; set; }
     public DbSet<ProdutoFornecedor> ProdutoFornecedores { get; set; }
+    public DbSet<SolicitacaoDevolucao> SolicitacoesDevolucao { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
