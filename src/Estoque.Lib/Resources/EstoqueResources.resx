@@ -249,4 +249,43 @@
   <data name="Log" xml:space="preserve">
     <value>Log</value>
   </data>
+  <data name="InvalidLoginAttempt" xml:space="preserve">
+    <value>Tentativa de login inválida.</value>
+  </data>
+  <data name="UserLoggedIn" xml:space="preserve">
+    <value>Usuário se logou</value>
+  </data>
+  <data name="DadosInvalidos" xml:space="preserve">
+    <value>Dados Inválidos</value>
+  </data>
+  <data name="ExternalLoginInfoError" xml:space="preserve">
+    <value>Erro ao obter informações do login externo.</value>
+  </data>
+  <data name="EmailNotFound" xml:space="preserve">
+    <value>Email não encontrado na conta Google.</value>
+  </data>
+  <data name="UserNotFoundRegisterFirst" xml:space="preserve">
+    <value>Usuário não encontrado. Cadastre-se primeiro.</value>
+  </data>
+  <data name="ExternalLoginLinkFailed" xml:space="preserve">
+    <value>Falha ao vincular login externo.</value>
+  </data>
+  <data name="ActiveUsers" xml:space="preserve">
+    <value>Usuários Ativos</value>
+  </data>
+  <data name="LowStockItems" xml:space="preserve">
+    <value>Itens com Baixo Estoque</value>
+  </data>
+  <data name="PendingOrders" xml:space="preserve">
+    <value>Pedidos Pendentes</value>
+  </data>
+  <data name="Leave" xml:space="preserve">
+    <value>Sair</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Salvar</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
 </root>

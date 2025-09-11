@@ -50,8 +50,8 @@
                 </div>
 
                 <div class="d-flex justify-content-between">
-                    <button type="submit" class="btn btn-primary">Salvar</button>
-                    <a href="@Url.Action("Index", "Home", new { area = "Estoque" })" class="btn btn-secondary">Cancelar</a>
+                    <button type="submit" class="btn btn-primary">@Localizer["Save"]</button>
+                    <a href="@Url.Action("Index", "Home", new { area = "Estoque" })" class="btn btn-secondary">@Localizer["Cancel"]</a>
                 </div>
             </form>
         </div>

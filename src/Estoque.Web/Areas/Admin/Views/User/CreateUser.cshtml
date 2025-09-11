@@ -1,5 +1,7 @@
 ﻿@model Estoque.Domain.Models.UserViewModel
-
+@using Estoque.Lib.Resources
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<EstoqueResources> Localizer
 @{
     ViewData["Title"] = "Novo Usuário";
 }
@@ -70,7 +72,7 @@
         </div>
     </div>
 
-    <button type="submit" class="btn btn-outline-info mb-3">Salvar</button>
+    <button type="submit" class="btn btn-outline-info mb-3">@Localizer["Save"]</button>
 </form>
 
 @await Html.PartialAsync("_Error")

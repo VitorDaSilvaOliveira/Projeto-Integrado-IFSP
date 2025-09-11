@@ -3,13 +3,15 @@ using Estoque.Domain.Entities;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-
+using Estoque.Lib.Resources;
+using Microsoft.Extensions.Localization;
 namespace Estoque.Infrastructure.Services;
 
 public class AuthService(
     SignInManager<ApplicationUser> signInManager,
     UserManager<ApplicationUser> userManager,
     IUserClaimsPrincipalFactory<ApplicationUser> claimsPrincipalFactory,
+    IStringLocalizer<EstoqueResources> Localizer,
     IHttpContextAccessor httpContextAccessor,
     AuditLogService auditLogService)
 {
@@ -19,10 +21,10 @@ public class AuthService(
                    ?? await userManager.FindByEmailAsync(usernameOrEmail);
 
         if (user == null)
-            return (false, "Tentativa de login inválida.");
+            return (false, Localizer["InvalidLoginAttempt"]);
 
         if (!await userManager.CheckPasswordAsync(user, password))
-            return (false, "Tentativa de login inválida.");
+            return (false, Localizer["InvalidLoginAttempt"]);
 
         var principal = await claimsPrincipalFactory.CreateAsync(user);
 
@@ -30,7 +32,7 @@ public class AuthService(
         await httpContextAccessor.HttpContext!.SignInAsync(IdentityConstants.ApplicationScheme, principal,
             new AuthenticationProperties { IsPersistent = rememberMe });
     
-        await auditLogService.LogAsync("Identity", "Login", "Usuário se logou", user.Id, user.UserName);
+        await auditLogService.LogAsync("Identity", "Login", Localizer["UserLoggedIn"], user.Id, user.UserName);
 
         return (true, null);
     }
@@ -44,15 +46,15 @@ public class AuthService(
     {
         var info = await signInManager.GetExternalLoginInfoAsync();
         if (info == null)
-            return (false, "Erro ao obter informações do login externo.");
+            return (false, Localizer["ExternalLoginInfoError"]);
 
         var email = info.Principal.FindFirstValue(ClaimTypes.Email);
         if (string.IsNullOrEmpty(email))
-            return (false, "Email não encontrado na conta Google.");
+            return (false, Localizer["EmailNotFound"]);
 
         var user = await userManager.FindByEmailAsync(email);
         if (user == null)
-            return (false, "Usuário não encontrado. Cadastre-se primeiro.");
+            return (false, Localizer["UserNotFoundRegisterFirst"]);
 
         var result = await signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
 
@@ -61,7 +63,7 @@ public class AuthService(
 
         var addLoginResult = await userManager.AddLoginAsync(user, info);
         if (!addLoginResult.Succeeded)
-            return (false, "Falha ao vincular login externo.");
+            return (false, Localizer["ExternalLoginLinkFailed"]);
 
         await signInManager.SignInAsync(user, isPersistent: false);
         return (true, null);

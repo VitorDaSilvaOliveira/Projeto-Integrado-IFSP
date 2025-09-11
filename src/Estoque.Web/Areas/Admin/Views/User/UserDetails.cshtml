@@ -1,5 +1,7 @@
 ﻿@model EditUserViewModel
-
+@using Estoque.Lib.Resources
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<EstoqueResources> Localizer
 @{
     ViewData["Title"] = "Informações Pessoais";
     var defaultAvatar = Url.Content("~/img/default_profile.png");
@@ -125,7 +127,7 @@
 
                                 <div class="col-sm-12 mb-3">
                                     <button type="submit" class="btn btn-primary">
-                                        Salvar
+                                        @Localizer["Save"]
                                     </button>
                                 </div>
                             </form>
