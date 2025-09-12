@@ -23,12 +23,13 @@ public class MovimentacaoService(
         var formView = await componentFactory.FormView.CreateAsync("Movimentacao");
         formView.ShowTitle = true;
 
-        formView.OnAfterInsertAsync += OnAfterInsertAsync;
+        formView.OnAfterInsertAsync += GetValuesAsync;
+        formView.OnAfterUpdateAsync += GetValuesAsync;
 
         return formView;
     }
 
-    public async ValueTask OnAfterInsertAsync(object sender, FormAfterActionEventArgs e)
+    public async ValueTask GetValuesAsync(object sender, FormAfterActionEventArgs e)
     {
         var values = e.Values;
 
