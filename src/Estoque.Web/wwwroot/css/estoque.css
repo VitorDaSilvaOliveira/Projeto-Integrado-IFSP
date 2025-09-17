@@ -160,7 +160,7 @@ nav.fix-menu .navbar-logo {
   cursor: pointer;
 }
 
-#infinity-logo {
+#estoque-logo {
   width: 200px;
 }
 
@@ -997,4 +997,4 @@ table.table-fixed-header:nth-of-type(2) th:not([scope=row]):first-child {
   --md-sticky-top-color: #242833 !important;
 }
 
-/*# sourceMappingURL=infinity.css.map */
+/*# sourceMappingURL=estoque.css.map */

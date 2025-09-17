@@ -21,6 +21,8 @@ public class Cliente
     public string? Telefone { get; set; }
 
     public string? Anexo { get; set; }
+    public string? NomeFantasia { get; set; }
+    public string? Email { get; set; }
 
     public DateTime DataCadastro { get; set; }
 }
