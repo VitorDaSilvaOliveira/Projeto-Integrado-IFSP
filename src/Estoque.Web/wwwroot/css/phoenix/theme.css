@@ -6570,9 +6570,9 @@ textarea.form-control-lg {
 }
 
 .modal-body {
-  position: relative;
-  flex: 1 1 auto;
-  padding: var(--estoque-modal-padding);
+    position: relative;
+    flex: 1 1 auto;
+    padding: var(--estoque-modal-padding);
 }
 
 .modal-footer {
@@ -22073,12 +22073,21 @@ html {
 /* -------------------------------------------------------------------------- */
 /*                                  Dropzone                                  */
 /* -------------------------------------------------------------------------- */
-.dropzone {
-  position: relative;
-  background-color: var(--estoque-body-bg);
-  border: 0;
-  border-radius: 0.5rem;
-  min-height: auto;
+html[data-bs-theme="light"] .dropzone {
+    position: relative;
+    background-color: var(--estoque-body-bg);
+    border: 0;
+    border-radius: 0.5rem;
+    min-height: auto;
+}
+
+html[data-bs-theme="dark"] .dropzone {
+    position: relative;
+    background-color: #1e1e1e; 
+    border: 0;
+    border-radius: 0.5rem;
+    min-height: auto;
+    color: #eee;
 }
 .dropzone.dropzone-has-default .dz-message {
   border-color: transparent;
