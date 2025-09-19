@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
@@ -32,7 +31,6 @@ public static class ConfigurationExtensions
 
         builder.Services.AddControllersWithViews(options =>
         {
-            options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
             options.Filters.Add(new AuthorizeFilter());
         });
 
