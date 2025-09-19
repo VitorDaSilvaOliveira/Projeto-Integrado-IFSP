@@ -16,9 +16,6 @@ function updateThemeUI(theme) {
     }
 }
 
-const savedTheme = localStorage.getItem('theme') || 'light';
-updateThemeUI(savedTheme);
-
 toggle.addEventListener('change', () => {
     const newTheme = toggle.checked ? 'dark' : 'light';
     localStorage.setItem('theme', newTheme);
@@ -28,4 +25,7 @@ toggle.addEventListener('change', () => {
 document.addEventListener('DOMContentLoaded', () => {
     const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
     tooltipTriggerList.map(el => new bootstrap.Tooltip(el));
+
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    updateThemeUI(savedTheme);
 });
