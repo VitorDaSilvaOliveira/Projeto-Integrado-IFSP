@@ -18,4 +18,17 @@ public class PedidoController(PedidoService pedidoService) : Controller
         ViewBag.FormViewPedido = resultGridPedidoAsync.Content;
         return View();
     }
+
+    public async Task<IActionResult> Report()
+    {
+        var formViewRelatorioPedidoAsync = await pedidoService.GetFormViewReportPedidoAsync();
+
+        var resultGridReportPedidoAsync = await formViewRelatorioPedidoAsync.GetResultAsync();
+
+        if (resultGridReportPedidoAsync is IActionResult actionResultGridReportPedidoAsync)
+            return actionResultGridReportPedidoAsync;
+
+        ViewBag.FormViewRelatorioPedido = resultGridReportPedidoAsync.Content;
+        return View();
+    }
 }

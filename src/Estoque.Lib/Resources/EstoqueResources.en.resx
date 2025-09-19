@@ -207,8 +207,8 @@
   <data name="Relatorios" xml:space="preserve">
     <value>Reports</value>
   </data>
-  <data name="Report1" xml:space="preserve">
-    <value>Report 1</value>
+  <data name="OrderReport" xml:space="preserve">
+    <value>Order Report</value>
   </data>
   <data name="Report2" xml:space="preserve">
     <value>Report 2</value>
