@@ -1,4 +1,5 @@
 ﻿using Estoque.Domain.Entities;
+using Estoque.Domain.Enums;
 using Estoque.Domain.Models;
 using Estoque.Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -23,6 +24,20 @@ public class SignInController(AuthService authService, UserManager<ApplicationUs
     {
         if (!ModelState.IsValid)
             return View(model);
+
+        var user = await userManager.FindByNameAsync(model.Login);
+        
+        if (user == null)
+        {
+            ModelState.AddModelError(string.Empty, "Login ou senha inválidos.");
+            return View(model);
+        }
+
+        if (user.Status == UserStatus.Inativo)
+        {
+            ModelState.AddModelError(string.Empty, "Login ou senha inválidos.");
+            return View(model);
+        }
 
         var (success, errorMessage) = await authService.SignInAsync(model.Login, model.Senha, model.LembrarMe);
 
