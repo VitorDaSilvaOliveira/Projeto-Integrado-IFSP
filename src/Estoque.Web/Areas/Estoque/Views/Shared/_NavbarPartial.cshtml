@@ -170,8 +170,17 @@
                         </div>
                     </div>
                 </li>
+                <li class="nav-item me-2">
+                    <a class="nav-link text-center" href="#" data-bs-toggle="modal" data-bs-target="#sobreEmpresaModal" title="Sobre a Empresa">
+                        <i class="fas fa-info-circle" style="color: #969db2;"></i>
+                    </a>
+                </li>
             </ul>
 
         </ul>
     </div>
 </nav>
+
+@await Html.PartialAsync("_AboutUs")
+
+
