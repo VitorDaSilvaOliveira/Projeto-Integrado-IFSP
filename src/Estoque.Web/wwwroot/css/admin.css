@@ -1,0 +1,44 @@
+﻿.icon-nav-item {
+    text-decoration: none;
+    text-align: center;
+    color: #6c757d;
+    transition: transform 0.2s, color 0.2s;
+}
+
+    .icon-nav-item:hover {
+        color: #007bff;
+        transform: translateY(-5px);
+        text-decoration: none;
+    }
+
+.icon-container {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f9fa;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card-stats {
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+    .card-stats:hover {
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+.text-success-badge {
+    color: #fff;
+    background-color: #28a745;
+    padding: .25em .4em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25rem;
+}

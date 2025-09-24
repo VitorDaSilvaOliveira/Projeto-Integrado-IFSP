@@ -1,84 +1,80 @@
 ﻿@using Estoque.Lib.Resources
 @using Microsoft.Extensions.Localization
 @inject IStringLocalizer<EstoqueResources> Localizer
-@{
-}
+
 <head>
-    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+	<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+	<link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
 </head>
+
 <h3>
-    <i class="fas fa-cog me-2"></i> Administração
+	<i class="fas fa-cog me-2"></i> Administração
 </h3>
 <hr />
-<section class="py-0">
-    <div class="container-small">
-        <div class="scrollbar">
-            <div class="d-flex justify-content-between">
 
-                <a class="icon-nav-item" href="/DataDictionary">
-                    <div class="icon-container mb-2">
-                        <i class="fs-4 uil uil-book"></i>
-                    </div>
-                    <p class="nav-label">@Localizer["Forms"]</p>
-                </a>
+<section class="py-3">
+	<div class="container-small">
+		<div class="d-flex flex-wrap justify-content-center gap-4">
+			<a class="icon-nav-item" href="/DataDictionary">
+				<div class="icon-container mb-2">
+					<i class="fs-4 uil uil-book"></i>
+				</div>
+				<p class="nav-label">@Localizer["Forms"]</p>
+			</a>
 
-                <a class="icon-nav-item" href="@Url.Action("Index", "User", new { area = "Admin" })">
-                    <div class="icon-container mb-2">
-                        <i class="fs-4 uil uil-users-alt"></i>
-                    </div>
-                    <p class="nav-label">@Localizer["Users"]</p>
-                </a>
+			<a class="icon-nav-item" href="@Url.Action("Index", "User", new { area = "Admin" })">
+				<div class="icon-container mb-2">
+					<i class="fs-4 uil uil-users-alt"></i>
+				</div>
+				<p class="nav-label">@Localizer["Users"]</p>
+			</a>
 
-                <a class="icon-nav-item" href="@Url.Action("Index", "Roles", new { area = "Admin" })">
-                    <div class="icon-container mb-2">
-                        <i class="fs-4 uil uil-user-check"></i>
-                    </div>
-                    <p class="nav-label">@Localizer["Roles"]</p>
-                </a>
+			<a class="icon-nav-item" href="@Url.Action("Index", "Roles", new { area = "Admin" })">
+				<div class="icon-container mb-2">
+					<i class="fs-4 uil uil-user-check"></i>
+				</div>
+				<p class="nav-label">@Localizer["Roles"]</p>
+			</a>
 
-                <a class="icon-nav-item" href="@Url.Action("Index", "AuditLog", new { area = "Admin" })">
-                    <div class="icon-container mb-2">
-                        <i class="fs-4 uil uil-shield-check"></i>
-                    </div>
-                    <p class="nav-label">@Localizer["Audit"]</p>
-                </a>
+			<a class="icon-nav-item" href="@Url.Action("Index", "AuditLog", new { area = "Admin" })">
+				<div class="icon-container mb-2">
+					<i class="fs-4 uil uil-shield-check"></i>
+				</div>
+				<p class="nav-label">@Localizer["Audit"]</p>
+			</a>
 
-                <a class="icon-nav-item" href="@Url.Action("Index", "Log", new { area = "Admin" })">
-                    <div class="icon-container mb-2">
-                        <i class="fs-4 uil uil-film"></i>
-                    </div>
-                    <p class="nav-label">@Localizer["Log"]</p>
-                </a>
-
-            </div>
-        </div>
-    </div>
-
+			<a class="icon-nav-item" href="@Url.Action("Index", "Log", new { area = "Admin" })">
+				<div class="icon-container mb-2">
+					<i class="fs-4 uil uil-film"></i>
+				</div>
+				<p class="nav-label">@Localizer["Log"]</p>
+			</a>
+		</div>
+	</div>
 </section>
 
 <div class="container mt-5">
-    <div class="row g-4 text-center">
+	<div class="row g-4 text-center">
 
-        <div class="col-md-4">
-            <div class="card p-4">
-                <h6 class="text-muted">@Localizer["ActiveUsers"]</h6>
-                <p class="fs-2 text-success fw-bold">@ViewBag.ActiveUsersCount</p>
-            </div>
-        </div>
+		<div class="col-md-4">
+			<div class="card p-4 card-stats shadow-sm">
+				<h6 class="text-muted">@Localizer["ActiveUsers"]</h6>
+				<p class="fs-2 text-success fw-bold">@ViewBag.ActiveUsersCount</p>
+			</div>
+		</div>
 
-        <div class="col-md-4">
-            <div class="card p-4">
-                <h6 class="text-muted">@Localizer["LowStockItems"]</h6>
-                <p class="fs-2 text-warning fw-bold">@ViewBag.ItensBaixoEstoque</p>
-            </div>
-        </div>
+		<div class="col-md-4">
+			<div class="card p-4 card-stats shadow-sm">
+				<h6 class="text-muted">@Localizer["LowStockItems"]</h6>
+				<p class="fs-2 text-warning fw-bold">@ViewBag.ItensBaixoEstoque</p>
+			</div>
+		</div>
 
-        <div class="col-md-4">
-            <div class="card p-4">
-                <h6 class="text-muted">@Localizer["PendingOrders"]</h6>
-                <p class="fs-2 text-danger fw-bold">@ViewBag.PedidosPendentes</p>
-            </div>
-        </div>
-
-    </div>
+		<div class="col-md-4">
+			<div class="card p-4 card-stats shadow-sm">
+				<h6 class="text-muted">@Localizer["PendingOrders"]</h6>
+				<p class="fs-2 text-danger fw-bold">@ViewBag.PedidosPendentes</p>
+			</div>
+		</div>
+	</div>
 </div>

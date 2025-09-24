@@ -1,4 +1,5 @@
 ﻿@model EditUserViewModel
+@using Estoque.Domain.Enums
 @using Estoque.Lib.Resources
 @using Microsoft.Extensions.Localization
 @inject IStringLocalizer<EstoqueResources> Localizer
@@ -6,8 +7,6 @@
     ViewData["Title"] = "Informações Pessoais";
     var defaultAvatar = Url.Content("~/img/default_profile.png");
 }
-
-
 
 <div class="border-bottom pb-2 mb-2">
     <nav aria-label="breadcrumb">
@@ -29,116 +28,84 @@
 
 @await Html.PartialAsync("_UserTabs", Model)
 
-
 <div class="tab-content" id="nav-tabContent">
     <div class="tab-pane fade show active" id="UserDetails" role="tabpanel">
-        <div class="container">
-            <div class="row gutters">
-                <div class="col-xl-3 col-sm-12 mb-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="user-profile text-center">
-                                <div class="user-avatar mb-3" onclick="openFilePicker()">
-                                    <img src="/uploads/avatars/@Model.AvatarUrl"
-                                         onerror="this.onerror=null;this.src='@defaultAvatar';"
-                                         class="rounded-circle"
-                                         alt="Avatar"
-                                         style="width: 120px; height: 120px; object-fit: cover;"/>
-                                </div>
-                                <h5 class="user-name mb-3">@Model.FirstName</h5>
+        <div class="container" style="max-width: 900px;">
 
-                                <div class="status mb-3">
-                                    <span class="fa fa-circle fa-lg" style="color:green; font-size: 0.9rem;"></span>
-                                    <span class="fw-bold" style="font-size: 0.9rem;">@Model.Status</span>
-                                </div>
-
-                                <a class="btn btn-secondary fw-bold mt-3"
-                                   href="@Url.Action("Impersonate", "User", new { area = "Admin", userId = Model.Id })">
-                                    <i class="fa fa-user-secret"></i> Impersonate
-                                </a>
-                            </div>
-                        </div>
+            <!-- Avatar Card -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-body text-center">
+                    <div class="user-avatar mb-3" onclick="openFilePicker()">
+                        <img src="/uploads/avatars/@Model.AvatarUrl"
+                             onerror="this.onerror=null;this.src='@defaultAvatar';"
+                             class="rounded-circle"
+                             alt="Avatar"
+                             style="width: 120px; height: 120px; object-fit: cover;" />
                     </div>
-                </div>
-
-                <div class="col-xl-9 col-sm-12">
-                    <div class="card shadow-sm">
-                        <div class="card-body">
-                            <form asp-action="UserDetails" method="post" novalidate>
-                                @Html.AntiForgeryToken()
-
-                                <input type="hidden" name="Id" value="@Model.Id"/>
-
-                                <div class="row gutters">
-                                    <div class="col-sm-4">
-                                        <div class="mb-3">
-                                            <label class="form-label">Nome do Usuário <span
-                                                                                          class="required-symbol">*</span></label>
-                                            <input class="form-control" type="text" name="UserName"
-                                                   value="@Model.UserName"/>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-4">
-                                        <div class="mb-3">
-                                            <label class="form-label">Email <span
-                                                                                class="required-symbol">*</span></label>
-                                            <input class="form-control" type="email" name="Email" value="@Model.Email"/>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-4">
-                                        <div class="mb-3">
-                                            <label class="form-label" for="PhoneNumber">Número de Telefone</label>
-                                            <span class="fa fa-question-circle help-description"
-                                                  data-bs-toggle="tooltip"
-                                                  data-bs-html="true"
-                                                  aria-label="+55 99999-9999"
-                                                  data-bs-original-title="+55 99999-9999">
-                                            </span>
-                                            <input class="form-control"
-                                                   type="text"
-                                                   name="PhoneNumber"
-                                                   value="@Model.PhoneNumber"
-                                                   maxlength="19"
-                                                   inputmode="text"/>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-3">
-                                        <div class="mb-3">
-                                            <label class="form-label">Nome <span
-                                                                               class="required-symbol">*</span></label>
-                                            <input class="form-control" type="text" name="FirstName"
-                                                   value="@Model.FirstName"/>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-3">
-                                        <div class="mb-3">
-                                            <label class="form-label">Sobrenome <span
-                                                                                    class="required-symbol">*</span></label>
-                                            <input class="form-control" type="text" name="LastName"
-                                                   value="@Model.LastName"/>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                                <div class="col-sm-12 mb-3">
-                                    <button type="submit" class="btn btn-primary">
-                                        @Localizer["Save"]
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
+                    <h4 class="user-name mb-2">@Model.FirstName @Model.LastName</h4>
+                    <div class="status mb-3">
+                        @if (Model.Status == UserStatus.Inativo)
+                        {
+                            <span class="fa fa-circle text-danger me-1"></span>
+                            <span class="fw-bold text-danger">@Model.Status</span>
+                        }
+                        else
+                        {
+                            <span class="fa fa-circle text-success me-1"></span>
+                            <span class="fw-bold text-success">@Model.Status</span>
+                        }
                     </div>
+                    <a class="btn btn-secondary fw-bold mt-2"
+                       href="@Url.Action("Impersonate", "User", new { area = "Admin", userId = Model.Id })">
+                        <i class="fa fa-user-secret"></i> Impersonate
+                    </a>
                 </div>
             </div>
+
+            <!-- Formulário Card -->
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <form asp-action="UserDetails" method="post" novalidate>
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="Id" value="@Model.Id" />
+                        <div class="row">
+
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Nome do Usuário <span class="required-symbol">*</span></label>
+                                <input class="form-control" type="text" name="UserName" value="@Model.UserName" />
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Email <span class="required-symbol">*</span></label>
+                                <input class="form-control" type="email" name="Email" value="@Model.Email" />
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Nome <span class="required-symbol">*</span></label>
+                                <input class="form-control" type="text" name="FirstName" value="@Model.FirstName" />
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Sobrenome <span class="required-symbol">*</span></label>
+                                <input class="form-control" type="text" name="LastName" value="@Model.LastName" />
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Número de Telefone</label>
+                                <span class="fa fa-question-circle help-description"
+                                      data-bs-toggle="tooltip"
+                                      data-bs-html="true"
+                                      aria-label="+55 99999-9999"
+                                      data-bs-original-title="+55 99999-9999"></span>
+                                <input class="form-control" type="text" name="PhoneNumber" value="@Model.PhoneNumber"
+                                       maxlength="19" inputmode="text" />
+                            </div>
+                        </div>
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-primary">@Localizer["Save"]</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
+
 @await Html.PartialAsync("_Success")
-
-
-
