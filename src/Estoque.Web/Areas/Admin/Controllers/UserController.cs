@@ -1,5 +1,6 @@
 ﻿using System.Security.Claims;
 using Estoque.Domain.Entities;
+using Estoque.Domain.Enums;
 using Estoque.Domain.Models;
 using Estoque.Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
@@ -38,14 +39,15 @@ public class UserController(UserManager<ApplicationUser> userManager, UserServic
         {
             UserName = model.UserName,
             Email = model.Email,
-            PhoneNumber = model.PhoneNumber
+            PhoneNumber = model.PhoneNumber,
+            Status = UserStatus.Ativo
         };
 
         var result = await userManager.CreateAsync(user, model.Password);
 
         if (result.Succeeded)
         {
-            var roleResult = await userManager.AddToRoleAsync(user, "Guest");
+            var roleResult = await userManager.AddToRoleAsync(user, "Funcionário");
 
             if (!roleResult.Succeeded)
             {

@@ -3,9 +3,7 @@
 namespace Estoque.Domain.Models;
 
 public class UserViewModel
-{
-    public string Id { get; set; }
-    
+{    
     [Required(ErrorMessage = "O campo Nome de Usuário é obrigatório.")]
     public string? UserName { get; set; }
 

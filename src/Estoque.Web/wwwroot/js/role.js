@@ -1,11 +1,12 @@
-﻿SpinnerOverlay.visible = false
+﻿SpinnerOverlay.visible = false;
+
 $("#create-role-inline-form").submit(function (e) {
     e.preventDefault();
 
     var formData = $(this).serialize();
 
     $.ajax({
-        url: '@Url.Action("Create")',
+        url: window.createRoleUrl,
         type: 'POST',
         data: formData,
         success: function (response) {
@@ -13,8 +14,8 @@ $("#create-role-inline-form").submit(function (e) {
             location.reload();
         },
         error: function (xhr) {
-            var errorMessage = JSON.parse(xhr.responseText).errors[0];
-            $("#error-message-add").text(errorMessage);
+            var errors = xhr.responseJSON?.errors || ["Erro desconhecido"];
+            $("#error-message-add").text(errors[0]);
         }
     });
 });

@@ -32,9 +32,9 @@
                         <span class="fas fa-plus me-2"></span>Adicionar
                     </button>
                     <div class="dropdown-menu p-3" style="min-width: 250px;">
-                        <form asp-action="Create" method="post" id="create-role-inline-form">
+                        <form asp-area="Admin" asp-controller="Roles" asp-action="Create" method="post" id="create-role-inline-form">
                             <div class="mb-2">
-                                <input class="form-control" name="NewRoleName" placeholder="Nome"/>
+                                <input class="form-control" name="newRoleName" placeholder="Nome" />
                             </div>
                             <button type="submit" class="btn btn-primary w-100">Novo Perfil</button>
                             <span class="text-danger field-validation-error">
@@ -83,5 +83,7 @@
         </div>
     </div>
 </div>
-
+<script>
+    window.createRoleUrl = '@Url.Action("Create", "Roles", new { area = "Admin" })';
+</script>
 <script src="~/js/role.js" asp-append-version="true"></script>

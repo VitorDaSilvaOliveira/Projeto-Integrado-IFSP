@@ -39,7 +39,6 @@ public class RolesController(RoleManager<ApplicationRole> roleManager, UserManag
     }
 
     [HttpPost]
-    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Create(string newRoleName)
     {
         if (string.IsNullOrWhiteSpace(newRoleName))
