@@ -1,71 +1,71 @@
 ﻿@for (var index = 0; index < Model.RolesWithUsers!.Count; index++)
 {
-    var rolesWithUsers = Model.RolesWithUsers[index];
-    var role = rolesWithUsers.Role;
-    var users = rolesWithUsers.Users;
-    var isLast = index == Model.RolesWithUsers.Count - 1;
+	var rolesWithUsers = Model.RolesWithUsers[index];
+	var role = rolesWithUsers.Role;
+	var users = rolesWithUsers.Users;
+	var isLast = index == Model.RolesWithUsers.Count - 1;
 
-    <tr
-        @if (isLast && ViewData.ContainsKey("NextPage"))
-        {
-        <text>
-        hx-get="@Url.Action("LoadMore", new { Page = ViewData["NextPage"] })"
-        hx-trigger="revealed"
-        hx-indicator=".tr-indicator"
-        hx-include="[name='SearchText']"
-        hx-swap="afterend"
-        </text>
-        }>
-        <td class="name align-middle ps-3">
-            @if (role.Name == "Admin")
-            {
-                <span class="fa-solid fa-crown text-warning"></span>
-            }
-            @role.Name
+	<tr @if (isLast && ViewData.ContainsKey("NextPage"))
+		{
+		        <text>
+		        hx-get="@Url.Action("LoadMore", new { Page = ViewData["NextPage"] })"
+		        hx-trigger="revealed"
+		        hx-indicator=".tr-indicator"
+		        hx-include="[name='SearchText']"
+		        hx-swap="afterend"
+		        </text>
+	        }
+	>
+	        <td class="name align-middle ps-3">
+	            @if (role.Name == "Admin")
+	            {
+		                <span class="fa-solid fa-crown text-warning"></span>
+	            }
+	            @role.Name
 
-        </td>
-        <td class="align-middle white-space-nowrap ps-3 py-4">
-            @foreach (var user in users)
-            {
-                var avatarUrl = user.Id != null
-                    ? Url.Action("Avatar", "Profile", new { area = "Identity", userId = user.Id })
-                    : Url.Content("~/img/default_profile.png");
+	        </td>
+	        <td class="align-middle white-space-nowrap ps-3 py-4">
+	            @foreach (var user in users)
+	            {
+		                var avatarUrl = user.Id != null
+			                    ? Url.Action("Avatar", "Profile", new { area = "Identity", userId = user.Id })
+			                    : Url.Content("~/img/default_profile.png");
 
-                <div class="d-inline-block me-2" title="@user.UserName">
-                    <img src="@avatarUrl"
-                         onerror="this.onerror=null;this.src='@Url.Content("~/img/default_profile.png")';"
-                         class="rounded-circle"
-                         alt="Avatar"
-                         style="width:32px; height:32px;"/>
-                </div>
-            }
-        </td>
-        <td class="creationDate align-middle ps-3">@role.CreationDate</td>
-        <td class="lastModifiedDate align-middle ps-3">
-            <date value="@role.LastModifiedDate" use-relative-time="true" />
-        </td>
-        <td class="table-action">
-            <a asp-action="RoleDetails"
-               asp-route-roleId="@role.Id"
-               data-bs-toggle="tooltip"
-               title="Editar">
-                <i class="fa fa-pen-to-square"></i>
-            </a>
-        </td>
-        <td class="table-action">
-            <form method="post" action="@Url.Action("DeleteRole", "Roles", new { area = "Admin" })"
-                  onsubmit="return confirm('Tem certeza que quer deletar esse perfil?');"
-                  style="display:inline;">
-                <input type="hidden" name="roleId" value="@role.Id"/>
-                @Html.AntiForgeryToken()
-                <button type="submit" class="btn btn-link p-0 m-0 align-baseline"
-                        data-bs-toggle="tooltip"
-                        title="Apagar"
-                        @(!User.IsInRole("Admin") ? "disabled=\"disabled\"" : "")>
-                    <i class="fa fa-trash-can text-primary"></i>
-                </button>
-            </form>
-        </td>
-    </tr>
+		                <div class="d-inline-block me-2" title="@user.UserName">
+		                    <img src="@avatarUrl"
+		                         onerror="this.onerror=null;this.src='@Url.Content("~/img/default_profile.png")';"
+		                         class="rounded-circle"
+		                         alt="Avatar"
+		                         style="width:32px; height:32px;"/>
+		                </div>
+	            }
+	        </td>
+	        <td class="creationDate align-middle ps-3">@role.CreationDate</td>
+			<td>@role.LastModifiedDate?.ToString("dd/MM/yyyy HH:mm:ss")</td>
+	        <td class="table-action">
+	            <a asp-area="Admin"
+	               asp-controller="Roles"
+	               asp-action="RoleDetails"
+	               asp-route-roleId="@role.Id"
+	               data-bs-toggle="tooltip"
+	               title="Editar">
+	                <i class="fa fa-pen-to-square"></i>
+	            </a>
+	        </td>
+	        <td class="table-action">
+	            <form method="post" action="@Url.Action("DeleteRole", "Roles", new { area = "Admin" })"
+	                  onsubmit="return confirm('Tem certeza que quer deletar esse perfil?');"
+	                  style="display:inline;">
+	                <input type="hidden" name="roleId" value="@role.Id"/>
+	                @Html.AntiForgeryToken()
+	                <button type="submit" class="btn btn-link p-0 m-0 align-baseline"
+	                        data-bs-toggle="tooltip"
+	                        title="Apagar"
+	                        @(!User.IsInRole("Admin") ? "disabled=\"disabled\"" : "")>
+	                    <i class="fa fa-trash-can text-primary"></i>
+	                </button>
+	            </form>
+	        </td>
+	    </tr>
 }
-<link rel="stylesheet" href="~/css/role.css" asp-append-version="true"/>
+<link rel="stylesheet" href="~/css/role.css" asp-append-version="true" />

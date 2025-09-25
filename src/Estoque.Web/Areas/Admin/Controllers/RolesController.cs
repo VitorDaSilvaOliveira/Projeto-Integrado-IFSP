@@ -1,8 +1,10 @@
 ﻿using Estoque.Domain.Entities;
 using Estoque.Domain.Models;
+using Estoque.Infrastructure.Utils;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Estoque.Web.Areas.Admin.Controllers;
 
@@ -18,7 +20,9 @@ public class RolesController(RoleManager<ApplicationRole> roleManager, UserManag
 
     private async Task<RolesIndexViewModel> GetRolesViewModel()
     {
-        var roles = roleManager.Roles.ToList();
+        var roles = await roleManager.Roles
+                                     .OrderBy(r => r.Name)
+                                     .ToListAsync();
 
         var rolesWithUsers = new List<RoleWithUsersViewModel>();
 
@@ -76,21 +80,62 @@ public class RolesController(RoleManager<ApplicationRole> roleManager, UserManag
         return RedirectToAction("Index");
     }
 
+    [HttpGet]
     public async Task<IActionResult> RoleDetails(string roleId)
     {
         var role = await roleManager.FindByIdAsync(roleId);
-        if (role == null)
-            return NotFound();
+        if (role == null) return NotFound();
 
-        var users = await userManager.GetUsersInRoleAsync(role.Name);
+        var allUsers = userManager.Users.ToList();
 
-        var vm = new RoleWithUsersViewModel
+        var usersInRole = await userManager.GetUsersInRoleAsync(role.Name!);
+
+        var vm = new EditRoleViewModel
         {
-            Role = role,
-            Users = users.ToList()
+            RoleId = role.Id,
+            RoleName = role.Name!,
+            Users = allUsers.Select(u => new UserRoleViewModel
+            {
+                UserId = u.Id,
+                UserName = u.UserName!,
+                IsSelected = usersInRole.Any(x => x.Id == u.Id)
+            }).ToList()
         };
 
         return View(vm);
+    }
+
+    [HttpPost]
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> RoleDetails(EditRoleViewModel model)
+    {
+        var role = await roleManager.FindByIdAsync(model.RoleId);
+        if (role == null) return NotFound();
+
+        role.Name = model.RoleName;
+
+        role.LastModifiedDate = LocalTime.Now();
+
+        var updateResult = await roleManager.UpdateAsync(role);
+        if (!updateResult.Succeeded)
+        {
+            ModelState.AddModelError("", "Erro ao atualizar o perfil.");
+            return View(model);
+        }
+
+        foreach (var userVm in model.Users)
+        {
+            var user = await userManager.FindByIdAsync(userVm.UserId);
+            if (user == null) continue;
+
+            if (userVm.IsSelected && !await userManager.IsInRoleAsync(user, role.Name))
+                await userManager.AddToRoleAsync(user, role.Name);
+
+            if (!userVm.IsSelected && await userManager.IsInRoleAsync(user, role.Name))
+                await userManager.RemoveFromRoleAsync(user, role.Name);
+        }
+
+        return RedirectToAction(nameof(Index));
     }
 
     public async Task<IActionResult> LoadMore(int page, string? searchText)

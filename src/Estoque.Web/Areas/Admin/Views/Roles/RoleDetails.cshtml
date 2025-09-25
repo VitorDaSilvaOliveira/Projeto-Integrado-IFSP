@@ -1,0 +1,84 @@
+﻿@model EditRoleViewModel
+
+@{
+    ViewData["Title"] = "Gerenciar Perfil";
+}
+
+<div class="card shadow-sm p-4">
+    <div class="card-body">
+        <h2 class="card-title text-center mb-4">
+            <i class="fas fa-user-tag me-2"></i> Gerenciar Perfil: <span class="text-primary">@Model.RoleName</span>
+        </h2>
+
+        <form asp-action="RoleDetails" method="post">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="RoleId" />
+
+            <div class="mb-4">
+                <label asp-for="RoleName" class="form-label fw-bold">Nome do Perfil</label>
+                <div class="input-group input-group-lg">
+                    <span class="input-group-text"><i class="fas fa-tag"></i></span>
+                    <input asp-for="RoleName" class="form-control" placeholder="Digite o nome do perfil" />
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <h5 class="mb-3"><i class="fas fa-users me-2"></i> Gerenciar Usuários</h5>
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                    <input type="text" class="form-control" id="userSearch" placeholder="Buscar usuário...">
+                </div>
+
+                <div class="list-group user-list-scroll" id="userListContainer">
+                    @for (int i = 0; i < Model.Users.Count; i++)
+                    {
+                        var user = Model.Users[i];
+                        var username = user.UserName?.Trim() ?? "";
+                        if (string.IsNullOrEmpty(username))
+                            continue;
+
+                        <div class="list-group-item d-flex justify-content-between align-items-center"
+                             data-username="@username.ToLower()">
+                            <label class="form-check-label w-100" for="user_@i">
+                                <i class="fas fa-user-circle me-2"></i> @username
+                            </label>
+                            <input class="form-check-input" type="checkbox"
+                                   asp-for="Users[@i].IsSelected"
+                                   id="user_@i" />
+                            <input type="hidden" asp-for="Users[@i].UserId" />
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="mt-4 d-flex justify-content-end gap-2">
+                <a asp-action="Index" class="btn btn-danger">
+                    <i class="fas fa-times me-1"></i> Cancelar
+                </a>
+                <button type="submit" class="btn btn-success">
+                    <i class="fas fa-save me-1"></i> Salvar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .user-list-scroll {
+        max-height: 300px;
+        overflow-y: auto;
+    }
+</style>
+
+<script>
+    document.getElementById('userSearch').addEventListener('input', function() {
+        const term = this.value.toLowerCase().trim();
+        const users = document.querySelectorAll('#userListContainer [data-username]');
+
+        users.forEach(item => {
+            const userName = item.getAttribute('data-username');
+            item.classList.toggle('d-none', !userName.includes(term));
+        });
+    });
+</script>
