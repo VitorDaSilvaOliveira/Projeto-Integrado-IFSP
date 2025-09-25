@@ -31,6 +31,9 @@ public class Devolucao
     [StringLength(100)]
     public string IdUser { get; set; }
 
+    [Column("Devolvido")]
+    public byte? Devolvido { get; set; }
+
     // 🔗 Relacionamentos
     public virtual ICollection<DevolucaoItem> Itens { get; set; }
 }

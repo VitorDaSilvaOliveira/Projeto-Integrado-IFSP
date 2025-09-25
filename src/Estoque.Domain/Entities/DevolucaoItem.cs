@@ -9,6 +9,7 @@ public class DevolucaoItem
     public int IdDevolucaoItem { get; set; }
 
     [Column("IdDevolucao")]
+    [ForeignKey(nameof(Devolucao))] // 🔑 informa ao EF que essa é a FK
     public int IdDevolucao { get; set; }
 
     [Column("IdProduto")]
@@ -24,6 +25,9 @@ public class DevolucaoItem
     [StringLength(255)]
     public string? Motivo { get; set; }
 
-    // 🔗 Relacionamentos
+    [Column("Devolvido")]
+    public byte? Devolvido { get; set; }
+
+    // 🔗 Relacionamento
     public virtual Devolucao Devolucao { get; set; }
 }
