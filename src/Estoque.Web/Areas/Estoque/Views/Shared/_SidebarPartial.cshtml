@@ -202,12 +202,15 @@
 						}
 
 						<div class="nav-item-wrapper">
-							<a class="nav-link label-1 px-2 @(ViewContext.RouteData.Values["controller"].ToString() == "Relatorio2" ? "active" : "")"
-							   href="@Url.Action("Index", "Relatorio2", new { area = "Estoque" })">
+							<a class="nav-link label-1 px-2 @(
+		  ViewContext.RouteData.Values["controller"].ToString() == "Cliente" &&
+		  ViewContext.RouteData.Values["action"].ToString() == "Report"
+			  ? "active" : "" )"
+							   href="@Url.Action("Report", "Cliente", new { area = "Estoque" })">
 								<div class="d-flex align-items-center" style="gap:0.8rem; font-size:0.80rem; padding-left:1rem;">
-									<span class="nav-link-icon"><span class="bi bi-file-earmark-bar-graph"></span></span>
+									<span class="nav-link-icon"><span class="bi bi-file-earmark-text"></span></span>
 									<span class="nav-link-text-wrapper">
-										<span class="nav-link-text text-wrap">@Localizer["Report2"]</span>
+										<span class="nav-link-text text-wrap">@Localizer["CustomerReport"]</span>
 									</span>
 								</div>
 							</a>

@@ -10,4 +10,14 @@ public class ClienteService(IComponentFactory componentFactory)
         formView.ShowTitle = true;
         return formView;
     }
+
+    public async Task<JJFormView> GetFormViewReportClienteAsync()
+    {
+        var formView = await componentFactory.FormView.CreateAsync("RelatorioCliente");
+        formView.ShowTitle = true;
+        return formView;
+    }
+
 }
+
+

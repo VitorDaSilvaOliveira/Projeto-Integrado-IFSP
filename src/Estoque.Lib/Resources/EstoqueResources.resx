@@ -192,9 +192,6 @@
   <data name="Fornecedores" xml:space="preserve">
     <value>Fornecedores</value>
   </data>
-  <data name="Fornecedores" xml:space="preserve">
-    <value>Fornecedores</value>
-  </data>
   <data name="Clientes" xml:space="preserve">
     <value>Clientes</value>
   </data>
@@ -212,9 +209,6 @@
   </data>
   <data name="OrderReport" xml:space="preserve">
     <value>Relatório Pedido</value>
-  </data>
-  <data name="Report2" xml:space="preserve">
-    <value>Relatório 2</value>
   </data>
   <data name="InformacoesPessoais" xml:space="preserve">
     <value>Informações Pessoais</value>
@@ -290,5 +284,8 @@
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancelar</value>
+  </data>
+  <data name="CustomerReport" xml:space="preserve">
+    <value>Relatório Cliente</value>
   </data>
 </root>
