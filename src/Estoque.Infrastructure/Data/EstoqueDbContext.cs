@@ -18,7 +18,8 @@ public class EstoqueDbContext : IdentityDbContext<ApplicationUser, ApplicationRo
     public DbSet<PedidoItem> PedidosItens { get; set; }
     public DbSet<ProdutoFornecedor> ProdutoFornecedores { get; set; }
     public DbSet<SolicitacaoDevolucao> SolicitacoesDevolucao { get; set; }
-    
+    public DbSet<RoleMenu> RoleMenus { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -36,5 +37,8 @@ public class EstoqueDbContext : IdentityDbContext<ApplicationUser, ApplicationRo
             .HasOne(pf => pf.Fornecedor)
             .WithMany(f => f.ProdutoFornecedores)
             .HasForeignKey(pf => pf.IdFornecedor);
+        
+        modelBuilder.Entity<RoleMenu>()
+            .HasKey(rm => new { rm.RoleId, rm.MenuId });
     }
 }

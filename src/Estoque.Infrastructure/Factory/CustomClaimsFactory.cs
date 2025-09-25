@@ -16,6 +16,17 @@ public class CustomClaimsFactory(
         var identity = await base.GenerateClaimsAsync(user);
         identity.AddClaim(new Claim("LastName", user.LastName ?? string.Empty));
         identity.AddClaim(new Claim("FirstName", user.FirstName ?? string.Empty));
+
+        var roles = await UserManager.GetRolesAsync(user);
+        foreach (var roleName in roles)
+        {
+            var role = await RoleManager.FindByNameAsync(roleName);
+            if (role != null)
+            {
+                identity.AddClaim(new Claim("RoleId", role.Id));
+            }
+        }
+
         return identity;
     }
 }

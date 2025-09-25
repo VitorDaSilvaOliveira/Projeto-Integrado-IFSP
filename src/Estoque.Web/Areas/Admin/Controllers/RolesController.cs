@@ -1,5 +1,6 @@
 ﻿using Estoque.Domain.Entities;
 using Estoque.Domain.Models;
+using Estoque.Infrastructure.Services;
 using Estoque.Infrastructure.Utils;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -9,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Estoque.Web.Areas.Admin.Controllers;
 
 [Area("Admin")]
-public class RolesController(RoleManager<ApplicationRole> roleManager, UserManager<ApplicationUser> userManager)
+public class RolesController(RoleManager<ApplicationRole> roleManager, UserManager<ApplicationUser> userManager, RoleService roleService)
     : Controller
 {
     public async Task<IActionResult> Index()
@@ -87,8 +88,19 @@ public class RolesController(RoleManager<ApplicationRole> roleManager, UserManag
         if (role == null) return NotFound();
 
         var allUsers = userManager.Users.ToList();
-
         var usersInRole = await userManager.GetUsersInRoleAsync(role.Name!);
+
+        var allMenus = new List<EditMenuViewModel>
+        {
+            new() { MenuId = "Home",       MenuName = "Dashboards",   IsSelected = await roleService.HasAccessAsync(role.Id, "Home") },
+            new() { MenuId = "Produto",    MenuName = "Produtos",     IsSelected = await roleService.HasAccessAsync(role.Id, "Produto") },
+            new() { MenuId = "Fornecedor", MenuName = "Fornecedores", IsSelected = await roleService.HasAccessAsync(role.Id, "Fornecedor") },
+            new() { MenuId = "Categoria",  MenuName = "Categorias",   IsSelected = await roleService.HasAccessAsync(role.Id, "Categoria") },
+            new() { MenuId = "Cliente",    MenuName = "Clientes",     IsSelected = await roleService.HasAccessAsync(role.Id, "Cliente") },
+            new() { MenuId = "Pedido",     MenuName = "Pedidos",      IsSelected = await roleService.HasAccessAsync(role.Id, "Pedido") },
+            new() { MenuId = "EntradaSaida", MenuName = "Entrada e Saídas", IsSelected = await roleService.HasAccessAsync(role.Id, "EntradaSaida") },
+            new() { MenuId = "RelatorioPedido", MenuName = "Relatório de Pedidos", IsSelected = await roleService.HasAccessAsync(role.Id, "RelatorioPedido") }
+        };
 
         var vm = new EditRoleViewModel
         {
@@ -99,7 +111,8 @@ public class RolesController(RoleManager<ApplicationRole> roleManager, UserManag
                 UserId = u.Id,
                 UserName = u.UserName!,
                 IsSelected = usersInRole.Any(x => x.Id == u.Id)
-            }).ToList()
+            }).ToList(),
+            Menus = allMenus
         };
 
         return View(vm);
@@ -113,7 +126,6 @@ public class RolesController(RoleManager<ApplicationRole> roleManager, UserManag
         if (role == null) return NotFound();
 
         role.Name = model.RoleName;
-
         role.LastModifiedDate = LocalTime.Now();
 
         var updateResult = await roleManager.UpdateAsync(role);
@@ -134,6 +146,8 @@ public class RolesController(RoleManager<ApplicationRole> roleManager, UserManag
             if (!userVm.IsSelected && await userManager.IsInRoleAsync(user, role.Name))
                 await userManager.RemoveFromRoleAsync(user, role.Name);
         }
+
+        await roleService.UpdateRoleMenusAsync(model.RoleId, model.Menus);
 
         return RedirectToAction(nameof(Index));
     }
