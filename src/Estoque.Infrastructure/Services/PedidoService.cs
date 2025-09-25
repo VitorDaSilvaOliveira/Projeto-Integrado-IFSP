@@ -13,7 +13,7 @@ public class PedidoService(IComponentFactory componentFactory, EstoqueDbContext 
         var formView = await componentFactory.FormView.CreateAsync("Pedido");
         formView.ShowTitle = true;
 
-        formView.OnBeforeUpdateAsync += GetValuesPreUpdate;
+        //formView.OnBeforeUpdateAsync += GetValuesPreUpdate;
         formView.OnAfterUpdateAsync += GetValuesPostUpdate;
 
         return formView;
