@@ -41,7 +41,7 @@ public class MovimentacaoService(
         await RegistrarMovimentacaoAsync(produtoId, quantidade, tipoMovimentacao, userId);
     }
 
-    private async Task RegistrarMovimentacaoAsync(int produtoId, int quantidade, TipoMovimentacao tipoMovimentacao,
+    public async Task RegistrarMovimentacaoAsync(int produtoId, int quantidade, TipoMovimentacao tipoMovimentacao,
         string? userId)
     {
         var produto = await context.Produtos

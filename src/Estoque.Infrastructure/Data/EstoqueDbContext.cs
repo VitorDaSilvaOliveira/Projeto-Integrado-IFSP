@@ -10,6 +10,8 @@ public class EstoqueDbContext : IdentityDbContext<ApplicationUser, ApplicationRo
     public DbSet<Produto> Produtos { get; set; }
     public DbSet<AuditLog> AuditLogs { get; set; }
     public DbSet<Categoria> Categorias { get; set; }
+    public DbSet<Devolucao> Devolucoes { get; set; }
+    public DbSet<DevolucaoItem> DevolucoesItens { get; set; }
     public DbSet<Movimentacao> Movimentacoes { get; set; }
     public DbSet<Notificacao> Notificacoes { get; set; }
     public DbSet<Fornecedor> Fornecedores { get; set; }

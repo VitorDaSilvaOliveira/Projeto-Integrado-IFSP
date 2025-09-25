@@ -69,6 +69,8 @@ public static class ConfigurationExtensions
     {
         services.AddScoped<ProdutoService>();
         services.AddScoped<ClienteService>();
+        services.AddScoped<DevolucaoService>();
+        services.AddScoped<DevolucaoItemService>();
         services.AddScoped<MovimentacaoService>();
         services.AddScoped<FornecedorService>();
         services.AddScoped<CategoriaService>();
