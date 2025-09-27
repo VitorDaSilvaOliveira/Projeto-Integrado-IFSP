@@ -288,4 +288,7 @@
   <data name="CustomerReport" xml:space="preserve">
     <value>Customer Report</value>
   </data>
+  <data name="Devolution" xml:space="preserve">
+    <value>Devolution</value>
+  </data>
 </root>

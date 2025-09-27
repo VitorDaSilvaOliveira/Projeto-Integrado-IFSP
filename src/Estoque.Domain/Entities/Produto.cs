@@ -18,10 +18,10 @@ public class Produto
     [Column("Preco", TypeName = "decimal(20,2)")]
     public decimal? Preco { get; set; }
 
-    [Column("QuantidadeEstoque")] public int? QuantidadeEstoque { get; set; }
+    [Column("Rastreio")] public bool? RastrearPorSerie { get; set; }
 
     [Column("Id_Categoria")] public int? IdCategoria { get; set; }
     [Column("EstoqueMinimo")] public int? EstoqueMinimo { get; set; }
-    
-    public virtual ICollection<ProdutoFornecedor> ProdutoFornecedores { get; set; } = new List<ProdutoFornecedor>();
+
+    public virtual ICollection<ProdutoLote> ProdutoLotes { get; set; } = new List<ProdutoLote>();
 }

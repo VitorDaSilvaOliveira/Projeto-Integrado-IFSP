@@ -18,27 +18,14 @@ public class EstoqueDbContext : IdentityDbContext<ApplicationUser, ApplicationRo
     public DbSet<Cliente> Clientes { get; set; }
     public DbSet<Pedido> Pedidos { get; set; }
     public DbSet<PedidoItem> PedidosItens { get; set; }
-    public DbSet<ProdutoFornecedor> ProdutoFornecedores { get; set; }
     public DbSet<SolicitacaoDevolucao> SolicitacoesDevolucao { get; set; }
     public DbSet<RoleMenu> RoleMenus { get; set; }
+    public DbSet<ProdutoLote> ProdutoLotes { get; set; }
+    public DbSet<ProdutoSerie> ProdutoSeries { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-
-        // Configura chave composta
-        modelBuilder.Entity<ProdutoFornecedor>()
-            .HasKey(pf => new { pf.IdProduto, pf.IdFornecedor });
-
-        modelBuilder.Entity<ProdutoFornecedor>()
-            .HasOne(pf => pf.Produto)
-            .WithMany(p => p.ProdutoFornecedores)
-            .HasForeignKey(pf => pf.IdProduto);
-
-        modelBuilder.Entity<ProdutoFornecedor>()
-            .HasOne(pf => pf.Fornecedor)
-            .WithMany(f => f.ProdutoFornecedores)
-            .HasForeignKey(pf => pf.IdFornecedor);
         
         modelBuilder.Entity<RoleMenu>()
             .HasKey(rm => new { rm.RoleId, rm.MenuId });

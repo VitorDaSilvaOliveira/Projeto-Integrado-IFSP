@@ -12,7 +12,7 @@ public class ConfigurationController( UserService userService, EstoqueDbContext 
     public async Task<IActionResult> Index()
     {
         ViewBag.ActiveUsersCount = await userService.GetActiveUsersCount();
-        ViewBag.ItensBaixoEstoque = await context.Produtos.CountAsync(p => p.QuantidadeEstoque <= p.EstoqueMinimo);
+        ViewBag.ItensBaixoEstoque = await context.Produtos.CountAsync(p => p.IdProduto == 1);
         ViewBag.PedidosPendentes = await context.Pedidos.CountAsync(p => p.Status == PedidoStatus.EmAndamento);
 
         return View();

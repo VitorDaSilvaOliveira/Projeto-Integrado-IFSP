@@ -10,5 +10,4 @@ public class ProdutoService(IComponentFactory componentFactory)
         formView.ShowTitle = true;
         return formView;
     }
-
 }

@@ -33,69 +33,100 @@ public class MovimentacaoService(
     {
         var values = e.Values;
 
+        int quantidade = 0;
         var produtoId = Convert.ToInt32(values["Id_Produto"]);
-        var quantidade = Convert.ToInt32(values["Quantidade"]);
         var tipoMovimentacao = (TipoMovimentacao)Convert.ToInt32(values["TipoMovimentacao"]);
         var userId = values["Id_User"]?.ToString();
 
         await RegistrarMovimentacaoAsync(produtoId, quantidade, tipoMovimentacao, userId);
     }
 
-    public async Task RegistrarMovimentacaoAsync(int produtoId, int quantidade, TipoMovimentacao tipoMovimentacao,
+    public async Task RegistrarMovimentacaoAsync(
+        int produtoId,
+        int quantidade,
+        TipoMovimentacao tipoMovimentacao,
         string? userId)
     {
         var produto = await context.Produtos
+            .Include(p => p.ProdutoLotes)
             .FirstOrDefaultAsync(p => p.IdProduto == produtoId);
+
+        if (produto == null)
+        {
+            logger.LogError("Produto não encontrado.");
+            return;
+        }
 
         var user = signInManager.Context.User;
         var userName = user?.Identity?.Name ?? "Anônimo";
 
-        if (produto == null)
-            logger.LogError("Produto não encontrado.");
-
-        produto.QuantidadeEstoque ??= 0;
-
         if (tipoMovimentacao == TipoMovimentacao.Saida)
         {
-            produto.QuantidadeEstoque -= quantidade;
+            var qtdRestante = quantidade;
+
+            foreach (var lote in produto.ProdutoLotes
+                         .Where(l => l.QuantidadeDisponivel > 0)
+                         .OrderBy(l => l.DataEntrada))
+            {
+                if (qtdRestante <= 0) break;
+
+                var retirar = Math.Min(qtdRestante, lote.QuantidadeDisponivel);
+                lote.QuantidadeDisponivel -= retirar;
+                qtdRestante -= retirar;
+            }
+
+            if (qtdRestante > 0)
+            {
+                logger.LogWarning("Tentativa de saída maior que estoque disponível do produto {ProdutoId}", produtoId);
+                throw new InvalidOperationException("Estoque insuficiente.");
+            }
 
             await auditLogService.LogAsync(
                 "Estoque",
                 "Movimentação de Saída",
-                $"Saída de {quantidade} unidades do produto '{produto.Nome}' (ID: {produto.IdProduto}). Novo estoque: {produto.QuantidadeEstoque}.",
+                $"Saída de {quantidade} unidades do produto '{produto.Nome}' (ID: {produto.IdProduto}).",
                 userId,
                 userName
             );
-
-
-            if (produto.QuantidadeEstoque < produto.EstoqueMinimo)
-                await NotificarEstoqueBaixo(produto, userId);
         }
         else if (tipoMovimentacao == TipoMovimentacao.Entrada)
         {
-            produto.QuantidadeEstoque += quantidade;
+            var lote = new ProdutoLote
+            {
+                ProdutoId = produtoId,
+                FornecedorId = 1,
+                Quantidade = quantidade,
+                QuantidadeDisponivel = quantidade,
+                CustoUnitario = 0,
+                DataEntrada = DateTime.UtcNow
+            };
+
+            context.ProdutoLotes.Add(lote);
 
             await auditLogService.LogAsync(
                 "Estoque",
                 "Movimentação de Entrada",
-                $"Entrada de {quantidade} unidades do produto '{produto.Nome}' (ID: {produto.IdProduto}). Novo estoque: {produto.QuantidadeEstoque}.",
+                $"Entrada de {quantidade} unidades do produto '{produto.Nome}' (ID: {produto.IdProduto}).",
                 userId,
                 userName
             );
         }
-    }
 
-    private async Task NotificarEstoqueBaixo(Produto produto, string? userId)
-    {
-        var notificacao = new Notificacao
-        {
-            Mensagem =
-                $"⚠️ Estoque do produto '{produto.Nome}' abaixo do mínimo! ({produto.QuantidadeEstoque} unidades restantes)",
-            Data = LocalTime.Now(),
-            IdUser = userId
-        };
-
-        context.Notificacoes.Add(notificacao);
         await context.SaveChangesAsync();
     }
+
+
+    //private async Task NotificarEstoqueBaixo(Produto produto, string? userId)
+    //{
+    //    var notificacao = new Notificacao
+    //    {
+    //        Mensagem =
+    //            $"⚠️ Estoque do produto '{produto.Nome}' abaixo do mínimo! ({produto.QuantidadeEstoque} unidades restantes)",
+    //        Data = LocalTime.Now(),
+    //        IdUser = userId
+    //    };
+
+    //    context.Notificacoes.Add(notificacao);
+    //    await context.SaveChangesAsync();
+    //}
 }

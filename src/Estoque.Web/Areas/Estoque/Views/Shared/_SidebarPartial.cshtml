@@ -168,6 +168,17 @@
 							</a>
 						</div>
 						}
+						<div class="nav-item-wrapper">
+							<a class="nav-link label-1 px-2 @(ViewContext.RouteData.Values["controller"].ToString() == "Devolucao" ? "active" : "")"
+							   href="@Url.Action("Index", "Devolucao", new { area = "Estoque" })">
+								<div class="d-flex align-items-center" style="gap:0.8rem; font-size:0.80rem; padding-left:1rem;">
+									<span class="nav-link-icon"><span class="bi bi-arrow-return-left"></span></span>
+									<span class="nav-link-text-wrapper">
+										<span class="nav-link-text text-wrap">@Localizer["Devolution"]</span>
+									</span>
+								</div>
+							</a>
+						</div>
 					</div>
 				</li>
 

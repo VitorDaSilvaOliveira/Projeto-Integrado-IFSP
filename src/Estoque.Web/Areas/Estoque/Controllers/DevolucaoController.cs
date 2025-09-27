@@ -10,6 +10,7 @@ public class DevolucaoController(DevolucaoService devolucaoService) : Controller
     public async Task<IActionResult> Index()
     {
         var formViewDevolucaoAsync = await devolucaoService.GetFormViewDevolucaoAsync();
+
         var resultGridDevolucaoAsync = await formViewDevolucaoAsync.GetResultAsync();
 
         if (resultGridDevolucaoAsync is IActionResult actionResultGridDevolucaoAsync)
