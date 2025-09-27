@@ -19,4 +19,20 @@ public class ClienteController(ClienteService clienteService) : Controller
         return View();
 
     }
+
+
+    public async Task<IActionResult> Report()
+    {
+        var formViewRelatorioClienteAsync = await clienteService.GetFormViewReportClienteAsync();
+
+        var resultGridReportClienteAsync = await formViewRelatorioClienteAsync.GetResultAsync();
+        if (resultGridReportClienteAsync is IActionResult actionResultGridReportClienteAsync)
+            return actionResultGridReportClienteAsync;
+
+        ViewBag.FormViewRelatorioCliente = resultGridReportClienteAsync.Content;
+        return View();
+    }
+
 }
+
+
