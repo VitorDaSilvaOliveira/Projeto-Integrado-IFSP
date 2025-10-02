@@ -24,4 +24,6 @@ public class Produto
     [Column("EstoqueMinimo")] public int? EstoqueMinimo { get; set; }
 
     public virtual ICollection<ProdutoLote> ProdutoLotes { get; set; } = new List<ProdutoLote>();
+    [Column("Quantidade Estoque")] // <-- COM ESPAÇO
+public int? QuantidadeEstoque { get; set; }
 }
