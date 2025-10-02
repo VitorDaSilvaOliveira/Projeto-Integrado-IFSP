@@ -31,6 +31,4 @@ public class Fornecedor
     public string? CEP { get; set; }
 
     public DateTime DataCadastro { get; set; } = DateTime.UtcNow;
-    
-    public virtual ICollection<ProdutoFornecedor> ProdutoFornecedores { get; set; } = new List<ProdutoFornecedor>();
 }

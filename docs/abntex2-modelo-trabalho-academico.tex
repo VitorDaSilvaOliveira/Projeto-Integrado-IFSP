@@ -717,9 +717,9 @@ O projeto tem como objetivo o desenvolvimento de um sistema de controle de estoq
     \hline
     \textbf{Código} & \textbf{Atores} & \textbf{Nome} & \textbf{Descrição} \\ \hline
 
-    RF01 & Administrador & Cadastro de Produtos & O sistema deve permitir que o administrador cadastre novos produtos no estoque, incluindo nome, código, categoria, preço, quantidade, marca, modelo, estoque inicial. Produtos com estoque zero devem ser marcados como "Esgotado". \\ \hline
+  RF01 & Gerente de estoque & Controle de Produtos & O sistema deve permitir ao usuário cadastrar, alterar, consultar e deletar produtos. Deve registrar movimentações de estoque e o histórico de alterações, garantindo que produtos tenham categoria e quantidade mínima ideal. \\ \hline
 
-    RF02 & Administrador & Atualização de Produtos & O sistema deve permitir que o administrador atualize informações de produtos já cadastrados, como preço, quantidade, data de validade e status ("Esgotado" se estoque = 0), mantendo histórico de alterações. \\ \hline
+  RF02 & Gerente de estoque, Vendedor/Funcionário & Controle de Pedidos & O sistema deve permitir cadastrar, consultar e alterar pedidos, vinculando produtos e quantidades. Pedidos aceitos geram movimentações de estoque, reduzindo saldos. Pedidos podem ser aceitos ou recusados, mas não deletados. \\ \hline
 
    
 
@@ -735,29 +735,28 @@ O projeto tem como objetivo o desenvolvimento de um sistema de controle de estoq
 
 
 \begin{quadro}[htb]
-\caption{\label{quadro_rf2}Requisitos Funcionais (RF3 a RF11)}
+\caption{\label{quadro_rf2}Requisitos Funcionais (RF3 a RF10)}
 \begin{tabular}{|p{1.4cm}|p{2.8cm}|p{4.5cm}|p{7.0cm}|}
     \hline
     \textbf{Código} & \textbf{Atores} & \textbf{Nome} & \textbf{Descrição} \\ \hline
 
-      RF03 & Administrador & Exclusão de Produtos & O sistema deve permitir que o administrador remova produtos do estoque quando necessário, com confirmação e registro em log. \\ \hline
+       RF03 & Gerente de estoque & Controle de Fornecedores & O sistema deve permitir o cadastro de fornecedores (nome, documento, localização, contatos). Após criado, o registro não pode ser deletado, apenas inativado, e deve ser relacionado a devoluções e movimentações. \\ \hline
 
+    RF04 & Gerente de estoque & Controle de Movimentação & O sistema deve permitir o cadastro de movimentações (produto, quantidade, tipo, usuário), alterando a quantidade em estoque. O registro é de segurança e não pode ser deletado após a criação. \\ \hline
 
-     RF04 & Administrador & Controle de Entradas & O sistema deve registrar entradas de produtos no estoque (reposição), atualizando automaticamente a quantidade disponível e registrando data, hora, responsável, fornecedor e nota fiscal. \\ \hline
+    RF05 & Gerente de estoque & Relatórios de Estoque & O sistema deve gerar relatórios consolidados para auxiliar a tomada de decisão, identificando produtos abaixo do mínimo ideal, perdas e considerando movimentações de entrada, saída e devolução. Deve permitir filtro por loja. \\ \hline
 
-    RF05 & Administrador & Controle de Saídas & O sistema deve registrar saídas de produtos (vendas ou perdas), reduzindo a quantidade em estoque e validando se há estoque suficiente antes da venda. Deve permitir cancelamento com restauração de estoque. \\ \hline
+    RF06 & Vendedor, Gerente de estoque & Registrar Devoluções & O sistema deve permitir o registro de devoluções de produtos (de cliente ou para fornecedor), vinculadas a pedidos e dentro da garantia (para clientes). Deve registrar data, origem, justificativa e impactar relatórios e movimentações. \\ \hline
 
-    RF06 & Administrador & Relatórios de Estoque & O sistema deve gerar relatórios de estoque (atual, histórico mensal), incluindo: produtos esgotados, produtos com baixa quantidade, mais vendidos e histórico de movimentações com filtros por período. \\ \hline
+    RF07 & Administrador do sistema & Gestão de Usuários e Permissões & O sistema deve ter gestão de perfis (Admin/Gerente e Vendedor/Funcionário) com permissões distintas. Ações críticas (como deletar produtos) devem ser restritas ao Administrador e registradas em log. \\ \hline
 
-    RF07 & Sistema & Alertas de Estoque & O sistema deve enviar alertas visuais e por e-mail quando um produto estiver abaixo do nível mínimo configurado, esgotado ou próximo da data de validade. \\ \hline
+    RF08 & Administrador do sistema, Usuário do sistema & Cadastro e Autenticação & O sistema deve permitir o cadastro e login com e-mail e senha, aplicando controle de acesso. As senhas devem ser armazenadas de forma segura (criptografia/hashing). \\ \hline
 
-    RF08 & Administrador & Categorização de Produtos & O sistema deve permitir a categorização hierárquica de produtos (ex.: hardware > placas > gráficas) com possibilidade de múltiplas categorias por produto. \\ \hline
+    RF09 & Usuário do sistema & Redefinição de Senha & O sistema deve permitir que usuários solicitem a redefinição de senha via e-mail. Deve enviar um link seguro e temporário, exigindo critérios mínimos de segurança para a nova senha. \\ \hline
 
-    RF09 & Todos & Busca Avançada de Produtos & O sistema deve permitir a busca de produtos por nome, código, marca, modelo, categoria, localização, status ou combinação destes, com resultados em tempo real. \\ \hline
+    RF10 & Todos os usuários do sistema & Internacionalização & O sistema deve oferecer suporte a internacionalização, estando disponível em, no mínimo, Português e Inglês. O idioma deve ser configurável pelo usuário ou ajustado pelo navegador. \\ \hline
 
-    RF10 & Administrador & Gerenciamento de Fornecedores & O sistema deve permitir o cadastro e gerenciamento de fornecedores, incluindo informações de contato, produtos fornecidos, prazos de entrega e histórico de compras. \\ \hline
-
-    RF11 & Administrador & Histórico de Movimentações & O sistema deve armazenar o histórico completo de entradas e saídas de produtos com data, hora, responsável, valor unitário, valor total, depósito de origem/destino e motivo (venda, perda, ajuste). \\ \hline
+    
 
     
 
@@ -769,25 +768,16 @@ O projeto tem como objetivo o desenvolvimento de um sistema de controle de estoq
 \FloatBarrier
 
 \begin{quadro}[htb]
-\caption{\label{quadro_rf3}Requisitos Funcionais (RF12 a RF18)}
+\caption{\label{quadro_rf3}Requisitos Funcionais (RF11 a RF12)}
 \hspace*{-1cm}
 \begin{tabular}{|p{1.4cm}|p{2.8cm}|p{4.5cm}|p{7.0cm}|}
     \hline
     \textbf{Código} & \textbf{Atores} & \textbf{Nome} & \textbf{Descrição} \\ \hline
 
-    RF12 & Administrador & Múltiplos Depósitos & O sistema deve permitir o gerenciamento de estoque em diferentes depósitos/filiais com transferências entre eles, registrando data, responsável e motivo. \\ \hline
+   RF11 & Administrador, Vendedor & Suporte a Múltiplas Lojas & O sistema deve permitir a gestão de estoque em, no mínimo, duas lojas distintas. Usuários devem ser vinculados a uma loja, e o Administrador deve poder alternar entre elas. \\ \hline
 
-    RF13 & Vendedor & Consulta de Estoque & O sistema deve permitir que vendedores consultem a disponibilidade de produtos em tempo real, incluindo status "Esgotado", localização e previsão de reposição. \\ \hline
+    RF12 & Administrador, Vendedor & Controle de Clientes & O sistema deve permitir o gerenciamento e registro completo de clientes (nome, documento, contatos). Todo cliente registrado deve ter pedidos atrelados a ele. \\ \hline
 
-    RF14 & Vendedor & Registro de Vendas & O sistema deve permitir que vendedores registrem vendas apenas se houver estoque suficiente para todos os itens, gerando comprovante com data, hora, produtos, quantidades, descontos, valor total e forma de pagamento. \\ \hline
-
-    RF15 & Sistema & Validação de Cadastro & O sistema deve impedir cadastro de produtos com nome, marca e modelo duplicados, sugerindo similaridades existentes. \\ \hline
-
-    RF16 & Administrador & Backup e Restauração & O sistema deve permitir backup completo dos dados (produtos, movimentações, configurações) com agendamento e restauração pontual. \\ \hline
-
-    RF17 & Administrador & Autenticação e Controle de Acesso & O sistema deve ter autenticação segura com níveis de acesso (admin e vendedor) e registro de atividades críticas. \\ \hline
-
-    RF18 & Administrador & Relatórios Mensais & O sistema deve gerar relatórios mensais automáticos com: estoque atual valorizado, produtos mais vendidos (quantidade e valor), giro de estoque, produtos sem movimentação e comparação com meses anteriores. \\ \hline
 
   
 
@@ -797,25 +787,21 @@ O projeto tem como objetivo o desenvolvimento de um sistema de controle de estoq
 \FloatBarrier
 
 
-\newpage
 \subsection{Requisitos Não Funcionais}
 
 
 
 \begin{quadro}[htb]
-\caption{\label{quadro_rnf1}Requisitos Não Funcionais (RNF01 a RNF08)}
+\caption{\label{quadro_rnf1}Requisitos Não Funcionais (RNF01 a RNF05)}
 \begin{center}
 \begin{tabular}{|p{2.2cm}|p{4.0cm}|p{10.0cm}|}
     \hline
     \textbf{Código} & \textbf{Módulo} & \textbf{Descrição} \\ \hline
-    RNF01 & Desempenho & O sistema deve responder às requisições em até 2 segundos (consultas simples) e 5 segundos (relatórios complexos), mesmo durante validações de estoque ou geração de comprovantes. \\ \hline
-    RNF02 & Escalabilidade & O sistema deve suportar até 10.000 produtos, 5.000 movimentações diárias e 500 usuários simultâneos, com possibilidade de expansão horizontal. \\ \hline
-    RNF03 & Portabilidade & O sistema deve funcionar em navegadores modernos (Chrome, Firefox, Edge, Safari) e ser responsivo para dispositivos móveis e tablets. Versão desktop otimizada para Windows e macOS. \\ \hline
-    RNF04 & Segurança & O sistema deve seguir a LGPD, com criptografia de dados sensíveis, autenticação de dois fatores para administradores, logs de acesso e auditoria de alterações críticas. \\ \hline
-    RNF05 & Disponibilidade & O sistema deve ter disponibilidade de 99,9\% com redundância, backups diários e recuperação de desastres em até 4 horas. \\ \hline
-    RNF06 & Usabilidade & Interface intuitiva para cadastros complexos, atalhos de teclado, busca rápida e relatórios exportáveis em PDF/Excel. \\ \hline
-    RNF07 & Integração & API REST para integração com ERPs e sistemas fiscais. \\ \hline
-    RNF08 & Internacionalização & Suporte a múltiplos idiomas (PT-BR, EN) e formatos de data/moeda configuráveis. \\ \hline
+    RNF01 & Desempenho & O sistema deve suportar no mínimo 10 usuários simultâneos sem queda de desempenho. \\ \hline
+    RNF02 & Segurança & O sistema deve ter todas as suas rotas protegidas por um mecanismo de autenticação robusto. \\ \hline
+    RNF03 & Disponibilidade & O sistema deve estar completamente disponível a todo momento, com uma tolerância máxima de queda de 0,15 ao mês. \\ \hline
+    RNF04 & Multiusuário & O sistema deve ser operável por múltiplos usuários ao mesmo tempo sem que ocorram inconsistências nos dados transacionais. \\ \hline
+    RNF05 & Qualidade de Código & O sistema deve poder receber manutenção de código com facilidade, seguindo padrões de desenvolvimento e possuindo documentação extensiva. \\ \hline
 \end{tabular}
 \end{center}
 \end{quadro}
@@ -1443,13 +1429,11 @@ Além da LGPD, o sistema também considera princípios estabelecidos no Marco Ci
 O modelo de banco de dados é responsável por organizar e estruturar as informações utilizadas no sistema, garantindo integridade, consistência e facilidade no acesso aos dados. Nesta seção, são apresentados o Modelo Entidade-Relacionamento (MER), o Diagrama Entidade-Relacionamento (DER) e o Dicionário de Dados. O MER e o DER representam graficamente as entidades, atributos e relacionamentos do sistema, enquanto o dicionário de dados descreve detalhadamente cada campo presente no banco, incluindo tipo, tamanho e função. O modelo foi projetado para gerenciar de forma eficiente o controle de estoque, permitindo registrar entradas, saídas, usuários, produtos, fornecedores e categorias.
 
 \subsection{Modelo Entidade Relacionamento}
-Nessa sessão será apresentado o MER - Modelo Entidade Relacionamento
 
 \includegraphics[width=1.0\textwidth]{Figuras/MERestoque.png}
 
 
 \subsection{Diagrama Entidade Relacionamento}
-Nessa sessão será apresentado o DER - Diagrama Entidade Relacionamento
 
 \includegraphics[width=1.0\textwidth]{Figuras/DERestoque.png}
 
@@ -1461,17 +1445,18 @@ Nessa sessão será apresentado o DER - Diagrama Entidade Relacionamento
 \subsection{Cronograma de Atividades – Primeiro Semestre}
 
 O desenvolvimento do sistema de gerenciamento de estoque será realizado ao longo de dois semestres letivos, estando o presente cronograma correspondente às atividades planejadas para o primeiro semestre. Neste período inicial, o foco principal está na fundamentação e planejamento do projeto, bem como na construção da prova de conceito e definição do escopo mínimo viável.
+
 \begin{itemize}
 
-   \item No início do semestre, tem-se a fase de desenvolvimento do tema (Entrega do marco dia 08/04/2025), que contempla a escolha do assunto central do projeto. Nessa etapa, são realizadas as tarefas de definição de um parceiro institucional e levantamento preliminar das necessidades de negócio. Em seguida, inicia-se a análise de requisitos, composta pela elaboração de um formulário de coleta de dados, condução de entrevistas com o parceiro escolhido e o levantamento detalhado dos requisitos funcionais e não funcionais do sistema. Complementarmente, realiza-se um estudo de viabilidade, que envolve entrevistas com os stakeholders e a identificação das necessidades estratégicas para garantir a utilidade e aplicabilidade do sistema proposto.
+\item No início do semestre, tem-se a fase de Desenvolvimento do Tema (Entrega do marco dia 08/04/2025), que contempla a escolha do assunto central do projeto e a definição do parceiro institucional. Essa etapa foca no levantamento detalhado dos requisitos (funcionais e não funcionais) e na análise de viabilidade do sistema proposto.
 
-  \item Posteriormente, desenvolve-se a fase de desenho da aplicação (Entrega do marco dia 29/04/2025), com foco na estruturação técnica da solução. Inicialmente, é feito o projeto do banco de dados, com a criação do Modelo Entidade-Relacionamento (MER) e do Diagrama Entidade-Relacionamento (DER). Na sequência, utiliza-se a linguagem UML para a construção dos diagramas de componentes e de implantação, com o objetivo de representar a arquitetura lógica e física do sistema. Ainda nessa fase, realiza-se a modelagem dos processos de negócio, com a descrição dos fluxos atuais (AS IS) e a proposição dos fluxos futuros (TO BE), identificando melhorias e ajustes esperados com a adoção do novo sistema.
+\item Posteriormente, desenvolve-se a fase de Desenho da Aplicação (Entrega do marco dia 29/04/2025), com foco na estruturação técnica da solução. Aqui, são entregues o projeto do banco de dados (MER e DER), os diagramas de arquitetura (UML) e a modelagem dos processos de negócio (AS IS e TO BE).
 
-  \item A seguir, passa-se à etapa de prova de conceito (Entrega do marco dia 20/05/2025), na qual se realiza a escolha das tecnologias mais adequadas ao projeto, por meio de uma análise criteriosa das alternativas disponíveis. Também são desenvolvidos os protótipos iniciais, incluindo os scripts de criação do banco de dados, os protótipos de interface de usuário (telas) e o início da implementação do back-end do sistema, a fim de validar os conceitos propostos.
+\item A seguir, passa-se à etapa de Prova de Conceito (Entrega do marco dia 20/05/2025), na qual se realiza a escolha das tecnologias mais adequadas. O resultado é o desenvolvimento dos protótipos iniciais de interface, dos scripts de criação do banco de dados e o início da implementação do back-end do sistema.
 
-  \item Por fim, inicia-se a fase da criação do MVP (Produto Mínimo Viável) (Entrega do marco dia 17/06/2025). Essa etapa inclui a definição clara do problema a ser resolvido, situando o projeto em seu contexto geral, descrevendo o impacto do problema e delimitando suas causas. Após isso, definem-se as prioridades do sistema, com base em critérios objetivos e identificação das funcionalidades prioritárias. Com essas definições, delimita-se o escopo da aplicação, com a explicitação dos limites do MVP, restrições técnicas e restrições de negócio. Por fim, identificam-se as funcionalidades mínimas essenciais, o fluxo principal do usuário no sistema e as integrações necessárias com outros sistemas ou serviços.
+\item Por fim, inicia-se a fase da Criação do MVP (Produto Mínimo Viável) (Entrega do marco dia 17/06/2025). Essa etapa inclui a definição clara do problema e das prioridades, delimitando o escopo da aplicação com suas restrições. O produto final é a identificação das funcionalidades mínimas essenciais e das integrações necessárias.
 
-  \item Paralelamente, é elaborada a fase de análise e documentação, cujo objetivo é consolidar os dados obtidos até aqui. (Entrega do marco dia 18/07/2025). Esta seção inclui a elaboração da introdução do trabalho, apresentando os objetivos, o problema e a solução proposta. Também se realiza uma breve revisão da literatura, com a recuperação do histórico e contexto do tema. No que se refere à gestão do projeto, descreve-se a organização da equipe e a metodologia adotada. A seção de desenvolvimento do projeto apresenta o escopo definido, seguido pela análise de viabilidade financeira, com a estimativa de custos envolvidos. Por fim, as considerações finais trazem as principais dificuldades encontradas, decisões tomadas e funcionalidades ou ideias descartadas durante o processo.
+\item Paralelamente, é elaborada a fase de Análise e Documentação (Entrega do marco dia 18/07/2025), cujo objetivo é consolidar os dados obtidos. Esta seção inclui a elaboração da introdução, revisão da literatura, gestão do projeto e análise de viabilidade financeira, encerrando com as considerações finais sobre o processo.
 \end{itemize}
 
 % \subsection{Análise da duração do projeto}
