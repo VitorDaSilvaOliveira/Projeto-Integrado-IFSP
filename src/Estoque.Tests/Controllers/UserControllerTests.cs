@@ -1,4 +1,5 @@
 ﻿using Estoque.Domain.Entities;
+using Estoque.Domain.Models;
 using Estoque.Infrastructure.Data;
 using Estoque.Infrastructure.Services;
 using Estoque.Web.Areas.Admin.Controllers;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using JJMasterData.Core.UI.Components;
@@ -19,19 +21,23 @@ public class UserControllerTests
     private readonly Mock<SignInManager<ApplicationUser>> _signInManagerMock;
     private readonly UserService _userService;
     private readonly EstoqueDbContext _context;
+    private readonly UserController _controller;
 
     public UserControllerTests()
     {
+        // 1. Configuração do DbContext em memória para isolar os testes
         var options = new DbContextOptionsBuilder<EstoqueDbContext>()
-            .UseInMemoryDatabase(Guid.NewGuid().ToString())
+            .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
             .Options;
         _context = new EstoqueDbContext(options);
 
+        // 2. Mock do UserManager
         var userStoreMock = new Mock<IUserStore<ApplicationUser>>();
         _userManagerMock = new Mock<UserManager<ApplicationUser>>(
             userStoreMock.Object, null, null, null, null, null, null, null, null
         );
 
+        // 3. Mock do SignInManager
         _signInManagerMock = new Mock<SignInManager<ApplicationUser>>(
             _userManagerMock.Object,
             new Mock<IHttpContextAccessor>().Object,
@@ -39,47 +45,139 @@ public class UserControllerTests
             null, null, null, null
         );
 
+        // 4. Instância real do UserService (pois sua lógica pode ser necessária)
         _userService = new UserService(_context, Mock.Of<IWebHostEnvironment>(), Mock.Of<IComponentFactory>());
+
+        // 5. Instancia o Controller uma única vez com todos os mocks
+        _controller = new UserController(
+            _userManagerMock.Object,
+            _userService,
+            _signInManagerMock.Object
+        );
+        
+        // 6. Configura o TempData para os testes que o utilizam
+        _controller.TempData = new TempDataDictionary(new DefaultHttpContext(), Mock.Of<ITempDataProvider>());
     }
 
     [Fact]
     public async Task UserDetails_DeveRetornarNotFound_SeUsuarioNaoExiste()
     {
+        // Arrange
         _userManagerMock.Setup(m => m.FindByIdAsync(It.IsAny<string>()))
             .ReturnsAsync((ApplicationUser?)null);
 
-        var controller = new UserController(
-            _userManagerMock.Object,
-            _userService,
-            _signInManagerMock.Object
-        );
+        // Act
+        var result = await _controller.UserDetails(Guid.NewGuid());
 
-        var result = await controller.UserDetails(Guid.NewGuid());
-
+        // Assert
         result.Should().BeOfType<NotFoundResult>();
     }
 
     [Fact]
     public async Task UserDetails_DeveRetornarView_SeUsuarioExiste()
     {
-        var usuario = new ApplicationUser("Ana", "Silva")
-        {
-            Id = Guid.NewGuid().ToString()
-        };
-
-        _userManagerMock.Setup(m => m.FindByIdAsync(usuario.Id.ToString()))
+        // Arrange
+        var userId = Guid.NewGuid();
+        var usuario = new ApplicationUser("Ana", "Silva") { Id = userId.ToString() };
+        
+        _userManagerMock.Setup(m => m.FindByIdAsync(userId.ToString()))
             .ReturnsAsync(usuario);
 
-        var controller = new UserController(
-            _userManagerMock.Object,
-            _userService,
-            _signInManagerMock.Object
-        );
+        // Act
+        var result = await _controller.UserDetails(userId);
 
-        var result = await controller.UserDetails(Guid.Parse(usuario.Id));
-
+        // Assert
         result.Should().BeOfType<ViewResult>();
-        var viewResult = result as ViewResult;
-        viewResult!.Model.Should().NotBeNull();
+        result.As<ViewResult>().Model.Should().NotBeNull();
+        result.As<ViewResult>().Model.Should().BeOfType<EditUserViewModel>();
+    }
+    
+    // --- Testes para CreateUser (POST) ---
+
+    [Fact]
+    public async Task CreateUser_ComModeloInvalido_DeveRetornarViewComErro()
+    {
+        // Arrange
+        var model = new UserViewModel(); // Modelo propositalmente inválido
+        _controller.ModelState.AddModelError("UserName", "O campo UserName é obrigatório");
+
+        // Act
+        var result = await _controller.CreateUser(model);
+
+        // Assert
+        result.Should().BeOfType<ViewResult>();
+        var viewResult = result.As<ViewResult>();
+        viewResult.Model.Should().Be(model);
+        viewResult.ViewData.ModelState.IsValid.Should().BeFalse();
+    }
+
+    [Fact]
+    public async Task CreateUser_FalhaAoCriarUsuario_DeveRetornarViewComErro()
+    {
+        // Arrange
+        var model = new UserViewModel { /* Dados válidos aqui */ };
+        var identityError = new IdentityError { Description = "Erro simulado ao criar usuário." };
+        _userManagerMock.Setup(m => m.CreateAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>()))
+            .ReturnsAsync(IdentityResult.Failed(identityError));
+
+        // Act
+        var result = await _controller.CreateUser(model);
+
+        // Assert
+        result.Should().BeOfType<ViewResult>();
+        var viewResult = result.As<ViewResult>();
+        viewResult.ViewData.ModelState.ErrorCount.Should().Be(1);
+        viewResult.ViewData.ModelState.Values.First().Errors.First().ErrorMessage.Should().Be(identityError.Description);
+    }
+
+    [Fact]
+    public async Task CreateUser_FalhaAoAdicionarRole_DeveRetornarViewComErro()
+    {
+        // Arrange
+        var model = new UserViewModel { /* Dados válidos aqui */ };
+        var roleError = new IdentityError { Description = "Erro simulado ao adicionar role." };
+        
+        _userManagerMock.Setup(m => m.CreateAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>()))
+            .ReturnsAsync(IdentityResult.Success);
+            
+        _userManagerMock.Setup(m => m.AddToRoleAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>()))
+            .ReturnsAsync(IdentityResult.Failed(roleError));
+
+        // Act
+        var result = await _controller.CreateUser(model);
+
+        // Assert
+        result.Should().BeOfType<ViewResult>();
+        var viewResult = result.As<ViewResult>();
+        viewResult.ViewData.ModelState.ErrorCount.Should().Be(1);
+        viewResult.ViewData.ModelState.Values.First().Errors.First().ErrorMessage.Should().Be(roleError.Description);
+    }
+
+    [Fact]
+    public async Task CreateUser_SucessoAoCriar_DeveRedirecionarParaIndex()
+    {
+        // Arrange
+        var model = new UserViewModel
+        {
+            FirstName = "Teste",
+            LastName = "Usuario",
+            UserName = "teste.usuario",
+            Email = "teste@email.com",
+            Password = "Password123!"
+        };
+        
+        _userManagerMock.Setup(m => m.CreateAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>()))
+            .ReturnsAsync(IdentityResult.Success);
+            
+        _userManagerMock.Setup(m => m.AddToRoleAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>()))
+            .ReturnsAsync(IdentityResult.Success);
+
+        // Act
+        var result = await _controller.CreateUser(model);
+
+        // Assert
+        result.Should().BeOfType<RedirectToActionResult>();
+        result.As<RedirectToActionResult>().ActionName.Should().Be("Index");
+        _controller.TempData["Success"].Should().Be("Usuário criado com sucesso!");
     }
 }
