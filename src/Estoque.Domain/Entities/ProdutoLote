@@ -1,0 +1,30 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Estoque.Domain.Entities
+{
+    [Table("ProdutoLote")]
+    public class ProdutoLote
+    {
+        [Key]
+        public int LoteId { get; set; }
+
+        public int ProdutoId { get; set; }
+        public virtual Produto Produto { get; set; }
+
+        public int FornecedorId { get; set; }
+        public virtual Fornecedor Fornecedor { get; set; }
+
+        public int Quantidade { get; set; }
+        public int QuantidadeDisponivel { get; set; }
+
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal CustoUnitario { get; set; }
+
+        public DateTime DataEntrada { get; set; }
+
+        public virtual ICollection<ProdutoSerie> ProdutoSeries { get; set; } = new List<ProdutoSerie>();
+    }
+}
