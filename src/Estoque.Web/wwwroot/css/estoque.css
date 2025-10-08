@@ -84,28 +84,6 @@ nav.fix-menu .navbar-logo {
     max-height: 100vh;
   }
 }
-.img-flag {
-  width: 20px;
-  height: auto;
-}
-
-@media (max-width: 350px) {
-  .hide-on-xs {
-    display: none !important;
-  }
-}
-.language-small-only {
-  display: none !important;
-}
-
-@media (max-width: 350px) {
-  .language-small-only {
-    display: flex !important;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-  }
-}
 .content-iframe {
   min-height: 100vh;
   height: 100%;
@@ -217,14 +195,6 @@ nav.fix-menu .navbar-logo {
 
 .clickable-card:hover {
   transform: scale(0.95);
-}
-
-#number {
-  font-size: 200px;
-  font-weight: bold;
-  color: var(--estoque-primary);
-  position: relative;
-  display: inline-block;
 }
 
 .tr-indicator {

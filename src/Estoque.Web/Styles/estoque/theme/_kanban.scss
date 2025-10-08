@@ -313,61 +313,6 @@
   }
 }
 
-.theme-wizard {
-  &.theme-wizard-progress {
-    .nav-wizard {
-      .nav-item {
-        pointer-events: none;
-        flex: 1;
-        &:first-child {
-          .nav-link {
-            &::before {
-              border-top-left-radius: 5px;
-              border-bottom-left-radius: 5px;
-            }
-          }
-        }
-        &:last-child {
-          .nav-link {
-            &::before {
-              border-top-right-radius: 5px;
-              border-bottom-right-radius: 5px;
-            }
-          }
-        }
-        .nav-link {
-          &:before {
-            content: '' !important;
-            height: 6px !important;
-            left: 0 !important;
-            top: 48% !important;
-            width: 100% !important;
-            position: absolute !important;
-            background-color: var(--#{$prefix}tertiary-bg) !important ;
-          }
-        }
-      }
-    }
-    .nav-wizard.nav-wizard-progress {
-      .nav-item {
-        .nav-link {
-          &.active {
-            &::before {
-              background-color: var(--#{$prefix}primary) !important ;
-            }
-          }
-          &.complete,
-          &.done {
-            &::before {
-              background-color: var(--#{$prefix}primary) !important ;
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
 // kanban modal view
 
 @each $color, $value in $theme-colors {

@@ -22,6 +22,7 @@ public class EstoqueDbContext : IdentityDbContext<ApplicationUser, ApplicationRo
     public DbSet<RoleMenu> RoleMenus { get; set; }
     public DbSet<ProdutoLote> ProdutoLotes { get; set; }
     public DbSet<ProdutoSerie> ProdutoSeries { get; set; }
+    public DbSet<MasterData> MasterData { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
