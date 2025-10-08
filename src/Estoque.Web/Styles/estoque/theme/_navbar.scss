@@ -148,28 +148,6 @@
   }
 }
 
-.ecommerce-topbar {
-  .navbar-nav {
-    .dropdown-menu {
-      position: absolute;
-    }
-  }
-}
-.ecommerce-navbar {
-  .nav-item {
-    white-space: nowrap;
-    .nav-link {
-      color: var(--#{$prefix}tertiary-color);
-      font-size: map-get($font-sizes, 9);
-      font-weight: $font-weight-semibold;
-      padding: 0 15px;
-      &.active,
-      &:hover {
-        color: var(--#{$prefix}emphasis-color);
-      }
-    }
-  }
-}
 .navbar-toggler {
   border-width: 0;
 }

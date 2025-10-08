@@ -123,13 +123,6 @@
   --#{$prefix}calendar-bg: #{$body-secondary-bg};
   --#{$prefix}calendar-border-color: var(--#{$prefix}body-bg);
 
-  /* --------------------------------- wizard --------------------------------- */
-  --#{$prefix}theme-wizard-nav-item-circle-bg: var(
-    --#{$prefix}body-highlight-bg
-  );
-  --#{$prefix}theme-wizard-complete-color: #{map-get($theme-colors, 'primary')};
-  --#{$prefix}theme-wizard-active-color: #{map-get($theme-colors, 'primary')};
-
   /* --------------------------------- tinymce -------------------------------- */
   --#{$prefix}tinymce-bg: #{$input-bg};
   --#{$prefix}tinymce-tox-tbtn-enabled-icon-color: var(
