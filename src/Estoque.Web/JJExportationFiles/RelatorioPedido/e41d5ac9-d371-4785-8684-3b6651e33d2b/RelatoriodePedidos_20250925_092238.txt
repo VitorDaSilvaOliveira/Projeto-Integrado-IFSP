@@ -1,2 +1,0 @@
-﻿Id;Status;Número Pedido;Data Pedido;Cliente;Produto;PrecoVenda;Valor Total;Operação;Data Entrega;Observações Interna;Responsável Pedido
-1;1;000001;17/09/2025 02:47:58;1;Samsung Galaxy S24 Ultra;5800,00;;1;17/09/2025 00:00:00;;e41d5ac9-d371-4785-8684-3b6651e33d2b
