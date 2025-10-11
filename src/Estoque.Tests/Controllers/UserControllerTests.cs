@@ -25,19 +25,16 @@ public class UserControllerTests
 
     public UserControllerTests()
     {
-        // 1. Configuração do DbContext em memória para isolar os testes
         var options = new DbContextOptionsBuilder<EstoqueDbContext>()
             .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
             .Options;
         _context = new EstoqueDbContext(options);
 
-        // 2. Mock do UserManager
         var userStoreMock = new Mock<IUserStore<ApplicationUser>>();
         _userManagerMock = new Mock<UserManager<ApplicationUser>>(
             userStoreMock.Object, null, null, null, null, null, null, null, null
         );
 
-        // 3. Mock do SignInManager
         _signInManagerMock = new Mock<SignInManager<ApplicationUser>>(
             _userManagerMock.Object,
             new Mock<IHttpContextAccessor>().Object,
@@ -45,20 +42,18 @@ public class UserControllerTests
             null, null, null, null
         );
 
-        // 4. Instância real do UserService (pois sua lógica pode ser necessária)
         _userService = new UserService(_context, Mock.Of<IWebHostEnvironment>(), Mock.Of<IComponentFactory>());
 
-        // 5. Instancia o Controller uma única vez com todos os mocks
         _controller = new UserController(
             _userManagerMock.Object,
             _userService,
             _signInManagerMock.Object
         );
         
-        // 6. Configura o TempData para os testes que o utilizam
         _controller.TempData = new TempDataDictionary(new DefaultHttpContext(), Mock.Of<ITempDataProvider>());
     }
 
+    // --- Testes para UserDetails (GET) ---
     [Fact]
     public async Task UserDetails_DeveRetornarNotFound_SeUsuarioNaoExiste()
     {
@@ -98,7 +93,7 @@ public class UserControllerTests
     public async Task CreateUser_ComModeloInvalido_DeveRetornarViewComErro()
     {
         // Arrange
-        var model = new UserViewModel(); // Modelo propositalmente inválido
+        var model = new UserViewModel();
         _controller.ModelState.AddModelError("UserName", "O campo UserName é obrigatório");
 
         // Act
@@ -115,7 +110,7 @@ public class UserControllerTests
     public async Task CreateUser_FalhaAoCriarUsuario_DeveRetornarViewComErro()
     {
         // Arrange
-        var model = new UserViewModel { /* Dados válidos aqui */ };
+        var model = new UserViewModel { /* Preencha com dados válidos */ };
         var identityError = new IdentityError { Description = "Erro simulado ao criar usuário." };
         _userManagerMock.Setup(m => m.CreateAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>()))
             .ReturnsAsync(IdentityResult.Failed(identityError));
@@ -134,7 +129,7 @@ public class UserControllerTests
     public async Task CreateUser_FalhaAoAdicionarRole_DeveRetornarViewComErro()
     {
         // Arrange
-        var model = new UserViewModel { /* Dados válidos aqui */ };
+        var model = new UserViewModel { /* Preencha com dados válidos */ };
         var roleError = new IdentityError { Description = "Erro simulado ao adicionar role." };
         
         _userManagerMock.Setup(m => m.CreateAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>()))
@@ -179,5 +174,90 @@ public class UserControllerTests
         result.Should().BeOfType<RedirectToActionResult>();
         result.As<RedirectToActionResult>().ActionName.Should().Be("Index");
         _controller.TempData["Success"].Should().Be("Usuário criado com sucesso!");
+    }
+    
+    // --- NOVOS TESTES PARA UserDetails (POST) ---
+
+    [Fact]
+    public async Task UserDetails_Post_ComModeloInvalido_DeveRetornarView()
+    {
+        // Arrange
+        var model = new EditUserViewModel();
+        _controller.ModelState.AddModelError("FirstName", "O campo Nome é obrigatório");
+        
+        // Act
+        var result = await _controller.UserDetails(model);
+
+        // Assert
+        result.Should().BeOfType<ViewResult>();
+        var viewResult = result.As<ViewResult>();
+        viewResult.Model.Should().Be(model);
+        viewResult.ViewData.ModelState.IsValid.Should().BeFalse();
+    }
+
+    [Fact]
+    public async Task UserDetails_Post_UsuarioNaoEncontrado_DeveRetornarNotFound()
+    {
+        // Arrange
+        var model = new EditUserViewModel { Id = Guid.NewGuid().ToString() };
+        _userManagerMock.Setup(m => m.FindByIdAsync(model.Id))
+                        .ReturnsAsync((ApplicationUser?)null);
+        
+        // Act
+        var result = await _controller.UserDetails(model);
+
+        // Assert
+        result.Should().BeOfType<NotFoundResult>();
+    }
+
+    [Fact]
+    public async Task UserDetails_Post_FalhaAoAtualizar_DeveRetornarViewComErro()
+    {
+        // Arrange
+        var user = new ApplicationUser("Gean", "Bandeira") { Id = Guid.NewGuid().ToString() };
+        var model = new EditUserViewModel { Id = user.Id };
+        var updateError = new IdentityError { Description = "Falha simulada na atualização." };
+
+        _userManagerMock.Setup(m => m.FindByIdAsync(user.Id)).ReturnsAsync(user);
+        _userManagerMock.Setup(m => m.UpdateAsync(It.IsAny<ApplicationUser>()))
+                        .ReturnsAsync(IdentityResult.Failed(updateError));
+        
+        // Act
+        var result = await _controller.UserDetails(model);
+
+        // Assert
+        result.Should().BeOfType<ViewResult>();
+        var viewResult = result.As<ViewResult>();
+        viewResult.ViewData.ModelState.ErrorCount.Should().Be(1);
+        viewResult.ViewData.ModelState.Values.First().Errors.First().ErrorMessage.Should().Be(updateError.Description);
+    }
+
+    [Fact]
+    public async Task UserDetails_Post_SucessoAoAtualizar_DeveRedirecionar()
+    {
+        // Arrange
+        var user = new ApplicationUser("Gean", "Bandeira") { Id = Guid.NewGuid().ToString() };
+        var model = new EditUserViewModel
+        {
+            Id = user.Id,
+            FirstName = "Gean Editado",
+            LastName = "Bandeira",
+            UserName = "gean.bandeira",
+            Email = "gean@teste.com"
+        };
+
+        _userManagerMock.Setup(m => m.FindByIdAsync(user.Id)).ReturnsAsync(user);
+        _userManagerMock.Setup(m => m.UpdateAsync(It.IsAny<ApplicationUser>()))
+                        .ReturnsAsync(IdentityResult.Success);
+        
+        // Act
+        var result = await _controller.UserDetails(model);
+
+        // Assert
+        result.Should().BeOfType<RedirectToActionResult>();
+        var redirectResult = result.As<RedirectToActionResult>();
+        redirectResult.ActionName.Should().Be("UserDetails");
+        redirectResult.RouteValues!["userId"].Should().Be(user.Id);
+        _controller.TempData["Success"].Should().Be("Informações do usuário atualizadas com sucesso!");
     }
 }
