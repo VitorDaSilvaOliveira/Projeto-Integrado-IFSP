@@ -34,7 +34,7 @@ public static class WebApplicationExtensions
         using (var scope = app.Services.CreateScope())
         {
             var dbContext = scope.ServiceProvider.GetRequiredService<EstoqueDbContext>();
-            //dbContext.Database.Migrate();
+            dbContext.Database.Migrate();
         }
 
         IdentitySeed.CreateAdminAsync(app.Services).GetAwaiter().GetResult();
