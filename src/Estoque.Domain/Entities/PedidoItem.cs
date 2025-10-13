@@ -7,10 +7,10 @@ public class PedidoItem
 {
     public int Id { get; set; }
     [Column("id_Pedido")]
-    public int PedidoId { get; set; }
+    public int id_Pedido { get; set; }
     public Pedido Pedido { get; set; }
     [Column("id_Produto")]
-    public int ProdutoId { get; set; }
+    public int id_Produto { get; set; }
     public Produto Produto { get; set; }
     public int Quantidade { get; set; }
     public decimal Desconto { get; set; }
