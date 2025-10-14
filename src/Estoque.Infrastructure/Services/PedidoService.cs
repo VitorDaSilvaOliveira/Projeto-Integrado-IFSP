@@ -4,6 +4,7 @@ using Estoque.Infrastructure.Data;
 using JJMasterData.Core.Events.Args;
 using JJMasterData.Core.UI.Components;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace Estoque.Infrastructure.Services;
@@ -12,6 +13,7 @@ public class PedidoService(IComponentFactory componentFactory,
     EstoqueDbContext context,
     ILogger<MovimentacaoService> logger,
     AuditLogService auditLogService,
+    MovimentacaoService movimentacaoService,
     SignInManager<ApplicationUser> signInManager)
 {
     public int? statusPreUpdate = null;
@@ -21,9 +23,6 @@ public class PedidoService(IComponentFactory componentFactory,
     {
         var formView = await componentFactory.FormView.CreateAsync("Pedido");
         formView.ShowTitle = true;
-
-        formView.OnBeforeUpdateAsync += GetStatusBeforeUpdate;
-        formView.OnAfterUpdateAsync += GetStatusAfterUpdate;
 
         return formView;
     }
@@ -35,31 +34,46 @@ public class PedidoService(IComponentFactory componentFactory,
         return formView;
     }
 
-
-    // MÉTODOS DE UPDATE
-
-    public async ValueTask GetStatusBeforeUpdate(object sender, FormBeforeActionEventArgs e)
+    public async Task<string> ConfirmarPedidoEGerarMovimentacoes(int idPedido)
     {
-        var values = e.Values;
+        var pedido = await context.Pedidos
+            .FirstOrDefaultAsync(p => p.Id == idPedido);
 
-        statusPreUpdate = Convert.ToInt32(values["Status"]);
+        if (pedido == null)
+            return $"Pedido com ID {idPedido} não encontrado.";
 
-        //await RegistrarMovimentacaoAsync(produtoId, quantidade, tipoMovimentacao, userId);
-    }
+        var itensPedido = await context.PedidosItens
+            .Where(pi => pi.id_Pedido == idPedido)
+            .ToListAsync();
 
-    public async ValueTask GetStatusAfterUpdate(object sender, FormAfterActionEventArgs e)
-    {
-        var values = e.Values;
+        if (!itensPedido.Any())
+            return $"Nenhum item encontrado para o pedido {idPedido}.";
 
-        statusPostUpdate = Convert.ToInt32(values["Status"]);
-
-        //await RegistrarMovimentacaoAsync(produtoId, quantidade, tipoMovimentacao, userId);
-
-        if (statusPreUpdate == 0 && statusPostUpdate == 1)
+        try
         {
-            int a = 1;
-        }
+            foreach (var item in itensPedido)
+            {
+                await movimentacaoService.RegistrarMovimentacaoAsync(
+                    item.id_Produto,
+                    item.Quantidade,
+                    TipoMovimentacao.Saida,
+                    null
+                );
+            }
 
+            pedido.Status = PedidoStatus.Realizado;
+
+            await context.SaveChangesAsync();
+
+            return $"Pedido {idPedido} confirmado com sucesso e movimentações geradas.";
+        }
+        catch (Exception ex)
+        {
+            // logar o erro (ex.Message)
+            // ex: logger.LogError(ex, "Erro ao confirmar pedido {Id}", idPedido);
+            return $"Erro ao confirmar pedido {idPedido}: {ex.Message}";
+        }
     }
+
 
 }

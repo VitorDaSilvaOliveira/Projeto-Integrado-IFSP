@@ -34,7 +34,9 @@ public class PedidoController(PedidoService pedidoService) : Controller
 
     public async Task< IActionResult> SendOrder (int idPedido)
     {
-        var a = "teste";
+
+        await pedidoService.ConfirmarPedidoEGerarMovimentacoes(idPedido);
+
         return RedirectToAction(nameof(Index));
     }
 }

@@ -81,6 +81,17 @@ public class MovimentacaoService(
                 throw new InvalidOperationException("Estoque insuficiente.");
             }
 
+            var entradaResgistrada = new Movimentacao
+            {
+                IdProduto = produtoId,
+                Quantidade = quantidade,
+                TipoMovimentacao = TipoMovimentacao.Saida,
+                DataMovimentacao = DateTime.UtcNow,
+                IdUser = userId
+            };
+
+            context.Movimentacoes.Add(entradaResgistrada);
+
             await auditLogService.LogAsync(
                 "Estoque",
                 "Movimentação de Saída",
@@ -88,6 +99,7 @@ public class MovimentacaoService(
                 userId,
                 userName
             );
+
         }
         else if (tipoMovimentacao == TipoMovimentacao.Entrada)
         {
