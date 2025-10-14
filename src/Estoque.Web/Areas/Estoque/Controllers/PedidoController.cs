@@ -31,4 +31,10 @@ public class PedidoController(PedidoService pedidoService) : Controller
         ViewBag.FormViewRelatorioPedido = resultGridReportPedidoAsync.Content;
         return View();
     }
+
+    public async Task< IActionResult> SendOrder (int idPedido)
+    {
+        var a = "teste";
+        return RedirectToAction(nameof(Index));
+    }
 }
