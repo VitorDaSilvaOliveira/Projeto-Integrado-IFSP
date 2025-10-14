@@ -26,18 +26,7 @@ git clone https://github.com/seuusuario/vip-penha-estoque.git
 
 Configure sua conexão de banco no `appsettings.json`
 
-### 4️⃣ Aplicar as Migrações do EF Core
-```bash
-dotnet ef database update
-```
-
-Se der erro, rode antes:
-
-```bash
-dotnet tool install --global dotnet-ef
-```
-
-### 5️⃣ Rodar a Aplicação
+### 4️⃣ Rodar a Aplicação
 
 ```bash
 cd Estoque.Web
