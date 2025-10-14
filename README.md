@@ -22,7 +22,7 @@ Antes de tudo, garanta que você tenha instalado:
 git clone https://github.com/seuusuario/vip-penha-estoque.git
 ```
 
-###3️⃣ Configurar o Banco de Dados
+### 3️⃣ Configurar o Banco de Dados
 
 Configure sua conexão de banco no `appsettings.json`
 
