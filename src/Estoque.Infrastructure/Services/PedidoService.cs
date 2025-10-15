@@ -3,12 +3,30 @@ using Estoque.Domain.Enums;
 using Estoque.Infrastructure.Data;
 using JJMasterData.Core.Events.Args;
 using JJMasterData.Core.UI.Components;
+<<<<<<< HEAD
 using Microsoft.EntityFrameworkCore;
 
 namespace Estoque.Infrastructure.Services;
 
 public class PedidoService(IComponentFactory componentFactory, EstoqueDbContext context, MovimentacaoService movimentacaoService)
+=======
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+
+namespace Estoque.Infrastructure.Services;
+
+public class PedidoService(IComponentFactory componentFactory,
+    EstoqueDbContext context,
+    ILogger<MovimentacaoService> logger,
+    AuditLogService auditLogService,
+    MovimentacaoService movimentacaoService,
+    SignInManager<ApplicationUser> signInManager)
+>>>>>>> 4854e9b31d66da0cd3599e0e4ccfe8b538f69934
 {
+    public int? statusPreUpdate = null;
+    public int? statusPostUpdate = null;
+
     public async Task<JJFormView> GetFormViewPedidoAsync()
     {
         var formView = await componentFactory.FormView.CreateAsync("Pedido");
@@ -24,6 +42,7 @@ public class PedidoService(IComponentFactory componentFactory, EstoqueDbContext 
         return formView;
     }
 
+<<<<<<< HEAD
     public async Task<bool> FinalizarPedidoAsync(int pedidoId)
     {
         var pedido = await context.Pedidos
@@ -59,3 +78,48 @@ public class PedidoService(IComponentFactory componentFactory, EstoqueDbContext 
     }
 }
 
+=======
+    public async Task<string> ConfirmarPedidoEGerarMovimentacoes(int idPedido)
+    {
+        var pedido = await context.Pedidos
+            .FirstOrDefaultAsync(p => p.Id == idPedido);
+
+        if (pedido == null)
+            return $"Pedido com ID {idPedido} não encontrado.";
+
+        var itensPedido = await context.PedidosItens
+            .Where(pi => pi.id_Pedido == idPedido)
+            .ToListAsync();
+
+        if (!itensPedido.Any())
+            return $"Nenhum item encontrado para o pedido {idPedido}.";
+
+        try
+        {
+            foreach (var item in itensPedido)
+            {
+                await movimentacaoService.RegistrarMovimentacaoAsync(
+                    item.id_Produto,
+                    item.Quantidade,
+                    TipoMovimentacao.Saida,
+                    null
+                );
+            }
+
+            pedido.Status = PedidoStatus.Realizado;
+
+            await context.SaveChangesAsync();
+
+            return $"Pedido {idPedido} confirmado com sucesso e movimentações geradas.";
+        }
+        catch (Exception ex)
+        {
+            // logar o erro (ex.Message)
+            // ex: logger.LogError(ex, "Erro ao confirmar pedido {Id}", idPedido);
+            return $"Erro ao confirmar pedido {idPedido}: {ex.Message}";
+        }
+    }
+
+
+}
+>>>>>>> 4854e9b31d66da0cd3599e0e4ccfe8b538f69934

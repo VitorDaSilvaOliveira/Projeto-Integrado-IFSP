@@ -6,17 +6,28 @@ namespace Estoque.Domain.Entities;
 public class PedidoItem
 {
     public int Id { get; set; }
+
     [Column("id_Pedido")]
-    public int PedidoId { get; set; }
+    public int id_Pedido { get; set; }
+
+    [ForeignKey(nameof(id_Pedido))]
     public Pedido Pedido { get; set; }
+
     [Column("id_Produto")]
-    public int ProdutoId { get; set; }
+    public int id_Produto { get; set; }
+
+    [ForeignKey(nameof(id_Produto))]
     public Produto Produto { get; set; }
+
     public int Quantidade { get; set; }
     public decimal Desconto { get; set; }
     public decimal PrecoTabela { get; set; }
     public decimal PrecoVenda { get; set; }
+<<<<<<< HEAD
 
     public decimal ValorTotal { get; set; }
 
 }
+=======
+}
+>>>>>>> 4854e9b31d66da0cd3599e0e4ccfe8b538f69934
