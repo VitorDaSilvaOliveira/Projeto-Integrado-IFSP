@@ -14,20 +14,17 @@ public class PedidoItem
     public Pedido Pedido { get; set; }
 
     [Column("id_Produto")]
-    public int id_Produto { get; set; }
+    public int ProdutoId { get; set; }
 
-    [ForeignKey(nameof(id_Produto))]
-    public Produto Produto { get; set; }
+    [ForeignKey(nameof(ProdutoId))]
+    public virtual Produto Produto { get; set; }
 
     public int Quantidade { get; set; }
     public decimal Desconto { get; set; }
     public decimal PrecoTabela { get; set; }
     public decimal PrecoVenda { get; set; }
-<<<<<<< HEAD
 
     public decimal ValorTotal { get; set; }
 
 }
-=======
-}
->>>>>>> 4854e9b31d66da0cd3599e0e4ccfe8b538f69934
+

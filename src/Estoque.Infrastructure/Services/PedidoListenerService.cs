@@ -71,10 +71,12 @@ public class PedidoListenerService : BackgroundService
                 foreach (var item in itens)
                 {
                     await movService.RegistrarMovimentacaoAsync(
-                        produtoId: item.id_Produto,
+                        produtoId: item.ProdutoId,
                         quantidade: -item.Quantidade,
                         tipoMovimentacao: TipoMovimentacao.Saida,
-                        userId: null
+                        userId: null,
+                        observacao: $"Saída automática de estoque para o Pedido {idPedido}."// Argumento 5 (string)
+                       // pedidoId: idPedido
                     );
                 }
             }

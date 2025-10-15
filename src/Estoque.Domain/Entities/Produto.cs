@@ -25,7 +25,6 @@ public class Produto
     [Column("EstoqueMinimo")] public int? EstoqueMinimo { get; set; }
 
     [ForeignKey("IdCategoria")]
-
     public virtual Categoria? Categoria { get; set; } 
 
     public virtual ICollection<ProdutoLote> ProdutoLotes { get; set; } = new List<ProdutoLote>();

@@ -3,26 +3,19 @@ using Estoque.Domain.Enums;
 using Estoque.Infrastructure.Data;
 using JJMasterData.Core.Events.Args;
 using JJMasterData.Core.UI.Components;
-<<<<<<< HEAD
-using Microsoft.EntityFrameworkCore;
-
-namespace Estoque.Infrastructure.Services;
-
-public class PedidoService(IComponentFactory componentFactory, EstoqueDbContext context, MovimentacaoService movimentacaoService)
-=======
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace Estoque.Infrastructure.Services;
 
-public class PedidoService(IComponentFactory componentFactory,
+public class PedidoService(
+    IComponentFactory componentFactory,
     EstoqueDbContext context,
-    ILogger<MovimentacaoService> logger,
-    AuditLogService auditLogService,
-    MovimentacaoService movimentacaoService,
-    SignInManager<ApplicationUser> signInManager)
->>>>>>> 4854e9b31d66da0cd3599e0e4ccfe8b538f69934
+   // ILogger<MovimentacaoService> logger,
+  //  AuditLogService auditLogService,
+    MovimentacaoService movimentacaoService)
+   // SignInManager<ApplicationUser> signInManager)
 {
     public int? statusPreUpdate = null;
     public int? statusPostUpdate = null;
@@ -42,7 +35,6 @@ public class PedidoService(IComponentFactory componentFactory,
         return formView;
     }
 
-<<<<<<< HEAD
     public async Task<bool> FinalizarPedidoAsync(int pedidoId)
     {
         var pedido = await context.Pedidos
@@ -57,15 +49,25 @@ public class PedidoService(IComponentFactory componentFactory,
 
         foreach (var item in pedido.Itens)
         {
+            try
+            { 
             // Baixar estoque
-            var sucessoMovimentacao = await movimentacaoService.RegistrarSaidaAsync(
-                item.ProdutoId,
-                item.Quantidade,
-                "Saída de estoque por finalização de pedido",
-                item.Id
-            );
-
-            if (!sucessoMovimentacao)
+            //var sucessoMovimentacao = 
+            await movimentacaoService.RegistrarMovimentacaoAsync(
+            /*item.id_Produto,
+            item.Quantidade,
+            "Saída de estoque por finalização de pedido",
+            item.Id*/
+            item.ProdutoId, // Argumento 1: ID do Produto (Usando IdProduto da entidade Produto)
+            item.Quantidade,        // Argumento 2: Quantidade
+            TipoMovimentacao.Saida, // Argumento 3: Tipo
+            null, // Argumento 4: UserId (ou nome do usuário logado)
+            "observaçao", // Argumento 5: Observacao
+            pedidoId
+        );
+        }
+            catch (InvalidOperationException)
+           // if (!sucessoMovimentacao)
             {
                 // Se a movimentação falhar, o pedido não pode ser finalizado
                 return false;
@@ -76,9 +78,8 @@ public class PedidoService(IComponentFactory componentFactory,
         await context.SaveChangesAsync();
         return true;
     }
-}
 
-=======
+
     public async Task<string> ConfirmarPedidoEGerarMovimentacoes(int idPedido)
     {
         var pedido = await context.Pedidos
@@ -99,9 +100,10 @@ public class PedidoService(IComponentFactory componentFactory,
             foreach (var item in itensPedido)
             {
                 await movimentacaoService.RegistrarMovimentacaoAsync(
-                    item.id_Produto,
+                    item.ProdutoId,
                     item.Quantidade,
                     TipoMovimentacao.Saida,
+                     "Saída ",
                     null
                 );
             }
@@ -122,4 +124,3 @@ public class PedidoService(IComponentFactory componentFactory,
 
 
 }
->>>>>>> 4854e9b31d66da0cd3599e0e4ccfe8b538f69934

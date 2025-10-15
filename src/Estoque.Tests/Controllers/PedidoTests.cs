@@ -152,6 +152,7 @@ namespace Estoque.Tests.FlowTests
                     new PedidoItem {
                         Id = ItemPedidoId,
                         ProdutoId = ProdutoId,
+                        Produto = produto,  
                         Quantidade = quantidadePedida,
                         PrecoVenda = precoVenda,
                         ValorTotal = quantidadePedida * precoVenda
