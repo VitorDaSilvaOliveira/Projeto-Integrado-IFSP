@@ -21,7 +21,12 @@ public class Produto
     [Column("Rastreio")] public bool? RastrearPorSerie { get; set; }
 
     [Column("Id_Categoria")] public int? IdCategoria { get; set; }
+   // [ForeignKey("IdCategoria")]
     [Column("EstoqueMinimo")] public int? EstoqueMinimo { get; set; }
+
+    [ForeignKey("IdCategoria")]
+
+    public virtual Categoria? Categoria { get; set; } 
 
     public virtual ICollection<ProdutoLote> ProdutoLotes { get; set; } = new List<ProdutoLote>();
 }

@@ -56,7 +56,7 @@ SignInManager<ApplicationUser> signInManager) : IFormEventHandler
                     IdUser = devolucao.IdUser
                 };
                 context.Movimentacoes.Add(movimentacao);
-                await movimentacaoService.RegistrarMovimentacaoAsync(produto.IdProduto, item.QuantidadeDevolvida, TipoMovimentacao.Entrada, devolucao.IdUser);
+                await movimentacaoService.RegistrarMovimentacaoAsync(produto.IdProduto, item.QuantidadeDevolvida, TipoMovimentacao.Entrada, devolucao.IdUser, item.Motivo);
 
                 item.Devolvido = 1;
 

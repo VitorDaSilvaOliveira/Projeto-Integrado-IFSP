@@ -16,4 +16,7 @@ public class PedidoItem
     public decimal Desconto { get; set; }
     public decimal PrecoTabela { get; set; }
     public decimal PrecoVenda { get; set; }
+
+    public decimal ValorTotal { get; set; }
+
 }
