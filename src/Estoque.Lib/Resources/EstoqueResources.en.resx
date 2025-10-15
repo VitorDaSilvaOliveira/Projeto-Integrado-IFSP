@@ -291,4 +291,28 @@
   <data name="Devolution" xml:space="preserve">
     <value>Devolution</value>
   </data>
+  <data name="OrdersByStatusTitle" xml:space="preserve">
+    <value>Orders By Status</value>
+  </data>
+  <data name="MonthlyRevenueEvolutionTitle" xml:space="preserve">
+    <value>Monthly Revenue Evolution</value>
+  </data>
+  <data name="DashboardPedidos" xml:space="preserve">
+    <value>Orders Dashboard</value>
+  </data>
+  <data name="OrdersByOperationTitle" xml:space="preserve">
+    <value>Orders By Operation</value>
+  </data>
+  <data name="Exchanges" xml:space="preserve">
+    <value>Exchanges</value>
+  </data>
+  <data name="Currency" xml:space="preserve">
+    <value>R$</value>
+  </data>
+  <data name="Sales" xml:space="preserve">
+    <value>Sales</value>
+  </data>
+  <data name="TotalRevenue" xml:space="preserve">
+    <value>Total Revenue</value>
+  </data>
 </root>

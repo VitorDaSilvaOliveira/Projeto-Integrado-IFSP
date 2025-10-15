@@ -35,14 +35,15 @@
 							</a>
 						</div>
 
-						<!-- Dashboard 2 -->
+						<!-- Dashboard de Pedidos -->
 						<div class="nav-item-wrapper">
-							<a class="nav-link label-1 px-2 @(ViewContext.RouteData.Values["controller"].ToString() == "Dashboard2" ? "active" : "")"
-							   href="@Url.Action("Index", "Dashboard2", new { area = "Estoque" })">
+							<a class="nav-link label-1 px-2 @(ViewContext.RouteData.Values["controller"].ToString() == "DashboardPedidos" ? "active" : "")"
+							   href="@Url.Action("Index", "DashboardPedidos", new { area = "Estoque" })">
+
 								<div class="d-flex align-items-center" style="gap:0.8rem; font-size:0.80rem; padding-left:1rem;">
-									<span class="nav-link-icon"><span class="bi bi-speedometer2"></span></span>
+									<span class="nav-link-icon"><span class="bi bi-clipboard-data"></span></span>
 									<span class="nav-link-text-wrapper">
-										<span class="nav-link-text text-wrap">@Localizer["Dashboard2"]</span>
+										<span class="nav-link-text text-wrap">@Localizer["DashboardPedidos"]</span>
 									</span>
 								</div>
 							</a>
