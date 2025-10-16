@@ -1175,7 +1175,26 @@ Esta seção detalha as tecnologias escolhidas para o desenvolvimento do sistema
     \item \textbf{Microsoft Azure}: Plataforma de computação em nuvem utilizada para hospedar a aplicação e seus serviços relacionados. A utilização do Azure proporciona escalabilidade, segurança e alta disponibilidade \cite{Azure2025}. O Azure está sendo utilizado como plataforma principal para a hospedagem de todos os componentes do sistema, abrangendo o banco de dados, o back-end e o front-end.
 \end{itemize}
 
+\section{Estilos de Codificação e Padrões de Projeto}
+Para manter a consistência e legibilidade do código-fonte, foram adotados os seguintes padrões:
 
+\begin{itemize}
+    \item \textbf{C\# (Back-end) - Padrões .NET:} Utilização das diretrizes oficiais do Microsoft .NET, que incluem:
+    \begin{itemize}
+        \item \textbf{Convenções de Nomenclatura:} Aplicação de \textit{PascalCase} para nomes de classes, métodos, propriedades (e.g., \texttt{DashboardPedidosController}) e \textit{camelCase} para variáveis locais (e.g., \texttt{faturamentoAcumulado}).
+        \item \textbf{Nullability:} Uso mandatório de \textit{nullable reference types} (\texttt{string?}, \texttt{DateTime?}) para mitigar erros de referência nula. O tipo \texttt{decimal?} foi utilizado para campos opcionais de valores monetários.
+        \item \textbf{Tipagem e Performance:} Uso de construtores primários em Services (e.g., \texttt{DashboardPedidosService(EstoqueDbContext context)}) e utilização de \textit{Records} ou \textit{Value Tuples} para retorno eficiente de múltiplos valores (e.g., \texttt{Task<(List<string> labels, List<int> vendas, List<int> trocas)>}).
+    \end{itemize}
+
+    \item \textbf{JavaScript/Front-end:} Aplicação de linter (\textit{ESLint}) para impor padrões como \textit{camelCase} e garantir a sintaxe moderna e consistente. Foi adotado o padrão de injetar variáveis de tradução do C\# (\texttt{@Localizer["Chave"]}) em um objeto JS (\texttt{textTranslated}) para garantir a localização do conteúdo dinâmico do \textit{Chart.js}.
+
+    \item \textbf{Arquitetura e Convenções MVC (ASP.NET Core):} Separação estrita de responsabilidades, conforme as convenções:
+    \begin{itemize}
+        \item \textbf{Controle e Roteamento:} Utilização de \textit{Areas} (\texttt{/Areas/Estoque/}) para organizar módulos grandes e \textit{Controllers} (Ex: \texttt{DashboardPedidosController.cs}) para roteamento e orquestração.
+        \item \textbf{Lógica de Negócio (Services):} O \textit{Controller} delega a lógica de negócio aos \textit{Services} (Injeção de Dependência). Foi imposto que toda consulta complexa do Entity Framework Core (EF Core), como \texttt{GroupBy} e \texttt{Sum}, seja encapsulada dentro do \texttt{Service}.
+        \item \textbf{Consulta a Dados (EF Core):} A manipulação de coleções (\texttt{Include}, \texttt{SelectMany}) e as conversões de tipos (Ex: \texttt{MapStatus}) foram forçadas para a execução no cliente (\texttt{.ToListAsync()}) para evitar o erro de projeção \textit{"InvalidOperationException: The client projection contains a reference..."}.
+    \end{itemize}
+\end{itemize}
 
 \section{Testes e Manutenção}
 Com a evolução da tecnologia, diversas práticas foram desenvolvidas visando um melhor desenvolvimento e manutenção de um projeto. Desde o início do processo de criação de um sistema, questões como escalabilidade, manutenibilidade e usabilidade devem ser consideradas para garantir a longevidade e qualidade do software.
