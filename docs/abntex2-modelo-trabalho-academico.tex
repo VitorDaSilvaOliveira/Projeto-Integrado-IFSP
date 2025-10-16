@@ -1196,6 +1196,31 @@ Para manter a consistência e legibilidade do código-fonte, foram adotados os s
     \end{itemize}
 \end{itemize}
 
+\section{Cobertura de Código e Qualidade} % Exemplo: 4.4 Cobertura de Código e Qualidade
+A Cobertura de Código é uma métrica essencial que estabelece o nível de \textbf{confiabilidade e robustez} do código-fonte. Ela mede a porcentagem de código executada pelo conjunto de testes automatizados, servindo como uma garantia quantificável de que as regras de negócio críticas foram validadas.
+
+\subsection{Metas e Escopo}
+A estratégia de cobertura foi focada em garantir a validação rigorosa da \textbf{Lógica de Negócio} e das interações com o banco de dados.
+
+\begin{itemize}
+    \item \textbf{Meta de Cobertura:} Foi estabelecida uma meta mínima de \textbf{80\% de cobertura de linhas} (\textit{Line Coverage}) para todos os módulos que contêm regras de negócio e complexidade algorítmica.
+    \item \textbf{Foco da Cobertura:} O esforço principal de teste é concentrado nas camadas de \textbf{Lógica de Negócio (\textit{Services})} e nas \textbf{Regras de Domínio (\textit{Entities})}, onde se encontram os cálculos críticos de faturamento e os mapeamentos de status.
+\end{itemize}
+
+\subsection{Implementação e Validação}
+A Cobertura é assegurada por meio da aplicação de padrões de testes no \textit{Back-end} do C\#.
+
+\begin{itemize}
+    \item \textbf{Framework de Teste:} Utilização de \textit{frameworks} de teste primário, integrado ao \textit{pipeline} de construção do projeto.
+    \item \textbf{Validação da Lógica de Dados:} Os testes unitários são críticos para validar as classes que contêm regras de agregação de dados do Entity Framework Core (EF Core), como a \texttt{DashboardPedidosService}.
+    \item \textbf{Garantia de Cálculo:} Os testes garantem que, por exemplo, a agregação de faturamento está correta, validando que:
+        \begin{itemize}
+            \item A consulta inclui a coleção de itens do pedido (\texttt{.Include(p => p.Itens)}).
+            \item A agregação soma o campo correto (\texttt{.Sum(item => item.PrecoVenda)}).
+            \item Os filtros de status e data funcionam corretamente para cálculos de faturamento e mapeamentos.
+        \end{itemize}
+\end{itemize}
+
 \section{Testes e Manutenção}
 Com a evolução da tecnologia, diversas práticas foram desenvolvidas visando um melhor desenvolvimento e manutenção de um projeto. Desde o início do processo de criação de um sistema, questões como escalabilidade, manutenibilidade e usabilidade devem ser consideradas para garantir a longevidade e qualidade do software.
 
