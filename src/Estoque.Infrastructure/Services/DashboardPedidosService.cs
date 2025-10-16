@@ -1,23 +1,23 @@
-﻿// ARQUIVO: DashboardPedidosService.cs (Corrigido para Escopo e Enum)
+﻿
 
 using System.Globalization;
 using Estoque.Infrastructure.Data;
 using Estoque.Infrastructure.Utils;
 using Microsoft.EntityFrameworkCore;
-// Certifique-se de que esta diretiva use o namespace CORRETO do seu Enum!
+
 using Estoque.Domain.Enums;
 
 namespace Estoque.Infrastructure.Services;
 
 public class DashboardPedidosService(EstoqueDbContext context)
 {
-    // Mapeamentos de códigos (usando o Enum PedidoStatus)
+   
     private string MapStatus(PedidoStatus? status) => status switch
     {
         null => "Status Não Definido",
         PedidoStatus.EmAndamento => "Em Andamento",
         PedidoStatus.Realizado => "Realizado",
-        PedidoStatus.Finalizado => "Finalizado", // CORRIGIDO PARA FINALIZADO
+        PedidoStatus.Finalizado => "Finalizado", 
         _ => "Status Desconhecido"
     };
 
@@ -28,10 +28,10 @@ public class DashboardPedidosService(EstoqueDbContext context)
         _ => "Outra Operação"
     };
 
-    // 1. TOP (Operação: Venda/Troca) - Variáveis de escopo REINSERIDAS
+    
     public async Task<(List<string> labels, List<int> vendas, List<int> trocas)> GetPedidosPorOperacaoAsync()
     {
-        // VARIÁVEIS DE SCOPE REINSERIDAS AQUI
+     
         var hoje = LocalTime.Now();
         var primeiroMes = new DateTime(hoje.Year, hoje.Month, 1).AddMonths(-3);
 
@@ -42,7 +42,7 @@ public class DashboardPedidosService(EstoqueDbContext context)
         var labels = new List<string>();
         var vendas = new List<int>();
         var trocas = new List<int>();
-        // FIM DAS VARIÁVEIS DE SCOPE
+        
 
         for (var i = 0; i < 4; i++)
         {
@@ -68,45 +68,43 @@ public class DashboardPedidosService(EstoqueDbContext context)
     }
 
     
-    // 2. ESQUERDA BAIXO (Status: 0, 1, 2) - CORRIGIDO
+    
     public async Task<Dictionary<string, int>> GetPedidosPorStatusAsync()
     {
         var dadosAgrupados = await context.Pedidos
-            // 1. Agrupar os dados no Banco de Dados (SQL)
+            
             .GroupBy(p => p.Status)
             .Select(g => new
             {
                 StatusId = g.Key,
                 Quantidade = g.Count()
             })
-            // 2. FORÇAR A EXECUÇÃO NO CLIENTE (C#) AQUI!
-            // A partir deste ponto, o EF Core não tenta mais traduzir para SQL.
+            
+            
             .ToListAsync();
 
-        // 3. Mapear os Status usando a função C# no lado do Cliente
+        
         var result = dadosAgrupados
             .ToDictionary(
-                x => MapStatus(x.StatusId), // Agora a função MapStatus é chamada no C#
+                x => MapStatus(x.StatusId),
                 x => x.Quantidade
             );
 
-        // Como a chave do dicionário já é o Status mapeado, não precisamos do .Select(g => new { ... })
+        
         return result;
     }
 
-    // 3. DIREITA BAIXO (Evolução de Faturamento por Mês) - Variáveis de escopo REINSERIDAS
+
     public async Task<IEnumerable<object>> GetFaturamentoMensalAsync()
     {
-        // VARIÁVEIS DE SCOPE REINSERIDAS AQUI
         var hoje = LocalTime.Now();
         var anoAtual = hoje.Year;
         var faturamentoAcumulado = 0m;
         var faturamentoMensal = new List<object>();
-        // FIM DAS VARIÁVEIS DE SCOPE
 
-        // CORREÇÃO 2: Se 'Cancelado' não existe, 'Realizado' pode ter um nome diferente ou valor diferente de 1.
-        // Se 1 for o valor do enum para Realizado, esta linha está OK.
-        var pedidosRealizados = await context.Pedidos
+        
+        var pedidosParaFaturar = await context.Pedidos
+            .Include(p => p.Itens) 
             .Where(p => p.DataPedido != null &&
                         p.DataPedido.Value.Year == anoAtual &&
                         p.Status == PedidoStatus.Realizado)
@@ -115,11 +113,17 @@ public class DashboardPedidosService(EstoqueDbContext context)
         for (var mes = 1; mes <= 12; mes++)
         {
             var mesInicio = new DateTime(anoAtual, mes, 1);
-            var mesFim = mesInicio.AddMonths(1);
 
-            var faturamentoDoMes = pedidosRealizados
-                .Where(p => p.DataPedido >= mesInicio && p.DataPedido < mesFim)
-                .Sum(p => p.ValorTotal ?? 0m);
+           
+            var pedidosDoMes = pedidosParaFaturar
+                .Where(p => p.DataPedido.Value.Month == mes);
+
+         
+            var faturamentoDoMes = pedidosDoMes
+               
+                .SelectMany(p => p.Itens)
+              
+                .Sum(item => item.PrecoVenda);
 
             faturamentoAcumulado += faturamentoDoMes;
 
