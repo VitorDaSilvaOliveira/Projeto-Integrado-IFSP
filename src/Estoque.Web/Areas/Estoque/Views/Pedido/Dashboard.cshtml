@@ -8,68 +8,17 @@
 @inject IStringLocalizer<EstoqueResources> Localizer
 
 @{
-    // MUDANÇA: Novo Título da Página
     ViewBag.Title = Localizer["DashboardPedidos"];
 }
+<h3 style="text-align: left;">
+    <i class="fas fa-tachometer-alt" style="margin-right: 0.5rem;"></i>
+    @Localizer["DashboardPedidos"]
+</h3>
+<div style="max-width: 600px; margin-left: 0; padding: 1rem;">
 
-<div class="row">
-
-    <div class="col-sm-12 mb-4">
-        <div class="card h-100">
-            <div class="card-body">
-                <h5 class="mb-3 text-center">@Localizer["OrdersByOperationTitle"]</h5>
-                <canvas id="operacaoChart"></canvas>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-sm-6 mb-4">
-        <div class="card h-100">
-            <div class="card-body">
-                <div class="d-flex justify-content-center">
-                    <div>
-                        <h5 class="mb-3">@Localizer["OrdersByStatusTitle"]</h5>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-center p-1">
-                    <canvas id="statusChart"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-sm-6 mb-4">
-        <div class="card h-100">
-            <div class="card-body">
-                <div class="d-flex justify-content-center">
-                    <div>
-                        <h5 class="mb-3">@Localizer["MonthlyRevenueEvolutionTitle"]</h5>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-center p-1">
-                    <canvas id="faturamentoMensalChart"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+    <canvas id="graficoPedidos" width="400" height="200"></canvas>
 </div>
 
-<script>
-    // MUDANÇA: Adicionando novos rótulos de tradução para os gráficos
-    const textTranslated = {
-        // Rótulos usados no gráfico central (Operação)
-        sales: "@Localizer["Sales"]", // Ex: "Vendas"
-        exchanges: "@Localizer["Exchanges"]", // Ex: "Trocas"
 
-        // Rótulo usado no gráfico de Linha (Faturamento)
-        totalRevenue: "@Localizer["TotalRevenue"]", // Ex: "Faturamento Total"
-
-        // Rótulos de unidades
-        orders: "@Localizer["Pedidos"]", // Ex: "Pedidos"
-        currency: "@Localizer["Currency"]" // Ex: "R$" ou "Moeda"
-    };
-</script>
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="~/js/dashboardpedidos.js" asp-append-version="true"></script>
-

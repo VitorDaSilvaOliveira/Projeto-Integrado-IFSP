@@ -70,42 +70,19 @@ public class PedidoService(
         }
     }
 
-    public async Task<(List<string> labels, List<int> vendas, List<int> trocas)> GetPedidosPorOperacaoAsync()
+    public async Task<IEnumerable<object>> ObterPedidosPorOperacaoAsync()
     {
-
-        var hoje = LocalTime.Now();
-        var primeiroMes = new DateTime(hoje.Year, hoje.Month, 1).AddMonths(-3);
-
-        var pedidos = await context.Pedidos
-            .Where(p => p.DataPedido != null && p.DataPedido >= primeiroMes)
+        var agrupado = await context.Pedidos
+            .GroupBy(p => p.Operacao)
+            .Select(g => new
+            {
+                Operacao = g.Key,
+                Total = g.Count()
+            })
+            .OrderByDescending(x => x.Total)
             .ToListAsync();
 
-        var labels = new List<string>();
-        var vendas = new List<int>();
-        var trocas = new List<int>();
-
-
-        for (var i = 0; i < 4; i++)
-        {
-            var mesRef = primeiroMes.AddMonths(i);
-            var proxMes = mesRef.AddMonths(1);
-
-            vendas.Add(pedidos
-                .Where(p => p.Operacao == 1 &&
-                            p.DataPedido >= mesRef &&
-                            p.DataPedido < proxMes)
-                .Count());
-
-            trocas.Add(pedidos
-                .Where(p => p.Operacao == 2 &&
-                            p.DataPedido >= mesRef &&
-                            p.DataPedido < proxMes)
-                .Count());
-
-            labels.Add(mesRef.ToString("MMM", new CultureInfo("pt-BR")));
-        }
-
-        return (labels, vendas, trocas);
+        return agrupado;
     }
 
 }

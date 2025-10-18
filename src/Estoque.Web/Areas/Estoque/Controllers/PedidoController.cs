@@ -52,7 +52,7 @@ public class PedidoController(PedidoService pedidoService) : Controller
     [HttpGet]
     public async Task<IActionResult> GetPedidosPorOperacao()
     {
-        var (labels, vendas, trocas) = await pedidoService.GetPedidosPorOperacaoAsync();
-        return Json(new { labels, vendas, trocas });
+        var dados = await pedidoService.ObterPedidosPorOperacaoAsync();
+        return Json(dados);
     }
 }
