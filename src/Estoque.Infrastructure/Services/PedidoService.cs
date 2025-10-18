@@ -1,21 +1,21 @@
 ﻿using Estoque.Domain.Entities;
 using Estoque.Domain.Enums;
 using Estoque.Infrastructure.Data;
-using JJMasterData.Core.Events.Args;
+using Estoque.Infrastructure.Utils;
 using JJMasterData.Core.UI.Components;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System.Globalization;
 
 namespace Estoque.Infrastructure.Services;
 
 public class PedidoService(
     IComponentFactory componentFactory,
     EstoqueDbContext context,
-   // ILogger<MovimentacaoService> logger,
-  //  AuditLogService auditLogService,
+    ILogger<MovimentacaoService> logger,
+    //  AuditLogService auditLogService,
     MovimentacaoService movimentacaoService)
-   // SignInManager<ApplicationUser> signInManager)
+// SignInManager<ApplicationUser> signInManager)
 {
     public int? statusPreUpdate = null;
     public int? statusPostUpdate = null;
@@ -35,65 +35,14 @@ public class PedidoService(
         return formView;
     }
 
-    public async Task<bool> FinalizarPedidoAsync(int pedidoId)
-    {
-        var pedido = await context.Pedidos
-            .Include(p => p.Itens)
-            .ThenInclude(pi => pi.Produto)
-            .FirstOrDefaultAsync(p => p.Id == pedidoId);
-
-        if (pedido == null || pedido.Status != PedidoStatus.EmAndamento)
-        {
-            return false;
-        }
-
-        foreach (var item in pedido.Itens)
-        {
-            try
-            { 
-            // Baixar estoque
-            //var sucessoMovimentacao = 
-            await movimentacaoService.RegistrarMovimentacaoAsync(
-            /*item.id_Produto,
-            item.Quantidade,
-            "Saída de estoque por finalização de pedido",
-            item.Id*/
-            item.ProdutoId, // Argumento 1: ID do Produto (Usando IdProduto da entidade Produto)
-            item.Quantidade,        // Argumento 2: Quantidade
-            TipoMovimentacao.Saida, // Argumento 3: Tipo
-            null, // Argumento 4: UserId (ou nome do usuário logado)
-            "observaçao", // Argumento 5: Observacao
-            pedidoId
-        );
-        }
-            catch (InvalidOperationException)
-           // if (!sucessoMovimentacao)
-            {
-                // Se a movimentação falhar, o pedido não pode ser finalizado
-                return false;
-            }
-        }
-
-        pedido.Status = PedidoStatus.Finalizado;
-        await context.SaveChangesAsync();
-        return true;
-    }
-
-
-    public async Task<string> ConfirmarPedidoEGerarMovimentacoes(int idPedido)
+    public async Task ProcessOrder(int idPedido, string userId)
     {
         var pedido = await context.Pedidos
             .FirstOrDefaultAsync(p => p.Id == idPedido);
 
-        if (pedido == null)
-            return $"Pedido com ID {idPedido} não encontrado.";
-
         var itensPedido = await context.PedidosItens
             .Where(pi => pi.id_Pedido == idPedido)
             .ToListAsync();
-
-        if (!itensPedido.Any())
-            return $"Nenhum item encontrado para o pedido {idPedido}.";
 
         try
         {
@@ -103,24 +52,60 @@ public class PedidoService(
                     item.ProdutoId,
                     item.Quantidade,
                     TipoMovimentacao.Saida,
-                     "Saída ",
+                    userId,
+                    $"Gerado Pedido {pedido!.NumeroPedido}",
                     null
                 );
             }
 
-            pedido.Status = PedidoStatus.Realizado;
+            pedido!.Status = PedidoStatus.Realizado;
 
             await context.SaveChangesAsync();
-
-            return $"Pedido {idPedido} confirmado com sucesso e movimentações geradas.";
         }
+
         catch (Exception ex)
         {
-            // logar o erro (ex.Message)
-            // ex: logger.LogError(ex, "Erro ao confirmar pedido {Id}", idPedido);
-            return $"Erro ao confirmar pedido {idPedido}: {ex.Message}";
+            logger.LogError($"Erro ao confirmar pedido {idPedido}: {ex.Message}");
+            throw;
         }
     }
 
+    public async Task<(List<string> labels, List<int> vendas, List<int> trocas)> GetPedidosPorOperacaoAsync()
+    {
+
+        var hoje = LocalTime.Now();
+        var primeiroMes = new DateTime(hoje.Year, hoje.Month, 1).AddMonths(-3);
+
+        var pedidos = await context.Pedidos
+            .Where(p => p.DataPedido != null && p.DataPedido >= primeiroMes)
+            .ToListAsync();
+
+        var labels = new List<string>();
+        var vendas = new List<int>();
+        var trocas = new List<int>();
+
+
+        for (var i = 0; i < 4; i++)
+        {
+            var mesRef = primeiroMes.AddMonths(i);
+            var proxMes = mesRef.AddMonths(1);
+
+            vendas.Add(pedidos
+                .Where(p => p.Operacao == 1 &&
+                            p.DataPedido >= mesRef &&
+                            p.DataPedido < proxMes)
+                .Count());
+
+            trocas.Add(pedidos
+                .Where(p => p.Operacao == 2 &&
+                            p.DataPedido >= mesRef &&
+                            p.DataPedido < proxMes)
+                .Count());
+
+            labels.Add(mesRef.ToString("MMM", new CultureInfo("pt-BR")));
+        }
+
+        return (labels, vendas, trocas);
+    }
 
 }

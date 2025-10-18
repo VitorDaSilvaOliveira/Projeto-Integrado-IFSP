@@ -820,7 +820,7 @@
     "formToolbarActions": {
       "urlActions": [
         {
-          "urlRedirect": "/Estoque/Pedido/SendOrder?idPedido={Id}",
+          "urlRedirect": "/Estoque/Pedido/SendOrder?idPedido={Id}&userId={USERID}",
           "urlAsPopUp": false,
           "isIframe": true,
           "popupSize": 3,
@@ -828,12 +828,12 @@
           "encryptParameters": false,
           "openInNewTab": false,
           "name": "Enviar Pedido",
-          "text": null,
-          "tooltip": null,
+          "text": "Realizar Pedido",
+          "tooltip": "Realizar Pedido",
           "isDefaultOption": false,
           "isGroup": false,
           "dividerLine": false,
-          "icon": 214,
+          "icon": 437,
           "showTitle": false,
           "confirmationMessage": null,
           "enableExpression": "val:1",

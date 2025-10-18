@@ -83,7 +83,6 @@ public static class ConfigurationExtensions
         services.AddScoped<PedidoService>();
         services.AddScoped<RoleService>();
         services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, CustomClaimsFactory>();
-        services.AddScoped<DashboardPedidosService>();
     }
 
     public static void AddCustomServices(this IServiceCollection services)

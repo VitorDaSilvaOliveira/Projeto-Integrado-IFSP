@@ -32,11 +32,27 @@ public class PedidoController(PedidoService pedidoService) : Controller
         return View();
     }
 
-    public async Task< IActionResult> SendOrder (int idPedido)
+    public async Task<IActionResult> SendOrder(int idPedido, string userId)
     {
-
-        await pedidoService.ConfirmarPedidoEGerarMovimentacoes(idPedido);
+        try
+        {
+            await pedidoService.ProcessOrder(idPedido, userId);
+            TempData["Success"] = "Pedido confirmado com sucesso!";
+        }
+        catch (Exception ex)
+        {
+            TempData["Error"] = ex.Message;
+        }
 
         return RedirectToAction(nameof(Index));
+    }
+
+    public IActionResult Dashboard() => View();
+
+    [HttpGet]
+    public async Task<IActionResult> GetPedidosPorOperacao()
+    {
+        var (labels, vendas, trocas) = await pedidoService.GetPedidosPorOperacaoAsync();
+        return Json(new { labels, vendas, trocas });
     }
 }
