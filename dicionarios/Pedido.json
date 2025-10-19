@@ -1149,6 +1149,30 @@
       }
     },
     "gridActions": {
+      "sqlActions": [
+        {
+          "isSubmit": false,
+          "commandSQL": "UPDATE Pedido\r\nSET Status = 2\r\nwhere Id = {Id}",
+          "applyOnSelected": false,
+          "redirectUrl": null,
+          "name": "Cancelar Pedido",
+          "text": null,
+          "tooltip": "Cancelar Pedido",
+          "isDefaultOption": false,
+          "isGroup": false,
+          "dividerLine": false,
+          "icon": 146,
+          "showTitle": false,
+          "confirmationMessage": "Deseja Cancelar Pedido?",
+          "enableExpression": "val:1",
+          "visibleExpression": "val:1",
+          "order": 3,
+          "showAsButton": false,
+          "color": 5,
+          "cssClass": null,
+          "formToolbarActionLocation": null
+        }
+      ],
       "deleteAction": {
         "isSubmit": false,
         "name": "delete",
@@ -1161,8 +1185,8 @@
         "showTitle": false,
         "confirmationMessage": "Would you like to delete this record?",
         "enableExpression": "val:1",
-        "visibleExpression": "val:1",
-        "order": 3,
+        "visibleExpression": "val:0",
+        "order": 4,
         "showAsButton": false,
         "color": 0,
         "cssClass": null,
