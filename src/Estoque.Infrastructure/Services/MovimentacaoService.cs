@@ -39,57 +39,22 @@ public class MovimentacaoService(
         var produtoId = Convert.ToInt32(values["Id_Produto"]);
         var tipoMovimentacao = (TipoMovimentacao)Convert.ToInt32(values["TipoMovimentacao"]);
         var userId = values["Id_User"]?.ToString();
+        var obs = values["Observacao"]?.ToString();
 
         if (values.ContainsKey("Quantidade"))
         {
             quantidade = Convert.ToInt32(values["Quantidade"]);
         }
 
-        await RegistrarMovimentacaoAsync(produtoId, quantidade, tipoMovimentacao, userId, "Movimentação via formulário");
+        await RegistrarMovimentacaoAsync(produtoId, quantidade, tipoMovimentacao, userId, obs);
     }
 
-    // ✅ MÉTODO 1: RegistrarSaidaAsync - CORRIGIDO
-    public async Task<bool> RegistrarSaidaAsync(int produtoId, int quantidade, string observacao, int? pedidoItemId = null)
-    {
-        // ✅ CORREÇÃO: Proteger acesso ao Context
-        string userId = null;
-        string userName = "Sistema";
-
-        try
-        {
-            var user = signInManager.Context?.User;
-            if (user != null)
-            {
-                userId = signInManager.UserManager.GetUserId(user);
-                userName = user?.Identity?.Name ?? "Sistema";
-            }
-        }
-        catch (Exception)
-        {
-            // Em ambiente de teste, Context pode ser null
-            userName = "Sistema/Teste";
-        }
-
-        try
-        {
-            await RegistrarMovimentacaoAsync(produtoId, quantidade, TipoMovimentacao.Saida, userId, observacao, pedidoItemId);
-            return true;
-        }
-        catch (InvalidOperationException ex)
-        {
-            logger.LogError(ex, "Erro ao registrar saída para o produto {ProdutoId}: {Mensagem}", produtoId, ex.Message);
-            return false;
-        }
-    }
-
-    // ✅ MÉTODO 2: RegistrarMovimentacaoAsync - CORRIGIDO
     public async Task RegistrarMovimentacaoAsync(
-        int produtoId,
-        int quantidade,
-        TipoMovimentacao tipoMovimentacao,
-        string? userId,
-        string observacao,
-        int? pedidoItemId = null)
+       int produtoId,
+       int quantidade,
+       TipoMovimentacao tipoMovimentacao,
+       string? userId,
+       string obs)
     {
         var produto = await context.Produtos
             .Include(p => p.ProdutoLotes)
@@ -98,21 +63,11 @@ public class MovimentacaoService(
         if (produto == null)
         {
             logger.LogError("Produto não encontrado.");
-            throw new InvalidOperationException("Produto não encontrado.");
+            return;
         }
 
-        // ✅ CORREÇÃO: Proteger acesso ao Context
-        string userName = "Sistema";
-        try
-        {
-            var user = signInManager.Context?.User;
-            userName = user?.Identity?.Name ?? "Anônimo";
-        }
-        catch (Exception)
-        {
-            // Em ambiente de teste, Context pode ser null
-            userName = "Sistema/Teste";
-        }
+        var user = signInManager.Context.User;
+        var userName = user?.Identity?.Name ?? "Anônimo";
 
         if (tipoMovimentacao == TipoMovimentacao.Saida)
         {
@@ -135,25 +90,26 @@ public class MovimentacaoService(
                 throw new InvalidOperationException("Estoque insuficiente.");
             }
 
-            // ✅ ADICIONAR: Criar registro de movimentação
-            var movimentacao = new Movimentacao
+            var entradaResgistrada = new Movimentacao
             {
                 IdProduto = produtoId,
                 Quantidade = quantidade,
                 TipoMovimentacao = TipoMovimentacao.Saida,
-                DataMovimentacao = DateTime.UtcNow,
-                Observacao = observacao,
-                IdUser = userId
+                DataMovimentacao = LocalTime.Now(),
+                IdUser = userId,
+                Observacao = obs
             };
-            context.Movimentacoes.Add(movimentacao);
+
+            context.Movimentacoes.Add(entradaResgistrada);
 
             await auditLogService.LogAsync(
                 "Estoque",
                 "Movimentação de Saída",
-                $"Saída de {quantidade} unidades do produto '{produto.Nome}' (ID: {produto.IdProduto}). {observacao}",
+                $"Saída de {quantidade} unidades do produto '{produto.Nome}' (ID: {produto.IdProduto}).",
                 userId,
                 userName
             );
+
         }
         else if (tipoMovimentacao == TipoMovimentacao.Entrada)
         {
@@ -164,42 +120,36 @@ public class MovimentacaoService(
                 Quantidade = quantidade,
                 QuantidadeDisponivel = quantidade,
                 CustoUnitario = 0,
-                DataEntrada = DateTime.UtcNow
+                DataEntrada = LocalTime.Now()
             };
 
             context.ProdutoLotes.Add(lote);
 
-            // ✅ ADICIONAR: Criar registro de movimentação
-            var movimentacao = new Movimentacao
-            {
-                IdProduto = produtoId,
-                Quantidade = quantidade,
-                TipoMovimentacao = TipoMovimentacao.Entrada,
-                DataMovimentacao = DateTime.UtcNow,
-                Observacao = observacao,
-                IdUser = userId
-            };
-            context.Movimentacoes.Add(movimentacao);
-
             await auditLogService.LogAsync(
                 "Estoque",
                 "Movimentação de Entrada",
-                $"Entrada de {quantidade} unidades do produto '{produto.Nome}' (ID: {produto.IdProduto}). {observacao}",
+                $"Entrada de {quantidade} unidades do produto '{produto.Nome}' (ID: {produto.IdProduto}).",
                 userId,
                 userName
             );
         }
+        else if (tipoMovimentacao == TipoMovimentacao.Devolucao)
+        {
+            var devolucao = new Movimentacao
+            {
+                IdProduto = produtoId,
+                Quantidade = quantidade,
+                TipoMovimentacao = TipoMovimentacao.Devolucao,
+                DataMovimentacao = LocalTime.Now(),
+                IdUser = userId,
+                Observacao = obs
+            };
+
+            context.Movimentacoes.Add(devolucao);
+        }
 
         await context.SaveChangesAsync();
-    
-
-
-
-}
-
-
-
-
+    }
 
     //private async Task NotificarEstoqueBaixo(Produto produto, string? userId)
     //{

@@ -53,8 +53,7 @@ public class PedidoService(
                     item.Quantidade,
                     TipoMovimentacao.Saida,
                     userId,
-                    $"Gerado Pedido {pedido!.NumeroPedido}",
-                    null
+                    $"Gerado Pedido {pedido!.NumeroPedido}"
                 );
             }
 

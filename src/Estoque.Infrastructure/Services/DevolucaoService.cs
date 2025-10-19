@@ -41,27 +41,20 @@ SignInManager<ApplicationUser> signInManager) : IFormEventHandler
         foreach (var item in itensDevolucao)
         {
             var produto = await context.Produtos.FindAsync(item.IdProduto);
-            if (produto != null)
-            {
-                if (item.Devolvido == 1)
-                    continue;
+            if (produto == null || item.Devolvido == 1)
+                continue;
 
-                var movimentacao = new Movimentacao
-                {
-                    IdProduto = item.IdProduto,
-                    Quantidade = item.QuantidadeDevolvida,
-                    TipoMovimentacao = TipoMovimentacao.Devolucao,
-                    DataMovimentacao = DateTime.Now.Date,
-                    Observacao = item.Motivo,
-                    IdUser = devolucao.IdUser
-                };
-                context.Movimentacoes.Add(movimentacao);
-                await movimentacaoService.RegistrarMovimentacaoAsync(produto.IdProduto, item.QuantidadeDevolvida, TipoMovimentacao.Entrada, devolucao.IdUser, item.Motivo);
+            await movimentacaoService.RegistrarMovimentacaoAsync(
+                produto.IdProduto,
+                item.QuantidadeDevolvida,
+                TipoMovimentacao.Devolucao,
+                devolucao.IdUser,
+                item.Motivo
+            );
 
-                item.Devolvido = 1;
-
-                await context.SaveChangesAsync();
-            }
+            item.Devolvido = 1;
         }
+
+        await context.SaveChangesAsync();
     }
 }
