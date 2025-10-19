@@ -70,14 +70,6 @@
                     <img src="~/img/logo.png" alt="Logo" width="100" height="100" style="position: relative; top: -40px;" />
                 </div>
 
-                <div class="position-relative w-100 px-3" style="max-width: 100%;">
-                    <hr class="bg-body-secondary mt-2 mb-2" style="border-width: 1px;">
-                    <div class="position-absolute top-50 start-50 translate-middle px-1 divider-label"
-                         style="font-size: 0.85rem; white-space: nowrap; max-width: 90vw; overflow: hidden; text-overflow: ellipsis;">
-                        @Localizer["OrEnterYourDetails"]
-                    </div>
-                </div>
-
                 <form asp-action="Index" method="post" class="D-flex FD-column JC-flex-start HEIGHT-60 WIDTH-100">
                     @Html.AntiForgeryToken()
 
