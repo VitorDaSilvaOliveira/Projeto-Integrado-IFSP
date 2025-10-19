@@ -14,7 +14,7 @@ public class Pedido
     public Cliente? Cliente { get; set; }
     public decimal? ValorTotal { get; set; }
     public PedidoStatus? Status { get; set; }
-    public int? Operacao { get; set; }
+    public PedidoOperacao? Operacao { get; set; }
     public DateTime? DataEntrega { get; set; }
     public string? Observacoes { get; set; }
     public string? UsuarioResponsavel { get; set; }

@@ -92,7 +92,6 @@ public class RolesController(RoleManager<ApplicationRole> roleManager, UserManag
 
         var menuDefinitions = new[]
         {
-            new { MenuId = "Home", MenuName = "Dashboards" },
             new { MenuId = "Produto", MenuName = "Produtos" },
             new { MenuId = "Fornecedor", MenuName = "Fornecedores" },
             new { MenuId = "Categoria", MenuName = "Categorias" },

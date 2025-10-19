@@ -136,7 +136,7 @@
     <value>Remember-me</value>
   </data>
   <data name="OrEnterYourDetails" xml:space="preserve">
-    <value>or enter your details</value>
+    <value>enter your details</value>
   </data>
   <data name="ForgotPassword" xml:space="preserve">
     <value>Forgot Password?</value>

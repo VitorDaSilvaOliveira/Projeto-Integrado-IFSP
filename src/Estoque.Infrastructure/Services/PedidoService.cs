@@ -76,7 +76,7 @@ public class PedidoService(
             .GroupBy(p => p.Operacao)
             .Select(g => new
             {
-                Operacao = g.Key,
+                Operacao = g.Key.HasValue ? g.Key.ToString() : "Sem Operação",
                 Total = g.Count()
             })
             .OrderByDescending(x => x.Total)
@@ -84,5 +84,4 @@ public class PedidoService(
 
         return agrupado;
     }
-
 }
