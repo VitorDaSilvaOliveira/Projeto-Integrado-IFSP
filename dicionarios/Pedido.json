@@ -336,6 +336,212 @@
       "size": 0,
       "numberOfDecimalPlaces": 0,
       "defaultvalue": null,
+      "isrequired": true,
+      "ispk": false,
+      "autonum": false,
+      "databehavior": 1
+    },
+    {
+      "component": 9,
+      "visibleExpression": "exp:!{IsList}",
+      "enableExpression": "val:1",
+      "lineGroup": 0,
+      "cssClass": "col-sm-3",
+      "helpDescription": null,
+      "dataItem": {
+        "dataItemType": 0,
+        "command": null,
+        "itens": [
+          {
+            "id": "1",
+            "description": "Pix",
+            "imageUrl": null,
+            "icon": 0,
+            "imagecolor": null,
+            "group": null
+          },
+          {
+            "id": "2",
+            "description": "Débito",
+            "imageUrl": null,
+            "icon": 0,
+            "imagecolor": null,
+            "group": null
+          },
+          {
+            "id": "3",
+            "description": "Crédito",
+            "imageUrl": null,
+            "icon": 0,
+            "imagecolor": null,
+            "group": null
+          },
+          {
+            "id": "4",
+            "description": "Boleto",
+            "imageUrl": null,
+            "icon": 0,
+            "imagecolor": null,
+            "group": null
+          }
+        ],
+        "elementMap": null,
+        "firstoption": 3,
+        "radioLayout": null,
+        "enableMultiSelect": false,
+        "gridBehavior": 1,
+        "showimagelegend": false
+      },
+      "dataFile": null,
+      "attributes": {},
+      "export": true,
+      "validateRequest": true,
+      "autoPostBack": true,
+      "triggerExpression": null,
+      "panelId": 0,
+      "actions": {},
+      "internalNotes": null,
+      "gridAlignment": 0,
+      "gridRenderingTemplate": null,
+      "encodeHtml": true,
+      "fieldid": 0,
+      "fieldname": "FormaPagamento",
+      "label": "Forma de Pagamento",
+      "datatype": 4,
+      "filter": {
+        "type": 1,
+        "isrequired": false
+      },
+      "size": 0,
+      "numberOfDecimalPlaces": 0,
+      "defaultvalue": null,
+      "isrequired": true,
+      "ispk": false,
+      "autonum": false,
+      "databehavior": 1
+    },
+    {
+      "component": 9,
+      "visibleExpression": "exp: '{FormaPagamento}' = '3'",
+      "enableExpression": "val:1",
+      "lineGroup": 0,
+      "cssClass": "col-sm-2",
+      "helpDescription": null,
+      "dataItem": {
+        "dataItemType": 0,
+        "command": null,
+        "itens": [
+          {
+            "id": "1",
+            "description": "1x",
+            "imageUrl": null,
+            "icon": 0,
+            "imagecolor": null,
+            "group": null
+          },
+          {
+            "id": "2",
+            "description": "2x",
+            "imageUrl": null,
+            "icon": 0,
+            "imagecolor": null,
+            "group": null
+          },
+          {
+            "id": "3",
+            "description": "3x",
+            "imageUrl": null,
+            "icon": 0,
+            "imagecolor": null,
+            "group": null
+          },
+          {
+            "id": "4",
+            "description": "4x",
+            "imageUrl": null,
+            "icon": 0,
+            "imagecolor": null,
+            "group": null
+          },
+          {
+            "id": "5",
+            "description": "5x",
+            "imageUrl": null,
+            "icon": 0,
+            "imagecolor": null,
+            "group": null
+          },
+          {
+            "id": "6",
+            "description": "6x",
+            "imageUrl": null,
+            "icon": 0,
+            "imagecolor": null,
+            "group": null
+          },
+          {
+            "id": "7",
+            "description": "7x",
+            "imageUrl": null,
+            "icon": 0,
+            "imagecolor": null,
+            "group": null
+          },
+          {
+            "id": "8",
+            "description": "8x",
+            "imageUrl": null,
+            "icon": 0,
+            "imagecolor": null,
+            "group": null
+          },
+          {
+            "id": "9",
+            "description": "9x",
+            "imageUrl": null,
+            "icon": 0,
+            "imagecolor": null,
+            "group": null
+          },
+          {
+            "id": "10",
+            "description": "10x",
+            "imageUrl": null,
+            "icon": 0,
+            "imagecolor": null,
+            "group": null
+          }
+        ],
+        "elementMap": null,
+        "firstoption": 1,
+        "radioLayout": null,
+        "enableMultiSelect": false,
+        "gridBehavior": 1,
+        "showimagelegend": false
+      },
+      "dataFile": null,
+      "attributes": {},
+      "export": true,
+      "validateRequest": true,
+      "autoPostBack": false,
+      "triggerExpression": null,
+      "panelId": 0,
+      "actions": {},
+      "internalNotes": null,
+      "gridAlignment": 0,
+      "gridRenderingTemplate": null,
+      "encodeHtml": true,
+      "fieldid": 0,
+      "fieldname": "Parcelas",
+      "label": "Parcelas",
+      "datatype": 4,
+      "filter": {
+        "type": 1,
+        "isrequired": false
+      },
+      "size": 0,
+      "numberOfDecimalPlaces": 0,
+      "defaultvalue": null,
       "isrequired": false,
       "ispk": false,
       "autonum": false,

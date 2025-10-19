@@ -17,6 +17,8 @@ public class Pedido
     public PedidoOperacao? Operacao { get; set; }
     public DateTime? DataEntrega { get; set; }
     public string? Observacoes { get; set; }
+    public int? FormaPagamento { get; set; }
+    public int? Parcelas { get; set; }
     public string? UsuarioResponsavel { get; set; }
 
     public ICollection<PedidoItem> Itens { get; set; } = new List<PedidoItem>();
