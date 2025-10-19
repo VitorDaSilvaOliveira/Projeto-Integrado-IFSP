@@ -90,17 +90,29 @@ public class RolesController(RoleManager<ApplicationRole> roleManager, UserManag
         var allUsers = userManager.Users.ToList();
         var usersInRole = await userManager.GetUsersInRoleAsync(role.Name!);
 
-        var allMenus = new List<EditMenuViewModel>
+        var menuDefinitions = new[]
         {
-            new() { MenuId = "Home",       MenuName = "Dashboards",   IsSelected = await roleService.HasAccessAsync(role.Id, "Home") },
-            new() { MenuId = "Produto",    MenuName = "Produtos",     IsSelected = await roleService.HasAccessAsync(role.Id, "Produto") },
-            new() { MenuId = "Fornecedor", MenuName = "Fornecedores", IsSelected = await roleService.HasAccessAsync(role.Id, "Fornecedor") },
-            new() { MenuId = "Categoria",  MenuName = "Categorias",   IsSelected = await roleService.HasAccessAsync(role.Id, "Categoria") },
-            new() { MenuId = "Cliente",    MenuName = "Clientes",     IsSelected = await roleService.HasAccessAsync(role.Id, "Cliente") },
-            new() { MenuId = "Pedido",     MenuName = "Pedidos",      IsSelected = await roleService.HasAccessAsync(role.Id, "Pedido") },
-            new() { MenuId = "EntradaSaida", MenuName = "Entrada e Saídas", IsSelected = await roleService.HasAccessAsync(role.Id, "EntradaSaida") },
-            new() { MenuId = "RelatorioPedido", MenuName = "Relatório de Pedidos", IsSelected = await roleService.HasAccessAsync(role.Id, "RelatorioPedido") }
+            new { MenuId = "Home", MenuName = "Dashboards" },
+            new { MenuId = "Produto", MenuName = "Produtos" },
+            new { MenuId = "Fornecedor", MenuName = "Fornecedores" },
+            new { MenuId = "Categoria", MenuName = "Categorias" },
+            new { MenuId = "Cliente", MenuName = "Clientes" },
+            new { MenuId = "Pedido", MenuName = "Pedidos" },
+            new { MenuId = "EntradaSaida", MenuName = "Entrada e Saídas" },
+            new { MenuId = "RelatorioPedido", MenuName = "Relatório de Pedidos" },
+            new { MenuId = "DashboardPedidos", MenuName = "Painel de Pedidos" }
         };
+
+        var allMenus = new List<EditMenuViewModel>();
+        foreach (var menu in menuDefinitions)
+        {
+            allMenus.Add(new EditMenuViewModel
+            {
+                MenuId = menu.MenuId,
+                MenuName = menu.MenuName,
+                IsSelected = await roleService.HasAccessAsync(role.Id, menu.MenuId)
+            });
+        }
 
         var vm = new EditRoleViewModel
         {

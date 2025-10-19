@@ -36,8 +36,13 @@
 						</div>
 
 						<!-- Dashboard de Pedidos -->
+						@if (Html.HasMenuAccess("DashboardPedidos", Db))
+						{
 						<div class="nav-item-wrapper">
-							<a class="nav-link label-1 px-2 @(ViewContext.RouteData.Values["controller"].ToString() == "Pedido" ? "active" : "")"
+							<a class="nav-link label-1 px-2 @(
+								  		  ViewContext.RouteData.Values["controller"].ToString() == "Pedido" &&
+								  		  ViewContext.RouteData.Values["action"].ToString() == "Dashboard"
+									  		  ? "active" : "" )"
 							   href="@Url.Action("Dashboard", "Pedido", new { area = "Estoque" })">
 
 								<div class="d-flex align-items-center" style="gap:0.8rem; font-size:0.80rem; padding-left:1rem;">
@@ -48,7 +53,7 @@
 								</div>
 							</a>
 						</div>
-
+						}
 					</div>
 				</li>
 
