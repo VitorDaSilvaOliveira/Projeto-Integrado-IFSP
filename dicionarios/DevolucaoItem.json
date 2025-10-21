@@ -88,7 +88,7 @@
         "dataItemType": 1,
         "command": {
           "cmdType": 1,
-          "sql": "SELECT p.Id, p.NumeroPedido + ' | ' + c.Nome + ' | ' + FORMAT(p.DataPedido,'dd-MM-yyyy')\r\nFROM Pedido p\r\ninner join Cliente c\r\nOn p.Cliente_Id = c.Id\r\n--where {SearchId} <> '' or p.Id = {SearchId}",
+          "sql": "SELECT p.Id, p.NumeroPedido + ' | ' + c.Nome + ' | ' + FORMAT(p.DataPedido,'dd-MM-yyyy')\r\nFROM Pedido p\r\ninner join Cliente c\r\nOn p.Cliente_Id = c.Id\r\nwhere p.Status = 1\r\n--where {SearchId} <> '' or p.Id = {SearchId}",
           "parameters": []
         },
         "itens": null,
