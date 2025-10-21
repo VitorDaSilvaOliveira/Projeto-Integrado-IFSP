@@ -11,6 +11,5 @@ namespace Estoque.Web.Areas.Estoque.Controllers
             var testeDevolucoes = new List<string> { "Produto A", "Produto B", "Produto C" };
             return View(testeDevolucoes);
         }
-
     }
 }

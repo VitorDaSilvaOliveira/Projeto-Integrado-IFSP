@@ -1,9 +1,11 @@
 ﻿using Estoque.Infrastructure.Services;
+using Estoque.Infrastructure.Utils;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Estoque.Web.Areas.Estoque.Controllers;
 
 [Area("Estoque")]
+[AuditLog("Estoque", "Menu", "Usuário acessou menu Fornecedores")]
 public class FornecedorController(FornecedorService fornecedorService)  : Controller
 {
     [Route("Fornecedor")]

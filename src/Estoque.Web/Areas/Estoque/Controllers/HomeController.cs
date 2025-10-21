@@ -1,9 +1,11 @@
 ﻿using Estoque.Infrastructure.Services;
+using Estoque.Infrastructure.Utils;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Estoque.Web.Areas.Estoque.Controllers;
 
 [Area("Estoque")]
+[AuditLog("Estoque", "Menu", "Usuário acessou menu Home")]
 public class HomeController(HomeService homeService) : Controller
 {
     public IActionResult Index() => View();

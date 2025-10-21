@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Estoque.Infrastructure.Services;
+﻿using Estoque.Infrastructure.Services;
+using Estoque.Infrastructure.Utils;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Estoque.Web.Areas.Estoque.Controllers;
 
 [Area("Estoque")]
+[AuditLog("Estoque", "Menu", "Usuário acessou menu Devoluções")]
 public class DevolucaoController(DevolucaoService devolucaoService) : Controller
 {
     [Route("Devolucao")]
