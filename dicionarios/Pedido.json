@@ -1164,7 +1164,7 @@
           "icon": 146,
           "showTitle": false,
           "confirmationMessage": "Deseja Cancelar Pedido?",
-          "enableExpression": "exp: '{Status}' <> 1",
+          "enableExpression": "exp: '{Status}' <> '1' && '{Status}' <> '2'",
           "visibleExpression": "val:1",
           "order": 3,
           "showAsButton": false,

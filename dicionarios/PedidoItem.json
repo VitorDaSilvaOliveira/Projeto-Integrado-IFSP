@@ -294,12 +294,12 @@
       "fieldid": 0,
       "fieldname": "PrecoVenda",
       "label": "Preço Venda",
-      "datatype": 13,
+      "datatype": 3,
       "filter": {
         "type": 1,
         "isrequired": false
       },
-      "size": 20,
+      "size": 0,
       "numberOfDecimalPlaces": 2,
       "defaultvalue": null,
       "isrequired": true,
@@ -730,7 +730,7 @@
         "showTitle": false,
         "confirmationMessage": "",
         "enableExpression": "val:1",
-        "visibleExpression": "val:1",
+        "visibleExpression": "val:0",
         "order": 1,
         "showAsButton": false,
         "color": 0,
