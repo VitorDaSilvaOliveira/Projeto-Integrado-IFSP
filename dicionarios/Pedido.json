@@ -1046,7 +1046,7 @@
           "visibleExpression": "exp: '{Status}' = '0'",
           "order": 0,
           "showAsButton": true,
-          "color": 0,
+          "color": 1,
           "cssClass": "float-end",
           "formToolbarActionLocation": 2
         }
@@ -1152,7 +1152,7 @@
       "sqlActions": [
         {
           "isSubmit": false,
-          "commandSQL": "UPDATE Pedido\r\nSET Status = 2\r\nwhere Id = {Id}",
+          "commandSQL": "EXEC Sp_CancelarPedido {Id}",
           "applyOnSelected": false,
           "redirectUrl": null,
           "name": "Cancelar Pedido",
