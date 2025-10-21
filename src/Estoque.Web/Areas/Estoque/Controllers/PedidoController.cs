@@ -34,16 +34,7 @@ public class PedidoController(PedidoService pedidoService) : Controller
 
     public async Task<IActionResult> SendOrder(int idPedido, string userId)
     {
-        try
-        {
-            await pedidoService.ProcessOrder(idPedido, userId);
-            TempData["Success"] = "Pedido confirmado com sucesso!";
-        }
-        catch (Exception ex)
-        {
-            TempData["Error"] = ex.Message;
-        }
-
+        await pedidoService.ProcessOrder(idPedido, userId);
         return RedirectToAction(nameof(Index));
     }
 

@@ -25,28 +25,7 @@ public class MovimentacaoService(
         var formView = await componentFactory.FormView.CreateAsync("Movimentacao");
         formView.ShowTitle = true;
 
-        formView.OnAfterInsertAsync += GetValuesAsync;
-        formView.OnAfterUpdateAsync += GetValuesAsync;
-
         return formView;
-    }
-
-    public async ValueTask GetValuesAsync(object sender, FormAfterActionEventArgs e)
-    {
-        var values = e.Values;
-
-        int quantidade = 0;
-        var produtoId = Convert.ToInt32(values["Id_Produto"]);
-        var tipoMovimentacao = (TipoMovimentacao)Convert.ToInt32(values["TipoMovimentacao"]);
-        var userId = values["Id_User"]?.ToString();
-        var obs = values["Observacao"]?.ToString();
-
-        if (values.ContainsKey("Quantidade"))
-        {
-            quantidade = Convert.ToInt32(values["Quantidade"]);
-        }
-
-        await RegistrarMovimentacaoAsync(produtoId, quantidade, tipoMovimentacao, userId, obs);
     }
 
     public async Task RegistrarMovimentacaoAsync(
