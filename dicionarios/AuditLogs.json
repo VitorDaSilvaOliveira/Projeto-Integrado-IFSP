@@ -78,11 +78,11 @@
       "databehavior": 1
     },
     {
-      "component": 2,
+      "component": 1,
       "visibleExpression": "val:1",
       "enableExpression": "val:1",
       "lineGroup": 0,
-      "cssClass": null,
+      "cssClass": "col-sm-3",
       "helpDescription": null,
       "dataItem": null,
       "dataFile": null,
@@ -102,7 +102,7 @@
       "label": "Usuário",
       "datatype": 5,
       "filter": {
-        "type": 2,
+        "type": 3,
         "isrequired": false
       },
       "size": 0,
@@ -228,7 +228,7 @@
       "visibleExpression": "val:1",
       "enableExpression": "val:1",
       "lineGroup": 0,
-      "cssClass": null,
+      "cssClass": "col-sm-2",
       "helpDescription": null,
       "dataItem": {
         "dataItemType": 0,
@@ -283,7 +283,7 @@
       "label": "Action",
       "datatype": 5,
       "filter": {
-        "type": 2,
+        "type": 3,
         "isrequired": false
       },
       "size": 0,
@@ -479,8 +479,8 @@
       },
       "filterAction": {
         "showAsCollapse": true,
-        "expandedByDefault": false,
-        "enableScreenSearch": false,
+        "expandedByDefault": true,
+        "enableScreenSearch": true,
         "IsSubmit": false,
         "name": "filter",
         "text": "Detailed Filters",
