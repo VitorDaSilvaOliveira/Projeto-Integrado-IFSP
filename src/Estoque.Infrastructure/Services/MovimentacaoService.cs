@@ -84,7 +84,7 @@ public class MovimentacaoService(
             await auditLogService.LogAsync(
                 "Estoque",
                 "Movimentação de Saída",
-                $"Saída de {quantidade} unidades do produto '{produto.Nome}' (ID: {produto.IdProduto}).",
+                $"Saída de {quantidade} unidades do produto '{produto.Nome}' (Cód: {produto.Codigo}).",
                 userId,
                 userName
             );
@@ -107,7 +107,7 @@ public class MovimentacaoService(
             await auditLogService.LogAsync(
                 "Estoque",
                 "Movimentação de Entrada",
-                $"Entrada de {quantidade} unidades do produto '{produto.Nome}' (ID: {produto.IdProduto}).",
+                $"Entrada de {quantidade} unidades do produto '{produto.Nome}' (Cód: {produto.Codigo}).",
                 userId,
                 userName
             );
@@ -125,6 +125,14 @@ public class MovimentacaoService(
             };
 
             context.Movimentacoes.Add(devolucao);
+
+            await auditLogService.LogAsync(
+                "Estoque",
+                "Movimentação de Devolução",
+                $"Devolução de {quantidade} unidades do produto '{produto.Nome}' (Cód:  {produto.Codigo} ).",
+                userId,
+                userName
+            );
         }
 
         await context.SaveChangesAsync();
