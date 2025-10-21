@@ -21,4 +21,17 @@ public class DevolucaoController(DevolucaoService devolucaoService) : Controller
         ViewBag.FormViewDevolucao = resultGridDevolucaoAsync.Content;
         return View();
     }
+
+    public async Task<IActionResult> Report()
+    {
+        var formViewRelatorioDevolucaoAsync = await devolucaoService.GetFormViewReportDevolucaoAsync();
+
+        var resultGridReportDevolucaoAsync = await formViewRelatorioDevolucaoAsync.GetResultAsync();
+
+        if (resultGridReportDevolucaoAsync is IActionResult actionResultGridReportDevolucaoAsync)
+            return actionResultGridReportDevolucaoAsync;
+
+        ViewBag.FormViewRelatorioDevolucao = resultGridReportDevolucaoAsync.Content;
+        return View();
+    }
 }

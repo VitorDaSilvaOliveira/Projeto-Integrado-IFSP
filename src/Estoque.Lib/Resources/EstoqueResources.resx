@@ -315,4 +315,7 @@
   <data name="TotalRevenue" xml:space="preserve">
     <value>Faturamento Total</value>
   </data>
+  <data name="DevolutionReport" xml:space="preserve">
+    <value>Relatório Devolução</value>
+  </data>
 </root>

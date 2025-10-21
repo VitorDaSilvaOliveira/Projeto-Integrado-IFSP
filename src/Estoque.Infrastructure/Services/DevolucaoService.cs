@@ -28,6 +28,13 @@ SignInManager<ApplicationUser> signInManager) : IFormEventHandler
         return formView;
     }
 
+    public async Task<JJFormView> GetFormViewReportDevolucaoAsync()
+    {
+        var formView = await componentFactory.FormView.CreateAsync("RelatorioDevolucao");
+        formView.ShowTitle = true;
+        return formView;
+    }
+
     public async ValueTask ProcessAfterInsertAsync(object sender, FormAfterActionEventArgs e)
     {
         var values = e.Values;
