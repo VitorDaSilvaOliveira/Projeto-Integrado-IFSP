@@ -3,8 +3,8 @@ using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using SeleniumExtras.WaitHelpers; // Certifique-se de ter este using no seu arquivo
-
+using SeleniumExtras.WaitHelpers; 
+using OpenQA.Selenium.Support.Extensions;
 
 namespace Estoque.Tests.E2ETests.PageObjects
 {
@@ -30,33 +30,39 @@ namespace Estoque.Tests.E2ETests.PageObjects
         protected IWebElement WaitForElement(By locator, int timeoutSeconds = 20)
         {
             var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(timeoutSeconds));
-            return wait.Until(ExpectedConditions.ElementIsVisible(locator));
+            return wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(locator));
+            //return wait.Until(ExpectedConditions.ElementIsVisible(locator));
         }
-
+        protected void ExecuteScript(string script, IWebElement element)
+        {
+            ((OpenQA.Selenium.IJavaScriptExecutor)Driver).ExecuteScript(script, element);
+        }
         protected void Click(By locator)
         {
-            // WaitForElement(locator).Click();
             var element = WaitForElement(locator, (int)Wait.Timeout.TotalSeconds);
-            // Tentativa 1: Submit (Mais robusto para formulários)
-            if (element.GetAttribute("type")?.ToLower() == "submit")
+
+            try
             {
-                element.Submit();
+                element.Click();
             }
-            else
+            catch (OpenQA.Selenium.ElementClickInterceptedException)
             {
-                // Tentativa 2: Clique normal (para links, etc.)
-                try
-                {
-                    element.Click();
-                }
-                catch (ElementNotInteractableException)
-                {
-                    // Tentativa 3: Clique via JavaScript (Último recurso contra bloqueios)
-                    ((IJavaScriptExecutor)Driver).ExecuteScript("arguments[0].click();", element);
-                }
+                ExecuteScript("arguments[0].click();", element);
+            }
+            catch (OpenQA.Selenium.ElementNotInteractableException)
+            {
+                ExecuteScript("arguments[0].click();", element);
+            }
+            catch (OpenQA.Selenium.WebDriverException ex) when (ex.Message.Contains("not clickable"))
+            {
+                ExecuteScript("arguments[0].click();", element);
+            }
+            catch (WebDriverTimeoutException)
+            {
+                Console.WriteLine("Botão 'Entrar' não estava disponível no tempo esperado.");
             }
 
-            // element.Click();
+
         }
 
         protected void Type(By locator, string text)

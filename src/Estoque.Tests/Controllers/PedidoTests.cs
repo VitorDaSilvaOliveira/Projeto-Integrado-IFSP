@@ -3,6 +3,7 @@ using Estoque.Domain.Enums;
 using Estoque.Infrastructure.Data;
 using Estoque.Infrastructure.Services;
 using FluentAssertions;
+using JJMasterData.Core.Events.Args;
 using JJMasterData.Core.UI.Components;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -11,181 +12,299 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Estoque.Tests.FlowTests
+namespace Estoque.Tests.IntegrationTests
 {
-    public class PedidoTests
+    public class PedidoFluxoIntegrationTests : IDisposable
     {
         private readonly EstoqueDbContext _context;
         private readonly PedidoService _pedidoService;
-        private readonly MovimentacaoService _movimentacaoServiceReal;
+      //  private readonly DevolucaoService _devolucaoService;
+        private readonly MovimentacaoService _movimentacaoService;
 
-        public PedidoTests()
+        public PedidoFluxoIntegrationTests()
         {
-            // ARRANGE GLOBAL: Configuração do DB e dos Serviços
             var options = new DbContextOptionsBuilder<EstoqueDbContext>()
                 .UseInMemoryDatabase(Guid.NewGuid().ToString())
                 .Options;
 
             _context = new EstoqueDbContext(options);
 
-            // Mocks Essenciais
+            var componentFactoryMock = Mock.Of<IComponentFactory>();
             var loggerMock = Mock.Of<ILogger<MovimentacaoService>>();
-            var mockComponentFactory = Mock.Of<IComponentFactory>();
-            var httpContextAccessorMock = new Mock<IHttpContextAccessor>();
-
-            // --- 1. MOCKING DA SEGURANÇA (UserManager e SignInManager) ---
-            var userStoreMock = new Mock<IUserStore<ApplicationUser>>();
+            var loggerPedidoMock = Mock.Of<ILogger<MovimentacaoService>>();
             var userManagerMock = new Mock<UserManager<ApplicationUser>>(
-                userStoreMock.Object,
-                null, null, null, null, null, null, null, null
-            );
+                Mock.Of<IUserStore<ApplicationUser>>(), null, null, null, null, null, null, null, null);
 
-            // Configurar o UserManager para retornar um usuário mockado para GetUserId
-            userManagerMock.Setup(u => u.GetUserId(It.IsAny<System.Security.Claims.ClaimsPrincipal>()))
-                .Returns("test-user-id");
+            var contextAccessorMock = new Mock<IHttpContextAccessor>();
+            var identity = new ClaimsIdentity(new[]
+            {
+                new Claim(ClaimTypes.Name, "usuarioteste")
+            });
 
-            // Mocks para as dependências do SignInManager
-            var userClaimsPrincipalFactoryMock = new Mock<IUserClaimsPrincipalFactory<ApplicationUser>>();
-            var optionsAccessorMock = new Mock<Microsoft.Extensions.Options.IOptions<IdentityOptions>>();
-            var loggerSignInManagerMock = new Mock<ILogger<SignInManager<ApplicationUser>>>();
-            var schemesMock = new Mock<Microsoft.AspNetCore.Authentication.IAuthenticationSchemeProvider>();
-            var userConfirmationMock = new Mock<Microsoft.AspNetCore.Identity.IUserConfirmation<ApplicationUser>>();
+            var claimsPrincipal = new ClaimsPrincipal(identity);
+            var httpContext = new DefaultHttpContext
+            {
+                User = claimsPrincipal
+            };
+            contextAccessorMock.Setup(_ => _.HttpContext).Returns(httpContext);
 
             var signInManagerMock = new Mock<SignInManager<ApplicationUser>>(
                 userManagerMock.Object,
-                httpContextAccessorMock.Object,
-                userClaimsPrincipalFactoryMock.Object,
-                optionsAccessorMock.Object,
-                loggerSignInManagerMock.Object,
-                schemesMock.Object,
-                userConfirmationMock.Object
-            );
-            var signInManagerObject = signInManagerMock.Object;
+                contextAccessorMock.Object,
+                Mock.Of<IUserClaimsPrincipalFactory<ApplicationUser>>(),
+                null, null, null, null);
 
-            // --- 2. MOCKING DO AUDITLOG SERVICE ---
-            var auditLogMock = new Mock<AuditLogService>(
+            // ComponentFactory mock (caso precise passar para AuditLog)
+            var factoryMock = Mock.Of<IComponentFactory>();
+
+            // AuditLogService real com mocks
+            var auditLogService = new AuditLogService(
                 _context,
-                httpContextAccessorMock.Object,
-                mockComponentFactory
+                contextAccessorMock.Object,
+                factoryMock
             );
-            var auditLogServiceObject = auditLogMock.Object;
 
-            // --- 3. INSTANCIAÇÃO DO MOVIMENTACAOSERVICE ---
-            _movimentacaoServiceReal = new MovimentacaoService(
-                mockComponentFactory,
+            // MovimentacaoService real com dependências mockadas
+            var movimentacaoService = new MovimentacaoService(
+                factoryMock,
                 _context,
                 loggerMock,
-                auditLogServiceObject,
-                signInManagerObject
+                auditLogService,
+                signInManagerMock.Object
             );
 
-            // --- 4. INSTANCIAÇÃO DO PEDIDOSERVICE ---
-            //_pedidoService = new PedidoService(
-            //    mockComponentFactory,
-            //    _context,
-            //    _movimentacaoServiceReal
-            //);
+            // PedidoService com dependências reais e mocks
+            _pedidoService = new PedidoService(
+                factoryMock,
+                _context,
+                loggerPedidoMock,
+                movimentacaoService
+            );
+
+            //var signInManagerMock = Mock.Of<SignInManager<ApplicationUser>>();
+            /*_devolucaoService = new DevolucaoService(
+                  componentFactoryMock,
+                 _context,
+                  loggerMock,
+                  auditLogService,
+                  _movimentacaoService,
+                  signInManagerMock.Object
+            );*/
+
         }
-
-        [Fact]
-        [Trait("E2E", "Fluxo de Finalização de Pedido")]
-        public async Task FP_007_FinalizarPedido_DeveBaixarEstoqueCorretamente()
+            [Fact]
+        public async Task ProcessOrder_DeveFinalizarPedidoERegistrarMovimentacao()
         {
-            // ARRANGE
-            const int ProdutoId = 10;
-            const int LoteId = 20;
-            const int ClienteId = 30;
-            const int PedidoId = 40;
-            const int ItemPedidoId = 50;
-            const int FornecedorId = 60;
-            const int estoqueInicial = 10;
-            const int quantidadePedida = 4;
-            const decimal precoVenda = 1500.00m;
-
-            var fornecedor = new Fornecedor { Id = FornecedorId, NomeFantasia = "Fornecedor Teste" };
+            // Arrange
+            const int produtoId = 1001;
+            const int quantidade = 5;
+            const string userId = "usuario-test";
 
             var produto = new Produto
             {
-                IdProduto = ProdutoId,
-                Nome = "Monitor Gamer",
-                Preco = precoVenda,
-                Codigo = "MG-02"
+                IdProduto = produtoId,
+                Nome = "Produto Teste",
+                Codigo = "1001"
             };
 
-            var loteInicial = new ProdutoLote
+            var cliente = new Cliente { Id = 2001, Nome = "Cliente Teste" };
+
+            var lote = new ProdutoLote
             {
-                LoteId = LoteId,
-                ProdutoId = ProdutoId,
-                FornecedorId = FornecedorId,
-                QuantidadeDisponivel = estoqueInicial,
-                Quantidade = estoqueInicial,
-                CustoUnitario = 500.00m,
+                ProdutoId = produtoId,
+                Quantidade = 10,
+                QuantidadeDisponivel = 10,
                 DataEntrada = DateTime.UtcNow
             };
 
-            var cliente = new Cliente
-            {
-                Id = ClienteId,
-                Nome = "Cliente Fulano",
-                Documento = "23535838819"
-            };
-
-            _context.Fornecedores.Add(fornecedor);
-            _context.Produtos.Add(produto);
-            _context.Clientes.Add(cliente);
-            _context.ProdutoLotes.Add(loteInicial);
-
-            await _context.SaveChangesAsync();
-
             var pedido = new Pedido
             {
-                Id = PedidoId,
-                ClienteId = ClienteId,
-                DataPedido = DateTime.UtcNow,
+                Id = 1,
+                ClienteId = cliente.Id,
+                NumeroPedido = "1",
                 Status = PedidoStatus.EmAndamento,
                 Itens = new List<PedidoItem>
                 {
-                    new PedidoItem {
-                        Id = ItemPedidoId,
-                        ProdutoId = ProdutoId,
-                        Produto = produto,  
-                        Quantidade = quantidadePedida,
-                        PrecoVenda = precoVenda,
-                        ValorTotal = quantidadePedida * precoVenda
+                    new PedidoItem
+                    {
+                        ProdutoId = produtoId,
+                        Quantidade = quantidade,
+                        PrecoVenda = 100.00m,
+                        ValorTotal = 500.00m
                     }
                 }
             };
 
+            _context.Produtos.Add(produto);
+            _context.Clientes.Add(cliente);
+            _context.ProdutoLotes.Add(lote);
             _context.Pedidos.Add(pedido);
             await _context.SaveChangesAsync();
 
-            // ACT
-            //var sucesso = await _pedidoService.ProcessOrder(pedido.Id, "1");
+            // Act
+            await _pedidoService.ProcessOrder(pedido.Id, userId);
 
-            //// ASSERT
-            //sucesso.Should().BeTrue("O serviço de finalização deveria retornar sucesso.");
+            // Assert
+            var pedidoAtualizado = await _context.Pedidos.FindAsync(pedido.Id);
+            pedidoAtualizado.Status.Should().Be(PedidoStatus.Realizado);
 
-            var pedidoFinalizado = await _context.Pedidos.FindAsync(pedido.Id);
-            pedidoFinalizado.Status.Should().Be(PedidoStatus.Finalizado);
-
-            var loteAposBaixa = await _context.ProdutoLotes.FindAsync(LoteId);
-            loteAposBaixa.Should().NotBeNull();
-            loteAposBaixa.QuantidadeDisponivel.Should().Be(estoqueInicial - quantidadePedida);
+            var loteAtualizado = await _context.ProdutoLotes.FirstAsync(l => l.ProdutoId == produtoId);
+            loteAtualizado.QuantidadeDisponivel.Should().Be(5);
 
             var movimentacao = await _context.Movimentacoes
-                .FirstOrDefaultAsync(m => m.IdProduto == ProdutoId &&
-                                          m.TipoMovimentacao == TipoMovimentacao.Saida);
+                .FirstOrDefaultAsync(m => m.IdProduto == produtoId && m.TipoMovimentacao == TipoMovimentacao.Saida);
 
             movimentacao.Should().NotBeNull();
-            movimentacao.Quantidade.Should().Be(quantidadePedida);
-            movimentacao.TipoMovimentacao.Should().Be(TipoMovimentacao.Saida);
-            movimentacao.IdProduto.Should().Be(ProdutoId);
+            movimentacao!.Quantidade.Should().Be(quantidade);
+            movimentacao.IdUser.Should().Be(userId);
+        }
+
+        [Fact]
+        public async Task ProcessOrder_ComEstoqueInsuficiente_DeveLancarExcecao()
+        {
+            // Arrange
+            const int produtoId = 2002;
+            const int quantidadeSolicitada = 10;
+            const int estoqueDisponivel = 3;
+            const string userId = "usuario";
+
+            var produto = new Produto
+            {
+                IdProduto = produtoId,
+                Nome = "Produto Sem Estoque",
+                Codigo = "2002"
+            };
+
+            var cliente = new Cliente { Id = 3001, Nome = "Cliente Sem Estoque" };
+
+            var lote = new ProdutoLote
+            {
+                ProdutoId = produtoId,
+                Quantidade = estoqueDisponivel,
+                QuantidadeDisponivel = estoqueDisponivel,
+                DataEntrada = DateTime.UtcNow
+            };
+
+            var pedido = new Pedido
+            {
+                Id = 2,
+                ClienteId = cliente.Id,
+                NumeroPedido = "2",
+                Status = PedidoStatus.EmAndamento,
+                Itens = new List<PedidoItem>
+        {
+            new PedidoItem
+            {
+                ProdutoId = produtoId,
+                Quantidade = quantidadeSolicitada,
+                PrecoVenda = 100.00m,
+                ValorTotal = 1000.00m
+            }
+        }
+            };
+
+            _context.Produtos.Add(produto);
+            _context.Clientes.Add(cliente);
+            _context.ProdutoLotes.Add(lote);
+            _context.Pedidos.Add(pedido);
+            await _context.SaveChangesAsync();
+
+            // Act
+            Func<Task> acao = async () =>
+            await _pedidoService.ProcessOrder(pedido.Id, userId);
+
+            // Assert
+            await acao.Should()
+                .ThrowAsync<InvalidOperationException>()
+                .WithMessage("*Estoque insuficiente*");
+
+            await _context.Entry(lote).ReloadAsync(); 
+            await _context.Entry(pedido).ReloadAsync();
+
+            lote.QuantidadeDisponivel.Should().Be(estoqueDisponivel);
+            pedido.Status.Should().Be(PedidoStatus.EmAndamento, "status do pedido não deve mudar se a operação falhar");
+
+            // Nenhuma movimentação deve ter sido registrada
+            var movimentacao = await _context.Movimentacoes
+                .FirstOrDefaultAsync(m => m.IdProduto == produtoId && m.TipoMovimentacao == TipoMovimentacao.Saida);
+
+            movimentacao.Should().BeNull("Não deveria registrar movimentação se o estoque é insuficiente");
+        }
+
+     /*   [Fact]
+        public async Task ProcessAfterInsertAsync_DeveRegistrarDevolucaoECriarMovimentacao()
+        {
+            // Arrange
+            const int produtoId = 1001;
+            const int quantidadeDevolvida = 2;
+            const string userId = "user-teste";
+            const string motivo = "Produto com defeito";
+
+            var produto = new Produto
+            {
+                IdProduto = produtoId,
+                Nome = "Notebook",
+                Codigo = "NBK123",
+                Preco = 3000
+            };
+
+            var devolucao = new Devolucao
+            {
+                IdDevolucao = 1,
+                IdUser = userId
+            };
+
+            var itemDevolucao = new DevolucaoItem
+            {
+                IdDevolucao = 1,
+                IdProduto = produtoId,
+                QuantidadeDevolvida = quantidadeDevolvida,
+                Motivo = motivo,
+                Devolvido = 0
+            };
+
+            _context.Produtos.Add(produto);
+            _context.Devolucoes.Add(devolucao);
+            _context.DevolucoesItens.Add(itemDevolucao);
+            await _context.SaveChangesAsync();
+
+            var eventArgs = new FormAfterActionEventArgs
+            {
+                Values = new Dictionary<string, object>
+        {
+            { "idDevolucao", devolucao.IdDevolucao }
+        }
+            };
+
+            // Act
+            await _devolucaoService.ProcessAfterInsertAsync(null, eventArgs);
+
+            // Assert
+
+            var itemAtualizado = await _context.DevolucoesItens
+                .FirstOrDefaultAsync(i => i.IdDevolucao == 1 && i.IdProduto == produtoId);
+
+            itemAtualizado.Should().NotBeNull();
+            itemAtualizado!.Devolvido.Should().Be(1);
+
+            var movimentacao = await _context.Movimentacoes
+                .FirstOrDefaultAsync(m => m.IdProduto == produtoId && m.TipoMovimentacao == TipoMovimentacao.Devolucao);
+
+            movimentacao.Should().NotBeNull("Deveria ter sido registrada uma movimentação de devolução");
+            movimentacao!.Quantidade.Should().Be(quantidadeDevolvida);
+            movimentacao.IdUser.Should().Be(userId);
+            movimentacao.Observacao.Should().Contain(motivo);
+        }
+        */
+
+
+        public void Dispose()
+        {
+            _context.Dispose();
         }
     }
 }
-
-

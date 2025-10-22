@@ -1,33 +1,29 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
-using SeleniumExtras.WaitHelpers;
 
 namespace Estoque.Tests.E2ETests.PageObjects
 {
     public class LoginPage : BasePage
     {
-        // ✅ Seletores Corretos baseados no HTML real
         private By LoginInput => By.Id("Login");                    // Campo de login
         private By SenhaInput => By.Id("senha");                    // Campo de senha
         private By EntrarButton => By.CssSelector("button[type='submit']");  // Botão entrar
-        private By ErrorMessage => By.CssSelector(".text-danger");  // Mensagem de erro
-        private By LoginForm => By.CssSelector("form[method='post']");  // Formulário
+        private By ErrorMessage => By.CssSelector(".text-danger");  
+        private By LoginForm => By.CssSelector("form[action='/Identity/SignIn']"); 
 
         public LoginPage(IWebDriver driver, WebDriverWait wait, string baseUrl)
             : base(driver, wait, baseUrl)
         {
         }
 
+
+
         // Ações
         public LoginPage GoToLoginPage()
         {
-                NavigateTo("/Account/Login");
-            Wait.Until(ExpectedConditions.UrlContains("/Login"));
-            //Wait.Until(OpenQA.Selenium.Support.UI.ExpectedConditions.UrlContains("/Login"));
-
-
-            //NavigateTo("/Identity/SignIn");  // ✅ Rota correta
-            WaitForElement(LoginForm,20);
+            NavigateTo("/Identity/SignIn");  
+            WaitForElement(LoginForm);
             return this;
         }
 
@@ -45,27 +41,8 @@ namespace Estoque.Tests.E2ETests.PageObjects
 
         public void ClickEntrarButton()
         {
-           // 1.Espera o botão ficar visível(para garantir que a página carregou)
-    var submitButton = WaitForElement(EntrarButton, (int)Wait.Timeout.TotalSeconds);
-
-            // 2. CORREÇÃO CRÍTICA: Encontra o elemento FORMULÁRIO e executa o Submit()
-
-            // Tentativa A: Submeter o formulário pai do botão
-            // Esta é a forma mais robusta de ignorar bloqueios de interatividade
-            try
-            {
-                // Encontra o botão e depois navega para o elemento <form> pai
-                var formElement = submitButton.FindElement(By.XPath("./ancestor::form[1]"));
-                formElement.Submit();
-            }
-            catch (NoSuchElementException)
-            {
-                // Se o XPath for muito complexo, submete o próprio botão como fallback (o que já falhou antes)
-                submitButton.Submit();
-            }
-
+            Click(EntrarButton);
             WaitForPageLoad();
-
         }
 
         public void Login(string login, string senha)
@@ -73,7 +50,6 @@ namespace Estoque.Tests.E2ETests.PageObjects
             EnterLogin(login);
             EnterSenha(senha);
             ClickEntrarButton();
-            
         }
 
         // Verificações
@@ -89,8 +65,32 @@ namespace Estoque.Tests.E2ETests.PageObjects
 
         public bool IsLoginSuccessful()
         {
-            // Verificar se foi redirecionado (não está mais na página de login)
             return !Driver.Url.Contains("/Identity/SignIn");
+        }
+
+       
+
+        public void Logout()
+        {
+            try
+            {
+                var userDropdown = Wait.Until(d =>
+                    d.FindElement(By.CssSelector(".dropdown-toggle"))
+                );
+                userDropdown.Click();
+
+                System.Threading.Thread.Sleep(500);
+
+                var logoutButton = Wait.Until(d =>
+                    d.FindElement(By.XPath("//button[contains(text(), 'Sair')]"))
+                );
+                logoutButton.Click();
+            }
+            catch
+            {
+                // Fallback: URL direta
+                Driver.Navigate().GoToUrl($"{BaseUrl}/Identity/SignOut");
+            }
         }
     }
 }

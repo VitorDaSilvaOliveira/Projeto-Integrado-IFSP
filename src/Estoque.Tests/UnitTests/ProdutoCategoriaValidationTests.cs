@@ -22,7 +22,7 @@ namespace Estoque.Tests.UnitTests
 
             using (var command = _connection.CreateCommand())
             {
-                command.CommandText = "PRAGMA foreign_keys = 1;"; // Comando SQL para ativar a restrição
+                command.CommandText = "PRAGMA foreign_keys = 1;"; 
                 command.ExecuteNonQuery();
             }
 
@@ -38,7 +38,6 @@ namespace Estoque.Tests.UnitTests
         [Trait("Unit", "Produto-Categoria-Validation")]
         public async Task Produto_ComCategoriaInexistente_DeveFalharAoSalvar()
         {
-            // ARRANGE
             var produto = new Produto
             {
                 IdProduto = 1,
