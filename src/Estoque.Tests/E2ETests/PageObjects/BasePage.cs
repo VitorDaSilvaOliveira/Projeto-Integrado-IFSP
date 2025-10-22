@@ -21,7 +21,6 @@ namespace Estoque.Tests.E2ETests.PageObjects
             BaseUrl = baseUrl;
         }
 
-        // Métodos auxiliares comuns
         protected void NavigateTo(string relativeUrl)
         {
             Driver.Navigate().GoToUrl($"{BaseUrl}{relativeUrl}");

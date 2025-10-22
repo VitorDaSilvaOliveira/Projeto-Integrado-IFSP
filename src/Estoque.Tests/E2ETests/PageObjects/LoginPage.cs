@@ -88,7 +88,6 @@ namespace Estoque.Tests.E2ETests.PageObjects
             }
             catch
             {
-                // Fallback: URL direta
                 Driver.Navigate().GoToUrl($"{BaseUrl}/Identity/SignOut");
             }
         }
