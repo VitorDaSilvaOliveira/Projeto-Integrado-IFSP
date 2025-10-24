@@ -315,4 +315,7 @@
   <data name="TotalRevenue" xml:space="preserve">
     <value>Total Revenue</value>
   </data>
+  <data name="Cliente" xml:space="preserve">
+    <value>Client</value>
+  </data>
 </root>
