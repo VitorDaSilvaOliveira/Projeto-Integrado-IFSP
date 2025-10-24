@@ -34,8 +34,4 @@
   </PackageReference>
 </ItemGroup>
 
-<ItemGroup>
-  <Folder Include="Areas\Estoque\Views\RelatorioDevolucaoTroca\" />
-</ItemGroup>
-
 </Project>

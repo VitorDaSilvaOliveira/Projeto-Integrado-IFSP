@@ -315,7 +315,7 @@
   <data name="TotalRevenue" xml:space="preserve">
     <value>Total Revenue</value>
   </data>
-  <data name="Cliente" xml:space="preserve">
-    <value>Client</value>
+  <data name="DevolutionReport" xml:space="preserve">
+    <value>Devolution Report</value>
   </data>
 </root>
