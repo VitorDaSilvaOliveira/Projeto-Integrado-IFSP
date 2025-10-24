@@ -671,8 +671,6 @@
   --estoque-btn-border-color: var(--estoque-danger-light);
 }
 [data-bs-theme=dark] {
-  /* --------------------------------- list js -------------------------------- */
-  --estoque-list-sort-icon: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNyIgaGVpZ2h0PSI5IiB2aWV3Qm94PSIwIDAgNyA5IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cGF0aCBkPSJNMS4xMjkzIDQuOTkwMjNDMC42OTEwMTYgNC45OTAyMyAwLjQ3MTg3NSA1LjUwODIgMC43OTA2MjUgNS44MDcwM0wzLjE2MTMzIDguMTc3NzNDMy4zNDA2MiA4LjM3Njk1IDMuNjM5NDUgOC4zNzY5NSAzLjgzODY3IDguMTc3NzNMNi4yMDkzNyA1LjgwNzAzQzYuNTA4MiA1LjUwODIgNi4yODkwNiA0Ljk5MDIzIDUuODcwNyA0Ljk5MDIzSDEuMTI5M1pNNi4yMDkzNyAyLjg5ODQ0TDMuODM4NjcgMC41Mjc3MzVDMy42Mzk0NSAwLjM0ODQzOCAzLjM0MDYyIDAuMzQ4NDM4IDMuMTYxMzMgMC41Mjc3MzVMMC43OTA2MjUgMi44OTg0NEMwLjQ3MTg3NSAzLjIxNzE5IDAuNjkxMDE2IDMuNzE1MjMgMS4xMjkzIDMuNzE1MjNINS44NzA3QzYuMjg5MDYgMy43MTUyMyA2LjUwODIgMy4yMTcxOSA2LjIwOTM3IDIuODk4NDRaIiBmaWxsPSIjM0U0NjVCIi8+Cjwvc3ZnPgo=");
   /* --------------------------------- tinymce -------------------------------- */
   --estoque-tinymce-tox-tbtn-enabled-icon-color: var(
     --estoque-body-highlight-color
@@ -21146,40 +21144,6 @@ fieldset:disabled .mapbox-container .mapbox-control-btn .fullScreen,
 }
 
 /* -------------------------------------------------------------------------- */
-/*                                Terms sidebar                               */
-/* -------------------------------------------------------------------------- */
-.terms-sidebar .nav-link {
-  color: var(--estoque-quaternary-color);
-  font-weight: 500;
-  font-family: var(--estoque-font-sans-serif);
-}
-.terms-sidebar .nav-link.active {
-  color: var(--estoque-primary);
-}
-
-.divider-content-center {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translateX(-50%) translateY(-50%);
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-  background-color: var(--estoque-body-bg);
-  font-family: var(--estoque-font-sans-serif);
-  font-size: 0.8rem;
-  color: rgba(var(--estoque-tertiary-color-rgb), 0.85);
-  white-space: nowrap;
-  font-weight: 700;
-}
-[data-bs-theme=dark] .bg-auth-card .divider-content-center {
-  background-color: #17191c !important;
-}
-
-.btn-check[data-theme-control]:checked + label {
-  display: none;
-}
-
-/* -------------------------------------------------------------------------- */
 /*                                    Height                                  */
 /* -------------------------------------------------------------------------- */
 html {
@@ -26864,55 +26828,6 @@ a[href].bg-body-secondary:hover, a[href].bg-body-secondary:focus {
 .table > tbody > tr > td:last-child {
   padding-right: 0;
 }
-
-/*-----------------------------------------------
-|   Scrollbar style for windows
------------------------------------------------*/
-.scrollbar, .offcanvas.faq-sidebar, html:not(.navbar-vertical-collapsed) .navbar-vertical .navbar-vertical-content,
-.scrollbar-overlay {
-  overflow: auto;
-}
-.scrollbar::-webkit-scrollbar, .offcanvas.faq-sidebar::-webkit-scrollbar, html:not(.navbar-vertical-collapsed) .navbar-vertical .navbar-vertical-content::-webkit-scrollbar,
-.scrollbar-overlay::-webkit-scrollbar {
-  visibility: hidden;
-  -webkit-appearance: none;
-  width: 6px;
-  height: 6px;
-  background-color: transparent;
-}
-.scrollbar::-webkit-scrollbar-thumb, .offcanvas.faq-sidebar::-webkit-scrollbar-thumb, html:not(.navbar-vertical-collapsed) .navbar-vertical .navbar-vertical-content::-webkit-scrollbar-thumb,
-.scrollbar-overlay::-webkit-scrollbar-thumb {
-  visibility: hidden;
-  border-radius: 3px;
-  background-color: var(--estoque-scrollbar-bg);
-}
-.scrollbar:hover::-webkit-scrollbar, .offcanvas.faq-sidebar:hover::-webkit-scrollbar, html:not(.navbar-vertical-collapsed) .navbar-vertical .navbar-vertical-content:hover::-webkit-scrollbar, .scrollbar:hover::-webkit-scrollbar-thumb, .offcanvas.faq-sidebar:hover::-webkit-scrollbar-thumb, html:not(.navbar-vertical-collapsed) .navbar-vertical .navbar-vertical-content:hover::-webkit-scrollbar-thumb, .scrollbar:focus::-webkit-scrollbar, .offcanvas.faq-sidebar:focus::-webkit-scrollbar, html:not(.navbar-vertical-collapsed) .navbar-vertical .navbar-vertical-content:focus::-webkit-scrollbar, .scrollbar:focus::-webkit-scrollbar-thumb, .offcanvas.faq-sidebar:focus::-webkit-scrollbar-thumb, html:not(.navbar-vertical-collapsed) .navbar-vertical .navbar-vertical-content:focus::-webkit-scrollbar-thumb,
-.scrollbar-overlay:hover::-webkit-scrollbar,
-.scrollbar-overlay:hover::-webkit-scrollbar-thumb,
-.scrollbar-overlay:focus::-webkit-scrollbar,
-.scrollbar-overlay:focus::-webkit-scrollbar-thumb {
-  visibility: visible;
-}
-
-.navbar-vibrant .scrollbar, .navbar-vibrant .offcanvas.faq-sidebar, .navbar-vibrant html:not(.navbar-vertical-collapsed) .navbar-vertical .navbar-vertical-content, html:not(.navbar-vertical-collapsed) .navbar-vertical .navbar-vibrant .navbar-vertical-content {
-  overflow: auto;
-}
-.navbar-vibrant .scrollbar::-webkit-scrollbar, .navbar-vibrant .offcanvas.faq-sidebar::-webkit-scrollbar, .navbar-vibrant html:not(.navbar-vertical-collapsed) .navbar-vertical .navbar-vertical-content::-webkit-scrollbar, html:not(.navbar-vertical-collapsed) .navbar-vertical .navbar-vibrant .navbar-vertical-content::-webkit-scrollbar {
-  visibility: hidden;
-  -webkit-appearance: none;
-  width: 6px;
-  height: 6px;
-  background-color: transparent;
-}
-.navbar-vibrant .scrollbar::-webkit-scrollbar-thumb, .navbar-vibrant .offcanvas.faq-sidebar::-webkit-scrollbar-thumb, .navbar-vibrant html:not(.navbar-vertical-collapsed) .navbar-vertical .navbar-vertical-content::-webkit-scrollbar-thumb, html:not(.navbar-vertical-collapsed) .navbar-vertical .navbar-vibrant .navbar-vertical-content::-webkit-scrollbar-thumb {
-  visibility: hidden;
-  border-radius: 3px;
-  background-color: rgba(255, 255, 255, 0.4);
-}
-.navbar-vibrant .scrollbar:hover::-webkit-scrollbar, .navbar-vibrant .offcanvas.faq-sidebar:hover::-webkit-scrollbar, .navbar-vibrant html:not(.navbar-vertical-collapsed) .navbar-vertical .navbar-vertical-content:hover::-webkit-scrollbar, html:not(.navbar-vertical-collapsed) .navbar-vertical .navbar-vibrant .navbar-vertical-content:hover::-webkit-scrollbar, .navbar-vibrant .scrollbar:hover::-webkit-scrollbar-thumb, .navbar-vibrant .offcanvas.faq-sidebar:hover::-webkit-scrollbar-thumb, .navbar-vibrant html:not(.navbar-vertical-collapsed) .navbar-vertical .navbar-vertical-content:hover::-webkit-scrollbar-thumb, html:not(.navbar-vertical-collapsed) .navbar-vertical .navbar-vibrant .navbar-vertical-content:hover::-webkit-scrollbar-thumb, .navbar-vibrant .scrollbar:focus::-webkit-scrollbar, .navbar-vibrant .offcanvas.faq-sidebar:focus::-webkit-scrollbar, .navbar-vibrant html:not(.navbar-vertical-collapsed) .navbar-vertical .navbar-vertical-content:focus::-webkit-scrollbar, html:not(.navbar-vertical-collapsed) .navbar-vertical .navbar-vibrant .navbar-vertical-content:focus::-webkit-scrollbar, .navbar-vibrant .scrollbar:focus::-webkit-scrollbar-thumb, .navbar-vibrant .offcanvas.faq-sidebar:focus::-webkit-scrollbar-thumb, .navbar-vibrant html:not(.navbar-vertical-collapsed) .navbar-vertical .navbar-vertical-content:focus::-webkit-scrollbar-thumb, html:not(.navbar-vertical-collapsed) .navbar-vertical .navbar-vibrant .navbar-vertical-content:focus::-webkit-scrollbar-thumb {
-  visibility: visible;
-}
-
 
 /*-----------------------------------------------
 |   Hover Box

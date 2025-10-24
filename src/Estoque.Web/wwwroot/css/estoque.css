@@ -11,7 +11,7 @@
 }
 
 .table {
-  font-size: 0.8rem !important;
+  font-size: 0.9rem !important;
 }
 
 .validation-summary-errors {
@@ -802,7 +802,6 @@ input.form-control:read-only {
   z-index: 99999999;
   margin: -5px 0 0 -5px;
   padding: 5px;
-  /*background: #666666 url(../img/ajax-background.png) 30% 30% repeat;*/
   opacity: 0.55;
   filter: Alpha(Opacity=55);
   cursor: progress;
@@ -966,5 +965,3 @@ table.table-fixed-header:nth-of-type(2) th:not([scope=row]):first-child {
 :root, [data-bs-theme=dark] {
   --md-sticky-top-color: #242833 !important;
 }
-
-/*# sourceMappingURL=estoque.css.map */

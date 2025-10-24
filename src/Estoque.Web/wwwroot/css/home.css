@@ -1,9 +1,9 @@
 ﻿[data-bs-theme="light"] #navbarDefault {
-    background-color: #222834;
+    background-color: #191616;
 }
 
 [data-bs-theme="dark"] #navbarDefault {
-    background-color: #222834;
+    background-color: #000000;
 }
 
 [data-bs-theme="light"] .nav-link.active,
