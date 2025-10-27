@@ -19,11 +19,5 @@
            role="tab" aria-controls="UserRoles">
             <span class="fa-regular fa-address-card me-1"></span> Perfis
         </a>
-
-        <a href="@Url.Action("ResetPassword", "User", new { area = "Admin", userId = Model.Id })"
-           class="nav-link @(action == "ResetPassword" ? "active" : "")"
-           role="tab" aria-controls="ResetPassword">
-            <span class="fa fa-key me-1"></span> Redefinir senha
-        </a>
     </div>
 </nav>
