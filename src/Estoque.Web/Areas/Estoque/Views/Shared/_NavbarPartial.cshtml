@@ -12,7 +12,6 @@
     var currentCulture = System.Globalization.CultureInfo.CurrentUICulture.Name;
     var dataAtual = DateTime.Now.ToString("MMMM, yyyy", System.Globalization.CultureInfo.CurrentCulture);
 
-    // Capturando o nome do usuário para exibir na navbar
     var nomeCompleto = $"{User.FindFirst("FirstName")?.Value} {User.FindFirst("LastName")?.Value}";
 }
 
@@ -33,7 +32,8 @@
         <ul class="navbar-nav navbar-nav-icons flex-row align-items-center">
 
             <li class="nav-item d-flex align-items-center me-3">
-                <span class="fw-semibold text-muted d-none d-lg-inline" style="color: #969db2 !important;">@dataAtual</span>
+                <span class="fw-semibold text-muted" style="color: #969db2 !important;">@dataAtual</span>
+
             </li>
 
             <li class="nav-item">
