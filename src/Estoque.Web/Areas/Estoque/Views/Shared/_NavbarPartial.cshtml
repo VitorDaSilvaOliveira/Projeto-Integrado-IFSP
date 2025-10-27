@@ -17,18 +17,12 @@
 
 <nav class="navbar navbar-top fixed-top navbar-expand shadow-sm" id="navbarDefault">
     <div class="container-fluid">
-        <div class="d-flex align-items-center">
-            <button class="btn navbar-toggler d-lg-none me-2" type="button"
-                    data-bs-toggle="collapse" data-bs-target="#navbarVerticalCollapse"
-                    aria-controls="navbarVerticalCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <a class="navbar-logo d-flex align-items-center" href="@Url.Action("Index", "Home", new { area = "Estoque" })">
-                <img src="~/img/logo.png" alt="Logo" width="50" height="50" class="me-2" />
-                <span class="fw-bold">Vip Penha</span>
+        <div class="d-flex align-items-center ms-3">
+            <a href="/Configuracoes" style="text-decoration:none;" class="d-flex align-items-center">
+                <i class="bi bi-gear-fill me-1" style="color: #b0b5c1;"></i>
+                <span class="fw-semibold" style="color: #b0b5c1 !important;">Configurações</span>
             </a>
         </div>
-
         <ul class="navbar-nav navbar-nav-icons flex-row align-items-center">
 
             <li class="nav-item d-flex align-items-center me-3">
