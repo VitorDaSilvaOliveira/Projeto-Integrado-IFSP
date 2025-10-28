@@ -56,7 +56,7 @@ public class PedidoService(
                     $"Gerado Pedido {pedido!.NumeroPedido}"
                 );
             }
-
+            pedido.ValorTotal = itensPedido.Sum(i => i.Quantidade * i.PrecoVenda);
             pedido!.Status = PedidoStatus.Realizado;
 
             await context.SaveChangesAsync();
