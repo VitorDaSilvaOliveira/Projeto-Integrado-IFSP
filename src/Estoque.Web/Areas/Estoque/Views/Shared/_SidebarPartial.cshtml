@@ -260,11 +260,10 @@
 			</ul>
 		</div>
 	</div>
-
 	@if (User.IsInRole("Admin"))
 	{
 		<div class="navbar-vertical-footer">
-			<a class="btn navbar-vertical-toggle border-0 fw-semibold w-100 white-space-nowrap d-flex align-items-center"
+			<a class="btn navbar-vertical-toggle fw-semibold w-100 white-space-nowrap d-flex align-items-center border-right-mode"
 			   href="@Url.Action("Index", "Configuration", new { area = "Admin" })">
 				<span class="bi-gear"></span>
 				<span class="navbar-vertical-footer-text ms-2">@Localizer["AdminPanel"]</span>
