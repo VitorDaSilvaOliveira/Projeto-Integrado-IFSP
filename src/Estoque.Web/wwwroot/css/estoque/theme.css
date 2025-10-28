@@ -13752,16 +13752,6 @@ html:not(.navbar-vertical-collapsed) .navbar-vertical.navbar-expand-xs .navbar-v
         flex-direction: column;
     }
 
-    .navbar-vertical.collapsed {
-        width: 80px; /* ou o quanto quiser diminuir */
-        transition: width 0.3s ease;
-    }
-
-        /* Se quiser esconder texto e ícones secundários ao recolher */
-        .navbar-vertical.collapsed .navbar-logo span,
-        .navbar-vertical.collapsed .navbar-nav .nav-link span {
-            display: none;
-        }
 .navbar-vertical .navbar-vertical-line {
   display: none;
 }
@@ -17365,4 +17355,15 @@ a[href].bg-body-secondary:hover, a[href].bg-body-secondary:focus {
   border-radius: 0.243rem;
   top: 0.5rem;
   left: 0.2rem;
+}
+[data-bs-theme="light"] .border-right-mode {
+    border-right: 1px solid #cbd0dd;
+    height: 100%;
+    border-radius: 0;
+}
+
+[data-bs-theme="dark"] .border-right-mode {
+    border-right: 1px solid #31374a;
+    height: 100%;
+    border-radius: 0;
 }
