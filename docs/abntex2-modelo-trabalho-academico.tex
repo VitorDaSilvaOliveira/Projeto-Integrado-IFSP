@@ -1125,18 +1125,23 @@ Além disso, o sistema utiliza o framework JJMasterData, uma solução que permi
 
 \subsection{Diagramas da Arquitetura}
 
-Foram construídos diagramas de Componentes e de Implementação para visualizar a estrutura do projeto. O diagrama de componentes descreve a estrutura modular da aplicação, evidenciando os elementos lógicos e suas interações internas. Já o diagrama de implantação representa a distribuição física desses componentes em ambientes de execução, detalhando a infraestrutura utilizada e as conexões entre os ambientes.
+Foram construídos diagramas de Componentes e de Implantação para visualizar a estrutura do projeto. O diagrama de componentes descreve a estrutura modular da aplicação, evidenciando os elementos lógicos e suas interações internas. Já o diagrama de implantação representa a distribuição física desses componentes em ambientes de execução, detalhando a infraestrutura utilizada e as conexões entre os ambientes.
 
-\subsubsection{Diagrama de Componentes}
-
+\begin{figure}[h!]
+    \centering
 \includegraphics[width=1.0\textwidth]{Figuras/Componentes.png}
+    \caption{Diagrama de Componentes}
+\end{figure}
 
-
-\subsubsection{Diagrama de Implantação}
-
-
+\begin{figure}[h!]
+    \centering
 \includegraphics[width=1.0\textwidth]{Figuras/Implantação.png}
+    \caption{Diagrama de Implantação}
+\end{figure}
 
+
+
+\FloatBarrier
 
 
 \section{Tecnologias}
@@ -1192,45 +1197,56 @@ Para manter a consistência e legibilidade do código-fonte, foram adotados os s
 \begin{itemize}
     \item \textbf{C\# (Back-end) - Padrões .NET:} Utilização das diretrizes oficiais do Microsoft .NET, que incluem:
     \begin{itemize}
-        \item \textbf{Convenções de Nomenclatura:} Aplicação de \textit{PascalCase} para nomes de classes, métodos, propriedades (e.g., \texttt{DashboardPedidosController}) e \textit{camelCase} para variáveis locais (e.g., \texttt{faturamentoAcumulado}).
+        \item \textbf{Convenções de Nomenclatura:} Aplicação de \textit{PascalCase} para nomes de classes, métodos, propriedades (e.g., \texttt{ProdutoController}) e \textit{camelCase} para variáveis locais (e.g., \texttt{faturamentoAcumulado}).
         \item \textbf{Nullability:} Uso mandatório de \textit{nullable reference types} (\texttt{string?}, \texttt{DateTime?}) para mitigar erros de referência nula. O tipo \texttt{decimal?} foi utilizado para campos opcionais de valores monetários.
-        \item \textbf{Tipagem e Performance:} Uso de construtores primários em Services (e.g., \texttt{DashboardPedidosService(EstoqueDbContext context)}) e utilização de \textit{Records} ou \textit{Value Tuples} para retorno eficiente de múltiplos valores (e.g., \texttt{Task<(List<string> labels, List<int> vendas, List<int> trocas)>}).
+        \item \textbf{Tipagem e Performance:} Uso de construtores primários em Services (e.g., \texttt{PedidosService(EstoqueDbContext context)}) e utilização de \textit{Records} ou \textit{Value Tuples} para retorno eficiente de múltiplos valores (e.g., \texttt{Task<(List<string> labels, List<int> vendas, List<int> trocas)>}).
     \end{itemize}
 
     \item \textbf{JavaScript/Front-end:} Aplicação de linter (\textit{ESLint}) para impor padrões como \textit{camelCase} e garantir a sintaxe moderna e consistente. Foi adotado o padrão de injetar variáveis de tradução do C\# (\texttt{@Localizer["Chave"]}) em um objeto JS (\texttt{textTranslated}) para garantir a localização do conteúdo dinâmico do \textit{Chart.js}.
 
     \item \textbf{Arquitetura e Convenções MVC (ASP.NET Core):} Separação estrita de responsabilidades, conforme as convenções:
     \begin{itemize}
-        \item \textbf{Controle e Roteamento:} Utilização de \textit{Areas} (\texttt{/Areas/Estoque/}) para organizar módulos grandes e \textit{Controllers} (Ex: \texttt{DashboardPedidosController.cs}) para roteamento e orquestração.
+        \item \textbf{Controle e Roteamento:} Utilização de \textit{Areas} (\texttt{/Areas/Estoque/}) para organizar módulos grandes e \textit{Controllers} para roteamento e orquestração.
         \item \textbf{Lógica de Negócio (Services):} O \textit{Controller} delega a lógica de negócio aos \textit{Services} (Injeção de Dependência). Foi imposto que toda consulta complexa do Entity Framework Core (EF Core), como \texttt{GroupBy} e \texttt{Sum}, seja encapsulada dentro do \texttt{Service}.
-        \item \textbf{Consulta a Dados (EF Core):} A manipulação de coleções (\texttt{Include}, \texttt{SelectMany}) e as conversões de tipos (Ex: \texttt{MapStatus}) foram forçadas para a execução no cliente (\texttt{.ToListAsync()}) para evitar o erro de projeção \textit{"InvalidOperationException: The client projection contains a reference..."}.
+ 
     \end{itemize}
 \end{itemize}
 
 \section{Cobertura de Código e Qualidade} % Exemplo: 4.4 Cobertura de Código e Qualidade
 A Cobertura de Código é uma métrica essencial que estabelece o nível de \textbf{confiabilidade e robustez} do código-fonte. Ela mede a porcentagem de código executada pelo conjunto de testes automatizados, servindo como uma garantia quantificável de que as regras de negócio críticas foram validadas.
 
-\subsection{Metas e Escopo}
-A estratégia de cobertura foi focada em garantir a validação rigorosa da \textbf{Lógica de Negócio} e das interações com o banco de dados.
+\subsection{Metas e Escopo da Cobertura}
+A estratégia de cobertura e qualidade foi delineada para garantir a máxima confiabilidade nas áreas de maior risco do sistema. O escopo foi rigorosamente focado em três pilares:
 
 \begin{itemize}
-    \item \textbf{Meta de Cobertura:} Foi estabelecida uma meta mínima de \textbf{80\% de cobertura de linhas} (\textit{Line Coverage}) para todos os módulos que contêm regras de negócio e complexidade algorítmica.
-    \item \textbf{Foco da Cobertura:} O esforço principal de teste é concentrado nas camadas de \textbf{Lógica de Negócio (\textit{Services})} e nas \textbf{Regras de Domínio (\textit{Entities})}, onde se encontram os cálculos críticos de faturamento e os mapeamentos de status.
+    \item \textbf{Meta de Cobertura:} Foi estabelecida uma meta mínima de \textbf{80\% de cobertura de linhas} (\textit{Line Coverage}) para todos os módulos que encapsulam a lógica de negócio e complexidade algorítmica.
+    \item \textbf{Validação Funcional:} O foco principal da cobertura foi na validação rigorosa de \textbf{funções e métodos críticos} nas camadas de \textit{Services} e \textit{Handlers}, garantindo que cada caminho lógico (incluindo desvios condicionais e tratamento de erros) fosse exercitado.
+    \item \textbf{Aderência às Regras de Negócio:} O esforço de teste foi concentrado nas \textbf{Regras de Domínio (\textit{Entities})} e \textbf{Lógica de Negócio}, assegurando que todos os cálculos críticos, validações de estado e mapeamentos de status fossem validados.
+    \item \textbf{Integração de Dados:} Uma parte significativa dos testes de integração foi dedicada a validar a \textbf{comunicação e a persistência de dados} no banco de dados, garantindo a integridade transacional e o correto mapeamento de objetos.
 \end{itemize}
 
 \subsection{Implementação e Validação}
-A Cobertura é assegurada por meio da aplicação de padrões de testes no \textit{Back-end} do C\#.
+A qualidade do código e a aderência à meta de cobertura são asseguradas por uma combinação estratégica de testes manuais e automatizados, integrados ao fluxo de desenvolvimento.
 
 \begin{itemize}
-    \item \textbf{Framework de Teste:} Utilização de \textit{frameworks} de teste primário, integrado ao \textit{pipeline} de construção do projeto.
-    \item \textbf{Validação da Lógica de Dados:} Os testes unitários são críticos para validar as classes que contêm regras de agregação de dados do Entity Framework Core (EF Core), como a \texttt{DashboardPedidosService}.
-    \item \textbf{Garantia de Cálculo:} Os testes garantem que, por exemplo, a agregação de faturamento está correta, validando que:
-        \begin{itemize}
-            \item A consulta inclui a coleção de itens do pedido (\texttt{.Include(p => p.Itens)}).
-            \item A agregação soma o campo correto (\texttt{.Sum(item => item.PrecoVenda)}).
-            \item Os filtros de status e data funcionam corretamente para cálculos de faturamento e mapeamentos.
-        \end{itemize}
+    \item \textbf{Testes Unitários e de Integração:  (C\#):}
+ 
+        A Cobertura é calculada através da execução automatizada de \textit{Unit Tests} e \textit{Integration Tests} (C\#), utilizando o \textbf{`dotnet test`} para coletar as métricas de linha e função.
+    
+
+
+    \item \textbf{Testes de Ponta-a-Ponta (\textit{End-to-End}, E2E):}
+    \begin{itemize}
+        \item A validação dos fluxos completos de usuário, incluindo a interface gráfica, é realizada com \textbf{testes automatizados usando Selenium}. Embora estes testes não contribuam diretamente para o cálculo da Cobertura de Código de Linha, eles validam a **funcionalidade completa** do sistema sob a perspectiva do usuário.
+    \end{itemize}
+
+    \item \textbf{Testes Manuais no Back-end:}
+    \begin{itemize}
+        \item Complementarmente, foram realizados testes manuais de funcionalidades críticas diretamente no \textit{Back-end}, focando na validação ad-hoc de \textbf{APIs e contratos de serviço} antes da integração com o \textit{Front-end}.
+    \end{itemize}
 \end{itemize}
+
+
 
 \section{Testes e Manutenção}
 Com a evolução da tecnologia, diversas práticas foram desenvolvidas visando um melhor desenvolvimento e manutenção de um projeto. Desde o início do processo de criação de um sistema, questões como escalabilidade, manutenibilidade e usabilidade devem ser consideradas para garantir a longevidade e qualidade do software.
@@ -1486,14 +1502,28 @@ Além da LGPD, o sistema também considera princípios estabelecidos no Marco Ci
 
 O modelo de banco de dados é responsável por organizar e estruturar as informações utilizadas no sistema, garantindo integridade, consistência e facilidade no acesso aos dados. O MER (Modelo Entidade-Relacionamento) e o DER (Diagrama Entidade-Relacionamento) representam graficamente as entidades, atributos e relacionamentos do sistema, enquanto o dicionário de dados descreve detalhadamente cada campo presente no banco, incluindo tipo, tamanho e função. O modelo foi projetado para gerenciar de forma eficiente o controle de estoque, permitindo registrar entradas, saídas, usuários, produtos, fornecedores e categorias.
 
-\subsection{Modelo Entidade Relacionamento}
-
+\begin{figure}[h!]
+    \centering
 \includegraphics[width=1.0\textwidth]{Figuras/MERestoque.png}
+    \caption{Modelo de Entidade-Relacionamento}
+\end{figure}
 
 
-\subsection{Diagrama Entidade Relacionamento}
+\FloatBarrier
 
+
+\begin{figure}[h!]
+    \centering
 \includegraphics[width=1.0\textwidth]{Figuras/DERestoque.png}
+    \caption{Diagrama de Entidade-Relacionamento}
+\end{figure}
+
+\FloatBarrier
+
+
+
+
+
 
 
 % coloca o dicionário de dados?  \subsection{Dicionário de Dados}
