@@ -675,13 +675,13 @@ O projeto tem como objetivo o desenvolvimento de um sistema de controle de estoq
     \hline
     \textbf{Código} & \textbf{Nome} & \textbf{Descrição} & \textbf{Requisito Relacionado} \\ \hline
 
-    RN01 & Cadastro de Produtos & Produtos devem ter: nome, marca, modelo, preço, estoque inicial, código SKU único, categoria principal e pelo menos um depósito associado. Nome+marca+modelo não podem ser duplicados. & RF01, RF15 \\ \hline
+    RN01 & Cadastro de Produtos & Produtos devem ter: nome, marca, modelo, preço, estoque inicial, código SKU único, categoria principal e pelo menos um depósito associado. Nome+marca+modelo não podem ser duplicados. & RF01, RF11 \\ \hline
 
-    RN02 & Atualização de Estoque & Qualquer entrada/saída deve atualizar automaticamente o estoque e recalcular o valor total em estoque. Se estoque igual a zero, produto deve ser marcado como "Esgotado". Transações devem ser atômicas. & RF04, RF05 \\ \hline
+RN02 & Atualização de Estoque & Qualquer entrada/saída deve atualizar automaticamente o estoque e recalcular o valor total em estoque. Se estoque igual a zero, produto deve ser marcado como "Esgotado". Transações devem ser atômicas. & RF02, RF04 \\ \hline
 
-    RN03 & Níveis de Estoque & Produtos devem ter nível mínimo, ideal e máximo configuráveis. Abaixo do mínimo gera alerta amarelo, esgotado vermelho. Acima do ideal azul. & RF07 \\ \hline
+RN03 & Níveis de Estoque & Produtos devem ter nível mínimo, ideal e máximo configuráveis. Abaixo do mínimo gera alerta amarelo, esgotado vermelho. Acima do ideal azul. & RF01, RF05 \\ \hline
 
-    RN04 & Rastreabilidade & Todas as movimentações devem registrar: data, hora, responsável, produto(s), quantidade, valor unitário, valor total, depósito, documento fiscal (se aplicável) e motivo. & RF11 \\ \hline
+RN04 & Rastreabilidade & Todas as movimentações devem registrar: data, hora, responsável, produto(s), quantidade, valor unitário, valor total, depósito, documento fiscal (se aplicável) e motivo. & RF04, RF13 \\ \hline
 
     
 
@@ -700,19 +700,19 @@ O projeto tem como objetivo o desenvolvimento de um sistema de controle de estoq
 
  
 
-    RN05 & Controle de Acesso & Administradores: acesso completo; Vendedores: apenas consultas e registro de vendas. & RF17 \\ \hline
+   RN05 & Controle de Acesso & Administradores: acesso completo; Vendedores: apenas consultas e registro de vendas. & RF07, RF08 \\ \hline
 
-    RN06 & Validação de Venda & Vendas só podem ser registradas se houver estoque suficiente para todos os itens. & RF14 \\ \hline
+RN06 & Validação de Venda & Vendas só podem ser registradas se houver estoque suficiente para todos os itens. & RF02 \\ \hline
 
-    RN07 & Comprovante & Comprovante deve ter: número único, data/hora, itens (código, descrição, quantidade, valor unitário, subtotal), totais, desconto, valor final, forma de pagamento, vendedor e dados da empresa. & RF14 \\ \hline
+RN07 & Comprovante & Comprovante deve ter: número único, data/hora, itens (código, descrição, quantidade, valor unitário, subtotal), totais, desconto, valor final, forma de pagamento, vendedor e dados da empresa. & RF02, RF13 \\ \hline
 
-    RN08 & Transferências & Transferências entre depósitos devem ser confirmadas pelo depósito destino antes de atualizar estoques. & RF12 \\ \hline
+RN08 & Transferências & Transferências entre depósitos devem ser confirmadas pelo depósito destino antes de atualizar estoques. & RF11 \\ \hline
 
-    RN09 & Backup & Backups diários incrementais e semanais completos. Notificar falhas imediatamente. & RF16 \\ \hline
+RN09 & Backup & Backups diários incrementais e semanais completos. Notificar falhas imediatamente. & *-* \\ \hline
 
-    RN10 & Auditoria & Todas as exclusões e alterações de preço/estoque devem registrar IP, usuário, data/hora e valores antes/depois. & RF17 \\ \hline
+RN10 & Auditoria & Todas as exclusões e alterações de preço/estoque devem registrar IP, usuário, data/hora e valores antes/depois. & RF07 \\ \hline
 
-    RN11 & Relatórios Mensais & Gerar automaticamente no primeiro dia útil do mês, com comparação mês anterior e acumulado anual. Enviar por e-mail aos gestores. & RF18 \\ \hline
+RN11 & Relatórios Mensais & Gerar automaticamente no primeiro dia útil do mês, com comparação mês anterior e acumulado anual. Enviar por e-mail aos gestores. & RF05 \\ \hline
 
 \end{tabular}
 \end{quadro}
@@ -782,7 +782,7 @@ O projeto tem como objetivo o desenvolvimento de um sistema de controle de estoq
 \FloatBarrier
 
 \begin{quadro}[htb]
-\caption{\label{quadro_rf3}Requisitos Funcionais (RF11 a RF12)}
+\caption{\label{quadro_rf3}Requisitos Funcionais (RF11 a RF13)}
 \hspace*{-1cm}
 \begin{tabular}{|p{1.4cm}|p{2.8cm}|p{4.5cm}|p{7.0cm}|}
     \hline
@@ -792,6 +792,7 @@ O projeto tem como objetivo o desenvolvimento de um sistema de controle de estoq
 
     RF12 & Administrador, Vendedor & Controle de Clientes & O sistema deve permitir o gerenciamento e registro completo de clientes (nome, documento, contatos). Todo cliente registrado deve ter pedidos atrelados a ele. \\ \hline
 
+ RF13 & Administrador, Vendedor & Geração de Nota Fiscal & O sistema deve, após a aceitação ou finalização de um pedido, gerar a Nota Fiscal eletrônica correspondente à venda, validando os dados fiscais do cliente e do produto, e registrando o status da emissão.. \\ \hline
 
   
 
@@ -829,279 +830,212 @@ O projeto tem como objetivo o desenvolvimento de um sistema de controle de estoq
 \section{Histórias de Usuário}
 
 \begin{quadro}[htb]
-\caption{Histórias de Usuário}
-\label{quadro_hist_usuarios}
+\caption{Histórias de Usuário (US01 a US13)}
+\label{hist_usuarios}
 \begin{tabular}{|c|p{10cm}|p{4cm}|}
 \hline
 \textbf{Código} & \textbf{História de Usuário} & \textbf{Requisito Funcional Relacionado} \\
 \hline
-US01 & Cadastrar novos produtos no estoque & RF01 \\ \hline
-US02 & Atualizar informações dos produtos & RF02 \\ \hline
-US03 & Remover produtos do estoque & RF03 \\ \hline
-US04 & Registrar entrada de produtos no sistema & RF04 \\ \hline
-US05 & Registrar saídas de produtos por vendas ou perdas & RF05 \\ \hline
-US06 & Gerar relatórios de estoque atual e histórico & RF06 \\ \hline
-US07 & Receber alertas de estoque baixo ou vencimento próximo & RF07 \\ \hline
-US08 & Categorizar produtos em grupos hierárquicos & RF08 \\ \hline
-US09 & Realizar busca avançada de produtos & RF09 \\ \hline
-US10 & Gerenciar informações de fornecedores & RF10 \\ \hline
-US11 & Consultar histórico completo de movimentações & RF11 \\ \hline
-US12 & Gerenciar estoques em múltiplos depósitos & RF12 \\ \hline
-US13 & Consultar estoque disponível em tempo real & RF13 \\ \hline
-US14 & Registrar uma venda de produtos & RF14 \\ \hline
-US15 & Validar cadastro para evitar duplicação de produtos & RF15 \\ \hline
-US16 & Fazer backup e restaurar dados do sistema & RF16 \\ \hline
-US17 & Autenticar usuários com controle de permissões & RF17 \\ \hline
-US18 & Gerar relatórios mensais de desempenho e movimentações & RF18 \\
+US01 & Cadastrar, Consultar, Alterar e Deletar Produtos. & \textbf{RF01} \\ \hline
+US02 & Cadastrar e consultar pedidos. & \textbf{RF02} \\ \hline
+US03 & Gerenciar fornecedores. & \textbf{RF03} \\ \hline
+US04 & Registrar movimentações de estoque. & \textbf{RF04} \\ \hline
+US05 & Gerar relatórios consolidados de estoque. & \textbf{RF05} \\ \hline
+US06 & Registrar devoluções. & \textbf{RF06} \\ \hline
+US07 & Gerenciar usuários e permissões. & \textbf{RF07} \\ \hline
+US08 & Cadastro e autenticação segura. & \textbf{RF08} \\ \hline
+US09 & Redefinição de senha segura. & \textbf{RF09} \\ \hline
+US10 & Configurar o idioma do sistema. & \textbf{RF10} \\ \hline
+US11 & Suporte a múltiplas lojas. & \textbf{RF11} \\ \hline
+US12 & Gerenciar e registrar clientes. & \textbf{RF12} \\ \hline
+US13 & Gerar a Nota Fiscal eletrônica. & \textbf{RF13} \\ \hline
 \hline
 \end{tabular}
-\legend{Fonte: Elaborado pelos autores}
+\legend{Fonte: Elaborado com base nos Requisitos Funcionais (RF01 a RF12)}
 \end{quadro}
 
 \FloatBarrier
 
 \subsection{Descrição das Histórias}
 
-Neste tópico será detalhado a descrição das Histórias de Usuário
+Neste tópico será detalhada a descrição das Histórias de Usuário, incluindo o ator principal, a descrição e os critérios de aceitação.
 
 \begin{enumerate}
 
-\item \textbf{Cadastrar novos produtos no estoque}
+\item \textbf{US01: Cadastrar, Consultar, Alterar e Deletar Produtos}
 
-\textbf{Descri\c{c}\~ao:} Como um administrador do sistema, quero ter a capacidade de cadastrar novos produtos no estoque, para que eles fiquem dispon\'iveis para consulta, atualiza\c{c}\~ao, controle de entrada/sa\'ida e venda.
+\textbf{Descri\c{c}\~ao:} Como um \textbf{Gerente de Estoque}, eu quero ter a capacidade de gerenciar o ciclo de vida dos produtos no sistema (cadastrar, consultar, alterar e deletar), para que o catálogo de estoque esteja sempre atualizado e com a configuração da quantidade mínima ideal.
 
-\textbf{Requisito Funcional Relacionado:} RF01 -- Cadastro de Produtos
+\textbf{Requisito Funcional Relacionado:} RF01 -- Controle de Produtos
 
 \textbf{Crit\'erios de Aceita\c{c}\~ao:}
 \begin{itemize}
-  \item Deve existir uma interface acess\'ivel para o administrador cadastrar produtos, informando dados obrigat\'orios como nome, c\'odigo, categoria, pre\c{c}o, quantidade, marca e modelo.
-  \item Produtos com quantidade inicial igual a zero devem ser automaticamente marcados com o status ``Esgotado''.
-  \item O sistema deve validar campos obrigat\'orios e impedir o cadastro de produtos com informa\c{c}\~oes faltantes.
-  \item Ap\'os o cadastro, o produto deve aparecer imediatamente nas listagens e estar dispon\'ivel para as demais funcionalidades do sistema.
+  \item Deve existir uma interface acess\'ivel para o gerenciamento de produtos.
+  \item O sistema deve permitir \textbf{registrar movimentações de estoque} e o \textbf{histórico de alterações} do produto.
+  \item Deve ser obrigatório vincular o produto a uma \textbf{categoria} e definir a \textbf{quantidade mínima ideal}.
+  \item O processo de exclusão deve garantir que o produto não tenha vínculos ativos.
 \end{itemize}
 
-\item \textbf{Atualizar informações dos produtos}
+\item \textbf{US02: Cadastrar e Consultar Pedidos}
 
-\textbf{Descrição:} Como um administrador do sistema, quero poder atualizar as informações dos produtos cadastrados, para garantir que os dados estejam sempre corretos e atualizados.
+\textbf{Descri\c{c}\~ao:} Como \textbf{Vendedor}, eu quero cadastrar, consultar e alterar pedidos, vinculando produtos e quantidades, para iniciar o processo de venda e garantir que o estoque seja reduzido após a aceitação do pedido.
 
-\textbf{Requisito Funcional Relacionado:} RF02 -- Atualização de Produtos
+\textbf{Requisito Funcional Relacionado:} RF02 -- Controle de Pedidos
 
-\textbf{Critérios de Aceitação:}
+\textbf{Crit\'erios de Aceita\c{c}\~ao:}
 \begin{itemize}
-  \item O sistema deve permitir a edição de campos como nome, código, categoria, preço, quantidade, marca e modelo.
-  \item Deve haver um histórico de alterações com data, hora e usuário responsável pela atualização.
-  \item O sistema deve validar as alterações para evitar informações inconsistentes ou duplicadas.
+  \item O sistema deve permitir vincular o pedido a um cliente (RF12) e a múltiplos produtos com suas quantidades.
+  \item A \textbf{aceitação de um pedido} deve gerar automaticamente uma \textbf{movimentação de saída} no estoque (RF04).
+  \item Pedidos podem ser \textbf{aceitos ou recusados}, mas \textbf{não devem ser deletados} para manter a rastreabilidade.
 \end{itemize}
 
-\item \textbf{Remover produtos do estoque}
+\item \textbf{US03: Gerenciar Fornecedores}
 
-\textbf{Descrição:} Como administrador, quero remover produtos obsoletos ou descontinuados do estoque, para manter a base de dados limpa e atualizada.
+\textbf{Descri\c{c}\~ao:} Como \textbf{Gerente de Estoque}, eu quero cadastrar fornecedores com suas informações (nome, documento, localização), permitindo apenas a inativação, para que o histórico de devoluções e movimentações seja sempre rastreável.
 
-\textbf{Requisito Funcional Relacionado:} RF03 -- Remoção de Produtos
+\textbf{Requisito Funcional Relacionado:} RF03 -- Controle de Fornecedores
 
-\textbf{Critérios de Aceitação:}
+\textbf{Crit\'erios de Aceita\c{c}\~ao:}
 \begin{itemize}
-  \item O sistema deve permitir a exclusão apenas de produtos sem movimentações registradas.
-  \item Para produtos com histórico, deve ser possível inativá-los, mantendo os dados acessíveis para consulta.
-  \item Um aviso de confirmação deve ser exibido antes da remoção.
+  \item O sistema deve permitir o cadastro de dados como CNPJ/Documento e Contatos.
+  \item O fornecedor deve ser \textbf{relacionado a devoluções e movimentações} de entrada de produtos.
+  \item Após a criação, o registro do fornecedor \textbf{não pode ser deletado}, apenas \textbf{inativado}.
 \end{itemize}
 
-\item \textbf{Registrar entrada de produtos no sistema}
+\item \textbf{US04: Registrar Movimentações de Estoque}
 
-\textbf{Descrição:} Como operador de estoque, quero registrar a entrada de produtos no sistema, para manter o controle correto do estoque disponível.
+\textbf{Descri\c{c}\~ao:} Como \textbf{Gerente de Estoque}, eu quero registrar movimentações de entrada ou saída (produto, quantidade, tipo, usuário), para que a quantidade em estoque seja atualizada de forma precisa.
 
-\textbf{Requisito Funcional Relacionado:} RF04 -- Registro de Entradas
+\textbf{Requisito Funcional Relacionado:} RF04 -- Controle de Movimentação
 
-\textbf{Critérios de Aceitação:}
+\textbf{Crit\'erios de Aceita\c{c}\~ao:}
 \begin{itemize}
-  \item A interface de entrada deve permitir selecionar o produto, informar a quantidade, fornecedor e data.
-  \item O estoque disponível deve ser atualizado automaticamente após o registro.
-  \item As entradas devem ser registradas no histórico de movimentações.
+  \item O sistema deve permitir registrar o \textbf{tipo de movimentação} (Ex: Entrada por Compra, Saída por Venda, Perda).
+  \item A quantidade em estoque deve ser alterada automaticamente após o registro.
+  \item O registro de movimentação é de \textbf{segurança} e \textbf{não pode ser deletado} após a criação.
 \end{itemize}
 
-\item \textbf{Registrar saídas de produtos por vendas ou perdas}
+\item \textbf{US05: Gerar Relatórios Consolidados de Estoque}
 
-\textbf{Descrição:} Como operador de estoque, quero registrar as saídas de produtos por vendas ou perdas, para garantir o controle preciso do inventário.
+\textbf{Descri\c{c}\~ao:} Como \textbf{Gerente de Estoque}, eu quero gerar relatórios consolidados, com filtros de loja, para identificar produtos abaixo do mínimo ideal, perdas e analisar o saldo total considerando todas as movimentações.
 
-\textbf{Requisito Funcional Relacionado:} RF05 -- Registro de Saídas
+\textbf{Requisito Funcional Relacionado:} RF05 -- Relatórios de Estoque
 
-\textbf{Critérios de Aceitação:}
+\textbf{Crit\'erios de Aceita\c{c}\~ao:}
 \begin{itemize}
-  \item O sistema deve permitir selecionar o tipo de saída: venda, perda, devolução.
-  \item Deve ser possível registrar justificativa em caso de perdas.
-  \item O estoque deve ser atualizado automaticamente e refletido nos relatórios.
+  \item O relatório deve ser capaz de \textbf{identificar produtos abaixo do mínimo ideal} (RF01).
+  \item Deve incluir informações sobre perdas, entradas, saídas e devoluções.
+  \item O relatório deve permitir filtro por \textbf{loja} (RF11).
 \end{itemize}
 
-\item \textbf{Gerar relatórios de estoque atual e histórico}
+\item \textbf{US06: Registrar Devoluções}
 
-\textbf{Descrição:} Como gestor, quero gerar relatórios do estoque atual e histórico de movimentações, para análise e tomada de decisões estratégicas.
+\textbf{Descri\c{c}\~ao:} Como \textbf{Vendedor ou Gerente de Estoque}, eu quero registrar devoluções (de cliente ou para fornecedor), vinculadas a pedidos, para que o estoque e os relatórios sejam corretamente impactados.
 
-\textbf{Requisito Funcional Relacionado:} RF06 -- Relatórios de Estoque
+\textbf{Requisito Funcional Relacionado:} RF06 -- Registrar Devoluções
 
-\textbf{Critérios de Aceitação:}
+\textbf{Crit\'erios de Aceita\c{c}\~ao:}
 \begin{itemize}
-  \item Os relatórios devem incluir filtros por período, produto, categoria e tipo de movimentação.
-  \item Deve ser possível exportar os relatórios em formatos como PDF e Excel.
-  \item Os relatórios devem mostrar dados atualizados em tempo real.
+  \item Deve ser obrigatório registrar a \textbf{origem}, \textbf{justificativa} e a \textbf{data da devolução}.
+  \item Devoluções de cliente devem ser validadas se estão \textbf{dentro do período de garantia}.
+  \item O registro deve gerar uma \textbf{movimentação de entrada} no estoque (RF04) ou de saída para o fornecedor.
 \end{itemize}
 
-\item \textbf{Receber alertas de estoque baixo ou vencimento próximo}
+\item \textbf{US07: Gerenciar Usuários e Permissões}
 
-\textbf{Descrição:} Como gestor, quero ser alertado sobre produtos com estoque baixo ou vencimento próximo, para evitar rupturas ou perdas.
+\textbf{Descri\c{c}\~ao:} Como \textbf{Administrador do Sistema}, eu quero ter gestão de perfis (Admin/Gerente e Vendedor/Funcionário) com permissões distintas, para que ações críticas sejam restritas e registradas em log.
 
-\textbf{Requisito Funcional Relacionado:} RF07 -- Alertas de Estoque
+\textbf{Requisito Funcional Relacionado:} RF07 -- Gestão de Usuários e Permissões
 
-\textbf{Critérios de Aceitação:}
+\textbf{Crit\'erios de Aceita\c{c}\~ao:}
 \begin{itemize}
-  \item O sistema deve emitir alertas automáticos para produtos abaixo do nível mínimo configurado.
-  \item Alertas de vencimento devem considerar uma margem configurável (ex: 30 dias antes).
-  \item Os alertas devem ser visíveis na interface e enviados por e-mail, se configurado.
+  \item O sistema deve garantir que ações críticas (ex: exclusão de registros) sejam \textbf{restritas ao perfil Administrador}.
+  \item Todas as alterações de permissão devem ser \textbf{registradas em log} de auditoria.
+  \item A interface deve ser ajustada para exibir apenas as funcionalidades permitidas ao perfil logado.
 \end{itemize}
 
-\item \textbf{Categorizar produtos em grupos hierárquicos}
+\item \textbf{US08: Cadastro e Autenticação Segura}
 
-\textbf{Descrição:} Como administrador, quero categorizar os produtos em grupos e subgrupos, para facilitar a organização e busca.
+\textbf{Descri\c{c}\~ao:} Como \textbf{Usuário do Sistema}, eu quero poder me cadastrar e efetuar o login usando e-mail e senha, para ter acesso controlado e seguro ao sistema.
 
-\textbf{Requisito Funcional Relacionado:} RF08 -- Categorias Hierárquicas
+\textbf{Requisito Funcional Relacionado:} RF08 -- Cadastro e Autenticação
 
-\textbf{Critérios de Aceitação:}
+\textbf{Crit\'erios de Aceita\c{c}\~ao:}
 \begin{itemize}
-  \item Deve ser possível criar categorias e subcategorias ilimitadas.
-  \item Cada produto deve estar vinculado a uma única categoria principal.
-  \item As categorias devem ser usadas como filtro nas buscas e relatórios.
+  \item O sistema deve aplicar \textbf{controle de acesso} e redirecionar para a tela inicial após o login.
+  \item As senhas devem ser armazenadas de forma segura (utilizando \textbf{criptografia/hashing}).
+  \item Deve ser verificada a existência do usuário para evitar duplicidade.
 \end{itemize}
 
-\item \textbf{Realizar busca avançada de produtos}
+\item \textbf{US09: Redefinição de Senha Segura}
 
-\textbf{Descrição:} Como usuário do sistema, quero realizar buscas avançadas por diferentes critérios, para localizar rapidamente produtos no estoque.
+\textbf{Descri\c{c}\~ao:} Como \textbf{Usuário do Sistema}, eu quero solicitar a redefinição de senha, recebendo um link seguro e temporário via e-mail, para recuperar meu acesso quando necessário.
 
-\textbf{Requisito Funcional Relacionado:} RF09 -- Busca Avançada
+\textbf{Requisito Funcional Relacionado:} RF09 -- Redefinição de Senha
 
-\textbf{Critérios de Aceitação:}
+\textbf{Crit\'erios de Aceita\c{c}\~ao:}
 \begin{itemize}
-  \item A busca deve permitir filtro por nome, código, categoria, status, fornecedor e data de validade.
-  \item Os resultados devem ser exibidos com paginação e ordenação personalizável.
-  \item Deve haver uma opção de salvar filtros frequentes.
+  \item O link de redefinição enviado por e-mail deve ter \textbf{validade limitada} (temporário).
+  \item O sistema deve exigir \textbf{critérios mínimos de segurança} (ex: tamanho, caracteres especiais) para a nova senha.
+  \item Deve haver uma confirmação na tela após a solicitação e após a redefinição bem-sucedida.
 \end{itemize}
 
-\item \textbf{Gerenciar informações de fornecedores}
+\item \textbf{US10: Configurar o Idioma do Sistema}
 
-\textbf{Descrição:} Como administrador, quero cadastrar e manter informações de fornecedores, para facilitar o controle de compras e rastreabilidade.
+\textbf{Descri\c{c}\~ao:} Como \textbf{Qualquer Usuário do Sistema}, eu quero que o sistema ofereça suporte a internacionalização, estando disponível em, no mínimo, Português e Inglês, para configurar a interface no meu idioma.
 
-\textbf{Requisito Funcional Relacionado:} RF10 -- Gestão de Fornecedores
+\textbf{Requisito Funcional Relacionado:} RF10 -- Internacionalização
 
-\textbf{Critérios de Aceitação:}
+\textbf{Crit\'erios de Aceita\c{c}\~ao:}
 \begin{itemize}
-  \item Deve ser possível cadastrar dados como nome, CNPJ, endereço, contato e produtos fornecidos.
-  \item O sistema deve relacionar produtos aos seus fornecedores.
-  \item Relatórios devem poder ser gerados por fornecedor.
+  \item Deve haver uma opção para o usuário \textbf{configurar o idioma preferencial} no seu perfil.
+  \item Alternativamente, o sistema deve \textbf{ajustar o idioma} com base na configuração do navegador.
+  \item Todos os textos da interface de usuário devem estar traduzidos para os idiomas suportados.
 \end{itemize}
 
-\item \textbf{Consultar histórico completo de movimentações}
+\item \textbf{US11: Suporte a Múltiplas Lojas}
 
-\textbf{Descrição:} Como operador ou gestor, quero acessar o histórico completo de movimentações dos produtos, para auditoria e rastreabilidade.
+\textbf{Descri\c{c}\~ao:} Como \textbf{Administrador}, eu quero que o sistema permita a gestão de estoque em, no mínimo, duas lojas distintas, para que os usuários sejam vinculados a uma loja e eu possa alternar entre elas.
 
-\textbf{Requisito Funcional Relacionado:} RF11 -- Histórico de Movimentações
+\textbf{Requisito Funcional Relacionado:} RF11 -- Suporte a Múltiplas Lojas
 
-\textbf{Critérios de Aceitação:}
+\textbf{Crit\'erios de Aceita\c{c}\~ao:}
 \begin{itemize}
-  \item Cada movimentação deve conter data, tipo, usuário e justificativa (se aplicável).
-  \item O histórico deve ser acessível por produto ou período.
-  \item Deve haver filtros e exportação dos dados.
+  \item Deve ser possível \textbf{vincular usuários a uma loja específica} (exceto o Administrador).
+  \item O Administrador deve ter uma interface para \textbf{alternar o contexto} entre as lojas.
+  \item Todas as consultas e relatórios de estoque (RF05) e movimentações (RF04) devem respeitar o contexto da loja ativa.
 \end{itemize}
 
-\item \textbf{Gerenciar estoques em múltiplos depósitos}
+\item \textbf{US12: Gerenciar e Registrar Clientes}
 
-\textbf{Descrição:} Como gestor, quero controlar estoques em diferentes depósitos, para refletir a estrutura física da empresa.
+\textbf{Descri\c{c}\~ao:} Como \textbf{Vendedor}, eu quero gerenciar o cadastro completo de clientes (nome, documento, contatos), para que todo pedido de venda esteja atrelado a um cliente registrado.
 
-\textbf{Requisito Funcional Relacionado:} RF12 -- Estoques Múltiplos
+\textbf{Requisito Funcional Relacionado:} RF12 -- Controle de Clientes
 
-\textbf{Critérios de Aceitação:}
+\textbf{Crit\'erios de Aceita\c{c}\~ao:}
 \begin{itemize}
-  \item Deve ser possível cadastrar vários depósitos com identificação distinta.
-  \item Produtos podem estar distribuídos em mais de um depósito.
-  \item Movimentações devem indicar o depósito de origem e destino.
+  \item O sistema deve permitir o cadastro de dados como CPF/CNPJ, e-mail e telefone.
+  \item O sistema \textbf{deve exigir um cliente registrado} para a criação de um novo pedido (RF02).
+  \item Deve ser possível consultar o histórico de pedidos e devoluções (RF06) atrelado a cada cliente.
 \end{itemize}
 
-\item \textbf{Consultar estoque disponível em tempo real}
+\item \textbf{US13: Gerar a Nota Fiscal Eletrônica}
 
-\textbf{Descrição:} Como usuário do sistema, quero ver o estoque disponível em tempo real, para facilitar decisões de compra ou venda.
+\textbf{Descri\c{c}\~ao:} Como \textbf{Vendedor}, eu quero que o sistema \textbf{gere a Nota Fiscal eletrônica} automaticamente após a aceitação ou finalização de um pedido (RF02), para cumprir as obrigações fiscais e disponibilizar o documento ao cliente.
 
-\textbf{Requisito Funcional Relacionado:} RF13 -- Consulta em Tempo Real
+\textbf{Requisito Funcional Relacionado:} RF13 -- Geração de Nota Fiscal
 
-\textbf{Critérios de Aceitação:}
+\textbf{Crit\'erios de Aceita\c{c}\~ao:}
 \begin{itemize}
-  \item O sistema deve exibir a quantidade disponível atualizada automaticamente.
-  \item A consulta pode ser feita por produto, categoria ou depósito.
-  \item Deve incluir filtros de status (disponível, reservado, esgotado).
-\end{itemize}
-
-\item \textbf{Registrar uma venda de produtos}
-
-\textbf{Descrição:} Como operador de vendas, quero registrar uma venda diretamente no sistema, para controle de saída e faturamento.
-
-\textbf{Requisito Funcional Relacionado:} RF14 -- Registro de Vendas
-
-\textbf{Critérios de Aceitação:}
-\begin{itemize}
-  \item A venda deve abater automaticamente a quantidade no estoque.
-  \item O sistema deve permitir registrar cliente, data e forma de pagamento.
-  \item As vendas devem ser incluídas no histórico e relatórios.
-\end{itemize}
-
-\item \textbf{Validar cadastro para evitar duplicação de produtos}
-
-\textbf{Descrição:} Como administrador, quero que o sistema valide cadastros para evitar duplicação de produtos, garantindo a integridade dos dados.
-
-\textbf{Requisito Funcional Relacionado:} RF15 -- Validação de Cadastro
-
-\textbf{Critérios de Aceitação:}
-\begin{itemize}
-  \item O sistema deve alertar ao tentar cadastrar um produto com mesmo nome e código.
-  \item Deve ser possível configurar critérios de unicidade.
-  \item A validação deve ocorrer tanto no cadastro quanto na atualização de produtos.
-\end{itemize}
-
-\item \textbf{Fazer backup e restaurar dados do sistema}
-
-\textbf{Descrição:} Como administrador, quero fazer backup e restaurar os dados do sistema, para garantir segurança contra perdas ou falhas.
-
-\textbf{Requisito Funcional Relacionado:} RF16 -- Backup e Restauração
-
-\textbf{Critérios de Aceitação:}
-\begin{itemize}
-  \item O sistema deve permitir backups manuais e programados.
-  \item Os backups devem incluir todas as informações críticas do sistema.
-  \item A restauração deve ser simples e segura, com verificação de integridade dos dados.
-\end{itemize}
-
-\item \textbf{Autenticar usuários com controle de permissões}
-
-\textbf{Descrição:} Como administrador, quero autenticar usuários e definir permissões por perfil, para garantir segurança e controle de acesso.
-
-\textbf{Requisito Funcional Relacionado:} RF17 -- Autenticação e Permissões
-
-\textbf{Critérios de Aceitação:}
-\begin{itemize}
-  \item O sistema deve exigir login e senha para acesso.
-  \item Deve ser possível definir permissões por função (ex: operador, gerente, administrador).
-  \item A interface deve exibir apenas funcionalidades compatíveis com o perfil do usuário.
-\end{itemize}
-
-\item \textbf{Gerar relatórios mensais de desempenho e movimentações}
-
-\textbf{Descrição:} Como gestor, quero relatórios mensais com dados de movimentação e desempenho, para acompanhar o funcionamento do estoque.
-
-\textbf{Requisito Funcional Relacionado:} RF18 -- Relatórios de Desempenho
-
-\textbf{Critérios de Aceitação:}
-\begin{itemize}
-  \item O relatório deve incluir entradas, saídas, perdas e vendas por mês.
-  \item Deve permitir comparação com meses anteriores e geração de gráficos.
-  \item Os relatórios devem ser exportáveis e configuráveis por período.
+  \item A geração da NF-e deve ser disparada após a \textbf{confirmação de que o pedido foi aceito e o pagamento efetuado}.
+  \item O sistema deve \textbf{validar os dados fiscais} antes da emissão.
+  \item Deve ser registrado o \textbf{status da emissão} e a chave de acesso da NF-e.
+  \item O sistema deve \textbf{enviar a NF-e (XML e DANFE)} ao e-mail do cliente automaticamente.
 \end{itemize}
 
 \end{enumerate}
+
+
 \section{Arquitetura}
 
 A arquitetura do sistema representa a estrutura organizacional fundamental da aplicação, incluindo seus principais componentes, suas relações, ambientes de execução e os padrões adotados para garantir a escalabilidade, manutenibilidade e segurança. Esta seção descreve a forma como o sistema foi planejado e dividido, visando facilitar tanto o desenvolvimento quanto a futura evolução da solução. São considerados aqui os aspectos lógicos e físicos do sistema, incluindo frameworks, tecnologias e infraestrutura.
