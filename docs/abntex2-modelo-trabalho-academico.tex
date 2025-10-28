@@ -546,13 +546,13 @@ Essa abordagem favoreceu a comunicação, a integração das atividades e a efic
 \begin{tabular}{|l|l|}
 \hline
 \textbf{Membro} & \textbf{Função(ões)} \\ \hline
-Vitor           & Gestor, DBA           \\ \hline
-Matheus         & DBA, Back-end         \\ \hline
+Vitor           & Gestor, DBA         \\ \hline
+Matheus         & Front-end, QA         \\ \hline
 Beatriz         & Front-end, Back-end   \\ \hline
-Rafael          & Front-end, QA         \\ \hline
+Rafael          & Front-end, Back-end         \\ \hline
 Khalil              & Back-end, QA          \\ \hline
 Gean            & QA                    \\ \hline
-Marcelo         & Front-end, QA         \\ \hline
+Marcelo         & QA         \\ \hline
 \end{tabular}
 \caption{Composição da equipe e funções}
 \end{table}
@@ -675,13 +675,15 @@ O projeto tem como objetivo o desenvolvimento de um sistema de controle de estoq
     \hline
     \textbf{Código} & \textbf{Nome} & \textbf{Descrição} & \textbf{Requisito Relacionado} \\ \hline
 
-    RN01 & Cadastro de Produtos & Produtos devem ter: nome, marca, modelo, preço, estoque inicial, código SKU único, categoria principal e pelo menos um depósito associado. Nome+marca+modelo não podem ser duplicados. & RF01, RF11 \\ \hline
+    RN01 & Cadastro de Produtos & Produtos devem ter: nome, codigo, categoria, preço, garantia e estoque mínimo obrigatoriamente. & RF01 \\ \hline
 
-RN02 & Atualização de Estoque & Qualquer entrada/saída deve atualizar automaticamente o estoque e recalcular o valor total em estoque. Se estoque igual a zero, produto deve ser marcado como "Esgotado". Transações devem ser atômicas. & RF02, RF04 \\ \hline
+RN02 & Atualização de Estoque & Qualquer entrada/saída deve atualizar automaticamente o estoque e recalcular o valor total em estoque. Produtos abaixo do estoque mínimo devem gerar notificações no sistema. & RF01, RF05 \\ \hline
 
-RN03 & Níveis de Estoque & Produtos devem ter nível mínimo, ideal e máximo configuráveis. Abaixo do mínimo gera alerta amarelo, esgotado vermelho. Acima do ideal azul. & RF01, RF05 \\ \hline
 
-RN04 & Rastreabilidade & Todas as movimentações devem registrar: data, hora, responsável, produto(s), quantidade, valor unitário, valor total, depósito, documento fiscal (se aplicável) e motivo. & RF04, RF13 \\ \hline
+RN03 & Registro de Movimentações & Toda movimentação deve gerar um registro contendo: tipo, data, responsável, produto(s), quantidade. & RF04 \\ \hline
+
+
+RN04 & Controle de Acesso & O sistema deve ter diferentes níveis de acesso para perfis de Administrador e outros tipos de perfil. & RF07, RF08, RF11 \\ \hline
 
     
 
@@ -692,27 +694,22 @@ RN04 & Rastreabilidade & Todas as movimentações devem registrar: data, hora, r
 
 
 \begin{quadro}[htb]
-\caption{\label{quadro_rn2}Regras de Negócio (RN05 a RN11)}
+\caption{\label{quadro_rn2}Regras de Negócio (RN05 a RN09)}
 \hspace*{-1cm}
 \begin{tabular}{|p{1.6cm}|p{4.0cm}|p{7.5cm}|p{2.0cm}|}
     \hline
     \textbf{Código} & \textbf{Nome} & \textbf{Descrição} & \textbf{Requisito Relacionado} \\ \hline
 
- 
+ RN05 & Garantia & Devoluções só podem ser aceitas caso os itens ainda estejam dentro do prazo de garantia correspondente. & RF02, RF06 \\ \hline
 
-   RN05 & Controle de Acesso & Administradores: acesso completo; Vendedores: apenas consultas e registro de vendas. & RF07, RF08 \\ \hline
 
-RN06 & Validação de Venda & Vendas só podem ser registradas se houver estoque suficiente para todos os itens. & RF02 \\ \hline
+RN06 & Validação de Venda & Vendas só podem ser registradas se houver estoque suficiente para todos os itens. & RF01, RF02 \\ \hline
 
-RN07 & Comprovante & Comprovante deve ter: número único, data/hora, itens (código, descrição, quantidade, valor unitário, subtotal), totais, desconto, valor final, forma de pagamento, vendedor e dados da empresa. & RF02, RF13 \\ \hline
+RN07 & Informações da Venda & Toda venda deve ter informações relevantes como valor, desconto, forma de pagamento e dados do cliente, registrada nos dados do pedido, e na nota fiscal eletrônica. & RF02, RF12, RF13 \\ \hline
 
-RN08 & Transferências & Transferências entre depósitos devem ser confirmadas pelo depósito destino antes de atualizar estoques. & RF11 \\ \hline
+RN08 & Auditoria & Todas as exclusões e alterações de preço/estoque devem registrar IP, usuário, data/hora e valores antes/depois. & RF07 \\ \hline
 
-RN09 & Backup & Backups diários incrementais e semanais completos. Notificar falhas imediatamente. & *-* \\ \hline
-
-RN10 & Auditoria & Todas as exclusões e alterações de preço/estoque devem registrar IP, usuário, data/hora e valores antes/depois. & RF07 \\ \hline
-
-RN11 & Relatórios Mensais & Gerar automaticamente no primeiro dia útil do mês, com comparação mês anterior e acumulado anual. Enviar por e-mail aos gestores. & RF05 \\ \hline
+RN09 & Criação de Relatórios & O sistema deve gerar relatórios com informações relevantes sobre produtos, pedidos, clientes, correspondendo ao estado atual do estoque, e esses relatórios devem poder ser exportados em formato adequado. & RF05 \\ \hline
 
 \end{tabular}
 \end{quadro}
@@ -733,7 +730,7 @@ RN11 & Relatórios Mensais & Gerar automaticamente no primeiro dia útil do mês
 
   RF01 & Gerente de estoque & Controle de Produtos & O sistema deve permitir ao usuário cadastrar, alterar, consultar e deletar produtos. Deve registrar movimentações de estoque e o histórico de alterações, garantindo que produtos tenham categoria e quantidade mínima ideal. \\ \hline
 
-  RF02 & Gerente de estoque, Vendedor/Funcionário & Controle de Pedidos & O sistema deve permitir cadastrar, consultar e alterar pedidos, vinculando produtos e quantidades. Pedidos aceitos geram movimentações de estoque, reduzindo saldos. Pedidos podem ser aceitos ou recusados, mas não deletados. \\ \hline
+  RF02 & Gerente de estoque, Vendedor/Funcionário & Controle de Pedidos & O sistema deve permitir cadastrar, consultar e alterar pedidos, vinculando produtos e quantidades. Pedidos aceitos geram movimentações de estoque, reduzindo saldos. Pedidos podem ter alteração de estado, mas não podem ser deletados. \\ \hline
 
    
 
@@ -754,11 +751,11 @@ RN11 & Relatórios Mensais & Gerar automaticamente no primeiro dia útil do mês
     \hline
     \textbf{Código} & \textbf{Atores} & \textbf{Nome} & \textbf{Descrição} \\ \hline
 
-       RF03 & Gerente de estoque & Controle de Fornecedores & O sistema deve permitir o cadastro de fornecedores (nome, documento, localização, contatos). Após criado, o registro não pode ser deletado, apenas inativado, e deve ser relacionado a devoluções e movimentações. \\ \hline
+       RF03 & Gerente de estoque & Controle de Fornecedores & O sistema deve permitir o cadastro de fornecedores. Após criado, o registro não pode ser deletado, apenas inativado, e deve ser relacionado a devoluções e movimentações. \\ \hline
 
-    RF04 & Gerente de estoque & Controle de Movimentação & O sistema deve permitir o cadastro de movimentações (produto, quantidade, tipo, usuário), alterando a quantidade em estoque. O registro é de segurança e não pode ser deletado após a criação. \\ \hline
+    RF04 & Gerente de estoque & Controle de Movimentação & O sistema deve gerar movimentações a partir de pedidos e devoluções, alterando a quantidade em estoque. O registro é de segurança e não pode ser deletado após a criação. \\ \hline
 
-    RF05 & Gerente de estoque & Relatórios de Estoque & O sistema deve gerar relatórios consolidados para auxiliar a tomada de decisão, identificando produtos abaixo do mínimo ideal, perdas e considerando movimentações de entrada, saída e devolução. Deve permitir filtro por loja. \\ \hline
+    RF05 & Gerente de estoque & Relatórios de Estoque & O sistema deve gerar relatórios consolidados para auxiliar a tomada de decisão, identificando dados interessantes referentes a produtos, pedidos, clientes, fornecedores, movimentações e os relacionando de forma útil para a análise do negócio. \\ \hline
 
     RF06 & Vendedor, Gerente de estoque & Registrar Devoluções & O sistema deve permitir o registro de devoluções de produtos (de cliente ou para fornecedor), vinculadas a pedidos e dentro da garantia (para clientes). Deve registrar data, origem, justificativa e impactar relatórios e movimentações. \\ \hline
 
@@ -768,7 +765,7 @@ RN11 & Relatórios Mensais & Gerar automaticamente no primeiro dia útil do mês
 
     RF09 & Usuário do sistema & Redefinição de Senha & O sistema deve permitir que usuários solicitem a redefinição de senha via e-mail. Deve enviar um link seguro e temporário, exigindo critérios mínimos de segurança para a nova senha. \\ \hline
 
-    RF10 & Todos os usuários do sistema & Internacionalização & O sistema deve oferecer suporte a internacionalização, estando disponível em, no mínimo, Português e Inglês. O idioma deve ser configurável pelo usuário ou ajustado pelo navegador. \\ \hline
+    RF10 & Todos os usuários do sistema & Internacionalização & O sistema deve oferecer suporte a internacionalização, estando disponível em Português e Inglês. O idioma deve ser configurável pelo usuário ou ajustado pelo navegador. \\ \hline
 
     
 
@@ -788,11 +785,11 @@ RN11 & Relatórios Mensais & Gerar automaticamente no primeiro dia útil do mês
     \hline
     \textbf{Código} & \textbf{Atores} & \textbf{Nome} & \textbf{Descrição} \\ \hline
 
-   RF11 & Administrador, Vendedor & Suporte a Múltiplas Lojas & O sistema deve permitir a gestão de estoque em, no mínimo, duas lojas distintas. Usuários devem ser vinculados a uma loja, e o Administrador deve poder alternar entre elas. \\ \hline
+   RF11 & Administrador, Vendedor & Suporte a Múltiplas Lojas & O sistema deve permitir a gestão de estoque em múltiplas lojas. Usuários devem ser vinculados a uma loja, e o Administrador deve poder alternar entre elas. \\ \hline
 
-    RF12 & Administrador, Vendedor & Controle de Clientes & O sistema deve permitir o gerenciamento e registro completo de clientes (nome, documento, contatos). Todo cliente registrado deve ter pedidos atrelados a ele. \\ \hline
+    RF12 & Administrador, Vendedor & Controle de Clientes & O sistema deve permitir o gerenciamento e registro completo de clientes. Todo cliente registrado deve ter pedidos atrelados a ele. \\ \hline
 
- RF13 & Administrador, Vendedor & Geração de Nota Fiscal & O sistema deve, após a aceitação ou finalização de um pedido, gerar a Nota Fiscal eletrônica correspondente à venda, validando os dados fiscais do cliente e do produto, e registrando o status da emissão.. \\ \hline
+ RF13 & Administrador, Vendedor & Geração de Nota Fiscal & O sistema deve, após a finalização de um pedido, gerar a Nota Fiscal eletrônica correspondente à venda, validando os dados fiscais do cliente e do produto, e registrando o status da emissão.. \\ \hline
 
   
 
