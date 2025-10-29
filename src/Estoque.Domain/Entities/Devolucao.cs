@@ -1,8 +1,7 @@
-﻿using Estoque.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Estoque.Domain.Entities;
 
 [Table("Devolucao")]
 public class Devolucao
@@ -12,13 +11,7 @@ public class Devolucao
     public int IdDevolucao { get; set; }
 
     [Column("TipoDevolucao")]
-    public byte TipoDevolucao { get; set; } // 1=Cliente->Loja, 2=Loja->Fornecedor
-
-    [Column("IdPedido")]
-    public int? IdPedido { get; set; }
-
-    [Column("IdFornecedor")]
-    public int? IdFornecedor { get; set; }
+    public byte TipoDevolucao { get; set; }
 
     [Column("DataDevolucao", TypeName = "date")]
     public DateTime DataDevolucao { get; set; }
@@ -34,6 +27,5 @@ public class Devolucao
     [Column("Devolvido")]
     public byte? Devolvido { get; set; }
 
-    // 🔗 Relacionamentos
     public virtual ICollection<DevolucaoItem> Itens { get; set; }
 }

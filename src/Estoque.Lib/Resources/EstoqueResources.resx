@@ -318,4 +318,7 @@
   <data name="DevolutionReport" xml:space="preserve">
     <value>Relatório Devolução</value>
   </data>
+  <data name="Invoice" xml:space="preserve">
+    <value>Nota Fiscal</value>
+  </data>
 </root>

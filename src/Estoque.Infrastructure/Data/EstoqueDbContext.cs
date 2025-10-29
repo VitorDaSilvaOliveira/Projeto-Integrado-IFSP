@@ -23,7 +23,7 @@ public class EstoqueDbContext : IdentityDbContext<ApplicationUser, ApplicationRo
     public DbSet<ProdutoLote> ProdutoLotes { get; set; }
     public DbSet<ProdutoSerie> ProdutoSeries { get; set; }
     public DbSet<MasterData> MasterData { get; set; }
-    public DbSet<Evento> Eventos { get; set; }
+    public DbSet<PedidoNFView> Vw_PedidoNF { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -31,5 +31,23 @@ public class EstoqueDbContext : IdentityDbContext<ApplicationUser, ApplicationRo
         
         modelBuilder.Entity<RoleMenu>()
             .HasKey(rm => new { rm.RoleId, rm.MenuId });
+
+        modelBuilder.Entity<PedidoNFView>(entity =>
+        {
+            entity.HasNoKey(); 
+            entity.ToView("vw_PedidoNF"); 
+            entity.Property(v => v.PedidoId);
+            entity.Property(v => v.NumeroPedido);
+            entity.Property(v => v.DataPedido);
+            entity.Property(v => v.ValorNF);
+            entity.Property(v => v.FormaPagamento);
+            entity.Property(v => v.ClienteCNPJ);
+            entity.Property(v => v.ClienteNome);
+            entity.Property(v => v.id_Produto);
+            entity.Property(v => v.ProdutoNome);
+            entity.Property(v => v.Quantidade);
+            entity.Property(v => v.PrecoVenda);
+            entity.Property(v => v.ItemTotal);
+        });
     }
 }

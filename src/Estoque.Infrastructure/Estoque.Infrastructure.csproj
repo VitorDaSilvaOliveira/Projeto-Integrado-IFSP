@@ -18,6 +18,8 @@
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.8" />
+        <PackageReference Include="QRCoder" Version="1.7.0" />
+        <PackageReference Include="QuestPDF" Version="2025.7.3" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\Estoque.Domain\Estoque.Domain.csproj" />

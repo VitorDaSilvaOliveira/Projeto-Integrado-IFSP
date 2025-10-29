@@ -318,4 +318,7 @@
   <data name="DevolutionReport" xml:space="preserve">
     <value>Devolution Report</value>
   </data>
+  <data name="Invoice" xml:space="preserve">
+    <value>Invoice</value>
+  </data>
 </root>

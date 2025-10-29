@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Estoque.Domain.Entities;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 [Table("DevolucaoItem")]
@@ -9,7 +10,7 @@ public class DevolucaoItem
     public int IdDevolucaoItem { get; set; }
 
     [Column("IdDevolucao")]
-    [ForeignKey(nameof(Devolucao))] // 🔑 informa ao EF que essa é a FK
+    [ForeignKey(nameof(Devolucao))]
     public int IdDevolucao { get; set; }
 
     [Column("IdProduto")]

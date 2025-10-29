@@ -4,6 +4,7 @@ using Estoque.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Estoque.Infrastructure.Migrations
 {
     [DbContext(typeof(EstoqueDbContext))]
-    partial class EstoqueDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251028005212_NotaFiscal")]
+    partial class NotaFiscal
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +24,51 @@ namespace Estoque.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Devolucao", b =>
+                {
+                    b.Property<int>("IdDevolucao")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("idDevolucao");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdDevolucao"));
+
+                    b.Property<DateTime>("DataDevolucao")
+                        .HasColumnType("date")
+                        .HasColumnName("DataDevolucao");
+
+                    b.Property<byte?>("Devolvido")
+                        .HasColumnType("tinyint")
+                        .HasColumnName("Devolvido");
+
+                    b.Property<int?>("IdFornecedor")
+                        .HasColumnType("int")
+                        .HasColumnName("IdFornecedor");
+
+                    b.Property<int?>("IdPedido")
+                        .HasColumnType("int")
+                        .HasColumnName("IdPedido");
+
+                    b.Property<string>("IdUser")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("Id_User");
+
+                    b.Property<string>("Observacao")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)")
+                        .HasColumnName("Observacao");
+
+                    b.Property<byte>("TipoDevolucao")
+                        .HasColumnType("tinyint")
+                        .HasColumnName("TipoDevolucao");
+
+                    b.HasKey("IdDevolucao");
+
+                    b.ToTable("Devolucao");
+                });
 
             modelBuilder.Entity("DevolucaoItem", b =>
                 {
@@ -272,43 +320,6 @@ namespace Estoque.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Cliente");
-                });
-
-            modelBuilder.Entity("Estoque.Domain.Entities.Devolucao", b =>
-                {
-                    b.Property<int>("IdDevolucao")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("idDevolucao");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdDevolucao"));
-
-                    b.Property<DateTime>("DataDevolucao")
-                        .HasColumnType("date")
-                        .HasColumnName("DataDevolucao");
-
-                    b.Property<byte?>("Devolvido")
-                        .HasColumnType("tinyint")
-                        .HasColumnName("Devolvido");
-
-                    b.Property<string>("IdUser")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("Id_User");
-
-                    b.Property<string>("Observacao")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnName("Observacao");
-
-                    b.Property<byte>("TipoDevolucao")
-                        .HasColumnType("tinyint")
-                        .HasColumnName("TipoDevolucao");
-
-                    b.HasKey("IdDevolucao");
-
-                    b.ToTable("Devolucao");
                 });
 
             modelBuilder.Entity("Estoque.Domain.Entities.Fornecedor", b =>
@@ -886,7 +897,7 @@ namespace Estoque.Infrastructure.Migrations
 
             modelBuilder.Entity("DevolucaoItem", b =>
                 {
-                    b.HasOne("Estoque.Domain.Entities.Devolucao", "Devolucao")
+                    b.HasOne("Devolucao", "Devolucao")
                         .WithMany("Itens")
                         .HasForeignKey("IdDevolucao")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1041,7 +1052,7 @@ namespace Estoque.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Estoque.Domain.Entities.Devolucao", b =>
+            modelBuilder.Entity("Devolucao", b =>
                 {
                     b.Navigation("Itens");
                 });

@@ -1,0 +1,9 @@
+﻿@using JJMasterData.Web.Extensions
+@{
+    ViewBag.Title = "Nota Fiscal";
+}
+
+@using (Html.BeginMasterDataForm())
+{
+    @Html.Raw(ViewBag.FormViewNotaFiscal)
+}

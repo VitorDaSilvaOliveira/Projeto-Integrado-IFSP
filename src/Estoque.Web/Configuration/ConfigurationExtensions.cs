@@ -81,6 +81,7 @@ public static class ConfigurationExtensions
         services.AddSingleton<EmailSender>();
         services.AddScoped<PedidoService>();
         services.AddScoped<RoleService>();
+        services.AddScoped<NotaFiscalService>();
         services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, CustomClaimsFactory>();
     }
 
