@@ -24,6 +24,7 @@ public class EstoqueDbContext : IdentityDbContext<ApplicationUser, ApplicationRo
     public DbSet<ProdutoSerie> ProdutoSeries { get; set; }
     public DbSet<MasterData> MasterData { get; set; }
     public DbSet<PedidoNFView> Vw_PedidoNF { get; set; }
+    public DbSet<UserSetting> UserSettings { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

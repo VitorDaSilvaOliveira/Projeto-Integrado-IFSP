@@ -22,27 +22,20 @@ public class NotaFiscalController(NotaFiscalService notaFiscalService, IWebHostE
 
     public IActionResult ViewDocument(int pedidoId)
     {
-        string folder = Path.Combine(env.WebRootPath, "danfe");
-        if (!Directory.Exists(folder))
-            Directory.CreateDirectory(folder);
+        using var ms = new MemoryStream();
+        notaFiscalService.GenerateDanfe(pedidoId, ms);
+        ms.Position = 0;
 
-        string path = Path.Combine(folder, $"danfe-{pedidoId}.pdf");
-        notaFiscalService.GenerateDanfe(pedidoId, path);
-
-        var fileBytes = System.IO.File.ReadAllBytes(path);
-        return File(fileBytes, "application/pdf");
+        Response.Headers.Append("Content-Disposition", $"inline; filename=danfe-{pedidoId}.pdf");
+        return File(ms.ToArray(), "application/pdf");
     }
 
     public IActionResult Download(int pedidoId)
     {
-        string folder = Path.Combine(env.WebRootPath, "danfe");
-        if (!Directory.Exists(folder))
-            Directory.CreateDirectory(folder);
+        using var ms = new MemoryStream();
+        notaFiscalService.GenerateDanfe(pedidoId, ms); 
+        ms.Position = 0;
 
-        string path = Path.Combine(folder, $"danfe-{pedidoId}.pdf");
-        notaFiscalService.GenerateDanfe(pedidoId, path);
-
-        var fileBytes = System.IO.File.ReadAllBytes(path);
-        return File(fileBytes, "application/pdf", $"danfe-{pedidoId}.pdf");
+        return File(ms.ToArray(), "application/pdf", $"danfe-{pedidoId}.pdf");
     }
 }

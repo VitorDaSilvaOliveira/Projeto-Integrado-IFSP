@@ -1,10 +1,12 @@
 ﻿@inject IHttpContextAccessor HttpContextAccessor
 @using Estoque.Lib.Resources
 @using Microsoft.Extensions.Localization
+@inject Estoque.Infrastructure.Data.EstoqueDbContext Db
 @inject IStringLocalizer<EstoqueResources> Localizer
 @{
     var userId = HttpContextAccessor!.HttpContext?.User.FindFirst("sub")?.Value
                  ?? HttpContextAccessor.HttpContext?.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
     var avatarUrl = userId != null
         ? Url.Action("Avatar", "Profile", new { area = "Identity", userId })
         : Url.Content("~/img/default_profile.png");
@@ -13,14 +15,23 @@
     var dataAtual = DateTime.Now.ToString("MMMM, yyyy", System.Globalization.CultureInfo.CurrentCulture);
 
     var nomeCompleto = $"{User.FindFirst("FirstName")?.Value} {User.FindFirst("LastName")?.Value}";
+
+    Estoque.Domain.Entities.UserSetting? settings = null;
+    if (!string.IsNullOrEmpty(userId))
+    {
+        settings = Db.UserSettings.FirstOrDefault(s => s.UserId == userId);
+    }
 }
 
 <nav class="navbar navbar-top fixed-top navbar-expand shadow-sm" id="navbarDefault">
     <div class="container-fluid">
         <div class="d-flex align-items-center ms-3">
-            <a href="/Configuracoes" style="text-decoration:none;" class="d-flex align-items-center">
-                <i class="bi bi-gear-fill me-1" style="color: #b0b5c1;"></i>
-                <span class="fw-semibold" style="color: #b0b5c1 !important;">Configurações</span>
+            <a asp-area="Identity"
+               asp-controller="Settings"
+               asp-action="Index"
+               class="d-flex align-items-center text-decoration-none">
+                <i class="bi bi-gear-fill me-1" style="color: #b0b5c1"></i>
+                <span class="fw-semibold" style="color: #b0b5c1">Configurações</span>
             </a>
         </div>
         <ul class="navbar-nav navbar-nav-icons flex-row align-items-center">
@@ -29,7 +40,8 @@
                 <span class="fw-semibold text-muted" style="color: #969db2 !important;">@dataAtual</span>
 
             </li>
-
+            @if (settings?.EnableDarkModeSwitch ?? false)
+            {
             <li class="nav-item">
                 <div class="theme-control-toggle position-relative">
                     <input class="form-check-input ms-0 theme-control-toggle-input" type="checkbox"
@@ -40,7 +52,9 @@
                     </label>
                 </div>
             </li>
-
+            }
+            @if (settings?.EnableLanguageSwitch ?? false)
+            {
             <li class="nav-item dropdown hide-on-xs">
                 <button id="language-button" data-bs-placement="bottom" title="Idioma" type="button" class="nav-link"
                         aria-expanded="false" data-bs-toggle="dropdown">
@@ -67,6 +81,7 @@
                     </li>
                 </ul>
             </li>
+            }
 
             <li class="nav-item">
                 <a class="nav-link text-center" href="#" data-bs-toggle="modal" data-bs-target="#sobreEmpresaModal" title="Sobre a Empresa">

@@ -18,14 +18,14 @@ public class NotaFiscalService(EstoqueDbContext context, IComponentFactory compo
         return formView;
     }
 
-    public void GenerateDanfe(int pedidoId, string outputPdfPath)
+    public void GenerateDanfe(int pedidoId, Stream outputPdfPath)
     {
         var linhas = context.Vw_PedidoNF
             .Where(x => x.PedidoId == pedidoId)
             .ToList();
 
         var pedido = linhas.First();
-
+        
         string clienteTelefone = ObjectUtils.SafeGetString(pedido, "ClienteTelefone") ?? ObjectUtils.SafeGetString(pedido, "TelefoneCliente") ?? "(não informado)";
         string clienteEmail = ObjectUtils.SafeGetString(pedido, "ClienteEmail") ?? ObjectUtils.SafeGetString(pedido, "EmailCliente") ?? "(não informado)";
 
