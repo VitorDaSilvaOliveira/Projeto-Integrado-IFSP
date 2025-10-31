@@ -8,11 +8,11 @@ using Xunit;
 namespace Estoque.Tests.E2ETests
 {
     [Collection("Selenium")]
-    public class LoginTests : SeleniumTestBase, IDisposable
+    public class LoginE2ETests : SeleniumTestBase, IDisposable
     {
         private readonly WebDriverWait wait;
 
-        public LoginTests()
+        public LoginE2ETests()
         {
             wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(20));
         }
@@ -27,17 +27,21 @@ namespace Estoque.Tests.E2ETests
             Driver.FindElement(By.Id("senha")).Clear();
             Driver.FindElement(By.Id("senha")).SendKeys(senha);
 
-            var botaoEntrar = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.CssSelector("button.btn.BGC-azul-2")));
+            var botaoEntrar = wait.Until(
+                SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(
+                    By.CssSelector("button.btn.BGC-azul-2"))
+            );
 
             new Actions(Driver).MoveToElement(botaoEntrar).Perform();
-            System.Threading.Thread.Sleep(500); 
+            System.Threading.Thread.Sleep(500); // Aguarda o hover
 
             botaoEntrar.Click();
 
             if (esperaSucesso)
             {
                 wait.Until(d => !d.Url.Contains("/Identity/SignIn"));
-                Driver.Url.Should().NotContain("/Identity/SignIn", "Usuário ativo deveria conseguir fazer login");
+                Driver.Url.Should().NotContain("/Identity/SignIn",
+                    "Usuário ativo deveria conseguir fazer login");
             }
             else
             {
@@ -71,7 +75,7 @@ namespace Estoque.Tests.E2ETests
         {
             try
             {
-                TentaLogin("Funcionário", "Mario@123", esperaSucesso: false);
+                TentaLogin("Funcionario", "Mario@123", esperaSucesso: false);
                 TakeScreenshot("Usuario_Bloqueado_Login_Negado");
             }
             catch (Exception)
