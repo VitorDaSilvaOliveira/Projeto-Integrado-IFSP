@@ -9,12 +9,12 @@ using Xunit;
 
 namespace Estoque.Tests.UnitTests
 {
-    public class ProdutoCategoriaValidationTests : IDisposable
+    public class ProdutoCategoriaValidationUnitTests : IDisposable
     {
         private readonly EstoqueDbContext _context;
         private readonly SqliteConnection _connection;
 
-        public ProdutoCategoriaValidationTests()
+        public ProdutoCategoriaValidationUnitTests()
         {
             // Configurar SQLite in-memory
             _connection = new SqliteConnection("DataSource=:memory:");
