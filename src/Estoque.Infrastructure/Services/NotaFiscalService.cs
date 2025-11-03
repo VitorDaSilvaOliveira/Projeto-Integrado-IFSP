@@ -4,7 +4,10 @@ using JJMasterData.Core.UI.Components;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
-using System.Xml.Linq;
+using ZXing;
+using ZXing.Common;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace Estoque.Infrastructure.Services;
 
@@ -14,20 +17,19 @@ public class NotaFiscalService(EstoqueDbContext context, IComponentFactory compo
     {
         var formView = await componentFactory.FormView.CreateAsync("vw_PedidoNF");
         formView.ShowTitle = true;
-
         return formView;
     }
 
-    public void GenerateDanfe(int pedidoId, Stream outputPdfPath)
+    public void GenerateDanfe(int pedidoId, Stream outputPdf)
     {
-        var linhas = context.Vw_PedidoNF
-            .Where(x => x.PedidoId == pedidoId)
-            .ToList();
-
+        var linhas = context.Vw_PedidoNF.Where(x => x.PedidoId == pedidoId).ToList();
         var pedido = linhas.First();
-        
-        string clienteTelefone = ObjectUtils.SafeGetString(pedido, "ClienteTelefone") ?? ObjectUtils.SafeGetString(pedido, "TelefoneCliente") ?? "(não informado)";
-        string clienteEmail = ObjectUtils.SafeGetString(pedido, "ClienteEmail") ?? ObjectUtils.SafeGetString(pedido, "EmailCliente") ?? "(não informado)";
+
+        string clienteNome = ObjectUtils.SafeGetString(pedido, "ClienteNome") ?? "(não informado)";
+        string clienteCNPJ = ObjectUtils.SafeGetString(pedido, "ClienteCNPJ") ?? "(não informado)";
+        string clienteEndereco = ObjectUtils.SafeGetString(pedido, "ClienteEndereco") ?? "(não informado)";
+        string clienteTelefone = ObjectUtils.SafeGetString(pedido, "ClienteTelefone") ?? "(não informado)";
+        string clienteEmail = ObjectUtils.SafeGetString(pedido, "ClienteEmail") ?? "(não informado)";
 
         var itens = linhas.Select(i => new
         {
@@ -45,122 +47,183 @@ public class NotaFiscalService(EstoqueDbContext context, IComponentFactory compo
         string cNF = new Random().Next(10000000, 99999999).ToString("D8");
         string chaveAcesso = DanfeUtils.GerarChaveAcesso(pedido, cNF);
 
-        XDocument xml = DanfeUtils.MontarXmlSimples(pedido, itens, chaveAcesso, cNF);
+        var writer = new BarcodeWriterPixelData
+        {
+            Format = BarcodeFormat.CODE_128,
+            Options = new EncodingOptions
+            {
+                Height = 100,     
+                Width = 600, 
+                Margin = 0,
+                PureBarcode = true
+            }
+        };
+        var pixelData = writer.Write(chaveAcesso);
+        byte[] barcodePng;
+        using (var bmp = new Bitmap(pixelData.Width, pixelData.Height, PixelFormat.Format32bppArgb))
+        {
+            var data = bmp.LockBits(new Rectangle(0, 0, pixelData.Width, pixelData.Height),
+                ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+            System.Runtime.InteropServices.Marshal.Copy(pixelData.Pixels, 0, data.Scan0, pixelData.Pixels.Length);
+            bmp.UnlockBits(data);
+            using var ms = new MemoryStream();
+            bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+            barcodePng = ms.ToArray();
+        }
 
         QuestPDF.Settings.License = LicenseType.Community;
-        string qrText = $"https://homologacao.nfe.fazenda.sp.gov.br/qrcode?p={chaveAcesso}&tpAmb=2";
-        byte[] qrPng = DanfeUtils.GerarQrPng(qrText, 200);
 
         var document = Document.Create(container =>
         {
             container.Page(page =>
             {
                 page.Size(PageSizes.A4);
-                page.Margin(18);
-                page.DefaultTextStyle(x => x.FontSize(9));
+                page.Margin(10);
+                page.DefaultTextStyle(t => t.FontSize(8));
 
-                page.Header().Row(row =>
+                // === LAYOUT PRINCIPAL ===
+                page.Content().Column(content =>
                 {
-                    row.RelativeItem().Column(col =>
+                    // CABEÇALHO (Topo da página)
+                    content.Item().Height(120).Border(1).Padding(6).Row(row =>
                     {
-                        col.Item().Text("VIP PENHA").FontSize(18).Bold();
-                        col.Item().Text("CNPJ: 12.345.678/0001-95").FontSize(9);
-                        col.Item().Text("IE: ISENTO").FontSize(9);
-                        col.Item().Text("End.: R. Dr. João Ribeiro, 424 - Penha de França, São Paulo - SP, 03634-000").FontSize(9);
-                        col.Item().Text("Tel.: (11) 98527-7600").FontSize(9);
-                    });
-
-                    row.ConstantItem(160).Column(col =>
-                    {
-                        col.Item().Image(qrPng, ImageScaling.FitArea);
-                        col.Item().Text("QR Code - Ambiente: HOMOLOGAÇÃO").FontSize(8).AlignCenter();
-                    });
-                });
-
-                page.Content().Column(col =>
-                {
-                    col.Spacing(6);
-
-                    col.Item().Row(r =>
-                    {
-                        r.RelativeItem().Column(left =>
+                        // Emitente
+                        row.RelativeItem(3).Column(c =>
                         {
-                            left.Item().Text("DESTINATÁRIO").Bold().FontSize(10);
-                            left.Item().Text($"{ObjectUtils.SafeGetString(pedido, "ClienteNome") ?? "(Nome não informado)"}").FontSize(9);
-                            left.Item().Text($"CNPJ/CPF: {ObjectUtils.SafeGetString(pedido, "ClienteCNPJ") ?? "(não informado)"}").FontSize(9);
-                            left.Item().Text($"Tel: {clienteTelefone}  •  Email: {clienteEmail}").FontSize(9);
+                            c.Item().Text("VIP PENHA ELETRÔNICOS LTDA").FontSize(16).Bold();
+                            c.Item().Text("CNPJ: 12.345.678/0001-95 | IE: ISENTO");
+                            c.Item().Text("R. Dr. João Ribeiro, 424 - Penha - SP - CEP 03607-000");
+                            c.Item().Text("Telefone: (11) 2222-3333 | E-mail: contato@vippenha.com");
                         });
 
-                        r.ConstantItem(260).Column(right =>
+                        // Título DANFE
+                        row.RelativeItem(2).BorderLeft(1).PaddingLeft(8).Column(c =>
                         {
-                            right.Item().Text("DADOS DA NF-e").Bold().FontSize(10);
-                            right.Item().Text($"Nº: {ObjectUtils.SafeGetString(pedido, "NumeroPedido") ?? "(---)"}").FontSize(9);
-                            var dataPedidoObj = ObjectUtils.SafeGetObject(pedido, "DataPedido");
-                            string dataStr = dataPedidoObj is DateTime dt ? dt.ToString("yyyy-MM-dd HH:mm") : "(não informado)";
-                            right.Item().Text($"Emissão: {dataStr}").FontSize(9);
-                            right.Item().Text($"Chave de Acesso: {chaveAcesso}").FontSize(8);
+                            c.Item().AlignCenter().Text("DANFE").FontSize(18).Bold();
+                            c.Item().AlignCenter().Text("Documento Auxiliar da Nota Fiscal Eletrônica");
+                            c.Item().AlignCenter().Text("Modelo 55").FontSize(9);
+                            c.Item().AlignCenter().Text($"Nº: {ObjectUtils.SafeGetString(pedido, "NumeroPedido") ?? "(---)"}").Bold();
+                            c.Item().AlignCenter().Text("Série: 1");
+                        });
+
+                        // Código de barras
+                        row.ConstantItem(200).BorderLeft(1).PaddingLeft(5).Column(c =>
+                        {
+                            c.Item().Image(barcodePng, ImageScaling.FitWidth);
+                            c.Item().AlignCenter().Text("CHAVE DE ACESSO").FontSize(7);
+                            c.Item().AlignCenter().Text(chaveAcesso).FontSize(7);
                         });
                     });
 
-                    col.Item().LineHorizontal(1).LineColor(Colors.Grey.Lighten2);
-
-                    col.Item().Table(table =>
+                    // NATUREZA / PROTOCOLO
+                    content.Item().Height(40).Border(1).Padding(3).Row(r =>
                     {
-                        table.ColumnsDefinition(columns =>
+                        r.RelativeItem().Text($"NATUREZA DA OPERAÇÃO: VENDA DE MERCADORIA").Bold();
+                        r.ConstantItem(250).AlignRight().Text("PROTOCOLO: 000000000000000 - 01/11/2025 10:20:00");
+                    });
+
+                    // DESTINATÁRIO
+                    content.Item().Height(80).Border(1).Padding(4).Column(c =>
+                    {
+                        c.Item().Text("DESTINATÁRIO / REMETENTE").Bold();
+                        c.Item().Text($"Nome / Razão Social: {clienteNome}");
+                        c.Item().Text($"CPF/CNPJ: {clienteCNPJ} | Fone: {clienteTelefone}");
+                        c.Item().Text($"Endereço: {clienteEndereco}");
+                        c.Item().Text($"Email: {clienteEmail}");
+                    });
+
+                    // IMPOSTOS + TRANSPORTE
+                    content.Item().Height(100).Row(r =>
+                    {
+                        r.RelativeItem(5).Border(1).Padding(4).Column(col =>
                         {
-                            columns.RelativeColumn(6);
-                            columns.RelativeColumn(1.2f);
-                            columns.RelativeColumn(2);
-                            columns.RelativeColumn(2);
+                            col.Item().Text("CÁLCULO DO IMPOSTO").Bold();
+                            col.Item().Text($"Base de Cálculo do ICMS: 0,00");
+                            col.Item().Text($"Valor do ICMS: 0,00");
+                            col.Item().Text($"Valor Total dos Produtos: {somaItens:F2}");
+                            col.Item().Text($"Valor Total da Nota: {valorNF:F2}");
                         });
 
+                        r.RelativeItem(5).Border(1).Padding(4).Column(col =>
+                        {
+                            col.Item().Text("TRANSPORTADOR / VOLUMES TRANSPORTADOS").Bold();
+                            col.Item().Text("Frete: 0 - Por conta do Remetente");
+                        });
+                    });
+
+                    // PRODUTOS
+                    content.Item().MinHeight(350).Padding(2).Table(table =>
+                    {
+                        table.ColumnsDefinition(cols =>
+                        {
+                            cols.RelativeColumn(1);
+                            cols.RelativeColumn(5);
+                            cols.RelativeColumn(1);
+                            cols.RelativeColumn(2);
+                            cols.RelativeColumn(2);
+                        });
+
+                        // Cabeçalho
                         table.Header(header =>
                         {
-                            header.Cell().Text("Descrição").FontSize(9).Bold();
-                            header.Cell().AlignRight().Text("Qtde").FontSize(9).Bold();
-                            header.Cell().AlignRight().Text("V.Unit").FontSize(9).Bold();
-                            header.Cell().AlignRight().Text("V.Total").FontSize(9).Bold();
+                            header.Cell().Border(1).AlignCenter().Text("CÓD").Bold();
+                            header.Cell().Border(1).AlignCenter().Text("DESCRIÇÃO DO PRODUTO / SERVIÇO").Bold();
+                            header.Cell().Border(1).AlignCenter().Text("QTDE").Bold();
+                            header.Cell().Border(1).AlignCenter().Text("V. UNIT.").Bold();
+                            header.Cell().Border(1).AlignCenter().Text("V. TOTAL").Bold();
                         });
 
-                        bool odd = false;
-                        foreach (var item in itens)
+                        void LinhaProduto(string c1, string c2, string c3, string c4, string c5, bool temProduto)
                         {
-                            odd = !odd;
-                            table.Cell().Element(c => c.Padding(6).Background(odd ? Colors.Grey.Lighten5 : Colors.White)).Text(item.Descricao).FontSize(9);
-                            table.Cell().Element(c => c.Padding(6).Background(odd ? Colors.Grey.Lighten5 : Colors.White)).AlignRight().Text(item.Quantidade.ToString("N0")).FontSize(9);
-                            table.Cell().Element(c => c.Padding(6).Background(odd ? Colors.Grey.Lighten5 : Colors.White)).AlignRight().Text(item.ValorUnit.ToString("F2")).FontSize(9);
-                            table.Cell().Element(c => c.Padding(6).Background(odd ? Colors.Grey.Lighten5 : Colors.White)).AlignRight().Text(item.ValorTotal.ToString("F2")).FontSize(9);
+                            var top = temProduto ? 1 : 0;
+
+                            table.Cell().BorderLeft(1).BorderTop(top).AlignCenter().Text(c1);
+                            table.Cell().BorderLeft(1).BorderTop(top).Text(c2);
+                            table.Cell().BorderLeft(1).BorderTop(top).AlignRight().Text(c3);
+                            table.Cell().BorderLeft(1).BorderTop(top).AlignRight().Text(c4);
+                            table.Cell().BorderLeft(1).BorderRight(1).BorderTop(top).AlignRight().Text(c5);
                         }
 
-                        table.Footer(footer =>
+                        // Linhas reais
+                        foreach (var item in itens)
                         {
-                            footer.Cell().ColumnSpan(2).Element(c => c.Padding(6)).Text("");
-                            footer.Cell().Element(c => c.Padding(6)).AlignRight().Text("Subtotal:").FontSize(9);
-                            footer.Cell().Element(c => c.Padding(6)).AlignRight().Text(somaItens.ToString("F2")).FontSize(9);
+                            LinhaProduto(
+                                item.Codigo.ToString(),
+                                item.Descricao,
+                                item.Quantidade.ToString("N2"),
+                                item.ValorUnit.ToString("F2"),
+                                item.ValorTotal.ToString("F2"),
+                                true
+                            );
+                        }
 
-                            footer.Cell().ColumnSpan(2).Element(c => c.Padding(6)).Text("");
-                            footer.Cell().Element(c => c.Padding(6)).AlignRight().Text("Total (R$):").FontSize(11).Bold();
-                            footer.Cell().Element(c => c.Padding(6)).AlignRight().Text(valorNF.ToString("F2")).FontSize(11).Bold();
-                        });
+                        // Linhas vazias (só verticais)
+                        int totalLinhas = 35;
+                        int linhasFaltando = totalLinhas - itens.Count;
+
+                        for (int i = 0; i < linhasFaltando; i++)
+                        {
+                            LinhaProduto(" ", " ", " ", " ", " ", false);
+                        }
                     });
 
-                    col.Item().PaddingTop(8).Text("Observações:").Bold().FontSize(9);
-                    col.Item().Text(ObjectUtils.SafeGetString(pedido, "Observacoes") ?? "").FontSize(9);
-
+                    // DADOS ADICIONAIS
+                    content.Item().Height(100).Border(1).Padding(4).Column(c =>
+                    {
+                        c.Item().Text("DADOS ADICIONAIS").Bold();
+                        c.Item().Text(ObjectUtils.SafeGetString(pedido, "Observacoes") ?? "Nenhuma observação registrada.");
+                    });
                 });
 
-                page.Footer().Column(f =>
+                // Rodapé
+                page.Footer().Height(30).Padding(2).BorderTop(1).Column(f =>
                 {
-                    f.Item().LineHorizontal(1).LineColor(Colors.Grey.Lighten2);
-                    f.Item().Row(r =>
-                    {
-                        r.RelativeItem().Text("Documento emitido em ambiente de homologação. DANFE gerado para fins de teste.").FontSize(8);
-                        r.ConstantItem(200).AlignRight().Text($"Emitente: VIP PENHA • CNPJ: 12.345.678/0001-95").FontSize(8);
-                    });
+                    f.Item().AlignCenter().Text("Documento emitido em ambiente de homologação - Sem valor fiscal").FontSize(8);
+                    f.Item().AlignCenter().Text("Consulta de autenticidade: https://homologacao.nfe.fazenda.sp.gov.br/").FontSize(8);
                 });
             });
         });
 
-        document.GeneratePdf(outputPdfPath);
+        document.GeneratePdf(outputPdf);
     }
 }

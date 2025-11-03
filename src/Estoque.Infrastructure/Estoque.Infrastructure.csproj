@@ -20,6 +20,7 @@
         <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.8" />
         <PackageReference Include="QRCoder" Version="1.7.0" />
         <PackageReference Include="QuestPDF" Version="2025.7.3" />
+        <PackageReference Include="ZXing.Net" Version="0.16.11" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\Estoque.Domain\Estoque.Domain.csproj" />
