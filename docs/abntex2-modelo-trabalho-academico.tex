@@ -482,6 +482,7 @@ O MarketUP é uma solução gratuita e bastante completa, oferecendo controle de
 \subsection{Quadro Comparativo}
 
 \begin{quadro}[htb]
+\centering
 \caption{\label{quadro_comparativo}Comparação entre Sistemas de Gerenciamento de Estoque}
 \begin{tabular}{|p{3.2cm}|p{5.5cm}|p{2.2cm}|p{4.1cm}|}
 \hline
@@ -669,6 +670,7 @@ O projeto tem como objetivo o desenvolvimento de um sistema de controle de estoq
 
 
 \begin{quadro}[htb]
+\centering
 \caption{\label{quadro_rn1}Regras de Negócio (RN01 a RN04)}
 \centering
 \begin{tabular}{|p{1.6cm}|p{4.0cm}|p{7.5cm}|p{2.0cm}|}
@@ -694,6 +696,7 @@ RN04 & Controle de Acesso & O sistema deve ter diferentes níveis de acesso para
 
 
 \begin{quadro}[htb]
+\centering
 \caption{\label{quadro_rn2}Regras de Negócio (RN05 a RN09)}
 \hspace*{-1cm}
 \begin{tabular}{|p{1.6cm}|p{4.0cm}|p{7.5cm}|p{2.0cm}|}
@@ -722,6 +725,7 @@ RN09 & Criação de Relatórios & O sistema deve gerar relatórios com informaç
 \subsection{Requisitos Funcionais}
 
 \begin{quadro}[htb]
+\centering
 \caption{\label{quadro_rf1}Requisitos Funcionais (RF01 a RF02)}
 \hspace*{-1cm}
 \begin{tabular}{|p{1.4cm}|p{2.8cm}|p{4.5cm}|p{7.0cm}|}
@@ -746,6 +750,7 @@ RN09 & Criação de Relatórios & O sistema deve gerar relatórios com informaç
 
 
 \begin{quadro}[htb]
+\centering
 \caption{\label{quadro_rf2}Requisitos Funcionais (RF3 a RF10)}
 \begin{tabular}{|p{1.4cm}|p{2.8cm}|p{4.5cm}|p{7.0cm}|}
     \hline
@@ -779,6 +784,7 @@ RN09 & Criação de Relatórios & O sistema deve gerar relatórios com informaç
 \FloatBarrier
 
 \begin{quadro}[htb]
+\centering
 \caption{\label{quadro_rf3}Requisitos Funcionais (RF11 a RF13)}
 \hspace*{-1cm}
 \begin{tabular}{|p{1.4cm}|p{2.8cm}|p{4.5cm}|p{7.0cm}|}
@@ -804,8 +810,9 @@ RN09 & Criação de Relatórios & O sistema deve gerar relatórios com informaç
 
 
 \begin{quadro}[htb]
+\centering
 \caption{\label{quadro_rnf1}Requisitos Não Funcionais (RNF01 a RNF05)}
-\begin{center}
+\hspace*{-1cm}
 \begin{tabular}{|p{2.2cm}|p{4.0cm}|p{10.0cm}|}
     \hline
     \textbf{Código} & \textbf{Módulo} & \textbf{Descrição} \\ \hline
@@ -817,7 +824,6 @@ RN09 & Criação de Relatórios & O sistema deve gerar relatórios com informaç
 RNF06 & Usabilidade & O sistema deve ter uma interface intuitiva e uma curva de aprendizagem rápida, permitindo que um novo usuário realize as principais operações com pouco treinamento. \\ \hline
 RNF07 & Tolerância a Falhas & O sistema deve possuir um mecanismo de registro (logs) de erros e falhas, que permita a rastreabilidade e identificação da causa raiz em um tempo curto. \\ \hline
 \end{tabular}
-\end{center}
 \end{quadro}
 
 \FloatBarrier
@@ -828,6 +834,7 @@ RNF07 & Tolerância a Falhas & O sistema deve possuir um mecanismo de registro (
 \section{Histórias de Usuário}
 
 \begin{quadro}[htb]
+\centering
 \caption{Histórias de Usuário (US01 a US13)}
 \label{hist_usuarios}
 \begin{tabular}{|c|p{10cm}|p{4cm}|}
@@ -1060,12 +1067,14 @@ Além disso, o sistema utiliza o framework JJMasterData, uma solução que permi
 Foram construídos diagramas de Componentes e de Implantação para visualizar a estrutura do projeto. O diagrama de componentes descreve a estrutura modular da aplicação, evidenciando os elementos lógicos e suas interações internas. Já o diagrama de implantação representa a distribuição física desses componentes em ambientes de execução, detalhando a infraestrutura utilizada e as conexões entre os ambientes.
 
 \begin{figure}[h!]
+\hspace*{+0,2cm}
     \centering
 \includegraphics[width=1.0\textwidth]{Figuras/Componentes.png}
     \caption{Diagrama de Componentes}
 \end{figure}
 
 \begin{figure}[h!]
+\hspace*{-1,2cm}
     \centering
 \includegraphics[width=1.0\textwidth]{Figuras/Implantação.png}
     \caption{Diagrama de Implantação}
@@ -1230,6 +1239,7 @@ Os testes foram realizados dentro de módulos do sistema:
 
 \subsubsection{Casos de teste Funcionais}
 \begin{table}[htbp]
+\centering
 
 \caption{Casos de Teste Funcionais - Módulo de Autenticação}
 \begin{tabular}{|p{1cm}|p{1.6cm}|p{3.3cm}|p{2.3cm}|p{3.5cm}|p{3.5cm}|}
@@ -1298,6 +1308,7 @@ O sistema deve atualizar os dados do produto e exibir mensagem de sucesso \\
 \FloatBarrier
 
 \begin{table}[htbp]
+\centering
 
 \caption{Casos de Teste Funcionais - Módulo de Movimentação de Estoque}
 \begin{tabular}{|p{1cm}|p{1.7cm}|p{3.3cm}|p{2.2cm}|p{3.5cm}|p{3.5cm}|}
@@ -1338,6 +1349,7 @@ O sistema deve exibir mensagem de erro indicando saldo insuficiente \\
 \FloatBarrier
 
 \begin{table}[htbp]
+\centering
 
 \caption{Casos de Teste Funcionais - Módulo de Relatórios}
 \begin{tabular}{|p{1cm}|p{1.5cm}|p{3.2cm}|p{2.1cm}|p{3.5cm}|p{3.5cm}|}
@@ -1517,7 +1529,7 @@ Consequentemente, a tabela constitui um pilar para um planejamento financeiro ro
 \fonte{Elaborado pelos autores.}
 \end{table}
 
-Na tabela 3 é representada a estrutura mensal da empresa, detalhando os custos associados às instalações, equipamentos e serviços de TI. No item 2.1, destacam-se os gastos com aluguel de espaço e mobiliário, totalizando 0 reais por mês. Já no item 2.2, referente à aquisição de equipamentos, observa-se que não há custos neste momento. No entanto, no item 2.3, estão listados os custos mensais de serviços de TI.
+Na tabela 10 é representada a estrutura mensal da empresa, detalhando os custos associados às instalações, equipamentos e serviços de TI. No item 2.1, destacam-se os gastos com aluguel de espaço e mobiliário, totalizando 0 reais por mês. Já no item 2.2, referente à aquisição de equipamentos, observa-se que não há custos neste momento. No entanto, no item 2.3, estão listados os custos mensais de serviços de TI.
 
 \begin{table}[hbtp]
 \centering
@@ -1538,32 +1550,16 @@ Na tabela 3 é representada a estrutura mensal da empresa, detalhando os custos 
 \addlinespace
 \multicolumn{3}{l}{\quad 2.3. Serviços de TI} \\
 \qquad - Ferramentas de desenvolvimento & - & 0,00 \\
-\qquad - Hospedagem e banco de dados & - &99,83 \\
+\qquad - Hospedagem e banco de dados & - &100,00 \\
 \midrule
-\textbf{Total mensal} & & \textbf{R\$ 99,83} \\
+\textbf{Total mensal} & & \textbf{R\$ 100,00} \\
 \bottomrule
 \end{tabular}
 \fonte{Elaborado pelos autores.}
 \end{table}
 
 
-\section{Cenário realista}
-Na figura 9 no cenário realista, em que o ponto de equilíbrio é alcançado em cerca de 15 meses, considerando um investimento inicial de R\$ 155.520 e receita mensal média de R\$ 30.600.
-\begin{center}
-  \includegraphics[width=0.9\textwidth]{Figuras/CenarioRealista.png}
-\end{center}
 
-\section{Cenários otimista}
-Na figura 10 no cenário otimista, o ponto de equilíbrio é alcançado em cerca de 9 meses, com receitas 25\% acima do projetado.
-\begin{center}
-  \includegraphics[width=0.9\textwidth]{Figuras/CenarioOtimista.png}
-\end{center}
-
-\section{Cenários pessimista}
-Na figura 11 no cenário pessimista, o ponto de equilíbrio é alcançado em cerca de 37 meses, com receitas 20\% abaixo do projetado.
-\begin{center}
-  \includegraphics[width=0.9\textwidth]{Figuras/CenarioPessimista.png}
-\end{center}
 
 \chapter{Considerações Finais}
 Ao longo do desenvolvimento deste projeto, que visa a criação de um sistema de controle de estoque para um estabelecimento comercial, foi possível constatar de soluções tecnológicas para otimizar processos e garantir a eficiência operacional em ambientes comerciais. A iniciativa de desenvolver este sistema surgiu da necessidade de modernizar a gestão  em um cenário de mercado cada vez mais competitivo.
