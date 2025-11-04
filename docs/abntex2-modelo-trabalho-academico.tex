@@ -814,12 +814,13 @@ RN09 & Criação de Relatórios & O sistema deve gerar relatórios com informaç
     RNF03 & Disponibilidade & O sistema deve estar completamente disponível a todo momento, com uma tolerância máxima de queda de 0,15 ao mês. \\ \hline
     RNF04 & Multiusuário & O sistema deve ser operável por múltiplos usuários ao mesmo tempo sem que ocorram inconsistências nos dados transacionais. \\ \hline
     RNF05 & Qualidade de Código & O sistema deve poder receber manutenção de código com facilidade, seguindo padrões de desenvolvimento e possuindo documentação extensiva. \\ \hline
+RNF06 & Usabilidade & O sistema deve ter uma interface intuitiva e uma curva de aprendizagem rápida, permitindo que um novo usuário realize as principais operações com pouco treinamento. \\ \hline
+RNF07 & Tolerância a Falhas & O sistema deve possuir um mecanismo de registro (logs) de erros e falhas, que permita a rastreabilidade e identificação da causa raiz em um tempo curto. \\ \hline
 \end{tabular}
 \end{center}
 \end{quadro}
 
 \FloatBarrier
-
 
 
 
@@ -1488,7 +1489,7 @@ O desenvolvimento do sistema de gerenciamento de estoque será realizado ao long
 
 A Tabela 9 apresenta uma análise detalhada dos custos de desenvolvimento, com foco no investimento em mão de obra, que representa o principal ativo do projeto. A metodologia de cálculo é simples e transparente: o esforço previsto (em horas) é multiplicado pela taxa horária específica de cada especialista (desenvolvedores, analistas, gestores), garantindo uma apuração precisa e fiel aos valores de mercado.
 
-Esta abordagem, portanto, transcende um simples levantamento numérico. Ela não só oferece clareza sobre os custos inerentes a cada fase do desenvolvimento, mas, ao ser projetada sobre a duração total de 9 meses, transforma-se em uma poderosa ferramenta de gestão estratégica e preditiva. A projeção temporal permite uma análise aprofundada da distribuição dos custos mensais e globais, oferecendo previsibilidade e permitindo a antecipação de picos de investimento. Com isso, a gestão pode mitigar riscos financeiros, como desvios orçamentários, antes que se concretizem.
+Esta abordagem, portanto, transcende um simples levantamento numérico. Ela não só oferece clareza sobre os custos inerentes a cada fase do desenvolvimento, mas, ao ser projetada sobre a duração total do desenvolvimento, transforma-se em uma poderosa ferramenta de gestão estratégica e preditiva. A projeção temporal permite uma análise aprofundada da distribuição dos custos mensais e globais, oferecendo previsibilidade e permitindo a antecipação de picos de investimento. Com isso, a gestão pode mitigar riscos financeiros, como desvios orçamentários, antes que se concretizem.
 
 Consequentemente, a tabela constitui um pilar para um planejamento financeiro robusto, que justifica o orçamento perante stakeholders e estabelece uma linha de base para o controle rigoroso das despesas, viabilizando a alocação otimizada de recursos e assegurando a sustentabilidade operacional do projeto.
 
@@ -1498,24 +1499,21 @@ Consequentemente, a tabela constitui um pilar para um planejamento financeiro ro
     \label{tab:custos_desenvolvimento_simples}
     \begin{tabular}{|l|c|c|c|c|c|}
         \hline
-        \textbf{Função} & \textbf{Quant.} & \textbf{Horas/Dia} & \textbf{Dias} & \textbf{Valor/Hora (R\$)} & \textbf{Total (R\$)} \\
+        \textbf{Função} & \textbf{Quant.} & \textbf{Horas} & \textbf{Valor/Hora (R\$)} & \textbf{Total (R\$)} \\
         \hline
-        Product Owner (PO)    & 1 & 6 & 180 & 25,00 & 27.000,00 \\
+        Product Owner (PO)    & 1 & 400 & 35,00 & 14.000,00 \\
         \hline
-        DBA (MySQL/Azure)     & 1 & 6 & 180 & 22,00 & 23.760,00 \\
+        DBA     & 1 & 400 & 25,50 & 10.200,00 \\
         \hline
-        Desenvolvedor Front-end & 1 & 6 & 180 & 18,00 & 19.440,00 \\
+        Desenvolvedor Front-end & 3 & 250 & 18,00 & 13.500,00 \\
         \hline
-        Desenvolvedor Back-end  & 2 & 6 & 180 & 20,00 & 43.200,00 \\
+        Desenvolvedor Back-end  & 3 & 250 & 20,00 & 15.000,00 \\
         \hline
-        Especialista em SI    & 1 & 6 & 180 & 23,00 & 24.840,00 \\
+        QA (Testes)           & 4 & 100 & 22,00 & 8.800,00 \\
         \hline
-        QA (Testes)           & 1 & 6 & 180 & 16,00 & 17.280,00 \\
-        \hline
-        \textbf{Total} & \textbf{7} & - & - & - & \textbf{155.520,00} \\
+        \textbf{Total} & \textbf{7} & - & - & \textbf{61.500,00} \\
         \hline
     \end{tabular}
-    Duração do projeto: 9 meses (180 dias úteis). Custo MO mensal: R\$ 17.280,00.
 \fonte{Elaborado pelos autores.}
 \end{table}
 
