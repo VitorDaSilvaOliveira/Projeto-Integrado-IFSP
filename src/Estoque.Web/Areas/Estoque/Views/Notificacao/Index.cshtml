@@ -1,0 +1,37 @@
+﻿@using Estoque.Domain.Entities
+@using Microsoft.AspNetCore.Identity
+@model IEnumerable<Estoque.Domain.Entities.Notificacao>
+@inject Estoque.Infrastructure.Data.EstoqueDbContext Db
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    ViewData["Title"] = "Minhas Notificações";
+    var userId = UserManager.GetUserId(User);
+
+    var notificacoes = Model.ToList();
+    var naoLidas = notificacoes.Where(n => !n.Lido).ToList();
+    if (naoLidas.Any())
+    {
+        foreach (var n in naoLidas) n.Lido = true;
+        Db.SaveChanges();
+    }
+}
+
+<h2 class="mb-4"><i class="fas fa-bell"></i> Minhas Notificações</h2>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-success">Sem notificações no momento 🎉</div>
+}
+else
+{
+    <div class="list-group shadow-sm">
+        @foreach (var n in Model)
+        {
+            <div class="list-group-item">
+                <div class="small text-muted">@n.Data.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</div>
+                <div>@Html.Raw(n.Mensagem)</div>
+            </div>
+        }
+    </div>
+}

@@ -13,7 +13,7 @@ using PdfSharpCore.Utils;
 
 namespace Estoque.Infrastructure.Services
 {
-    internal class RelatorioService
+    public class RelatorioService
     {
         public PdfDocument GeraPDFSLAConsumo(List<PedidoItemPDF> pedidosItens)
         {

@@ -11,16 +11,15 @@ public class NotificacaoController(EstoqueDbContext context, UserManager<Applica
     : Controller
 {
     [HttpGet]
-    public async Task<IActionResult> GetNotificacoes()
+    public async Task<IActionResult> Index()
     {
         var userId = userManager.GetUserId(User);
 
         var notificacoes = await context.Notificacoes
             .Where(n => n.IdUser == userId)
             .OrderByDescending(n => n.Data)
-            .Take(5)
             .ToListAsync();
 
-        return PartialView("_NotificacoesDropdown", notificacoes);
+        return View(notificacoes);
     }
 }
