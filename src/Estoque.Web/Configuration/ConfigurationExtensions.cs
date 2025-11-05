@@ -82,6 +82,7 @@ public static class ConfigurationExtensions
         services.AddScoped<PedidoService>();
         services.AddScoped<RoleService>();
         services.AddScoped<NotaFiscalService>();
+        services.AddScoped<RelatorioService>();
         services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, CustomClaimsFactory>();
     }
 
