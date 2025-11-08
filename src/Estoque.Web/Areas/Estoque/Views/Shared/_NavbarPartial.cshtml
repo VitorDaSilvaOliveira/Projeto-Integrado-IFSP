@@ -4,206 +4,215 @@
 @inject Estoque.Infrastructure.Data.EstoqueDbContext Db
 @inject IStringLocalizer<EstoqueResources> Localizer
 @{
-    var userId = HttpContextAccessor!.HttpContext?.User.FindFirst("sub")?.Value
-                 ?? HttpContextAccessor.HttpContext?.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+	var userId = HttpContextAccessor!.HttpContext?.User.FindFirst("sub")?.Value
+				 ?? HttpContextAccessor.HttpContext?.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
 
-    var avatarUrl = userId != null
-        ? Url.Action("Avatar", "Profile", new { area = "Identity", userId })
-        : Url.Content("~/img/default_profile.png");
+	var avatarUrl = userId != null
+		? Url.Action("Avatar", "Profile", new { area = "Identity", userId })
+		: Url.Content("~/img/default_profile.png");
 
-    var currentCulture = System.Globalization.CultureInfo.CurrentUICulture.Name;
-    var dataAtual = DateTime.Now.ToString("MMMM, yyyy", System.Globalization.CultureInfo.CurrentCulture);
+	var currentCulture = System.Globalization.CultureInfo.CurrentUICulture.Name;
+	var dataAtual = DateTime.Now.ToString("MMMM, yyyy", System.Globalization.CultureInfo.CurrentCulture);
 
-    var nomeCompleto = $"{User.FindFirst("FirstName")?.Value} {User.FindFirst("LastName")?.Value}";
+	var nomeCompleto = $"{User.FindFirst("FirstName")?.Value} {User.FindFirst("LastName")?.Value}";
 
-    Estoque.Domain.Entities.UserSetting? settings = null;
-    if (!string.IsNullOrEmpty(userId))
-    {
-        settings = Db.UserSettings.FirstOrDefault(s => s.UserId == userId);
-    }
+	Estoque.Domain.Entities.UserSetting? settings = null;
+
+	var temNotificacao = Db.Notificacoes.Any(n => n.IdUser == userId && !n.Lido);
 }
 
 <nav class="navbar navbar-top fixed-top navbar-expand shadow-sm" id="navbarDefault">
-    <div class="container-fluid">
-        <div class="d-flex align-items-center ms-3">
-            <a asp-area="Identity"
-               asp-controller="Settings"
-               asp-action="Index"
-               class="d-flex align-items-center text-decoration-none">
-                <i class="bi bi-gear-fill me-1" style="color: #b0b5c1"></i>
-                <span class="fw-semibold" style="color: #b0b5c1">Configurações</span>
-            </a>
-        </div>
-        <ul class="navbar-nav navbar-nav-icons flex-row align-items-center">
+	<div class="container-fluid">
+		<div class="d-flex align-items-center ms-3">
+			<a asp-area="Identity"
+			   asp-controller="Settings"
+			   asp-action="Index"
+			   class="d-flex align-items-center text-decoration-none">
+				<i class="bi bi-gear-fill me-1" style="color: #b0b5c1"></i>
+				<span class="fw-semibold" style="color: #b0b5c1">Configurações</span>
+			</a>
+		</div>
+		<ul class="navbar-nav navbar-nav-icons flex-row align-items-center">
 
-            <li class="nav-item d-flex align-items-center me-3">
-                <span class="fw-semibold text-muted" style="color: #969db2 !important;">@dataAtual</span>
+			<li class="nav-item d-flex align-items-center me-3">
+				<span class="fw-semibold text-muted" style="color: #969db2 !important;">@dataAtual</span>
 
-            </li>
-            @if (settings?.EnableDarkModeSwitch ?? false)
-            {
-            <li class="nav-item">
-                <div class="theme-control-toggle position-relative">
-                    <input class="form-check-input ms-0 theme-control-toggle-input" type="checkbox"
-                           data-theme-control="estoqueTheme" value="dark" id="themeControlToggle" hidden />
-                    <label class="mb-0 theme-control-toggle-label" for="themeControlToggle"
-                           data-bs-toggle="tooltip" data-bs-placement="bottom" title="Mudar Tema">
-                        <span id="themeIcon" class="bi bi-sun-fill"></span>
-                    </label>
-                </div>
-            </li>
-            }
-            @if (settings?.EnableLanguageSwitch ?? false)
-            {
-            <li class="nav-item dropdown hide-on-xs">
-                <button id="language-button" data-bs-placement="bottom" title="Idioma" type="button" class="nav-link"
-                        aria-expanded="false" data-bs-toggle="dropdown">
-                    <span class="fas fa-lg fa-globe-americas" style="color: #969db2;"></span>
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end navbar-dropdown-caret" href="#">
-                    <li>
-                        <form method="post" asp-area="Admin" asp-controller="Language" asp-action="SetLanguage" class="m-0 p-0">
-                            <input type="hidden" name="returnUrl" value="@(Context.Request.Path + Context.Request.QueryString)" />
-                            <button type="submit" class="dropdown-item @(currentCulture == "en-US" ? "active" : "")"
-                                    name="culture" value="en-US">
-                                <span class="fi fi-us"></span><span> United States</span>
-                            </button>
-                        </form>
-                    </li>
-                    <li>
-                        <form method="post" asp-area="Admin" asp-controller="Language" asp-action="SetLanguage" class="m-0 p-0">
-                            <input type="hidden" name="returnUrl" value="@(Context.Request.Path + Context.Request.QueryString)" />
-                            <button type="submit" class="dropdown-item @(currentCulture == "pt-BR" ? "active" : "")"
-                                    name="culture" value="pt-BR">
-                                <span class="fi fi-br"></span><span> Brasil</span>
-                            </button>
-                        </form>
-                    </li>
-                </ul>
-            </li>
-            }
+			</li>
+			@if (settings?.EnableDarkModeSwitch ?? false)
+			{
+				<li class="nav-item">
+					<div class="theme-control-toggle position-relative">
+						<input class="form-check-input ms-0 theme-control-toggle-input" type="checkbox"
+							   data-theme-control="estoqueTheme" value="dark" id="themeControlToggle" hidden />
+						<label class="mb-0 theme-control-toggle-label" for="themeControlToggle"
+							   data-bs-toggle="tooltip" data-bs-placement="bottom" title="Mudar Tema">
+							<span id="themeIcon" class="bi bi-sun-fill"></span>
+						</label>
+					</div>
+				</li>
+			}
+			@if (settings?.EnableLanguageSwitch ?? false)
+			{
+				<li class="nav-item dropdown hide-on-xs">
+					<button id="language-button" data-bs-placement="bottom" title="Idioma" type="button" class="nav-link"
+							aria-expanded="false" data-bs-toggle="dropdown">
+						<span class="fas fa-lg fa-globe-americas" style="color: #969db2;"></span>
+					</button>
+					<ul class="dropdown-menu dropdown-menu-end navbar-dropdown-caret" href="#">
+						<li>
+							<form method="post" asp-area="Admin" asp-controller="Language" asp-action="SetLanguage" class="m-0 p-0">
+								<input type="hidden" name="returnUrl" value="@(Context.Request.Path + Context.Request.QueryString)" />
+								<button type="submit" class="dropdown-item @(currentCulture == "en-US" ? "active" : "")"
+										name="culture" value="en-US">
+									<span class="fi fi-us"></span><span> United States</span>
+								</button>
+							</form>
+						</li>
+						<li>
+							<form method="post" asp-area="Admin" asp-controller="Language" asp-action="SetLanguage" class="m-0 p-0">
+								<input type="hidden" name="returnUrl" value="@(Context.Request.Path + Context.Request.QueryString)" />
+								<button type="submit" class="dropdown-item @(currentCulture == "pt-BR" ? "active" : "")"
+										name="culture" value="pt-BR">
+									<span class="fi fi-br"></span><span> Brasil</span>
+								</button>
+							</form>
+						</li>
+					</ul>
+				</li>
+			}
 
-            <li class="nav-item">
-                <a class="nav-link text-center" href="#" data-bs-toggle="modal" data-bs-target="#sobreEmpresaModal" title="Sobre a Empresa">
-                    <i class="fas fa-info-circle" style="color: #969db2;"></i>
-                </a>
-            </li>
+			<li class="nav-item">
+				<a class="nav-link text-center" href="#" data-bs-toggle="modal" data-bs-target="#sobreEmpresaModal" title="Sobre a Empresa">
+					<i class="fas fa-info-circle" style="color: #969db2;"></i>
+				</a>
+			</li>
 
-            <li class="nav-item">
-                <a class="nav-link text-center position-relative" href="/Notifications" role="button" title="@Localizer["HistoricoNotificacoes"]">
-                    <i class="bi bi-bell-fill" style="color: #969db2;"></i>
-                </a>
-            </li>
+			<li class="nav-item position-relative">
+				<a class="nav-link text-center position-relative"
+				   href="@Url.Action("Index", "Notificacao", new { area = "Estoque" })"
+				   role="button"
+				   title="@Localizer["HistoricoNotificacoes"]">
+					<i class="bi bi-bell-fill" style="color:@(temNotificacao ? "#dc3545" : "#969db2");"></i>
 
-            <li class="nav-item dropdown d-flex align-items-center">
-                <a class="nav-link lh-1 d-flex align-items-center" id="navbarDropdownUser" href="#"
-                   data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Menu do Usuário">
-                    <div class="avatar avatar-l position-relative me-2">
-                        <img src="@avatarUrl"
-                             onerror="this.onerror=null;this.src='@Url.Content("~/img/default_profile.png")';"
-                             class="rounded-circle" alt="Avatar" />
-                    </div>
-                    <span class="d-inline fw-semibold" style="color:#969db2;">
-                        @nomeCompleto
-                    </span>
-                </a>
+					@if (temNotificacao)
+					{
+						<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+							!
+							<span class="visually-hidden">Novas notificações</span>
+						</span>
+					}
+				</a>
+			</li>
 
-                <div class="dropdown-menu dropdown-menu-end navbar-dropdown-caret py-0 dropdown-profile shadow border"
-                     aria-labelledby="navbarDropdownUser" style="min-width: 16rem; max-height: 24rem; overflow: visible;">
-                    <div class="card position-relative border-0">
-                        <div class="card-body p-0">
-                            <br />
-                        </div>
-                        <div class="overflow-auto scrollbar" style="max-height: 20rem;">
-                            <ul class="nav flex-column mb-2 pb-1">
-                                <li class="nav-item">
-                                    <a class="nav-link px-3" asp-area="Identity"
-                                       asp-controller="Profile" asp-action="Index">
-                                        <span class="me-2 fa fa-user"></span>@Localizer["Perfil"]
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link px-3" href="/Identity/Email/ChangeEmail">
-                                        <span class="me-2 fa fa-at"></span>@Localizer["AlterarEmail"]
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link px-3" href="/Identity/ChangePassword">
-                                        <span class="me-2 fa fa-key"></span>@Localizer["AlterarSenha"]
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="card-footer p-0 border-top border-translucent">
-                            <div class="px-3 logout-button">
-                                <form id="logoutForm" asp-area="Identity" asp-controller="SignOut" asp-action="Index"
-                                      method="post" class="w-100">
-                                    @Html.AntiForgeryToken()
-                                    <button type="submit" class="btn btn-secondary w-100 mt-2">
-                                        <i class="fa fa-sign-out-alt me-2"></i>@Localizer["Leave"]
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </li>
+			<li class="nav-item dropdown d-flex align-items-center">
+				<a class="nav-link lh-1 d-flex align-items-center" id="navbarDropdownUser" href="#"
+				   data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Menu do Usuário">
+					<div class="avatar avatar-l position-relative me-2">
+						<img src="@avatarUrl"
+							 onerror="this.onerror=null;this.src='@Url.Content("~/img/default_profile.png")';"
+							 class="rounded-circle" alt="Avatar" />
+					</div>
+					<span class="d-inline fw-semibold" style="color:#969db2;">
+						@nomeCompleto
+					</span>
+				</a>
 
-        </ul>
-    </div>
+				<div class="dropdown-menu dropdown-menu-end navbar-dropdown-caret py-0 dropdown-profile shadow border"
+					 aria-labelledby="navbarDropdownUser" style="min-width: 16rem; max-height: 24rem; overflow: visible;">
+					<div class="card position-relative border-0">
+						<div class="card-body p-0">
+							<br />
+						</div>
+						<div class="overflow-auto scrollbar" style="max-height: 20rem;">
+							<ul class="nav flex-column mb-2 pb-1">
+								<li class="nav-item">
+									<a class="nav-link px-3" asp-area="Identity"
+									   asp-controller="Profile" asp-action="Index">
+										<span class="me-2 fa fa-user"></span>@Localizer["Perfil"]
+									</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link px-3" href="/Identity/Email/ChangeEmail">
+										<span class="me-2 fa fa-at"></span>@Localizer["AlterarEmail"]
+									</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link px-3" href="/Identity/ChangePassword">
+										<span class="me-2 fa fa-key"></span>@Localizer["AlterarSenha"]
+									</a>
+								</li>
+							</ul>
+						</div>
+						<div class="card-footer p-0 border-top border-translucent">
+							<div class="px-3 logout-button">
+								<form id="logoutForm" asp-area="Identity" asp-controller="SignOut" asp-action="Index"
+									  method="post" class="w-100">
+									@Html.AntiForgeryToken()
+									<button type="submit" class="btn btn-secondary w-100 mt-2">
+										<i class="fa fa-sign-out-alt me-2"></i>@Localizer["Leave"]
+									</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</li>
+
+		</ul>
+	</div>
 </nav>
 
 
 @* O modal não foi alterado, mas está aqui para completar o código *@
 <div class="modal fade" id="sobreEmpresaModal" tabindex="-1" aria-labelledby="sobreEmpresaModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content">
-            <div class="modal-header text-white">
-                <h5 class="modal-title" id="sobreEmpresaModalLabel">Sobre</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
-            </div>
-            <div class="modal-body">
-                <div class="text-center mb-4">
-                    <img src="~/img/ifsp.png" alt="Logotipo IFSP" class="mb-3" style="width: 100px;">
-                    <h4 class="text-primary">Uma Parceria de Inovação</h4>
-                    <p class="text-muted">
-                        Este produto foi desenvolvido como um projeto acadêmico pelo time de alunos do
-                        <strong>Instituto Federal de Ciência e Tecnologia de São Paulo (IFSP)</strong>,
-                        campus São Paulo. Uma prova de que a tecnologia e a educação andam juntas.
-                    </p>
-                </div>
+	<div class="modal-dialog modal-dialog-centered modal-lg">
+		<div class="modal-content">
+			<div class="modal-header text-white">
+				<h5 class="modal-title" id="sobreEmpresaModalLabel">Sobre</h5>
+				<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
+			</div>
+			<div class="modal-body">
+				<div class="text-center mb-4">
+					<img src="~/img/ifsp.png" alt="Logotipo IFSP" class="mb-3" style="width: 100px;">
+					<h4 class="text-primary">Uma Parceria de Inovação</h4>
+					<p class="text-muted">
+						Este produto foi desenvolvido como um projeto acadêmico pelo time de alunos do
+						<strong>Instituto Federal de Ciência e Tecnologia de São Paulo (IFSP)</strong>,
+						campus São Paulo. Uma prova de que a tecnologia e a educação andam juntas.
+					</p>
+				</div>
 
-                <hr>
+				<hr>
 
-                <div class="text-center mb-4">
-                    <img src="~/img/logo.png" alt="Logotipo VIP Penha" class="mb-3" style="width: 100px;">
-                    <h4 class="text-secondary">VIP Penha</h4>
-                    <p>
-                        A Vip Penha é especialista em <strong>acessórios para celular e assistência técnica</strong>.
-                        Atua com vendas no atacado e varejo, oferecendo soluções completas e de alta qualidade para todos os clientes.
-                    </p>
-                </div>
+				<div class="text-center mb-4">
+					<img src="~/img/logo.png" alt="Logotipo VIP Penha" class="mb-3" style="width: 100px;">
+					<h4 class="text-secondary">VIP Penha</h4>
+					<p>
+						A Vip Penha é especialista em <strong>acessórios para celular e assistência técnica</strong>.
+						Atua com vendas no atacado e varejo, oferecendo soluções completas e de alta qualidade para todos os clientes.
+					</p>
+				</div>
 
-                <hr>
+				<hr>
 
-                <div class="mt-4">
-                    <h5 class="text-primary"><i class="bi bi-geo-alt-fill me-2"></i>Contatos do IFSP - Campus São Paulo</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2">
-                            <strong>Endereço:</strong> <a href="https://maps.app.goo.gl/seu-endereco" target="_blank" class="text-decoration-none">R. Pedro Vicente, 625 - Canindé, São Paulo - SP, 01109-010</a>
-                        </li>
-                        <li class="mb-2">
-                            <strong>Telefone:</strong> <a href="tel:+551127637548" class="text-decoration-none">(11) 2763-7548</a>
-                        </li>
-                        <li class="mb-2">
-                            <strong>Website:</strong> <a href="https://spo.ifsp.edu.br" target="_blank" class="text-decoration-none">spo.ifsp.edu.br</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-            </div>
-        </div>
-    </div>
+				<div class="mt-4">
+					<h5 class="text-primary"><i class="bi bi-geo-alt-fill me-2"></i>Contatos do IFSP - Campus São Paulo</h5>
+					<ul class="list-unstyled">
+						<li class="mb-2">
+							<strong>Endereço:</strong> <a href="https://maps.app.goo.gl/seu-endereco" target="_blank" class="text-decoration-none">R. Pedro Vicente, 625 - Canindé, São Paulo - SP, 01109-010</a>
+						</li>
+						<li class="mb-2">
+							<strong>Telefone:</strong> <a href="tel:+551127637548" class="text-decoration-none">(11) 2763-7548</a>
+						</li>
+						<li class="mb-2">
+							<strong>Website:</strong> <a href="https://spo.ifsp.edu.br" target="_blank" class="text-decoration-none">spo.ifsp.edu.br</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+			</div>
+		</div>
+	</div>
 </div>

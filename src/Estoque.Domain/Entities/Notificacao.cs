@@ -6,4 +6,5 @@ public class Notificacao
     public string Mensagem { get; set; }
     public DateTime Data { get; set; }
     public string IdUser { get; set; }
+    public bool Lido { get; set; } = false;
 }

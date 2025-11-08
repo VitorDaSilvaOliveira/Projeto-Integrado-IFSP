@@ -11,16 +11,16 @@ using Microsoft.EntityFrameworkCore;
 using Moq;
 using JJMasterData.Core.UI.Components;
 
-namespace Estoque.Tests.UnitTests;
+namespace Estoque.Tests.Controllers;
 
-public class UserControllerUnitTests
+public class UserControllerTests
 {
     private readonly Mock<UserManager<ApplicationUser>> _userManagerMock;
     private readonly Mock<SignInManager<ApplicationUser>> _signInManagerMock;
     private readonly UserService _userService;
     private readonly EstoqueDbContext _context;
 
-    public UserControllerUnitTests()
+    public UserControllerTests()
     {
         var options = new DbContextOptionsBuilder<EstoqueDbContext>()
             .UseInMemoryDatabase(Guid.NewGuid().ToString())

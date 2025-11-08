@@ -73,15 +73,4 @@ public static class DanfeUtils
         int resto = soma % 11;
         return (resto == 0 || resto == 1) ? 0 : 11 - resto;
     }
-
-    public static byte[] GerarQrPng(string texto, int pixels)
-    {
-        using var generator = new QRCodeGenerator();
-        using var data = generator.CreateQrCode(texto, QRCodeGenerator.ECCLevel.Q);
-        using var qr = new QRCode(data);
-        using Bitmap bmp = qr.GetGraphic(10);
-        using var ms = new MemoryStream();
-        bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
-        return ms.ToArray();
-    }
 }

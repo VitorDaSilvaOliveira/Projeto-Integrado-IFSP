@@ -1,11 +1,8 @@
-﻿using Estoque.Domain.Entities;
-using Estoque.Domain.Enums;
+﻿using Estoque.Domain.Enums;
 using Estoque.Infrastructure.Data;
-using Estoque.Infrastructure.Utils;
 using JJMasterData.Core.UI.Components;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System.Globalization;
 
 namespace Estoque.Infrastructure.Services;
 
@@ -13,9 +10,7 @@ public class PedidoService(
     IComponentFactory componentFactory,
     EstoqueDbContext context,
     ILogger<MovimentacaoService> logger,
-    //  AuditLogService auditLogService,
     MovimentacaoService movimentacaoService)
-// SignInManager<ApplicationUser> signInManager)
 {
     public int? statusPreUpdate = null;
     public int? statusPostUpdate = null;
