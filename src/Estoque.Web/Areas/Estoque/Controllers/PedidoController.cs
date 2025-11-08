@@ -35,28 +35,31 @@ public class PedidoController(PedidoService pedidoService, RelatorioService rela
     }
 
     [HttpGet]
-    public IActionResult GeraPDFSLAConsumo(string idPedido)
+    public async Task<IActionResult> GeraPDFSLAConsumo(string idPedido, int modo = 0)
     {
-        var pedidosItens = new List<PedidoItemPDF>
-            {
-                new PedidoItemPDF
-                {
-                    nomeCodigoProduto = "IPHONE13-BLK",
-                    descricaoProduto = "iPhone 13 Preto",
-                    precoVendaPedidoItem = 3600,
-                    categoriaProduto = "Celular",
-                    fimGarantiaProdutoItem = "26/09/2026",
-                    quantidadeProdutoItem = 1
-                }
-            };
+        // Busca o pedido real no banco
+        var pedido = await relatorioService.GetInformacoesPedidoAsync(idPedido);
+        var pedidosItens = await relatorioService.GetInformacoesPedidoItensAsync(idPedido);
 
-        var pdf = relatorioService.GeraPDFSLAConsumo(pedidosItens);
+        var pdf = relatorioService.GeraPDFSLAConsumo(pedidosItens, pedido);
 
         using var stream = new MemoryStream();
         pdf.Save(stream, false);
         stream.Position = 0;
 
-        return File(stream.ToArray(), "application/pdf");
+        var fileName = $"Pedido_{pedido.numeroPedido}.pdf";
+
+        if (modo == 0)
+        {
+            // Visualização (inline)
+            Response.Headers.Add("Content-Disposition", $"inline; filename={fileName}");
+            return File(stream.ToArray(), "application/pdf");
+        }
+        else
+        {
+            // Download (attachment)
+            return File(stream.ToArray(), "application/pdf", fileName);
+        }
     }
 
     public async Task<IActionResult> SendOrder(int idPedido, string userId)

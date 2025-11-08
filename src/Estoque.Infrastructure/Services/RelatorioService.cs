@@ -10,22 +10,37 @@ using PdfSharpCore.Drawing;
 using PdfSharpCore.Fonts;
 using PdfSharpCore.Pdf;
 using PdfSharpCore.Utils;
+using Estoque.Infrastructure.Data;
+using Estoque.Domain.Entities;
+using Estoque.Domain.Enums;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace Estoque.Infrastructure.Services
 {
     public class RelatorioService
     {
-        public PdfDocument GeraPDFSLAConsumo(List<PedidoItemPDF> pedidosItens)
+        private readonly EstoqueDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
+
+
+        public RelatorioService(EstoqueDbContext context, UserManager<ApplicationUser> userManager)
+        {
+            _context = context;
+            _userManager = userManager;
+        }
+
+        public PdfDocument GeraPDFSLAConsumo(List<PedidoItemPDF> pedidosItens, PedidoPDF pedido)
         {
             var headers = new[] { "PRODUTO", "ADICIONAIS", "PREÇO", "CATEGORIA", "FIM GARANTIA", "QUANTIDADE" };
             var keys = new[] { "nomeCodigoProduto", "descricaoProduto", "precoVendaPedidoItem", "categoriaProduto", "fimGarantiaProdutoItem", "quantidadeProdutoItem" };
             var widths = new double[] { 40, 20, 10, 10, 10, 10 };
 
-            var pdf = GeraRelatorioPDF("PEDIDO", headers, keys, widths, pedidosItens);
+            var pdf = GeraRelatorioPDF("PEDIDO", headers, keys, widths, pedidosItens, pedido);
             return pdf;
         }
 
-        public static PdfDocument GeraRelatorioPDF<T>(string titulo, string[] headers, string[] keys, double[] widths, List<T> itens)
+        public static PdfDocument GeraRelatorioPDF<T>(string titulo, string[] headers, string[] keys, double[] widths, List<T> itens, PedidoPDF pedido)
         {
             // CONFIGURAÇÃO ---------------------------------------
             var (document, page, gfx, margin, pageWidth, currentY) = NovoPDF_A4Horizontal();
@@ -39,6 +54,10 @@ namespace Estoque.Infrastructure.Services
 
             // Título
             currentY = PDF_Titulo(gfx, margin, pageWidth, currentY, titulo, XBrushes.Gray, 2);
+            currentY += 0;
+
+            // Informações do pedido
+            currentY = PDFInfosPedido(page, gfx, margin, pageWidth, currentY, pedido);
             currentY += 1;
 
             // Cabeçalho da tabela
@@ -216,6 +235,96 @@ namespace Estoque.Infrastructure.Services
             return currentY;
         }
 
+        public static double PDFInfosPedido(PdfPage page, XGraphics gfx, double margin, double pageWidth, double currentY, PedidoPDF pedido)
+        {
+            var fontLabel = FontsPDF.Fonte8VerdanaBold;
+            var fontValue = FontsPDF.Fonte8Verdana;
+            var penLine = new XPen(XColors.LightGray, 0.5);
+            var headerBrush = new XSolidBrush(XColors.LightGray);
+
+            double linhaHeight = 14;
+            double espacamento = 6;
+            double colunaEspacamento = 20;
+
+            // 3 colunas
+            double colunaLargura = (pageWidth - margin * 2 - (2 * colunaEspacamento)) / 3;
+            double xCol1 = margin;
+            double xCol2 = xCol1 + colunaLargura + colunaEspacamento;
+            double xCol3 = xCol2 + colunaLargura + colunaEspacamento;
+            double yPos = currentY;
+
+            // Cabeçalho da seção
+            gfx.DrawRectangle(headerBrush, new XRect(margin, yPos, pageWidth, 20));
+            gfx.DrawString("INFORMAÇÕES DO PEDIDO", FontsPDF.Fonte10VerdanaBold, XBrushes.Black,
+                new XRect(margin + 5, yPos + 3, pageWidth - margin * 2, 20), XStringFormats.TopLeft);
+            yPos += 25;
+
+            // Lista de informações (sem observações ainda)
+            var infos = new (string label, string value)[]
+            {
+        ("NÚMERO DO PEDIDO:", pedido.numeroPedido),
+        ("DATA DO PEDIDO:", pedido.dataPedido),
+        ("CLIENTE:", pedido.clienteNome),
+        ("VALOR TOTAL:", pedido.valorTotal),
+        ("STATUS:", pedido.status),
+        ("OPERAÇÃO:", pedido.operacao),
+        ("USUÁRIO:", pedido.usuario),
+        ("FORMA DE PAGAMENTO:", pedido.formaPagamento),
+        ("PARCELAS:", pedido.parcelas)
+            };
+
+            // Exibir 3 informações por linha
+            for (int i = 0; i < infos.Length; i += 3)
+            {
+                var col1 = infos[i];
+                var col2 = i + 1 < infos.Length ? infos[i + 1] : (label: "", value: "");
+                var col3 = i + 2 < infos.Length ? infos[i + 2] : (label: "", value: "");
+
+                // Coluna 1
+                gfx.DrawString(col1.label, fontLabel, XBrushes.Black,
+                    new XRect(xCol1, yPos, colunaLargura / 2, linhaHeight), XStringFormats.TopLeft);
+                gfx.DrawString(col1.value ?? "-", fontValue, XBrushes.Black,
+                    new XRect(xCol1 + colunaLargura / 2, yPos, colunaLargura / 2, linhaHeight), XStringFormats.TopLeft);
+
+                // Coluna 2
+                gfx.DrawString(col2.label, fontLabel, XBrushes.Black,
+                    new XRect(xCol2, yPos, colunaLargura / 2, linhaHeight), XStringFormats.TopLeft);
+                gfx.DrawString(col2.value ?? "-", fontValue, XBrushes.Black,
+                    new XRect(xCol2 + colunaLargura / 2, yPos, colunaLargura / 2, linhaHeight), XStringFormats.TopLeft);
+
+                // Coluna 3
+                gfx.DrawString(col3.label, fontLabel, XBrushes.Black,
+                    new XRect(xCol3, yPos, colunaLargura / 2, linhaHeight), XStringFormats.TopLeft);
+                gfx.DrawString(col3.value ?? "-", fontValue, XBrushes.Black,
+                    new XRect(xCol3 + colunaLargura / 2, yPos, colunaLargura / 2, linhaHeight), XStringFormats.TopLeft);
+
+                // Linha divisória inferior
+                gfx.DrawLine(penLine, margin, yPos + linhaHeight + 2, pageWidth - margin, yPos + linhaHeight + 2);
+
+                yPos += linhaHeight + espacamento;
+            }
+
+            // Campo de observações - mesma linha que os outros
+            if (!string.IsNullOrWhiteSpace(pedido.observacoes))
+            {
+                yPos += 5;
+
+                gfx.DrawString("OBSERVAÇÕES:", fontLabel, XBrushes.Black,
+                    new XRect(margin, yPos, pageWidth / 6, linhaHeight), XStringFormats.TopLeft);
+
+                gfx.DrawString(pedido.observacoes, fontValue, XBrushes.Black,
+                    new XRect(margin + pageWidth / 6, yPos, pageWidth - margin * 2 - (pageWidth / 6), linhaHeight),
+                    XStringFormats.TopLeft);
+
+                // Linha inferior
+                yPos += linhaHeight + espacamento;
+                gfx.DrawLine(penLine, margin, yPos, pageWidth - margin, yPos);
+            }
+
+
+            return yPos + 10;
+        }
+
         public static void EscreveLinhaTabela<T>(XGraphics gfx, double startX, double startY, double[] colWidths, string[] keys, List<T> lista, int rowIndex, XFont font, XBrush brush)
         {
             if (rowIndex < 0 || rowIndex >= lista.Count)
@@ -294,7 +403,75 @@ namespace Estoque.Infrastructure.Services
             gfx.DrawString(texto, FontsPDF.Fonte8Verdana, XBrushes.Black, rectComPadding, XStringFormats.CenterRight);
         }
 
-    }
+        // GETS DE INFORMAÇOES
+        public async Task<PedidoPDF> GetInformacoesPedidoAsync(string idPedido)
+        {
+            if (!int.TryParse(idPedido, out int pedidoId))
+                throw new ArgumentException("ID do pedido inválido.");
+
+            var pedido = await _context.Pedidos
+                .Include(p => p.Cliente)
+                .FirstOrDefaultAsync(p => p.Id == pedidoId);
+
+            if (pedido == null)
+                throw new Exception("Pedido não encontrado.");
+
+            // Aqui buscamos o usuário responsável pelo Id armazenado no pedido
+            var usuario = await _userManager.FindByIdAsync(pedido.UsuarioResponsavel);
+
+            var pedidoPDF = new PedidoPDF
+            {
+                numeroPedido = pedido.NumeroPedido ?? "-",
+                dataPedido = pedido.DataPedido?.ToString("dd/MM/yyyy - HH:mm") ?? "-",
+                clienteNome = pedido.Cliente?.Nome ?? "-",
+                valorTotal = pedido.ValorTotal?.ToString("C2") ?? "-",
+                status = pedido.Status.HasValue
+                ? System.Text.RegularExpressions.Regex.Replace(pedido.Status.Value.ToString(), "(\\B[A-Z])", " $1")
+                : "-",
+                operacao = pedido.Operacao?.ToString() ?? "-",
+                observacoes = pedido.Observacoes ?? "-",
+                usuario = usuario?.NormalizedUserName ?? "-", // <- aqui pegamos o NormalizedUserName
+                formaPagamento = Enum.IsDefined(typeof(FormasPagamento), pedido.FormaPagamento ?? 0)
+                    ? ((FormasPagamento)pedido.FormaPagamento).ToString()
+                    : "-",
+                parcelas = pedido.Parcelas?.ToString() ?? "-"
+            };
+
+            return pedidoPDF;
+        }
+            public async Task<List<PedidoItemPDF>> GetInformacoesPedidoItensAsync(string idPedido)
+            {
+                if (!int.TryParse(idPedido, out int id))
+                    throw new ArgumentException("O parâmetro idPedido deve ser um número válido.");
+
+                var itens = await _context.PedidosItens
+                    .Where(x => x.id_Pedido == id)
+                    .Include(x => x.Produto)
+                        .ThenInclude(p => p.Categoria)
+                    .Include(x => x.Pedido) // para pegar a data do pedido pai
+                    .Select(x => new PedidoItemPDF
+                    {
+                        nomeCodigoProduto =
+                          (x.Produto.Codigo ?? "-") + " - " + (x.Produto.Nome ?? "-"),
+                        descricaoProduto = x.Produto.Nome ?? x.Produto.Descricao ?? "-",
+                        precoVendaPedidoItem = x.Produto.Preco ?? 0,
+                        categoriaProduto = x.Produto.Categoria.NomeCategoria ?? "-",
+
+                        fimGarantiaProdutoItem =
+                            x.Pedido.DataPedido.HasValue && x.Produto.DiasGarantia.HasValue
+                                ? x.Pedido.DataPedido.Value
+                                    .AddDays(x.Produto.DiasGarantia.Value)
+                                    .ToString("dd/MM/yyyy")
+                                : "-",
+
+                        quantidadeProdutoItem = x.Quantidade
+                    })
+                    .ToListAsync();
+
+                return itens;
+            }
+
+        }
 
     public static class FontsPDF
     {
@@ -339,7 +516,6 @@ namespace Estoque.Infrastructure.Services
         public static readonly XFont Fonte20VerdanaBold = new XFont("Verdana", 20, XFontStyle.Bold);
         public static readonly XFont Fonte25VerdanaBold = new XFont("Verdana", 25, XFontStyle.Bold);
     }
-
     public class PedidoItemPDF
     {
         public string nomeCodigoProduto { get; set; }
@@ -349,4 +525,23 @@ namespace Estoque.Infrastructure.Services
         public string fimGarantiaProdutoItem { get; set; }
         public int quantidadeProdutoItem { get; set; }
     }
+    public class PedidoPDF
+    {
+        public string numeroPedido { get; set; }
+        public string dataPedido { get; set; }
+        public string clienteNome { get; set; }
+        public string valorTotal { get; set; }
+        public string status { get; set; }
+        public string operacao { get; set; }
+        public string observacoes { get; set; }
+        public string usuario { get; set; }
+        public string formaPagamento { get; set; }
+        public string parcelas { get; set; }
+    }
+    public class SLAConsumoRequest
+    {
+        public List<PedidoItemPDF> PedidosItens { get; set; }
+        public PedidoPDF Pedido { get; set; }
+    }
+
 }
