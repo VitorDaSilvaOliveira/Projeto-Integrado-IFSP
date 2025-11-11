@@ -1,34 +1,43 @@
 # Sistema de Controle de Estoque VIP Penha <img src="src/Estoque.Web/wwwroot/img/logo.png" alt="Vip-Penha Logo" width="50" height="50">
 
-## 📌 Sobre o Projeto
-Sistema completo de gestão de estoque desenvolvido para a **VIP Penha**, loja especializada em eletrônicos. Oferece controle de produtos, movimentações, fornecedores e relatórios integrados.
+Versão: 1.0
+Data: 11 de Novembro de 2025
+Autor: Gean Carlos de Sousa Bandeira
 
-## 🚀 Como Rodar
+## 1. Introdução e Objetivo
 
-### 1️⃣ Pré-requisitos
+Este Pull Request (PR) introduz a suíte inicial e fundamental de testes de unidade para a camada de `Estoque.Domain.Entities`.
 
-Antes de tudo, garanta que você tenha instalado:
+O objetivo é garantir que todas as entidades de domínio (como `Cliente`, `Pedido`, `Movimentacao`, etc.) se comportem como esperado, validando duas áreas principais:
+1.  **Atribuição de Propriedades:** Assegurar que todas as propriedades (Set/Get) funcionam corretamente.
+2.  **Valores Padrão:** Verificar se as entidades são instanciadas com os valores padrão corretos (ex: `Id` como 0, `Status` como Inativo, `string` como `string.Empty` ou `null`, etc.).
 
-- [SDK .NET 9](https://dotnet.microsoft.com/en-us/download/dotnet/9.0)
-- [SQL Server](https://www.microsoft.com/pt-br/sql-server/sql-server-downloads)
-- [Visual Studio 2022](https://visualstudio.microsoft.com/) ou [Rider](https://www.jetbrains.com/rider/)
-- (Opcional) [Azure Data Studio](https://learn.microsoft.com/pt-br/sql/azure-data-studio/) ou [SQL Server Management Studio (SSMS)](https://learn.microsoft.com/pt-br/sql/ssms/download-sql-server-management-studio-ssms) para gerenciar o banco.
+## 2. Estratégia e Escopo
 
----
+* **Escopo:** O escopo deste PR está focado exclusivamente nas classes de entidade puras (POCOs) dentro do namespace `Estoque.Domain.Entities`.
+* **Estratégia:** Segue o padrão "Arrange, Act, Assert". Nenhum mock (simulação) é necessário, pois estes testes validam o estado e a construção dos objetos, isolando a lógica do domínio.
+* **Ferramentas:** xUnit.
 
-### 2️⃣ Clonar o Repositório
+## 3. Casos de Teste Detalhados Adicionados
 
-```bash
-git clone https://github.com/seuusuario/vip-penha-estoque.git
-```
+Foram adicionadas **7 novas classes de teste**, cobrindo 7 entidades de domínio, totalizando **77 novos testes de unidade**.
 
-### 3️⃣ Configurar o Banco de Dados
+| Entidade Testada | Descrição do Teste | Total de Testes | Cobertura da Lógica |
+| :--- | :--- | :--- | :--- |
+| **ClienteTests** | Valida todas as 10 propriedades (Set/Get) e os valores padrão (`Id`, `Nome`, `Status`, `DataCadastro`, etc.). | **17** | Garante a integridade da entidade `Cliente` e seus valores iniciais. |
+| **PedidoTests** | Valida propriedades e valores padrão, com foco em tipos anuláveis (como `ClienteId?`, `Status?`, `ValorTotal?`). | **15** | Assegura que o `Pedido` pode ser criado em um estado nulo/padrão antes do preenchimento. |
+| **PedidoItemTests** | Valida as propriedades de vínculo (`id_Pedido`, `ProdutoId`) e cálculos (`Quantidade`, `ValorTotal`). | **8** | Cobre o item de linha básico do pedido. |
+| **MovimentacaoTests** | Valida propriedades (`IdProduto?`, `DataMovimentacao?`) e o valor padrão do enum `TipoMovimentacao` (Saida = 0). | **14** | Garante que a movimentação de estoque é registrada corretamente. |
+| **DevolucaoTests** | Valida as propriedades da devolução (`DataDevolucao`, `Observacao`) e seus valores padrão. | **6** | Cobre a entidade principal de devolução. |
+| **DevolucaoItemTests**| Valida as propriedades do item devolvido (`IdProduto`, `QuantidadeDevolvida`). | **7** | Cobre os itens de linha da devolução. |
+| **MasterDataTests** | Valida a entidade genérica `MasterData`, incluindo suas propriedades anuláveis (`Json?`, `Sync?`). | **10** | Garante o funcionamento da entidade de metadados. |
 
-Configure sua conexão de banco no `appsettings.json`
+## 4. Como Executar os Testes
 
-### 4️⃣ Rodar a Aplicação
+1.  Navegue até a pasta raiz da solução (ou do projeto de testes) pelo terminal.
+2.  Execute o comando:
 
-```bash
-cd Estoque.Web
-dotnet run
-```
+    ```bash
+    dotnet test
+    ```
+3.  Verifique se todos os 77 testes passam com sucesso.
