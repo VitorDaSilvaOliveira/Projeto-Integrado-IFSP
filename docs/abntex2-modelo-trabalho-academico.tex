@@ -1208,9 +1208,12 @@ As classes escolhidas para a testagem foram:
 \label{res_domain}
 \begin{tabular}{|c|c|p{4cm}|p{4cm}|}
 \hline
-\textbf{Tipo} & \textbf{Total} & \textbf{Candidatas a testes} & \textbf{Cobertura esperada} \\
+\textbf{Tipo} & \textbf{Total} & \textbf{Candidatas a teste} & \textbf{Cobertura esperada} \\
 \hline
 Entities & 22 & 20 & 91\% \\ \hline
+Enums & 7 & 4 & 57\% \\ \hline
+Models & 13 & 9 & 69\% \\ \hline
+Total Geral & 42 & 33 & 72\% \\ \hline
 
 \hline
 \end{tabular}
@@ -1218,6 +1221,51 @@ Entities & 22 & 20 & 91\% \\ \hline
 \end{quadro}
 
 \FloatBarrier
+
+\begin{quadro}[htb]
+\centering
+\caption{Resumo Consolidado Estoque.Infrastructure}
+\label{res_infrastructure}
+\begin{tabular}{|c|c|p{4cm}|p{4cm}|}
+\hline
+\textbf{Tipo} & \textbf{Total} & \textbf{Candidatas a teste} & \textbf{Cobertura esperada} \\
+\hline
+Data & 1 & 1 & 100\% \\ \hline
+Factory & 2 & 1 & 50\% \\ \hline
+Services & 18 & 17 & 94\% \\ \hline
+Total Geral & 26 & 24 & 86\% \\ \hline
+
+\hline
+\end{tabular}
+\legend{Fonte: Elaborado pelos autores}
+\end{quadro}
+
+\FloatBarrier
+
+\begin{quadro}[htb]
+\centering
+\caption{Resumo Consolidado Estoque.Web}
+\label{res_web}
+\begin{tabular}{|c|c|p{4cm}|p{4cm}|}
+\hline
+\textbf{Tipo} & \textbf{Total} & \textbf{Candidatas a teste} & \textbf{Cobertura esperada} \\
+\hline
+Admin (Controllers) & 6 & 6 & 100\% \\ \hline
+Estoque (Controllers) & 10 & 10 & 100\% \\ \hline
+Identity (Controllers) & 4 & 4 & 100\% \\ \hline
+Configuration & 14 & 8 & 73\% \\ \hline
+Total Geral & 34 & 28 & 93\% \\ \hline
+
+\hline
+\end{tabular}
+\legend{Fonte: Elaborado pelos autores}
+\end{quadro}
+
+\FloatBarrier
+
+Todas as classes estão mapeadas e disponíveis no arquivo do projeto em:
+https://github.com/VitorDaSilvaOliveira/Projeto-Integrado-IFSP/tree/master/docs/Anexos.
+
 
 
 \subsection{Segurança}
@@ -1230,18 +1278,66 @@ O domínio do projeto recebeu nota A no teste do SSL Labs, o que indica uma impl
  Os critérios avaliados apresentaram os seguintes resultados:
 
 
-%imagem
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Figuras/SSL.png}
+    \caption{Resultado do SSL Labs}
+\end{figure}
 
-%quadro
+\begin{quadro}[htb]
+\centering
+\caption{Resultado SSL Labs}
+\label{res_ssl}
+\begin{tabular}{|c|c|p{6cm}|}
+\hline
+\textbf{Critério} & \textbf{Pontuação} & \textbf{Explicação} \\
+\hline
+Certificate & 100/100 & O certificado SSL/TLS está corretamente configurado, é válido, confiável e emitido por uma autoridade certificadora reconhecida. Garante autenticidade e confiança na comunicação. \\ \hline
+Protocol Support & 100/100 & Apenas versões seguras dos protocolos TLS estão habilitadas, com desativação de versões obsoletas (como SSLv3 e TLS 1.0/1.1), evitando vulnerabilidades conhecidas. \\ \hline
+Key Exchange & 90/100 & O mecanismo de troca de chaves usa algoritmos modernos (como ECDHE) que fornecem sigilo perfeito (Perfect Forward Secrecy), garantindo que sessões passadas não possam ser descriptografadas mesmo em caso de comprometimento futuro da chave privada. \\ \hline
+Cipher Strength & 90/100 & Os conjuntos de cifras (ciphers) utilizados são fortes, com chaves de 256 bits e algoritmos seguros (AES-GCM, SHA-256), protegendo os dados contra ataques de força bruta e descriptografia não autorizada. \\ \hline
+
+\hline
+\end{tabular}
+\legend{Fonte: Elaborado pelos autores}
+\end{quadro}
+
+\FloatBarrier
 
  \item \textbf{Avaliação Security Headers}
 O projeto também foi analisado pela ferramenta Security Headers, que verifica a presença e configuração de cabeçalhos HTTP responsáveis por mitigar ataques comuns (como XSS, clickjacking e data leaks).
 
-%imagem
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Figuras/Headers.png}
+    \caption{Resultado do Security Headers}
+\end{figure}
 
 O site obteve todas as diretivas essenciais ativas, conforme o checklist abaixo:
 
-%quadro
+\begin{quadro}[htb]
+\centering
+\caption{Resultado Security Headers}
+\label{res_shd}
+\begin{tabular}{|c|c|p{6cm}|}
+\hline
+\textbf{Cabeçalho} & \textbf{Status} & \textbf{Função} \\
+\hline
+Strict-Transport-Security (HSTS) & Positivo & Obriga o navegador a se conectar sempre via HTTPS, evitando downgrade attacks. \\ \hline
+Permissions-Policy & Positivo & Restringe o acesso a APIs e recursos sensíveis (como câmera, microfone e geolocalização). \\ \hline
+Content-Security-Policy (CSP) & Positivo & Impede a execução de scripts não autorizados, protegendo contra Cross-Site Scripting (XSS). \\ \hline
+Referrer-Policy & Positivo & Controla o envio de informações de origem, reduzindo o vazamento de dados de navegação. \\ \hline
+X-Content-Type-Options & Positivo & Evita que navegadores interpretem arquivos com tipos MIME incorretos, prevenindo ataques de injeção. \\ \hline
+X-Frame-Options & Positivo & Bloqueia o carregamento do site em iframes externos, prevenindo ataques de clickjacking. \\ \hline
+
+\hline
+\end{tabular}
+\legend{Fonte: Elaborado pelos autores}
+\end{quadro}
+
+\FloatBarrier
+
+
 \end{itemize}
 
 Conclusões a respeito de segurança
