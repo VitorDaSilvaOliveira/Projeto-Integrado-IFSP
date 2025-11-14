@@ -1153,17 +1153,17 @@ Para manter a consistência e legibilidade do código-fonte, foram adotados os s
     \end{itemize}
 \end{itemize}
 
-\section{Cobertura de Código e Qualidade} % Exemplo: 4.4 Cobertura de Código e Qualidade
-A Cobertura de Código é uma métrica essencial que estabelece o nível de \textbf{confiabilidade e robustez} do código-fonte. Ela mede a porcentagem de código executada pelo conjunto de testes automatizados, servindo como uma garantia quantificável de que as regras de negócio críticas foram validadas.
+\section{Cobertura de Código e Testes} 
+A Cobertura de Código é uma métrica essencial que estabelece o nível de \textbf{confiabilidade e robustez} do código-fonte. E a definição estratégica de teste é fundamental para garantir essa qualidade no codigo e no funcionamento do sistema como um todo.
 
 \subsection{Metas e Escopo da Cobertura}
 A estratégia de cobertura e qualidade foi delineada para garantir a máxima confiabilidade nas áreas de maior risco do sistema. O escopo foi rigorosamente focado em três pilares:
 
 \begin{itemize}
-    \item \textbf{Meta de Cobertura:} Foi estabelecida uma meta mínima de \textbf{80\% de cobertura de linhas} (\textit{Line Coverage}) para todos os módulos que encapsulam a lógica de negócio e complexidade algorítmica.
-    \item \textbf{Validação Funcional:} O foco principal da cobertura foi na validação rigorosa de \textbf{funções e métodos críticos} nas camadas de \textit{Services} e \textit{Handlers}, garantindo que cada caminho lógico (incluindo desvios condicionais e tratamento de erros) fosse exercitado.
-    \item \textbf{Aderência às Regras de Negócio:} O esforço de teste foi concentrado nas \textbf{Regras de Domínio (\textit{Entities})} e \textbf{Lógica de Negócio}, assegurando que todos os cálculos críticos, validações de estado e mapeamentos de status fossem validados.
-    \item \textbf{Integração de Dados:} Uma parte significativa dos testes de integração foi dedicada a validar a \textbf{comunicação e a persistência de dados} no banco de dados, garantindo a integridade transacional e o correto mapeamento de objetos.
+    \item \textbf{Cobertura de Classes:} Foi estabelecida uma meta mínima de 80\% de cobertura de classes  para todos os módulos que encapsulam a lógica de negócio e complexidade algorítmica.
+    \item \textbf{Segurança:} O ambiente web foi submetido a testes de segurança para garantir que o sistema esteja de acordo com os padrões de segurança, recebendo no mínimo uma nota A.
+    \item \textbf{Integração:}Os testes de integração são essenciais para garantir que todos os ambientes necessários para que a aplicação funcione, estejam devidamente integrados, sem a existência de erros e falhas de segurança.
+    \item \textbf{Usabilidade:} O esforço destes testes foi concentrado em fornecer a melhor experiência para o usuário, garantindo que todas as telas e processos sejam de fácil entedimento e interação.
 \end{itemize}
 
 \subsection{Implementação e Validação}
@@ -1172,248 +1172,141 @@ A qualidade do código e a aderência à meta de cobertura são asseguradas por 
 \begin{itemize}
     \item \textbf{Testes Unitários e de Integração:  (C\#):}
  
-        A Cobertura é calculada através da execução automatizada de \textit{Unit Tests} e \textit{Integration Tests} (C\#), utilizando o \textbf{`dotnet test`} para coletar as métricas de linha e função.
-    
-
+        A cobertura de classes é implementada pelos \textit{Unit Tests} (C\#, que indicam a porcentagem de classes cobertas, e a integração dos ambientes é feita através de \textit{Integration Tests} (C\#), que indicam se a conexão entre os sitemas está funcional ou falha.
 
     \item \textbf{Testes de Ponta-a-Ponta (\textit{End-to-End}, E2E):}
-    \begin{itemize}
-        \item A validação dos fluxos completos de usuário, incluindo a interface gráfica, é realizada com \textbf{testes automatizados usando Selenium}. Embora estes testes não contribuam diretamente para o cálculo da Cobertura de Código de Linha, eles validam a **funcionalidade completa** do sistema sob a perspectiva do usuário.
-    \end{itemize}
 
-    \item \textbf{Testes Manuais no Back-end:}
-    \begin{itemize}
-        \item Complementarmente, foram realizados testes manuais de funcionalidades críticas diretamente no \textit{Back-end}, focando na validação ad-hoc de \textbf{APIs e contratos de serviço} antes da integração com o \textit{Front-end}.
-    \end{itemize}
+        A validação dos fluxos completos de usuário, incluindo a interface gráfica, é realizada com \textbf{testes automatizados usando Selenium}, garantindo que o processo, sob a perspectiva do usuário, esteja funcional. E também foram feitos tetes manuais para validar a usabilidade do sistema.
+
+
+    \item \textbf{Teste de Segurnça:}
+
+        O ambiente web do projeto foi submetido a testes de segurança em duas ferramentas: SSL Labs e Security Headers, ferramentas que avaliam se o ambiente web está de acordo com os padrões de segurança mais modernos.
 \end{itemize}
 
 
 
-\section{Testes e Manutenção}
-Com a evolução da tecnologia, diversas práticas foram desenvolvidas visando um melhor desenvolvimento e manutenção de um projeto. Desde o início do processo de criação de um sistema, questões como escalabilidade, manutenibilidade e usabilidade devem ser consideradas para garantir a longevidade e qualidade do software.
+\section{Resultados dos Testes}
 
-\subsection{Manutenção do Sistema}
+Após definidas as metas de cobertura e os métodos de implementação e validação, a seguir consta os resultados dos testes propostos.
 
-A manutenção de software é um processo essencial que ocorre após a implantação da aplicação, seu objetivo é garantir o funcionamento contínuo e eficiente do sistema. Durante o desenvolvimento deste projeto, foram realizadas manutenções de diferentes tipos:
+\subsection{Cobertura de Classes}
+
+O projeto da VIP Penha é formado por diversas classes com diferentes funções, como mapeamento de tabelas do banco de dados, classes controladoras de requisições e classes que executam as regras de negócio.
+Foram Mapeadas 85 classes em nosso sistema, analisando o conteúdo e a relevância de cada classe, decidimos por testar 83,7\% delas, totalizando 71 classes. 
+As classes escolhidas para a testagem foram:
+\begin{itemize}
+\item \textbf{As que envolviam entidades (classes mapeadoras de tabelas do banco de dados) que executam papéis de grande importância nos processos do negócio.}
+\item \textbf{As classes de serviço que executam métodos das regras de negócio}
+\item \textbf{As classes que contêm as rotas que aceitam requisições (controladoras)}
+\item \textbf{As classes que geram as telas do sistema com base na biblioteca JJ Masterdata}
+\end{itemize}
+
+\begin{quadro}[htb]
+\centering
+\caption{Resumo Consolidado Estoque.Domain}
+\label{res_domain}
+\begin{tabular}{|c|c|p{4cm}|p{4cm}|}
+\hline
+\textbf{Tipo} & \textbf{Total} & \textbf{Candidatas a testes} & \textbf{Cobertura esperada} \\
+\hline
+Entities & 22 & 20 & 91\% \\ \hline
+
+\hline
+\end{tabular}
+\legend{Fonte: Elaborado pelos autores}
+\end{quadro}
+
+\FloatBarrier
+
+
+\subsection{Segurança}
+
+O ambiente web do projeto foi submetido a testes de segurança em duas ferramentas: SSL Labs e Security Headers obtivemos resultados positivos em ambos, o que demonstra a conformidade das práticas adotadas com os padrões modernos de segurança da web.
 
 \begin{itemize}
-    \item \textbf{Manutenção Corretiva}: correção de falhas no uso do sistema, foram encontradas algumas ações do sistema em inconformidade com as regras de negócio estabelecidas, algumas inconsistências nos formulários. Também foram identificadas algumas chamadas incorretas no código C\#  
-    \item \textbf{Manutenção Evolutiva}: conforme se deu o desenvolvimento, notou-se que algumas outras necessidades surgiram, como mudanças em campos e fluxos do sistema, como por exemplo o campo de observação da movimentação.
-    \item \textbf{Manutenção Adaptativa}: atualizações para garantir compatibilidade com novas versões de bibliotecas e frameworks utilizados, como o Bootstrap e componentes do ASP.NET. Além de portabilidades que permitem a compatibilidade com o uso do site por celulares, como a tela de login.
-    \item \textbf{Manutenção Preventiva}: otimização de consultas do banco de dados, revisões e refatorações do código fonte e técnicas de proteção de rotas e requisições.
+ \item \textbf{Avaliação SSL Labs — Nota A}
+O domínio do projeto recebeu nota A no teste do SSL Labs, o que indica uma implementação sólida e segura do protocolo HTTPS/TLS.
+ Os critérios avaliados apresentaram os seguintes resultados:
+
+
+%imagem
+
+%quadro
+
+ \item \textbf{Avaliação Security Headers}
+O projeto também foi analisado pela ferramenta Security Headers, que verifica a presença e configuração de cabeçalhos HTTP responsáveis por mitigar ataques comuns (como XSS, clickjacking e data leaks).
+
+%imagem
+
+O site obteve todas as diretivas essenciais ativas, conforme o checklist abaixo:
+
+%quadro
 \end{itemize}
 
-Durante todo o processo de manutenção também foi usado em larga escala o versionamento via Git, essencial para o controle de todas as mudanças do projeto. O versionamento com o registro de correções e da evolução do sistema, salvo no histórico de commits do GitHub, foi de grande importância para o desenvolvimento em equipe.
-
-O conjunto dessas ações contribuiu para a estabilidade, escalabilidade e segurança geral do sistema, garantindo assim uma maior satisfação dos Stakeholders.
-
-\subsection{Plano de Testes}
-
-A execução de testes é fundamental para o bom desenvolvimento de uma aplicação, eles devem ser continuamente realizados ao longo de toda construção dos processos de um sistema e também após a sua implementação. A testagem permite uma verificação precisa da qualidade de um software, ajuda a capturar falhas de execução de processos e a atestar que as funcionalidades estão sendo executadas de maneira correta.
-
-\subsubsection{Estratégia de Testes}
-
-A estratégia de testes adotada neste projeto foi centrada em testes manuais exploratórios, realizados ao longo de todo o processo de desenvolvimento. A cada nova funcionalidade implementada, foram conduzidos testes com foco na verificação do comportamento esperado, análise de validações, usabilidade e integridade dos dados.
-
-O foco principal foi validar os seguintes aspectos:
+Conclusões a respeito de segurança
+Os resultados das análises indicam que o site está altamente seguro, contendo boas práticas como
 \begin{itemize}
-    \item Navegação entre telas e fluxos do sistema.
-    \item Validação de formulários com campos obrigatórios e regras de negócio.
-    \item Conferência do correto salvamento, atualização e exclusão de dados no banco de dados.
-    \item Verificação de mensagens de erro e alertas ao usuário.
+ \item \textbf{Comunicação criptografada e confiável.}
+ \item \textbf{Cabeçalhos HTTP de segurança corretamente configurados.}
+ \item \textbf{Mitigação de ataques comuns de rede e navegador.}
 \end{itemize}
 
-Como parte da organização, os testes foram documentados por meio de registros no GitHub, vinculando as falhas encontradas aos commits de correção, o que favoreceu o acompanhamento da evolução da qualidade do sistema.
+\subsection{Integração}
 
-\subsubsection{Escopo dos testes}
-
-Os testes foram realizados dentro de módulos do sistema:
+A aplicação da VIP Penha necessita de duas integrações para funcionar devidamente, sendo elas a conexão com um banco de dados SQL Server e a integração com um ambiente de emissão de notas fiscais.
 
 \begin{itemize}
-    \item \textbf{Login}: foi testada a obrigatóriedade dos campos de usuário e senha, caso os campos não estejam preenchidos um alerta surgirá, não permitindo o avanço, caso os campos sejam preenchidos o sistema conferirá o usuário e a senha e então permitirá ou não o acesso do usuário.
-    \item \textbf{Operações do Banco de Dados}: o cadastro de produtos, movimentações, categorias de produtos, fornecedores e usuários foram testados a fim de garatir que o for feito por meio das telas do sistema de fato criem registros no banco de dados.
-    \item \textbf{Comportamento de telas}: o comportamento de botões, navegação, preenchimento de campos e alterações de estados da tela foram testados, alcançando, assim, a melhor experiência possível para o usuário.
+
+ \item \textbf{Integração com o Banco de Dados}
+
+O projeto realiza sua integração com o banco de dados \textit{SQL Server} por meio do \textit{Entity Framework Core} (EF Core), um ORM (Object-Relational Mapper) que permite mapear as entidades de domínio diretamente para tabelas do banco, garantindo abstração da camada de persistência e manutenção simplificada. A configuração dessa integração é feita na classe \textit{ConfigurationExtensions}, onde o contexto \textit{EstoqueDbContext} é registrado com a string de conexão \textit{DefaultConnection}, conforme o trecho abaixo:
+
+ \textit{builder.Services.AddDbContext<EstoqueDbContext>(options =>
+	options.UseSqlServer(
+    	builder.Configuration.GetConnectionString("DefaultConnection"),
+    	sql => sql.MigrationsAssembly("Estoque.Infrastructure")
+	)
+);}
+
+Essa abordagem permite que o projeto: Utilize injeção de dependência para gerenciar o contexto de dados, centralize a migração de esquemas dentro do assembly Estoque.Infrastructure e mantenha consistência entre as entidades de domínio (Estoque.Domain.Entities) e suas representações no banco. Além disso, o uso de repositórios e serviços garante que as operações de CRUD e as transações sejam tratadas de forma controlada, assegurando integridade e rastreabilidade dos dados.
+
+
+ \item \textbf{Integração com o Ambiente da Nota Fiscal}
+
+O ambiente da Nota Fiscal foi integrado ao sistema por meio do serviço  \textit{NotaFiscalService}, localizado na camada  \textit{Estoque.Infrastructure.Services}.
+Esse serviço tem como responsabilidade principal o gerenciamento dos processos de emissão, registro e comunicação das notas fiscais, integrando o sistema a um ambiente fiscal externo (seja de homologação ou produção).
+A integração segue princípios de arquitetura limpa, sendo mediada por:
+
+\begin{itemize}
+ \item \textbf{Serviços especializados responsáveis por comunicação HTTP segura com a API fiscal.}
+ \item \textbf{Modelos de dados padronizados que representam os documentos fiscais eletrônicos.}
+ \item \textbf{Tratamento de exceções e logs detalhados para auditoria e rastreabilidade.}
 \end{itemize}
 
-\newpage
+Essa integração é configurada e injetada automaticamente pelo método AddEstoqueServices(), que registra o NotaFiscalService e outros componentes auxiliares:
+ \textit{services.AddScoped<NotaFiscalService>()};
+Dessa forma, o ambiente de notas fiscais é completamente integrado ao fluxo do sistema, permitindo:
 
-\subsubsection{Casos de teste Funcionais}
-\begin{table}[htbp]
-\centering
+\begin{itemize}
+ \item \textbf{Automatização da emissão de notas após o registro de vendas ou movimentações.}
+ \item \textbf{Sincronização de status fiscais (autorização, cancelamento, inutilização)}
+ \item \textbf{Segurança no tráfego de dados por meio de HTTPS e certificados digitais válidos.}
+\end{itemize}
 
-\caption{Casos de Teste Funcionais - Módulo de Autenticação}
-\begin{tabular}{|p{1cm}|p{1.6cm}|p{3.3cm}|p{2.3cm}|p{3.5cm}|p{3.5cm}|}
-\hline
-\textbf{ID} & \textbf{Funcio-nalidade} & \textbf{Descrição do Teste} & \textbf{Pré-condições} & \textbf{Passos} & \textbf{Resultado Esperado} \\
-\hline
-TF001 & Login & Verificar se o sistema permite login com credenciais válidas & Usuário cadastrado no sistema & 
-1. Acessar a página de login
-2. Inserir nome de usuário válido
-3. Inserir senha válida
-4. Clicar no botão ``Entrar'' & 
-O sistema deve autenticar o usuário e redirecionar para a página inicial do sistema \\
-\hline
-TF002 & Login & Verificar se o sistema impede login com senha incorreta & Usuário cadastrado no sistema & 
-1. Acessar a página de login
-2. Inserir nome de usuário válido
-3. Inserir senha incorreta
-4. Clicar no botão ``Entrar'' & 
-O sistema deve exibir mensagem de erro indicando credenciais inválidas \\
-\hline
-TF003 & Logout & Verificar se o sistema permite que o usuário faça logout & Usuário autenticado no sistema & 
-1. Clicar na opção de logout no menu
-2. Confirmar a ação se solicitado & 
-O sistema deve encerrar a sessão e redirecionar para a página de login \\
-\hline
-\end{tabular}
-\legend{Fonte: Elaborado pelos autores}
-\end{table}
+ \item \textbf{Conclusão sobre Integração}
 
-\FloatBarrier
+A integração entre o sistema, o banco de dados e o ambiente da nota fiscal foi projetada de forma modular e segura. Enquanto o  \textit{Entity Framework Core} assegura persistência confiável e manutenção simples dos dados internos, o  \textit{NotaFiscalService} garante interoperabilidade com os sistemas fiscais externos, proporcionando automação, conformidade legal e rastreabilidade completa das operações.
 
-\begin{table}[htbp]
+\end{itemize}
 
-\caption{Casos de Teste Funcionais - Módulo de Cadastro de Produtos}
-\begin{tabular}{|p{1cm}|p{1.7cm}|p{3.2cm}|p{2.1cm}|p{3.5cm}|p{3.5cm}|}
-\hline
-\textbf{ID} & \textbf{Funcio-nalidade} & \textbf{Descrição do Teste} & \textbf{Pré-condições} & \textbf{Passos} & \textbf{Resultado Esperado} \\
-\hline
-TF004 & Cadastro de Produto & Verificar se o sistema permite cadastrar um novo produto com dados válidos & Usuário autenticado com permissões de cadastro & 
-1. Acessar o módulo de cadastro de produtos
-2. Clicar em ``Novo Produto''
-3. Preencher todos os campos obrigatórios
-4. Clicar em ``Salvar'' & 
-O sistema deve cadastrar o produto e exibir mensagem de sucesso \\
-\hline
-TF005 & Cadastro de Produto & Verificar se o sistema impede cadastro de produto com código duplicado & Produto já cadastrado no sistema & 
-1. Acessar o módulo de cadastro de produtos
-2. Clicar em ``Novo Produto''
-3. Inserir código já existente
-4. Preencher demais campos
-5. Clicar em ``Salvar'' & 
-O sistema deve exibir mensagem de erro indicando que o código já existe \\
-\hline
-TF006 & Edição de Produto & Verificar se o sistema permite editar dados de um produto existente & Produto cadastrado no sistema & 
-1. Acessar o módulo de produtos
-2. Localizar o produto desejado
-3. Clicar em ``Editar''
-4. Modificar campos desejados
-5. Clicar em ``Salvar'' & 
-O sistema deve atualizar os dados do produto e exibir mensagem de sucesso \\
-\hline
-\end{tabular}
-\legend{Fonte: Elaborado pelos autores}
-\end{table}
+\subsection{Usabilidade}
 
-\FloatBarrier
+Testes de usabilidade do sistema foram executados almejando a melhor experiência possível para o usuário. Foram apresentadas as visões gerais do sistema e definidos objetivos específicos a serem alcançados durante a utilização por um usuário externo ao desenvolvimento do projeto. Inicialmente, recebemos feedbacks negativos quanto à clareza dos processos e à disposição de algumas funcionalidades na interface.
 
-\begin{table}[htbp]
-\centering
+Com base nessas observações, foram revisados os fluxos de navegação e reorganizados elementos visuais para tornar o sistema mais intuitivo. O participante relatou dificuldades principalmente na compreensão da sequência correta de ações, o que indicou a necessidade de uma revisão nos fluxos dos processos e das interfaces gráficas.
 
-\caption{Casos de Teste Funcionais - Módulo de Movimentação de Estoque}
-\begin{tabular}{|p{1cm}|p{1.7cm}|p{3.3cm}|p{2.2cm}|p{3.5cm}|p{3.5cm}|}
-\hline
-\textbf{ID} & \textbf{Funcio-nalidade} & \textbf{Descrição do Teste} & \textbf{Pré-condições} & \textbf{Passos} & \textbf{Resultado Esperado} \\
-\hline
-TF007 & Entrada de Estoque & Verificar se o sistema registra corretamente a entrada de produtos no estoque & Produto cadastrado no sistema & 
-1. Acessar o módulo de movimentação
-2. Selecionar ``Entrada de Estoque''
-3. Selecionar o produto
-4. Informar quantidade
-5. Informar data e fornecedor
-6. Clicar em ``Registrar'' & 
-O sistema deve registrar a entrada e atualizar o saldo do produto \\
-\hline
-TF008 & Saída de Estoque & Verificar se o sistema registra corretamente a saída de produtos do estoque & Produto cadastrado com saldo disponível & 
-1. Acessar o módulo de movimentação
-2. Selecionar ``Saída de Estoque''
-3. Selecionar o produto
-4. Informar quantidade (menor que o saldo)
-5. Informar data e destino
-6. Clicar em ``Registrar'' & 
-O sistema deve registrar a saída e atualizar o saldo do produto \\
-\hline
-TF009 & Saída de Estoque & Verificar se o sistema impede saída maior que o saldo disponível & Produto cadastrado com saldo disponível & 
-1. Acessar o módulo de movimentação
-2. Selecionar ``Saída de Estoque''
-3. Selecionar o produto
-4. Informar quantidade maior que o saldo
-5. Informar data e destino
-6. Clicar em ``Registrar'' & 
-O sistema deve exibir mensagem de erro indicando saldo insuficiente \\
-\hline
-\end{tabular}
-\legend{Fonte: Elaborado pelos autores}
-\end{table}
-
-\FloatBarrier
-
-\begin{table}[htbp]
-\centering
-
-\caption{Casos de Teste Funcionais - Módulo de Relatórios}
-\begin{tabular}{|p{1cm}|p{1.5cm}|p{3.2cm}|p{2.1cm}|p{3.5cm}|p{3.5cm}|}
-\hline
-\textbf{ID} & \textbf{Funcio-nalidade} & \textbf{Descrição do Teste} & \textbf{Pré-condições} & \textbf{Passos} & \textbf{Resultado Esperado} \\
-\hline
-TF010 & Relatório de Saldo & Verificar se o sistema gera relatório de saldo atual de estoque & Produtos cadastrados com movimentações & 
-1. Acessar o módulo de relatórios
-2. Selecionar ``Relatório de Saldo''
-3. Definir filtros (opcional)
-4. Clicar em ``Gerar'' & 
-O sistema deve exibir relatório com saldo atual de todos os produtos \\
-\hline
-TF011 & Relatório de Movimentações & Verificar se o sistema gera relatório de movimentações por período & Movimentações registradas no sistema & 
-1. Acessar o módulo de relatórios
-2. Selecionar ``Relatório de Movimentações''
-3. Definir período
-4. Clicar em ``Gerar'' & 
-O sistema deve exibir relatório com todas as movimentações do período \\
-\hline
-\end{tabular}
-\legend{Fonte: Elaborado pelos autores}
-\end{table}
-
-\FloatBarrier
-\subsubsection{Casos de teste não Funcionais}
-\FloatBarrier
-\begin{table}[htbp]
-\centering
-\caption{Casos de Teste Não Funcionais - Usabilidade}
-\begin{tabular}{|p{1.3cm}|p{3.3cm}|p{3.5cm}|p{2.5cm}|p{4.5cm}|}
-\hline
-\textbf{ID} & \textbf{Descrição} & \textbf{Critérios de Aceitação} & \textbf{Ferramentas} & \textbf{Resultado Esperado} \\
-\hline
-TNF009 & Facilidade de uso para novos usuários & Usuários sem treinamento devem conseguir realizar tarefas básicas em até 5 minutos & Teste com usuários reais e cronômetro & Novos usuários devem conseguir realizar operações básicas sem necessidade de treinamento extensivo \\
-\hline
-TNF010 & Clareza das mensagens de erro & Mensagens de erro devem ser claras e indicar como resolver o problema & Avaliação qualitativa com usuários & As mensagens de erro devem ser compreensíveis e fornecer orientações para resolução \\
-\hline
-TNF011 & Responsividade em dispositivos móveis & Interface deve se adaptar corretamente a diferentes tamanhos de tela & Teste em diferentes dispositivos ou simuladores & A interface deve ser utilizável e visualmente adequada em smartphones, tablets e desktops \\
-\hline
-TNF012 & Acessibilidade & Sistema deve atender aos requisitos básicos de acessibilidade  & Ferramentas de análise de acessibilidade & O sistema deve ser utilizável por pessoas com deficiências motoras \\
-\hline
-\end{tabular}
-\legend{Fonte: Elaborado pelos autores}
-\end{table}
-
-\begin{table}[htbp]
-\centering
-\caption{Casos de Teste Não Funcionais - Desempenho}
-\begin{tabular}{|p{1.3cm}|p{3.3cm}|p{3.5cm}|p{2.5cm}|p{4.5cm}|}
-\hline
-\textbf{ID} & \textbf{Descrição} & \textbf{Critérios de Aceitação} & \textbf{Ferramentas} & \textbf{Resultado Esperado} \\
-\hline
-TNF001 & Tempo de resposta para consulta de produtos & Tempo de resposta deve ser menor que 2 segundos para até 100 produtos & Cronômetro & O sistema deve responder às consultas de produtos dentro do limite de tempo estabelecido, mesmo com um grande volume de dados \\
-\hline
-TNF002 & Tempo de geração de relatório de movimentações & Relatório com até 1000 registros deve ser gerado em menos de 5 segundos & Cronômetro  & O sistema deve gerar relatórios de movimentação dentro do limite de tempo estabelecido, mesmo com grande volume de dados \\
-\hline
-TNF003 & Capacidade de processamento simultâneo & Sistema deve suportar até 20 usuários simultâneos sem degradação de desempenho &  ferramenta similar de teste de carga & O sistema deve manter o tempo de resposta aceitável mesmo com múltiplos usuários realizando operações simultaneamente \\
-\hline
-TNF004 & Tempo de carregamento inicial da aplicação & A aplicação deve carregar completamente em menos de 5 segundos em conexão & Cronômetro  & A interface do usuário deve estar completamente carregada e operacional dentro do limite de tempo estabelecido \\
-\hline
-\end{tabular}
-\legend{Fonte: Elaborado pelos autores}
-\end{table}
+Após as melhorias, uma nova rodada de testes foi realizada, o usuário conseguiu realizar as tarefas propostas com muito mais fluidez e clareza. Desta forma, foi constatada a eficácia das modificações, auxiliando na evolução do produto final.
 
 
 
