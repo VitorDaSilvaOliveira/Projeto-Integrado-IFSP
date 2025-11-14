@@ -22,7 +22,9 @@ public class LoginButtonTest : IDisposable
     [Fact]
     public void TestaBotaoEntrarComHover()
     {
-        driver.Navigate().GoToUrl("https://localhost:7262/Identity/SignIn");
+//      driver.Navigate().GoToUrl("https://localhost:7262/Identity/SignIn");
+        driver.Navigate().GoToUrl("https://ifspestoque.azurewebsites.net/");
+
 
         var botaoEntrar = wait.Until(
             SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(

@@ -5,6 +5,7 @@ using Estoque.Infrastructure.Services;
 using FluentAssertions;
 using JJMasterData.Core.Events.Args;
 using JJMasterData.Core.UI.Components;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,7 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Xunit;
+using Estoque.Tests.Controllers;
 
 namespace Estoque.Tests.IntegrationTests
 {
@@ -22,17 +24,15 @@ namespace Estoque.Tests.IntegrationTests
     {
         private readonly EstoqueDbContext _context;
         private readonly PedidoService _pedidoService;
-      //  private readonly DevolucaoService _devolucaoService;
         private readonly MovimentacaoService _movimentacaoService;
-
+       
         public PedidoFluxoIntegrationTests()
         {
             var options = new DbContextOptionsBuilder<EstoqueDbContext>()
-                .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                .Options;
+              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+            .Options;
 
             _context = new EstoqueDbContext(options);
-
             var componentFactoryMock = Mock.Of<IComponentFactory>();
             var loggerMock = Mock.Of<ILogger<MovimentacaoService>>();
             var loggerPedidoMock = Mock.Of<ILogger<MovimentacaoService>>();
@@ -84,19 +84,9 @@ namespace Estoque.Tests.IntegrationTests
                 loggerPedidoMock,
                 movimentacaoService
             );
-
-            //var signInManagerMock = Mock.Of<SignInManager<ApplicationUser>>();
-            /*_devolucaoService = new DevolucaoService(
-                  componentFactoryMock,
-                 _context,
-                  loggerMock,
-                  auditLogService,
-                  _movimentacaoService,
-                  signInManagerMock.Object
-            );*/
-
+           
         }
-            [Fact]
+        [Fact]
         public async Task ProcessOrder_DeveFinalizarPedidoERegistrarMovimentacao()
         {
             // Arrange
@@ -222,7 +212,7 @@ namespace Estoque.Tests.IntegrationTests
                 .ThrowAsync<InvalidOperationException>()
                 .WithMessage("*Estoque insuficiente*");
 
-            await _context.Entry(lote).ReloadAsync(); 
+            await _context.Entry(lote).ReloadAsync();
             await _context.Entry(pedido).ReloadAsync();
 
             lote.QuantidadeDisponivel.Should().Be(estoqueDisponivel);
@@ -235,76 +225,14 @@ namespace Estoque.Tests.IntegrationTests
             movimentacao.Should().BeNull("Não deveria registrar movimentação se o estoque é insuficiente");
         }
 
-     /*   [Fact]
-        public async Task ProcessAfterInsertAsync_DeveRegistrarDevolucaoECriarMovimentacao()
-        {
-            // Arrange
-            const int produtoId = 1001;
-            const int quantidadeDevolvida = 2;
-            const string userId = "user-teste";
-            const string motivo = "Produto com defeito";
-
-            var produto = new Produto
-            {
-                IdProduto = produtoId,
-                Nome = "Notebook",
-                Codigo = "NBK123",
-                Preco = 3000
-            };
-
-            var devolucao = new Devolucao
-            {
-                IdDevolucao = 1,
-                IdUser = userId
-            };
-
-            var itemDevolucao = new DevolucaoItem
-            {
-                IdDevolucao = 1,
-                IdProduto = produtoId,
-                QuantidadeDevolvida = quantidadeDevolvida,
-                Motivo = motivo,
-                Devolvido = 0
-            };
-
-            _context.Produtos.Add(produto);
-            _context.Devolucoes.Add(devolucao);
-            _context.DevolucoesItens.Add(itemDevolucao);
-            await _context.SaveChangesAsync();
-
-            var eventArgs = new FormAfterActionEventArgs
-            {
-                Values = new Dictionary<string, object>
-        {
-            { "idDevolucao", devolucao.IdDevolucao }
-        }
-            };
-
-            // Act
-            await _devolucaoService.ProcessAfterInsertAsync(null, eventArgs);
-
-            // Assert
-
-            var itemAtualizado = await _context.DevolucoesItens
-                .FirstOrDefaultAsync(i => i.IdDevolucao == 1 && i.IdProduto == produtoId);
-
-            itemAtualizado.Should().NotBeNull();
-            itemAtualizado!.Devolvido.Should().Be(1);
-
-            var movimentacao = await _context.Movimentacoes
-                .FirstOrDefaultAsync(m => m.IdProduto == produtoId && m.TipoMovimentacao == TipoMovimentacao.Devolucao);
-
-            movimentacao.Should().NotBeNull("Deveria ter sido registrada uma movimentação de devolução");
-            movimentacao!.Quantidade.Should().Be(quantidadeDevolvida);
-            movimentacao.IdUser.Should().Be(userId);
-            movimentacao.Observacao.Should().Contain(motivo);
-        }
-        */
-
-
+       
         public void Dispose()
         {
             _context.Dispose();
         }
+
+       
+
     }
+
 }
