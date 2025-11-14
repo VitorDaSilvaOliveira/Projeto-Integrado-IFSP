@@ -1263,7 +1263,7 @@ Total Geral & 34 & 28 & 93\% \\ \hline
 
 \FloatBarrier
 
-Todas as classes estão mapeadas e disponíveis no arquivo do projeto em:
+Todas as classes estão mapeadas e disponíveis no arquivo do projeto em: \\
 https://github.com/VitorDaSilvaOliveira/Projeto-Integrado-IFSP/tree/master/docs/Anexos.
 
 
@@ -1356,15 +1356,7 @@ A aplicação da VIP Penha necessita de duas integrações para funcionar devida
 
  \item \textbf{Integração com o Banco de Dados}
 
-O projeto realiza sua integração com o banco de dados \textit{SQL Server} por meio do \textit{Entity Framework Core} (EF Core), um ORM (Object-Relational Mapper) que permite mapear as entidades de domínio diretamente para tabelas do banco, garantindo abstração da camada de persistência e manutenção simplificada. A configuração dessa integração é feita na classe \textit{ConfigurationExtensions}, onde o contexto \textit{EstoqueDbContext} é registrado com a string de conexão \textit{DefaultConnection}, conforme o trecho abaixo:
-
- \textit{builder.Services.AddDbContext<EstoqueDbContext>(options =>
-	options.UseSqlServer(
-    	builder.Configuration.GetConnectionString("DefaultConnection"),
-    	sql => sql.MigrationsAssembly("Estoque.Infrastructure")
-	)
-);}
-
+O projeto realiza sua integração com o banco de dados \textit{SQL Server} por meio do \textit{Entity Framework Core} (EF Core), um ORM (Object-Relational Mapper) que permite mapear as entidades de domínio diretamente para tabelas do banco, garantindo abstração da camada de persistência e manutenção simplificada. A configuração dessa integração é feita na classe \textit{ConfigurationExtensions}, onde o contexto \textit{EstoqueDbContext} é registrado com a string de conexão \textit{DefaultConnection}
 Essa abordagem permite que o projeto: Utilize injeção de dependência para gerenciar o contexto de dados, centralize a migração de esquemas dentro do assembly Estoque.Infrastructure e mantenha consistência entre as entidades de domínio (Estoque.Domain.Entities) e suas representações no banco. Além disso, o uso de repositórios e serviços garante que as operações de CRUD e as transações sejam tratadas de forma controlada, assegurando integridade e rastreabilidade dos dados.
 
 
