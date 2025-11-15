@@ -496,7 +496,7 @@ O MarketUP é uma solução gratuita e bastante completa, oferecendo controle de
 \hline
 \textbf{MarketUP} & Estoque, vendas, financeiro, notas fiscais & Gratuito & Completo, mas com interface confusa e suporte limitado \\
 \hline
-\textbf{"Sistema VIP PENHA} & Controle de estoque em tempo real, alerta de estoque mínimo, cadastro técnico de produtos, controle de garantias e geração de relatórios personalizados & Gratuito/Personalizado & Sistema desenvolvido especificamente para a realidade da loja VIP PENHA, com interface simples e fácil aprendizado, garantindo maior eficiência e redução de erros. \\
+\textbf{Sistema VIP PENHA} & Controle de estoque em tempo real, alerta de estoque mínimo, cadastro técnico de produtos, controle de garantias e geração de relatórios personalizados & Gratuito & Sistema desenvolvido especificamente para a realidade da loja VIP PENHA, com interface simples e fácil aprendizado, garantindo maior eficiência e redução de erros. \\
 \hline
 \end{tabular}
 \end{quadro}
@@ -573,26 +573,24 @@ Os papéis desempenhados pela equipe foram definidos com base em suas competênc
 
 \section{Metodologia de Gestão}
 
+Nesta sessão, será detalhado como a equipe se organizou, e quais métodos de gestão foram utilizados.
+
 \subsection{Kanban}
 
-A equipe optou pela utilização do método \textbf{Kanban} para o gerenciamento das atividades do projeto. Essa metodologia permite o acompanhamento visual focando na entrega contínua e em tempo real das tarefas.
+A equipe optou pela utilização do método \textbf{Scrum}, junto da ferramenta \textbf{Kanban} para o gerenciamento das atividades do projeto, e o uso de \textbf{Sprints} para controlar o cronograma de atividades.
 
 O quadro Kanban utilizado possui as seguintes colunas:
 
 \begin{itemize}
-    \item \textbf{Backlog – Código:} Armazena ideias e funcionalidades relacionadas à implementação do código que ainda não foram iniciadas.
-    \item \textbf{Backlog – Documentação:} Armazena tarefas de documentação que ainda não foram iniciadas.
-    \item \textbf{Design:} Etapa dedicada à elaboração de pesquisas.
     \item \textbf{A Fazer:} Tarefas já priorizadas e planejadas, aguardando início.
     \item \textbf{Em Andamento:} Tarefas em desenvolvimento.
-    \item \textbf{Revisão de Código:} Etapa de verificação e revisão do código antes da finalização.
-    \item \textbf{Fase de Teste:} Validação e testes das funcionalidades desenvolvidas.
+    \item \textbf{Em Revisão:} Etapa de verificação e revisão da tarefa antes da finalização.
     \item \textbf{Concluído:} Tarefas finalizadas, revisadas e testadas com sucesso.
 \end{itemize}
 
 As atividades são constantemente avaliadas e realocadas entre as colunas conforme seu progresso, promovendo transparência e melhoria contínua do fluxo de trabalho.
 
-\subsection{Funções da Equipe no Kanban}
+\subsection{Funções da Equipe}
 
 A seguir, serão apresentadas as funções da equipe no projeto, com os respectivos membros atribuídos e as responsabilidades de cada papel:
 
@@ -607,7 +605,7 @@ Vitor        & Beatriz      & Matheus             \\ \hline
              &              & Marcelo             \\ \hline
              &              & Rafael              \\ \hline
 \end{tabular}
-\caption{Atribuição de Papéis da Equipe no Kanban}
+\caption{Atribuição de Papéis da Equipe}
 \end{table}
 
 \FloatBarrier
@@ -646,6 +644,18 @@ O repositório está hospedado no GitHub e pode ser acessado pelo seguinte link:
 
 \begin{center}
     \href{https://github.com/VitorDaSilvaOliveira/Projeto-Integrado-IFSP}{https://github.com/VitorDaSilvaOliveira/Projeto-Integrado-IFSP}
+\end{center}
+
+Já a aplicação pode ser acessada no link abaixo:
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.3\textwidth]{Figuras/site.png}
+    \caption{QR Code para a aplicação}
+\end{figure}
+
+\begin{center}
+    \href{https://ifspestoque.azurewebsites.net/}{https://ifspestoque.azurewebsites.net/}
 \end{center}
 
 % ---
@@ -1170,16 +1180,16 @@ A estratégia de cobertura e qualidade foi delineada para garantir a máxima con
 A qualidade do código e a aderência à meta de cobertura são asseguradas por uma combinação estratégica de testes manuais e automatizados, integrados ao fluxo de desenvolvimento.
 
 \begin{itemize}
-    \item \textbf{Testes Unitários e de Integração:  (C\#):}
+    \item \textbf{Testes Unitários e de Integração:  (C\#)}
  
         A cobertura de classes é implementada pelos \textit{Unit Tests} (C\#, que indicam a porcentagem de classes cobertas, e a integração dos ambientes é feita através de \textit{Integration Tests} (C\#), que indicam se a conexão entre os sitemas está funcional ou falha.
 
-    \item \textbf{Testes de Ponta-a-Ponta (\textit{End-to-End}, E2E):}
+    \item \textbf{Testes de Ponta-a-Ponta (\textit{End-to-End}, E2E)}
 
         A validação dos fluxos completos de usuário, incluindo a interface gráfica, é realizada com \textbf{testes automatizados usando Selenium}, garantindo que o processo, sob a perspectiva do usuário, esteja funcional. E também foram feitos tetes manuais para validar a usabilidade do sistema.
 
 
-    \item \textbf{Teste de Segurnça:}
+    \item \textbf{Teste de Segurnça}
 
         O ambiente web do projeto foi submetido a testes de segurança em duas ferramentas: SSL Labs e Security Headers, ferramentas que avaliam se o ambiente web está de acordo com os padrões de segurança mais modernos.
 \end{itemize}
@@ -1474,13 +1484,33 @@ O desenvolvimento do sistema de gerenciamento de estoque será realizado ao long
 \item Paralelamente, é elaborada a fase de Análise e Documentação (Entrega do marco dia 18/07/2025), cujo objetivo é consolidar os dados obtidos. Esta seção inclui a elaboração da introdução, revisão da literatura, gestão do projeto e análise de viabilidade financeira, encerrando com as considerações finais sobre o processo.
 \end{itemize}
 
-% \subsection{Análise da duração do projeto}
+\subsection{Cronograma de Atividades – Segundo Semestre}
 
+No segundo período de desenvolvimento, o foco maior está no desenvolvimento da da aplicação em si, aprimorando o código, criando novas funções, melhorando padrões de segurança e transformando o protótipo no resultado final esperado. Esse semestre foi guiado por \textit{Sprints} de duas semanas, e em cada uma delas houve um foco maior em tal área do desenvolvimento. A seguir, uma breve sintese do foco de cada \textit{Sprint}:
+
+\begin{itemize}
+
+\item Sprint 1 (04/09 - 17/09): Elicitação de requisitos e Regras de Negócio.
+
+\item Sprint 2 (18/09 - 01/10): Implementação de novos fluxos de processo.
+
+\item Sprint 3 (02/10 - 15/10): Validação de números e Regras de Negócio.
+
+\item Sprint 4 (16/10 - 29/10): Bateria de testes sistemática e implementação de processos finais.
+
+\item Sprint 5 (30/10 - 12/11): Implementação de Relatórios e "Multi-lojas".
+
+\item Sprint 6 (13/11 - 26/11): Ajustes e Correções finais.
+
+
+\end{itemize}
 \chapter{Viabilidade Financeira}
+
+A viabilidade financeira do projeto foi feita através de uma simulação de possíveis custos da mão de obra, baseado na experiência dos integrantes, e nas horas efetivamente trabalhadas, além de custos operacionais.
 
 \section{Custos}
 
-A Tabela 9 apresenta uma análise detalhada dos custos de desenvolvimento, com foco no investimento em mão de obra, que representa o principal ativo do projeto. A metodologia de cálculo é simples e transparente: o esforço previsto (em horas) é multiplicado pela taxa horária específica de cada especialista (desenvolvedores, analistas, gestores), garantindo uma apuração precisa e fiel aos valores de mercado.
+A primeira tabela apresenta uma análise detalhada dos custos de desenvolvimento, com foco no investimento em mão de obra, que representa o principal ativo do projeto. A metodologia de cálculo é simples e transparente: o esforço previsto (em horas) é multiplicado pela taxa horária específica de cada especialista (desenvolvedores, analistas, gestores), garantindo uma apuração precisa e fiel aos valores de mercado.
 
 Esta abordagem, portanto, transcende um simples levantamento numérico. Ela não só oferece clareza sobre os custos inerentes a cada fase do desenvolvimento, mas, ao ser projetada sobre a duração total do desenvolvimento, transforma-se em uma poderosa ferramenta de gestão estratégica e preditiva. A projeção temporal permite uma análise aprofundada da distribuição dos custos mensais e globais, oferecendo previsibilidade e permitindo a antecipação de picos de investimento. Com isso, a gestão pode mitigar riscos financeiros, como desvios orçamentários, antes que se concretizem.
 
@@ -1510,7 +1540,7 @@ Consequentemente, a tabela constitui um pilar para um planejamento financeiro ro
 \fonte{Elaborado pelos autores.}
 \end{table}
 
-Na tabela 10 é representada a estrutura mensal da empresa, detalhando os custos associados às instalações, equipamentos e serviços de TI. No item 2.1, destacam-se os gastos com aluguel de espaço e mobiliário, totalizando 0 reais por mês. Já no item 2.2, referente à aquisição de equipamentos, observa-se que não há custos neste momento. No entanto, no item 2.3, estão listados os custos mensais de serviços de TI.
+Na segunda tabela é representada a estrutura mensal da empresa, detalhando os custos associados às instalações, equipamentos e serviços de TI. No item 2.1, destacam-se os gastos com aluguel de espaço e mobiliário, totalizando 0 reais por mês. Já no item 2.2, referente à aquisição de equipamentos, observa-se que não há custos neste momento. No entanto, no item 2.3, estão listados os custos mensais de serviços de TI.
 
 \begin{table}[hbtp]
 \centering
@@ -1558,80 +1588,17 @@ Conclui-se que a aplicação deste sistema resulta em uma melhora substancial na
 % ---
 % Inicia os apêndices
 % ---
-\begin{apendicesenv}
+
 
 % Imprime uma página indicando o início dos apêndices
 %\partapendices
 
 % ----------------------------------------------------------
-\chapter{Mapeamento de Processos}
-% ----------------------------------------------------------
-\section{Processo AS IS e TO BE}
 
-\subsection{Processo AS IS (Situação Atual)}
-
-\subsection*{Descrição Geral}
-A loja faz controle de estoque manualmente, por anotações em papel feitas pelo dono.
-
-\subsection*{Etapas do Processo}
-
-\begin{enumerate}
-    \item \textbf{Recebimento de produtos (entrada)}: O dono recebe os produtos de fornecedores. Ele anota em um caderno: nome do produto, quantidade recebida, data e fornecedor.
-    
-    \item \textbf{Venda de produtos (saída)}: Ao vender um produto, o dono anota à mão no mesmo caderno: nome do produto, quantidade vendida, data e valor da venda.
-    
-    \item \textbf{Controle de estoque}: O dono consulta o caderno para verificar a quantidade de produtos disponíveis. Não há atualização automática; o controle depende da leitura e interpretação das anotações.
-    
-    \item \textbf{Relatório mensal}: O dono folheia o caderno, soma manualmente as entradas e saídas e tenta fazer um resumo no final do mês. Processo demorado e sujeito a erros.
-\end{enumerate}
-
-\subsection*{Problemas Identificados}
-
-\begin{itemize}
-    \item Alto risco de erro humano.
-    \item Dificuldade em rastrear movimentações específicas.
-    \item Falta de relatórios precisos.
-    \item Perda ou danos ao caderno comprometem todo o controle.
-    \item Nenhuma visibilidade em tempo real do estoque.
-\end{itemize}
-
-\subsection{Processo TO BE (Situação Proposta com Sistema)}
-
-\subsection*{Descrição Geral}
-Será implementado um sistema informatizado para registrar entradas, saídas e gerar relatórios mensais automaticamente.
-
-\subsection*{Etapas do Processo com o Sistema}
-
-\begin{enumerate}
-    \item \textbf{Recebimento de produtos (entrada)}: O dono ou funcionário acessa o sistema. Registra os produtos recebidos: nome, quantidade, fornecedor, data, nota fiscal. O estoque é atualizado automaticamente.
-
-    \item \textbf{Venda de produtos (saída)}: No momento da venda, o produto é registrado como “vendido” no sistema. O sistema subtrai automaticamente a quantidade vendida do estoque.
-
-    \item \textbf{Controle de estoque}: O sistema exibe em tempo real o estoque disponível de cada item. Alertas de baixo estoque podem ser configurados.
-
-    \item \textbf{Relatório mensal de movimentações}: Ao fim do mês (ou sob demanda), o sistema gera automaticamente um relatório com:
-    \begin{itemize}
-        \item Total de entradas por produto.
-        \item Total de saídas por produto.
-        \item Saldo atual.
-        \item Produtos mais vendidos.
-        \item Histórico por período.
-    \end{itemize}
-\end{enumerate}
-
-\subsection*{Benefícios Esperados}
-
-\begin{itemize}
-    \item Redução de erros manuais.
-    \item Facilidade no rastreamento de movimentações.
-    \item Economia de tempo.
-    \item Maior controle e visibilidade sobre o estoque.
-    \item Dados organizados e acessíveis a qualquer momento.
-\end{itemize}
 % ----------------------------------------------------------
 %\lipsum[55-57]
 
-\end{apendicesenv}
+
 % ---
 % ----------------------------------------------------------
 % Finaliza a parte no bookmark do PDF
