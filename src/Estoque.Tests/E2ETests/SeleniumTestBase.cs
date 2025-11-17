@@ -11,7 +11,9 @@ namespace Estoque.Tests.E2ETests
     {
         protected IWebDriver Driver { get; private set; }
         protected WebDriverWait Wait { get; private set; }
-        protected string BaseUrl { get; set; } = "https://localhost:7262";
+        protected string BaseUrl { get; set; } = "https://ifspestoque.azurewebsites.net/";
+
+      //  protected string BaseUrl { get; set; } = "https://localhost:7262";
 
         // Page Objects
         protected LoginPage LoginPage { get; private set; }
