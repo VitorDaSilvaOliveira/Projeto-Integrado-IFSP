@@ -1,5 +1,6 @@
 ﻿@inject IHttpContextAccessor HttpContextAccessor
 @using Estoque.Lib.Resources
+@using Microsoft.EntityFrameworkCore
 @using Microsoft.Extensions.Localization
 @inject Estoque.Infrastructure.Data.EstoqueDbContext Db
 @inject IStringLocalizer<EstoqueResources> Localizer
@@ -16,8 +17,10 @@
 
 	var nomeCompleto = $"{User.FindFirst("FirstName")?.Value} {User.FindFirst("LastName")?.Value}";
 
-	Estoque.Domain.Entities.UserSetting? settings = null;
-
+	var settings = await Db.UserSettings
+		.AsNoTracking()
+		.FirstOrDefaultAsync(u => u.UserId == userId);
+	
 	var temNotificacao = Db.Notificacoes.Any(n => n.IdUser == userId && !n.Lido);
 }
 

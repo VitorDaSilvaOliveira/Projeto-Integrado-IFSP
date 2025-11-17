@@ -1,37 +1,28 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
   
 <ItemGroup>
-  <Compile Remove="Areas\Estoque\Controllers\Class.cs" />
-</ItemGroup>
-  
-<ItemGroup>
-  <Content Remove="C:\Users\biamu\.nuget\packages\jjmasterdata.web\4.4.17\contentFiles\any\net8.0\sasscompiler.json" />
-</ItemGroup>
-  
-<ItemGroup>
   <ProjectReference Include="..\Estoque.Domain\Estoque.Domain.csproj" />
   <ProjectReference Include="..\Estoque.Infrastructure\Estoque.Infrastructure.csproj" />
   <ProjectReference Include="..\Estoque.Lib\Estoque.Lib.csproj" />
 </ItemGroup>
 
 <PropertyGroup>
-  <TargetFramework>net9.0</TargetFramework>
+  <TargetFramework>net10.0</TargetFramework>
   <Nullable>enable</Nullable>
   <ImplicitUsings>enable</ImplicitUsings>
-  <UserSecretsId>aa54c91b-7bb6-40f3-a250-b5a8bccf1507</UserSecretsId>
-  <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-  <DockerfileContext>.</DockerfileContext>
 </PropertyGroup>
 
 <ItemGroup>
-  <PackageReference Include="AspNetCore.SassCompiler" Version="1.92.0" />
   <PackageReference Include="JJMasterData.Web" Version="4.4.15" />
   <PackageReference Include="Microsoft.AspNetCore.Authentication.Abstractions" Version="2.3.0" />
-  <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="9.0.8" />
-  <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.8">
+  <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.0">
     <PrivateAssets>all</PrivateAssets>
     <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
   </PackageReference>
+</ItemGroup>
+
+<ItemGroup>
+  <Content Remove="C:\Users\biamu\.nuget\packages\jjmasterdata.web\4.4.15\contentFiles\any\net8.0\sasscompiler.json" />
 </ItemGroup>
 
 </Project>

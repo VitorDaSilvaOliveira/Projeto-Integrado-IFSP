@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Estoque.Infrastructure.Migrations
 {
     [DbContext(typeof(EstoqueDbContext))]
-    [Migration("20251029234451_UserSettings")]
+    [Migration("20251117202329_UserSettings")]
     partial class UserSettings
     {
         /// <inheritdoc />
@@ -20,7 +20,7 @@ namespace Estoque.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.8")
+                .HasAnnotation("ProductVersion", "10.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -469,6 +469,9 @@ namespace Estoque.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("Lido")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Mensagem")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -781,7 +784,7 @@ namespace Estoque.Infrastructure.Migrations
                     b.ToTable("SolicitacaoDevolucao");
                 });
 
-            modelBuilder.Entity("Estoque.Domain.Entities.UserSetting", b =>
+            modelBuilder.Entity("Estoque.Domain.Entities.UserSettings", b =>
                 {
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");

@@ -2,7 +2,7 @@
 
 namespace Estoque.Domain.Entities;
 
-public class UserSetting
+public class UserSettings
 {
     [Key]
     public string UserId { get; set; }

@@ -16,13 +16,13 @@ namespace Estoque.Web.Areas.Identity.Controllers
 
             var settings = await context.UserSettings
                 .FirstOrDefaultAsync(s => s.UserId == userId)
-                ?? new UserSetting { UserId = userId };
+                ?? new UserSettings { UserId = userId };
 
             return View(settings);
         }
 
         [HttpPost]
-        public async Task<IActionResult> SaveSettings(UserSetting model)
+        public async Task<IActionResult> SaveSettings(UserSettings model)
         {
             if (!ModelState.IsValid)
                 return View("Index", model);
