@@ -35,7 +35,7 @@ public class NotaFiscalService(EstoqueDbContext context, IComponentFactory compo
             Codigo = ObjectUtils.SafeGetInt(i, "id_Produto"),
             Descricao = ObjectUtils.SafeGetString(i, "ProdutoNome"),
             Quantidade = ObjectUtils.SafeGetDecimal(i, "Quantidade"),
-            ValorUnit = ObjectUtils.SafeGetDecimal(i, "PrecoTabela"),
+            ValorUnit = ObjectUtils.SafeGetDecimal(i, "PrecoVenda"),
             ValorTotal = ObjectUtils.SafeGetDecimal(i, "ItemTotal")
         }).ToList();
 
@@ -117,8 +117,10 @@ public class NotaFiscalService(EstoqueDbContext context, IComponentFactory compo
                     // NATUREZA / PROTOCOLO
                     content.Item().Height(40).Border(1).Padding(3).Row(r =>
                     {
-                        r.RelativeItem().Text($"NATUREZA DA OPERAÇÃO: VENDA DE MERCADORIA").Bold();
-                        r.ConstantItem(250).AlignRight().Text("PROTOCOLO: 000000000000000 - 01/11/2025 10:20:00");
+                        var protocolo = DateTime.Now.Ticks.ToString().Substring(0, 15);
+                        var dataProtocolo = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
+                        r.RelativeItem().Text("NATUREZA DA OPERAÇÃO: VENDA DE MERCADORIA").Bold();
+                        r.ConstantItem(250).AlignRight().Text($"PROTOCOLO: {protocolo} - {dataProtocolo}");
                     });
 
                     // DESTINATÁRIO
@@ -196,8 +198,8 @@ public class NotaFiscalService(EstoqueDbContext context, IComponentFactory compo
                         }
 
                         // Linhas vazias (só verticais)
-                        int totalLinhas = 35;
-                        int linhasFaltando = totalLinhas - itens.Count;
+                        var totalLinhas = 35;
+                        var linhasFaltando = totalLinhas - itens.Count;
 
                         for (int i = 0; i < linhasFaltando; i++)
                         {
