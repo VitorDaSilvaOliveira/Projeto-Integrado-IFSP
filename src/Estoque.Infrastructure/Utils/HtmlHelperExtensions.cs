@@ -5,7 +5,7 @@ namespace Estoque.Infrastructure.Utils;
 
 public static class HtmlHelperExtensions
 {
-    public static bool HasMenuAccess(this IHtmlHelper html, string menuId, EstoqueDbContext db)
+    public static bool HasMenuAccess(this IHtmlHelper? html, string menuId, EstoqueDbContext? db)
     {
         var user = html.ViewContext.HttpContext.User;
         if (!user.Identity?.IsAuthenticated ?? true)

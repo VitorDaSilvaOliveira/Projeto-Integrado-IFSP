@@ -10,7 +10,10 @@ using Microsoft.EntityFrameworkCore;
 namespace Estoque.Web.Areas.Admin.Controllers;
 
 [Area("Admin")]
-public class RolesController(RoleManager<ApplicationRole> roleManager, UserManager<ApplicationUser> userManager, RoleService roleService)
+public class RolesController(
+    RoleManager<ApplicationRole> roleManager,
+    UserManager<ApplicationUser> userManager,
+    RoleService roleService)
     : Controller
 {
     public async Task<IActionResult> Index()
@@ -22,8 +25,8 @@ public class RolesController(RoleManager<ApplicationRole> roleManager, UserManag
     private async Task<RolesIndexViewModel> GetRolesViewModel()
     {
         var roles = await roleManager.Roles
-                                     .OrderBy(r => r.Name)
-                                     .ToListAsync();
+            .OrderBy(r => r.Name)
+            .ToListAsync();
 
         var rolesWithUsers = new List<RoleWithUsersViewModel>();
 
@@ -90,40 +93,79 @@ public class RolesController(RoleManager<ApplicationRole> roleManager, UserManag
         var allUsers = userManager.Users.ToList();
         var usersInRole = await userManager.GetUsersInRoleAsync(role.Name!);
 
-        var menuDefinitions = new[]
+        var groupDefinitions = new[]
         {
-            new { MenuId = "Produto", MenuName = "Produtos" },
-            new { MenuId = "Fornecedor", MenuName = "Fornecedores" },
-            new { MenuId = "Categoria", MenuName = "Categorias" },
-            new { MenuId = "Cliente", MenuName = "Clientes" },
-            new { MenuId = "Pedido", MenuName = "Pedidos" },
-            new { MenuId = "EntradaSaida", MenuName = "Entrada e Saídas" },
-            new { MenuId = "RelatorioPedido", MenuName = "Relatório de Pedidos" },
-            new { MenuId = "DashboardPedidos", MenuName = "Painel de Pedidos" }
+            new
+            {
+                GroupId = "Cadastros",
+                GroupName = "Cadastros",
+                Items = new[]
+                {
+                    new { Id = "Produto", Name = "Produtos" },
+                    new { Id = "Categoria", Name = "Categorias" },
+                    new { Id = "Fornecedor", Name = "Fornecedores" },
+                    new { Id = "Cliente", Name = "Clientes" }
+                }
+            },
+            new
+            {
+                GroupId = "Movimentacoes",
+                GroupName = "Movimentações",
+                Items = new[]
+                {
+                    new { Id = "EntradaSaida", Name = "Entrada e Saídas" },
+                    new { Id = "Pedido", Name = "Pedidos" },
+                    new { Id = "Devolucao", Name = "Devolução" },
+                    new { Id = "NotaFiscal", Name = "Nota Fiscal" }
+                }
+            },
+            new
+            {
+                GroupId = "Relatorios",
+                GroupName = "Relatórios",
+                Items = new[]
+                {
+                    new { Id = "RelatorioPedido", Name = "Relatório Pedidos" },
+                    new { Id = "RelatorioClientes", Name = "Relatório Clientes" },
+                    new { Id = "RelatorioDevolucao", Name = "Relatório Devolução" },
+                }
+            }
         };
 
-        var allMenus = new List<EditMenuViewModel>();
-        foreach (var menu in menuDefinitions)
+        var vmGroups = new List<EditMenuGroupViewModel>();
+
+        foreach (var g in groupDefinitions)
         {
-            allMenus.Add(new EditMenuViewModel
+            var groupVm = new EditMenuGroupViewModel
             {
-                MenuId = menu.MenuId,
-                MenuName = menu.MenuName,
-                IsSelected = await roleService.HasAccessAsync(role.Id, menu.MenuId)
-            });
+                GroupId = g.GroupId,
+                GroupName = g.GroupName
+            };
+
+            foreach (var item in g.Items)
+            {
+                groupVm.Items.Add(new EditMenuViewModel
+                {
+                    MenuId = item.Id,
+                    MenuName = item.Name,
+                    IsSelected = await roleService.HasAccessAsync(role.Id, item.Id)
+                });
+            }
+
+            vmGroups.Add(groupVm);
         }
 
         var vm = new EditRoleViewModel
         {
             RoleId = role.Id,
             RoleName = role.Name!,
+            Groups = vmGroups,
             Users = allUsers.Select(u => new UserRoleViewModel
             {
                 UserId = u.Id,
                 UserName = u.UserName!,
                 IsSelected = usersInRole.Any(x => x.Id == u.Id)
-            }).ToList(),
-            Menus = allMenus
+            }).ToList()
         };
 
         return View(vm);
@@ -151,14 +193,18 @@ public class RolesController(RoleManager<ApplicationRole> roleManager, UserManag
             var user = await userManager.FindByIdAsync(userVm.UserId);
             if (user == null) continue;
 
-            if (userVm.IsSelected && !await userManager.IsInRoleAsync(user, role.Name))
-                await userManager.AddToRoleAsync(user, role.Name);
-
-            if (!userVm.IsSelected && await userManager.IsInRoleAsync(user, role.Name))
-                await userManager.RemoveFromRoleAsync(user, role.Name);
+            switch (userVm.IsSelected)
+            {
+                case true when !await userManager.IsInRoleAsync(user, role.Name):
+                    await userManager.AddToRoleAsync(user, role.Name);
+                    break;
+                case false when await userManager.IsInRoleAsync(user, role.Name):
+                    await userManager.RemoveFromRoleAsync(user, role.Name);
+                    break;
+            }
         }
 
-        await roleService.UpdateRoleMenusAsync(model.RoleId, model.Menus);
+        await roleService.UpdateRoleMenusAsync(model.RoleId, model.Groups);
 
         return RedirectToAction(nameof(Index));
     }

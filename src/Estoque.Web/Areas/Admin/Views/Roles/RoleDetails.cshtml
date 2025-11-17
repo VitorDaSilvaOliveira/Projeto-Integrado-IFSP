@@ -55,15 +55,40 @@
                 <h5 class="mb-3"><i class="fas fa-bars me-2"></i> Gerenciar Acesso a Menus</h5>
 
                 <div class="list-group">
-                    @for (var i = 0; i < Model.Menus.Count; i++)
+                    @for (var g = 0; g < Model.Groups.Count; g++)
                     {
-                        var menu = Model.Menus[i];
-                        <div class="list-group-item d-flex justify-content-between align-items-center">
-                            @Html.HiddenFor(m => m.Menus[i].MenuId)
-                            <label>
-                                @Html.CheckBoxFor(m => m.Menus[i].IsSelected)
-                                @menu.MenuName
-                            </label>
+                        var group = Model.Groups[g];
+                        var collapseId = $"grp_{group.GroupId}";
+
+                        <div class="list-group-item">
+
+                            @* Hiddens para o binder reconstruir o grupo *@
+                            @Html.HiddenFor(m => m.Groups[g].GroupId)
+                            @Html.HiddenFor(m => m.Groups[g].GroupName)
+
+                            <div class="d-flex justify-content-between align-items-center">
+                                <strong>@group.GroupName</strong>
+
+                                <a data-bs-toggle="collapse" href="#@collapseId" class="text-decoration-none">
+                                    <i class="fas fa-chevron-down"></i>
+                                </a>
+                            </div>
+
+                            <div class="collapse mt-2" id="@collapseId">
+                                @for (var i = 0; i < group.Items.Count; i++)
+                                {
+                                    <div class="ps-4 mb-1">
+
+                                        @Html.HiddenFor(m => m.Groups[g].Items[i].MenuId)
+                                        @Html.HiddenFor(m => m.Groups[g].Items[i].MenuName)
+
+                                        <label class="d-flex align-items-center gap-2">
+                                            @Html.CheckBoxFor(m => m.Groups[g].Items[i].IsSelected)
+                                            @group.Items[i].MenuName
+                                        </label>
+                                    </div>
+                                }
+                            </div>
                         </div>
                     }
                 </div>
