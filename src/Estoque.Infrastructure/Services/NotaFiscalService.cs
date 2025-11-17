@@ -25,27 +25,26 @@ public class NotaFiscalService(EstoqueDbContext context, IComponentFactory compo
         var linhas = context.Vw_PedidoNF.Where(x => x.PedidoId == pedidoId).ToList();
         var pedido = linhas.First();
 
-        string clienteNome = ObjectUtils.SafeGetString(pedido, "ClienteNome") ?? "(não informado)";
-        string clienteCNPJ = ObjectUtils.SafeGetString(pedido, "ClienteCNPJ") ?? "(não informado)";
-        string clienteEndereco = ObjectUtils.SafeGetString(pedido, "ClienteEndereco") ?? "(não informado)";
-        string clienteTelefone = ObjectUtils.SafeGetString(pedido, "ClienteTelefone") ?? "(não informado)";
-        string clienteEmail = ObjectUtils.SafeGetString(pedido, "ClienteEmail") ?? "(não informado)";
+        var clienteNome = ObjectUtils.SafeGetString(pedido, "ClienteNome");
+        var clienteCnpj = ObjectUtils.SafeGetString(pedido, "ClienteCNPJ");
+        var clienteTelefone = ObjectUtils.SafeGetString(pedido, "ClienteTelefone");
+        var clienteEmail = ObjectUtils.SafeGetString(pedido, "ClienteEmail");
 
         var itens = linhas.Select(i => new
         {
             Codigo = ObjectUtils.SafeGetInt(i, "id_Produto"),
-            Descricao = ObjectUtils.SafeGetString(i, "ProdutoNome") ?? "",
+            Descricao = ObjectUtils.SafeGetString(i, "ProdutoNome"),
             Quantidade = ObjectUtils.SafeGetDecimal(i, "Quantidade"),
             ValorUnit = ObjectUtils.SafeGetDecimal(i, "PrecoTabela"),
             ValorTotal = ObjectUtils.SafeGetDecimal(i, "ItemTotal")
         }).ToList();
 
-        decimal somaItens = itens.Sum(x => x.ValorTotal);
-        decimal valorNF = ObjectUtils.SafeGetDecimal(pedido, "ValorNF");
-        if (valorNF == 0) valorNF = somaItens;
+        var somaItens = itens.Sum(x => x.ValorTotal);
+        var valorNf = ObjectUtils.SafeGetDecimal(pedido, "ValorNF");
+        if (valorNf == 0) valorNf = somaItens;
 
-        string cNF = new Random().Next(10000000, 99999999).ToString("D8");
-        string chaveAcesso = DanfeUtils.GerarChaveAcesso(pedido, cNF);
+        var cNf = new Random().Next(10000000, 99999999).ToString("D8");
+        var chaveAcesso = DanfeUtils.GerarChaveAcesso(pedido, cNf);
 
         var writer = new BarcodeWriterPixelData
         {
@@ -127,8 +126,7 @@ public class NotaFiscalService(EstoqueDbContext context, IComponentFactory compo
                     {
                         c.Item().Text("DESTINATÁRIO / REMETENTE").Bold();
                         c.Item().Text($"Nome / Razão Social: {clienteNome}");
-                        c.Item().Text($"CPF/CNPJ: {clienteCNPJ} | Fone: {clienteTelefone}");
-                        c.Item().Text($"Endereço: {clienteEndereco}");
+                        c.Item().Text($"CPF/CNPJ: {clienteCnpj} | Fone: {clienteTelefone}");
                         c.Item().Text($"Email: {clienteEmail}");
                     });
 
@@ -141,7 +139,7 @@ public class NotaFiscalService(EstoqueDbContext context, IComponentFactory compo
                             col.Item().Text($"Base de Cálculo do ICMS: 0,00");
                             col.Item().Text($"Valor do ICMS: 0,00");
                             col.Item().Text($"Valor Total dos Produtos: {somaItens:F2}");
-                            col.Item().Text($"Valor Total da Nota: {valorNF:F2}");
+                            col.Item().Text($"Valor Total da Nota: {valorNf:F2}");
                         });
 
                         r.RelativeItem(5).Border(1).Padding(4).Column(col =>
