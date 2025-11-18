@@ -21,8 +21,4 @@
   </PackageReference>
 </ItemGroup>
 
-<ItemGroup>
-  <Content Remove="C:\Users\biamu\.nuget\packages\jjmasterdata.web\4.4.15\contentFiles\any\net8.0\sasscompiler.json" />
-</ItemGroup>
-
 </Project>

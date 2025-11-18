@@ -6,7 +6,7 @@ namespace Estoque.Web.Areas.Estoque.Controllers;
 
 [Area("Estoque")]
 [AuditLog("Estoque", "Menu", "Usuário acessou menu Pedidos")]
-public class PedidoController(PedidoService pedidoService, RelatorioService relatorioService) : Controller
+public class PedidoController(PedidoService pedidoService) : Controller
 {
     public async Task<IActionResult> Index()
     {
@@ -33,33 +33,29 @@ public class PedidoController(PedidoService pedidoService, RelatorioService rela
         ViewBag.FormViewRelatorioPedido = resultGridReportPedidoAsync.Content;
         return View();
     }
-
-    [HttpGet]
-    public async Task<IActionResult> GeraPDFSLAConsumo(string idPedido, int modo = 0)
+    
+    public async Task<IActionResult> ViewReportPedidoPdf(int idPedido)
     {
-        // Busca o pedido real no banco
-        var pedido = await relatorioService.GetInformacoesPedidoAsync(idPedido);
-        var pedidosItens = await relatorioService.GetInformacoesPedidoItensAsync(idPedido);
+        var pdf = await pedidoService.ReportPedidoAsync(idPedido);
 
-        var pdf = relatorioService.GeraPDFSLAConsumo(pedidosItens, pedido);
+        if (pdf.Length == 0)
+            return NotFound("PDF não pôde ser gerado.");
 
-        using var stream = new MemoryStream();
-        pdf.Save(stream, false);
-        stream.Position = 0;
+        return File(pdf, "application/pdf");
+    }
+    
+    public async Task<IActionResult> DownloadReportPedidoPdf(int idPedido)
+    {
+        var pdf = await pedidoService.ReportPedidoAsync(idPedido);
 
-        var fileName = $"Pedido_{pedido.numeroPedido}.pdf";
+        if (pdf.Length == 0)
+            return NotFound("PDF não pôde ser gerado.");
 
-        if (modo == 0)
-        {
-            // Visualização (inline)
-            Response.Headers.Add("Content-Disposition", $"inline; filename={fileName}");
-            return File(stream.ToArray(), "application/pdf");
-        }
-        else
-        {
-            // Download (attachment)
-            return File(stream.ToArray(), "application/pdf", fileName);
-        }
+        return File(
+            pdf,
+            "application/pdf",
+            $"pedido_{idPedido}.pdf"
+        );
     }
 
     public async Task<IActionResult> SendOrder(int idPedido, string userId)
