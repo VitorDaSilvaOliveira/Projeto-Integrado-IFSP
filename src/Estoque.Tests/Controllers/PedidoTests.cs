@@ -2,6 +2,7 @@ using System.Security.Claims;
 using Estoque.Domain.Entities;
 using Estoque.Domain.Enums;
 using Estoque.Infrastructure.Data;
+using Estoque.Infrastructure.Repository;
 using Estoque.Infrastructure.Services;
 using FluentAssertions;
 using JJMasterData.Core.UI.Components;
@@ -20,6 +21,7 @@ public class PedidoFluxoIntegrationTests : IDisposable
     private readonly PedidoService _pedidoService;
     private readonly MovimentacaoService _movimentacaoService;
     private readonly IWebHostEnvironment _env;
+    private readonly PedidoRepository _repository;
 
     public PedidoFluxoIntegrationTests()
     {
@@ -75,11 +77,11 @@ public class PedidoFluxoIntegrationTests : IDisposable
         // PedidoService com dependências reais e mocks
         _pedidoService = new PedidoService(
             factoryMock,
-            _context,
+            _repository,
             loggerPedidoMock,
             movimentacaoService,
             _env
-        );
+            );
     }
 
     [Fact]
