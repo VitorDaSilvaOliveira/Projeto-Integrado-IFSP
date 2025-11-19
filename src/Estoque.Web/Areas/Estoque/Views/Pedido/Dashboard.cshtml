@@ -1,22 +1,64 @@
-﻿@using System.Security.Claims
-@using Estoque.Domain.Entities
-@using Estoque.Infrastructure.Utils
-@using Microsoft.AspNetCore.Identity
-@using Estoque.Lib.Resources
-@using Microsoft.Extensions.Localization
-@inject UserManager<ApplicationUser> UserManager
-@inject IStringLocalizer<EstoqueResources> Localizer
-
-@{
-    ViewBag.Title = Localizer["DashboardPedidos"];
+﻿@{
+    ViewBag.Title = "Dashboard de Pedidos";
 }
-<h3 style="text-align: left;">
-    <i class="fas fa-tachometer-alt" style="margin-right: 0.5rem;"></i>
-    @Localizer["DashboardPedidos"]
-</h3>
-<div style="max-width: 600px; margin-left: 0; padding: 1rem;">
 
-    <canvas id="graficoPedidos" width="400" height="200"></canvas>
+<h3>
+    <i class="fas fa-chart-line"></i> Dashboard de Pedidos
+</h3>
+
+<hr />
+
+<div class="row mt-4">
+
+    <div class="col-md-3">
+        <div class="card shadow-sm p-3">
+            <h5>Total de Pedidos</h5>
+            <span id="kpiTotal" class="fw-bold fs-4"></span>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow-sm p-3">
+            <h5>Valor Total</h5>
+            <span id="kpiValor" class="fw-bold fs-4"></span>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow-sm p-3">
+            <h5>Ticket Médio</h5>
+            <span id="kpiTicket" class="fw-bold fs-4"></span>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow-sm p-3">
+            <h5>Pedidos Hoje</h5>
+            <span id="kpiHoje" class="fw-bold fs-4"></span>
+        </div>
+    </div>
 </div>
 
+<hr />
+
+<div class="row">
+
+    <div class="col-md-5 mt-4">
+        <h5>Pedidos por Operação</h5>
+        <canvas id="chartOperacao" style="height: 180px;"></canvas>
+    </div>
+
+    <div class="col-md-2 mt-4" style="height: 220px; position: relative;">
+        <h5>Pedidos por Status</h5>
+        <canvas id="chartStatus" style="position:absolute; top:40px; left:0; right:0; bottom:0;"></canvas>
+    </div>
+
+    <div class="col-md-5 mt-4">
+        <h5>Pedidos por Dia</h5>
+        <canvas id="chartDia" style="height: 200px;"></canvas>
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="~/js/dashboardpedidos.js" asp-append-version="true"></script>

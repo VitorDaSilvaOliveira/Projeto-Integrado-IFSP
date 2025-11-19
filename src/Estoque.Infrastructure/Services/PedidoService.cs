@@ -79,18 +79,57 @@ public class PedidoService(
         return document.GeneratePdf();
     }
 
-    public async Task<IEnumerable<object>> ObterPedidosPorOperacaoAsync()
+    public async Task<object> DashboardPedidoAsync()
     {
-        var agrupado = await context.Pedidos
+        var hoje = DateTime.Today;
+
+        var pedidos = context.Pedidos.AsQueryable();
+
+        // KPI
+        var totalPedidos = await pedidos.CountAsync();
+        var valorTotal = await pedidos.SumAsync(p => (decimal?)p.ValorTotal) ?? 0;
+        var pedidosHoje = await pedidos.CountAsync(p => p.DataPedido >= hoje);
+        var ticketMedio = totalPedidos > 0 ? valorTotal / totalPedidos : 0;
+
+        // Gráfico: Operação
+        var porOperacao = await pedidos
+            .Where(p => p.Operacao != null)
             .GroupBy(p => p.Operacao)
-            .Select(g => new
-            {
-                Operacao = g.Key.HasValue ? g.Key.ToString() : "Sem Operação",
+            .Select(g => new {
+                Operacao = g.Key.ToString(),
                 Total = g.Count()
             })
-            .OrderByDescending(x => x.Total)
             .ToListAsync();
 
-        return agrupado;
+        // Gráfico: Status
+        var porStatus = await pedidos
+            .Where(p => p.Status != null)
+            .GroupBy(p => p.Status)
+            .Select(g => new {
+                Status = g.Key.ToString(),
+                Total = g.Count()
+            })
+            .ToListAsync();
+
+        // Gráfico: Pedidos por dia
+        var porDia = await pedidos
+            .Where(p => p.DataPedido != null)
+            .GroupBy(p => p.DataPedido!.Value.Date)
+            .Select(g => new {
+                Dia = g.Key,
+                Total = g.Count()
+            })
+            .OrderBy(x => x.Dia)
+            .ToListAsync();
+
+        return new {
+            TotalPedidos = totalPedidos,
+            ValorTotal = valorTotal,
+            TicketMedio = ticketMedio,
+            PedidosHoje = pedidosHoje,
+            PedidosPorOperacao = porOperacao,
+            PedidosPorStatus = porStatus,
+            PedidosPorDia = porDia
+        };
     }
 }

@@ -65,11 +65,11 @@ public class PedidoController(PedidoService pedidoService) : Controller
     }
 
     public IActionResult Dashboard() => View();
-
+    
     [HttpGet]
-    public async Task<IActionResult> GetPedidosPorOperacao()
+    public async Task<IActionResult> GetDashboardData()
     {
-        var dados = await pedidoService.ObterPedidosPorOperacaoAsync();
+        var dados = await pedidoService.DashboardPedidoAsync();
         return Json(dados);
     }
 }

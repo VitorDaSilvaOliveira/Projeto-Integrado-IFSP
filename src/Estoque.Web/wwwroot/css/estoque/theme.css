@@ -17478,3 +17478,11 @@ a[href].bg-body-secondary:hover, a[href].bg-body-secondary:focus {
     z-index: 1;
     content: "";
 }
+
+[data-bs-theme="dark"] .form-control:disabled {
+    color: white !important;
+}
+
+.form-control:disabled {
+    color: black !important;
+}

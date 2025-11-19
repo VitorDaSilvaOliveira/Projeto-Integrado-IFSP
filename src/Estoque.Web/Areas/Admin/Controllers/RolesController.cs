@@ -97,6 +97,15 @@ public class RolesController(
         {
             new
             {
+                GroupId = "Dashboards",
+                GroupName = "Dashboards",
+                Items = new[]
+                {
+                    new { Id = "PainelPedidos", Name = "Painel de Pedidos" },
+                }
+            },
+            new
+            {
                 GroupId = "Cadastros",
                 GroupName = "Cadastros",
                 Items = new[]
