@@ -1,6 +1,6 @@
 ﻿namespace Estoque.Domain.Entities;
 
-public class PedidoNFView
+public class PedidoNfView
 {
     public int PedidoId { get; set; }
     public string NumeroPedido { get; set; }
@@ -9,6 +9,8 @@ public class PedidoNFView
     public int FormaPagamento { get; set; }
     public string ClienteCNPJ { get; set; }
     public string ClienteNome { get; set; }
+    public string ClienteTelefone { get; set; }
+    public string ClienteEmail { get; set; }
     public int id_Produto { get; set; }
     public string ProdutoNome { get; set; }
     public int Quantidade { get; set; }

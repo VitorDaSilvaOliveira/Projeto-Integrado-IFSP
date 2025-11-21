@@ -4,7 +4,7 @@ namespace Estoque.Infrastructure.Utils;
 
 public static class ObjectUtils
 {
-    public static string SafeGetString(object obj, string propName)
+    public static string? SafeGetString(object obj, string propName)
     {
         var prop = obj?.GetType().GetProperty(propName, BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
         if (prop == null) return null;

@@ -2,12 +2,12 @@
 
 namespace Estoque.Domain.Entities;
 
-public class UserSetting
+public class UserSettings
 {
     [Key]
     public string UserId { get; set; }
     public bool EnableLanguageSwitch { get; set; } = true;
     public bool EnableDarkModeSwitch { get; set; } = true;
     public string PreferredLanguage { get; set; } = "pt-BR";
-    public bool DarkMode { get; set; } = false;
+    public bool DarkMode { get; set; }
 }

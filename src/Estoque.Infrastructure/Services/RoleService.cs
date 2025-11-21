@@ -12,41 +12,24 @@ public class RoleService(EstoqueDbContext context)
         return await context.RoleMenus.AnyAsync(rm => rm.RoleId == roleId && rm.MenuId == menuId);
     }
 
-    public async Task GrantAccessAsync(string roleId, string menuId)
-    {
-        if (!await HasAccessAsync(roleId, menuId))
-        {
-            context.RoleMenus.Add(new RoleMenu { RoleId = roleId, MenuId = menuId });
-            await context.SaveChangesAsync();
-        }
-    }
-
-    public async Task RevokeAccessAsync(string roleId, string menuId)
-    {
-        var rm = await context.RoleMenus.FirstOrDefaultAsync(r => r.RoleId == roleId && r.MenuId == menuId);
-        if (rm != null)
-        {
-            context.RoleMenus.Remove(rm);
-            await context.SaveChangesAsync();
-        }
-    }
-
-    public async Task UpdateRoleMenusAsync(string roleId, List<EditMenuViewModel> menus)
+    public async Task UpdateRoleMenusAsync(string roleId, List<EditMenuGroupViewModel> groups)
     {
         var existing = context.RoleMenus.Where(rm => rm.RoleId == roleId);
         context.RoleMenus.RemoveRange(existing);
 
-        var selectedMenus = menus
-            .Where(m => m.IsSelected)
-            .Select(m => new RoleMenu
+        var selectedMenus = groups
+            .SelectMany(g => g.Items)
+            .Where(i => i.IsSelected)
+            .Select(i => new RoleMenu
             {
                 RoleId = roleId,
-                MenuId = m.MenuId
-            });
+                MenuId = i.MenuId
+            })
+            .ToList();
 
-        await context.RoleMenus.AddRangeAsync(selectedMenus);
+        if (selectedMenus.Any())
+            await context.RoleMenus.AddRangeAsync(selectedMenus);
+
         await context.SaveChangesAsync();
     }
-
-
 }

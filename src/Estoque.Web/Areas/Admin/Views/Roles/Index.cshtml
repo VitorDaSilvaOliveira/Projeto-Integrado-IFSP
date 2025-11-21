@@ -46,22 +46,22 @@
             </div>
         </div>
 
-        <div class="col col-auto">
-            <div class="search-box">
-                <input name="SearchText"
-                       class="form-control search-input search"
-                       type="search"
-                       placeholder="Procurar..."
-                       hx-get="@Url.Action("LoadMore", new { Page = 1 })"
-                       hx-trigger="input changed delay:500ms, search"
-                       hx-target="#roles-tbody"
-                       hx-swap="innerHTML"
-                       hx-include="[name='SearchText']"
-                       hx-indicator=".tr-indicator"
-                       aria-label="Search"/>
-                <span class="fas fa-search search-box-icon"></span>
-            </div>
-        </div>
+        @* <div class="col col-auto"> *@
+        @*     <div class="search-box"> *@
+        @*         <input name="SearchText" *@
+        @*                class="form-control search-input search" *@
+        @*                type="search" *@
+        @*                placeholder="Procurar..." *@
+        @*                hx-get="@Url.Action("LoadMore", new { Page = 1 })" *@
+        @*                hx-trigger="input changed delay:500ms, search" *@
+        @*                hx-target="#roles-tbody" *@
+        @*                hx-swap="innerHTML" *@
+        @*                hx-include="[name='SearchText']" *@
+        @*                hx-indicator=".tr-indicator" *@
+        @*                aria-label="Search"/> *@
+        @*         <span class="fas fa-search search-box-icon"></span> *@
+        @*     </div> *@
+        @* </div> *@
 
         <div class="table-responsive mt-3">
             <table class="table table-sm fs-12 mb-0">

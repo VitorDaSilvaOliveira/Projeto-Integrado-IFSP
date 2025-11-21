@@ -13,6 +13,8 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
+using QuestPDF;
+using QuestPDF.Infrastructure;
 
 namespace Estoque.Web.Configuration;
 
@@ -20,6 +22,8 @@ public static class ConfigurationExtensions
 {
     public static void AddEstoqueConfiguration(this WebApplicationBuilder builder)
     {
+        Settings.License = LicenseType.Community;
+        
         var isDevelopment = builder.Environment.IsDevelopment();
 
         builder.Services.AddDbContext<EstoqueDbContext>(options =>
@@ -82,11 +86,10 @@ public static class ConfigurationExtensions
         services.AddScoped<PedidoService>();
         services.AddScoped<RoleService>();
         services.AddScoped<NotaFiscalService>();
-        services.AddScoped<RelatorioService>();
         services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, CustomClaimsFactory>();
     }
 
-    public static void AddCustomServices(this IServiceCollection services)
+    private static void AddCustomServices(this IServiceCollection services)
     {
         services.AddJJMasterDataWeb();
         services.AddJJMasterDataCommons();

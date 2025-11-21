@@ -9,7 +9,7 @@ Sistema completo de gestão de estoque desenvolvido para a **VIP Penha**, loja e
 
 Antes de tudo, garanta que você tenha instalado:
 
-- [SDK .NET 9](https://dotnet.microsoft.com/en-us/download/dotnet/9.0)
+- [SDK .NET 10](https://dotnet.microsoft.com/en-us/download/dotnet/10.0)
 - [SQL Server](https://www.microsoft.com/pt-br/sql-server/sql-server-downloads)
 - [Visual Studio 2022](https://visualstudio.microsoft.com/) ou [Rider](https://www.jetbrains.com/rider/)
 - (Opcional) [Azure Data Studio](https://learn.microsoft.com/pt-br/sql/azure-data-studio/) ou [SQL Server Management Studio (SSMS)](https://learn.microsoft.com/pt-br/sql/ssms/download-sql-server-management-studio-ssms) para gerenciar o banco.

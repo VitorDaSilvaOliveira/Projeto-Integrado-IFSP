@@ -3,7 +3,6 @@ using Estoque.Domain.Enums;
 using Estoque.Infrastructure.Data;
 using Estoque.Infrastructure.Utils;
 using JJMasterData.Core.Events.Abstractions;
-using JJMasterData.Core.Events.Args;
 using JJMasterData.Core.UI.Components;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -20,7 +19,8 @@ public class MovimentacaoService(
 {
     public string ElementName => "Movimentacao";
 
-    public async Task<JJFormView> GetFormViewMovimentacaoAsync()
+    // Adicionado 'virtual' para permitir Mock nos testes
+    public virtual async Task<JJFormView> GetFormViewMovimentacaoAsync()
     {
         var formView = await componentFactory.FormView.CreateAsync("Movimentacao");
         formView.ShowTitle = true;
@@ -28,7 +28,8 @@ public class MovimentacaoService(
         return formView;
     }
 
-    public async Task RegistrarMovimentacaoAsync(
+    // AQUI ESTAVA O ERRO: Adicionado 'virtual'
+    public virtual async Task RegistrarMovimentacaoAsync(
        int produtoId,
        int quantidade,
        TipoMovimentacao tipoMovimentacao,
@@ -137,18 +138,4 @@ public class MovimentacaoService(
 
         await context.SaveChangesAsync();
     }
-
-    //private async Task NotificarEstoqueBaixo(Produto produto, string? userId)
-    //{
-    //    var notificacao = new Notificacao
-    //    {
-    //        Mensagem =
-    //            $"⚠️ Estoque do produto '{produto.Nome}' abaixo do mínimo! ({produto.QuantidadeEstoque} unidades restantes)",
-    //        Data = LocalTime.Now(),
-    //        IdUser = userId
-    //    };
-
-    //    context.Notificacoes.Add(notificacao);
-    //    await context.SaveChangesAsync();
-    //}
 }

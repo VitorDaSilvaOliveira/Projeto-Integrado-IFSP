@@ -4,13 +4,33 @@
 @inject IStringLocalizer<EstoqueResources> Localizer
 @inject Estoque.Infrastructure.Data.EstoqueDbContext Db
 
+@{
+	var showCadastros =
+		Html.HasMenuAccess("Produto", Db) ||
+		Html.HasMenuAccess("Fornecedor", Db) ||
+		Html.HasMenuAccess("Cliente", Db) ||
+		Html.HasMenuAccess("Categoria", Db);
+
+	var showMov =
+		Html.HasMenuAccess("EntradaSaida", Db) ||
+		Html.HasMenuAccess("Pedido", Db) ||
+		Html.HasMenuAccess("Devolucao", Db) ||
+		Html.HasMenuAccess("NotaFiscal", Db);
+
+	var showRel =
+		Html.HasMenuAccess("RelatorioPedido", Db) ||
+		Html.HasMenuAccess("RelatorioClientes", Db) ||
+		Html.HasMenuAccess("RelatorioDevolucao", Db);
+}
+
 <nav class="navbar navbar-vertical navbar-expand-lg">
 	<div class="collapse navbar-collapse">
 		<div class="navbar-vertical-content">
 			<a class="navbar-logo d-flex flex-column align-items-center text-center"
 			   href="@Url.Action("Index", "Home", new { area = "Estoque" })"
 			   style="text-decoration:none; color:#e1b63b;">
-				<img src="~/img/logo.png" alt="Logo" width="40" height="40" style="border-radius:50%; margin-bottom:5px;" />
+				<img src="~/img/logo.png" alt="Logo" width="40" height="40"
+				     style="border-radius:50%; margin-bottom:5px;"/>
 				<span class="fw-bold">Vip Penha</span>
 			</a>
 			<ul class="navbar-nav flex-column" id="navbarVerticalNav">
@@ -26,13 +46,14 @@
 					<hr class="navbar-vertical-line">
 
 					<div class="collapse show"
-						 id="collapseHome">
+					     id="collapseHome">
 
 						<!-- Home -->
 						<div class="nav-item-wrapper">
 							<a class="nav-link label-1 px-2 @(ViewContext.RouteData.Values["controller"].ToString() == "Home" ? "active" : "")"
 							   href="@Url.Action("Index", "Home", new { area = "Estoque" })">
-								<div class="d-flex align-items-center" style="gap:0.8rem; font-size:0.80rem; padding-left:1rem;">
+								<div class="d-flex align-items-center"
+								     style="gap:0.8rem; font-size:0.80rem; padding-left:1rem;">
 									<span class="nav-link-icon"><span class="bi bi-house"></span></span>
 									<span class="nav-link-text-wrapper">
 										<span class="nav-link-text text-wrap">@Localizer["Home"]</span>
@@ -44,236 +65,279 @@
 						<!-- Dashboard de Pedidos -->
 						@if (Html.HasMenuAccess("DashboardPedidos", Db))
 						{
-						<div class="nav-item-wrapper">
-							<a class="nav-link label-1 px-2 @(
-								  		  ViewContext.RouteData.Values["controller"].ToString() == "Pedido" &&
-								  		  ViewContext.RouteData.Values["action"].ToString() == "Dashboard"
-									  		  ? "active" : "" )"
-							   href="@Url.Action("Dashboard", "Pedido", new { area = "Estoque" })">
+							<div class="nav-item-wrapper">
+								<a class="nav-link label-1 px-2 @(
+								                                ViewContext.RouteData.Values["controller"].ToString() == "Pedido" &&
+								                                ViewContext.RouteData.Values["action"].ToString() == "Dashboard"
+									                                ? "active"
+									                                : "")"
+								   href="@Url.Action("Dashboard", "Pedido", new { area = "Estoque" })">
 
-								<div class="d-flex align-items-center" style="gap:0.8rem; font-size:0.80rem; padding-left:1rem;">
-									<span class="nav-link-icon"><span class="bi bi-clipboard-data"></span></span>
-									<span class="nav-link-text-wrapper">
+									<div class="d-flex align-items-center"
+									     style="gap:0.8rem; font-size:0.80rem; padding-left:1rem;">
+										<span class="nav-link-icon"><span class="bi bi-clipboard-data"></span></span>
+										<span class="nav-link-text-wrapper">
 										<span class="nav-link-text text-wrap">@Localizer["DashboardPedidos"]</span>
 									</span>
-								</div>
-							</a>
-						</div>
+									</div>
+								</a>
+							</div>
 						}
 					</div>
 				</li>
 
 				<!-- Cadastros -->
-				<li class="nav-item">
-					<a class="nav-link d-flex justify-content-between align-items-center px-2"
-					   data-bs-toggle="collapse" href="#collapseCadastros" role="button"
-					   aria-expanded="false" aria-controls="collapseCadastros">
-						<span class="text-wrap">@Localizer["Cadastros"]</span>
-						<span class="bi bi-chevron-down"></span>
-					</a>
-					<hr class="navbar-vertical-line">
+				@if (showCadastros)
+				{
+					<li class="nav-item">
+						<a class="nav-link d-flex justify-content-between align-items-center px-2"
+						   data-bs-toggle="collapse" href="#collapseCadastros" role="button"
+						   aria-expanded="false" aria-controls="collapseCadastros">
+							<span class="text-wrap">@Localizer["Cadastros"]</span>
+							<span class="bi bi-chevron-down"></span>
+						</a>
+						<hr class="navbar-vertical-line">
 
-					<div class="collapse show"
-						 id="collapseCadastros">
-						@if (Html.HasMenuAccess("Produto", Db))
-						{
-							<div class="nav-item-wrapper">
-								<a class="nav-link label-1 px-2 @(ViewContext.RouteData.Values["controller"].ToString() == "Produto" ? "active" : "")"
-								   href="@Url.Action("Index", "Produto", new { area = "Estoque" })">
-									<div class="d-flex align-items-center" style="gap:0.8rem; font-size:0.80rem; padding-left:1rem;">
-										<span class="nav-link-icon"><span class="bi bi-box-seam"></span></span>
-										<span class="nav-link-text-wrapper">
-											<span class="nav-link-text text-wrap">@Localizer["Produtos"]</span>
-										</span>
-									</div>
-								</a>
-							</div>
-						}
-						@if (Html.HasMenuAccess("Fornecedor", Db))
-						{
-							<div class="nav-item-wrapper">
-								<a class="nav-link label-1 px-2 @(ViewContext.RouteData.Values["controller"].ToString() == "Fornecedor" ? "active" : "")"
-								   href="@Url.Action("Index", "Fornecedor", new { area = "Estoque" })">
-									<div class="d-flex align-items-center" style="gap:0.8rem; font-size:0.80rem; padding-left:1rem;">
-										<span class="nav-link-icon"><span class="bi bi-truck"></span></span>
-										<span class="nav-link-text-wrapper">
-											<span class="nav-link-text text-wrap">@Localizer["Fornecedores"]</span>
-										</span>
-									</div>
-								</a>
-							</div>
-						}
-						@if (Html.HasMenuAccess("Categoria", Db))
-						{
-							<div class="nav-item-wrapper">
-								<a class="nav-link label-1 px-2 @(ViewContext.RouteData.Values["controller"].ToString() == "Categoria" ? "active" : "")"
-								   href="@Url.Action("Index", "Categoria", new { area = "Estoque" })">
-									<div class="d-flex align-items-center" style="gap:0.8rem; font-size:0.80rem; padding-left:1rem;">
-										<span class="nav-link-icon"><span class="bi bi-tags"></span></span>
-										<span class="nav-link-text-wrapper">
-											<span class="nav-link-text text-wrap">@Localizer["Categorias"]</span>
-										</span>
-									</div>
-								</a>
-							</div>
-						}
+						<div class="collapse show"
+						     id="collapseCadastros">
+							@if (Html.HasMenuAccess("Produto", Db))
+							{
+								<div class="nav-item-wrapper">
+									<a class="nav-link label-1 px-2 @(ViewContext.RouteData.Values["controller"].ToString() == "Produto" ? "active" : "")"
+									   href="@Url.Action("Index", "Produto", new { area = "Estoque" })">
+										<div class="d-flex align-items-center"
+										     style="gap:0.8rem; font-size:0.80rem; padding-left:1rem;">
+											<span class="nav-link-icon"><span class="bi bi-box-seam"></span></span>
+											<span class="nav-link-text-wrapper">
+												<span class="nav-link-text text-wrap">@Localizer["Produtos"]</span>
+											</span>
+										</div>
+									</a>
+								</div>
+							}
+							@if (Html.HasMenuAccess("Fornecedor", Db))
+							{
+								<div class="nav-item-wrapper">
+									<a class="nav-link label-1 px-2 @(ViewContext.RouteData.Values["controller"].ToString() == "Fornecedor" ? "active" : "")"
+									   href="@Url.Action("Index", "Fornecedor", new { area = "Estoque" })">
+										<div class="d-flex align-items-center"
+										     style="gap:0.8rem; font-size:0.80rem; padding-left:1rem;">
+											<span class="nav-link-icon"><span class="bi bi-truck"></span></span>
+											<span class="nav-link-text-wrapper">
+												<span class="nav-link-text text-wrap">@Localizer["Fornecedores"]</span>
+											</span>
+										</div>
+									</a>
+								</div>
+							}
+							@if (Html.HasMenuAccess("Categoria", Db))
+							{
+								<div class="nav-item-wrapper">
+									<a class="nav-link label-1 px-2 @(ViewContext.RouteData.Values["controller"].ToString() == "Categoria" ? "active" : "")"
+									   href="@Url.Action("Index", "Categoria", new { area = "Estoque" })">
+										<div class="d-flex align-items-center"
+										     style="gap:0.8rem; font-size:0.80rem; padding-left:1rem;">
+											<span class="nav-link-icon"><span class="bi bi-tags"></span></span>
+											<span class="nav-link-text-wrapper">
+												<span class="nav-link-text text-wrap">@Localizer["Categorias"]</span>
+											</span>
+										</div>
+									</a>
+								</div>
+							}
 
-						@if (Html.HasMenuAccess("Cliente", Db))
-						{
-							<div class="nav-item-wrapper">
-								<a class="nav-link label-1 px-2 @(ViewContext.RouteData.Values["controller"].ToString() == "Cliente" ? "active" : "")"
-								   href="@Url.Action("Index", "Cliente", new { area = "Estoque" })">
-									<div class="d-flex align-items-center" style="gap:0.8rem; font-size:0.80rem; padding-left:1rem;">
-										<span class="nav-link-icon"><span class="bi bi-people-fill"></span></span>
-										<span class="nav-link-text-wrapper">
-											<span class="nav-link-text text-wrap">@Localizer["Clientes"]</span>
-										</span>
-									</div>
-								</a>
-							</div>
-						}
+							@if (Html.HasMenuAccess("Cliente", Db))
+							{
+								<div class="nav-item-wrapper">
+									<a class="nav-link label-1 px-2 @(ViewContext.RouteData.Values["controller"].ToString() == "Cliente" ? "active" : "")"
+									   href="@Url.Action("Index", "Cliente", new { area = "Estoque" })">
+										<div class="d-flex align-items-center"
+										     style="gap:0.8rem; font-size:0.80rem; padding-left:1rem;">
+											<span class="nav-link-icon"><span class="bi bi-people-fill"></span></span>
+											<span class="nav-link-text-wrapper">
+												<span class="nav-link-text text-wrap">@Localizer["Clientes"]</span>
+											</span>
+										</div>
+									</a>
+								</div>
+							}
 
-					</div>
-				</li>
-
+						</div>
+					</li>
+				}
 				<!-- Movimentações -->
-				<li class="nav-item">
-					<a class="nav-link d-flex justify-content-between align-items-center px-2"
-					   data-bs-toggle="collapse" href="#collapseMovimentacoes" role="button"
-					   aria-expanded="false" aria-controls="collapseMovimentacoes">
-						<span class="text-wrap">@Localizer["Movimentacoes"]</span>
-						<span class="bi bi-chevron-down"></span>
-					</a>
-					<hr class="navbar-vertical-line">
+				@if (showMov)
+				{
+					<li class="nav-item">
+						<a class="nav-link d-flex justify-content-between align-items-center px-2"
+						   data-bs-toggle="collapse" href="#collapseMovimentacoes" role="button"
+						   aria-expanded="false" aria-controls="collapseMovimentacoes">
+							<span class="text-wrap">@Localizer["Movimentacoes"]</span>
+							<span class="bi bi-chevron-down"></span>
+						</a>
+						<hr class="navbar-vertical-line">
 
-					<div class="collapse show"
-						 id="collapseMovimentacoes">
-						@if (Html.HasMenuAccess("Pedido", Db))
-						{
-							<div class="nav-item-wrapper">
-								<a class="nav-link label-1 px-2 @(
-								  ViewContext.RouteData.Values["controller"].ToString() == "Pedido" &&
-								  ViewContext.RouteData.Values["action"].ToString() == "Index"
-									  ? "active" : "" )"
-								   href="@Url.Action("Index", "Pedido", new { area = "Estoque" })">
-									<div class="d-flex align-items-center" style="gap:0.8rem; font-size:0.80rem; padding-left:1rem;">
-										<span class="nav-link-icon"><span class="bi bi-file-earmark-text"></span></span>
-										<span class="nav-link-text-wrapper">
+						<div class="collapse show"
+						     id="collapseMovimentacoes">
+							@if (Html.HasMenuAccess("Pedido", Db))
+							{
+								<div class="nav-item-wrapper">
+									<a class="nav-link label-1 px-2 @(
+									                                ViewContext.RouteData.Values["controller"].ToString() == "Pedido" &&
+									                                ViewContext.RouteData.Values["action"].ToString() == "Index"
+										                                ? "active"
+										                                : "")"
+									   href="@Url.Action("Index", "Pedido", new { area = "Estoque" })">
+										<div class="d-flex align-items-center"
+										     style="gap:0.8rem; font-size:0.80rem; padding-left:1rem;">
+											<span class="nav-link-icon"><span
+													class="bi bi-file-earmark-text"></span></span>
+											<span class="nav-link-text-wrapper">
 											<span class="nav-link-text text-wrap">@Localizer["Pedidos"]</span>
 										</span>
-									</div>
-								</a>
-							</div>
-						}
+										</div>
+									</a>
+								</div>
+							}
 
-						@if (Html.HasMenuAccess("EntradaSaida", Db))
-						{
-						<div class="nav-item-wrapper">
-							<a class="nav-link label-1 px-2 @(ViewContext.RouteData.Values["controller"].ToString() == "Movimentacao" ? "active" : "")"
-							   href="@Url.Action("Index", "Movimentacao", new { area = "Estoque" })">
-								<div class="d-flex align-items-center" style="gap:0.8rem; font-size:0.80rem; padding-left:1rem;">
-									<span class="nav-link-icon"><span class="bi bi-arrow-left-right"></span></span>
-									<span class="nav-link-text-wrapper">
+							@if (Html.HasMenuAccess("EntradaSaida", Db))
+							{
+								<div class="nav-item-wrapper">
+									<a class="nav-link label-1 px-2 @(ViewContext.RouteData.Values["controller"].ToString() == "Movimentacao" ? "active" : "")"
+									   href="@Url.Action("Index", "Movimentacao", new { area = "Estoque" })">
+										<div class="d-flex align-items-center"
+										     style="gap:0.8rem; font-size:0.80rem; padding-left:1rem;">
+											<span class="nav-link-icon"><span
+													class="bi bi-arrow-left-right"></span></span>
+											<span class="nav-link-text-wrapper">
 										<span class="nav-link-text text-wrap">@Localizer["EntradaSaida"]</span>
 									</span>
+										</div>
+									</a>
 								</div>
-							</a>
-						</div>
-						}
-						<div class="nav-item-wrapper">
-							<a class="nav-link label-1 px-2 @(
-							  ViewContext.RouteData.Values["controller"].ToString() == "Devolucao" &&
-							  ViewContext.RouteData.Values["action"].ToString() == "Index"
-								  ? "active" : "" )"
-							   href="@Url.Action("Index", "Devolucao", new { area = "Estoque" })">
-								<div class="d-flex align-items-center" style="gap:0.8rem; font-size:0.80rem; padding-left:1rem;">
-									<span class="nav-link-icon"><span class="bi bi-arrow-return-left"></span></span>
-									<span class="nav-link-text-wrapper">
-										<span class="nav-link-text text-wrap">@Localizer["Devolution"]</span>
-									</span>
+							}
+							@if (Html.HasMenuAccess("Devolucao", Db))
+							{
+								<div class="nav-item-wrapper">
+									<a class="nav-link label-1 px-2 @(
+									                                ViewContext.RouteData.Values["controller"].ToString() == "Devolucao" &&
+									                                ViewContext.RouteData.Values["action"].ToString() == "Index"
+										                                ? "active"
+										                                : "")"
+									   href="@Url.Action("Index", "Devolucao", new { area = "Estoque" })">
+										<div class="d-flex align-items-center"
+										     style="gap:0.8rem; font-size:0.80rem; padding-left:1rem;">
+											<span class="nav-link-icon"><span
+													class="bi bi-arrow-return-left"></span></span>
+											<span class="nav-link-text-wrapper">
+											<span class="nav-link-text text-wrap">@Localizer["Devolution"]</span>
+										</span>
+										</div>
+									</a>
 								</div>
-							</a>
-						</div>
-						<div class="nav-item-wrapper">
-							<a class="nav-link label-1 px-2 @(
-							  ViewContext.RouteData.Values["controller"].ToString() == "NotaFiscal" &&
-							  ViewContext.RouteData.Values["action"].ToString() == "Index"
-								  ? "active" : "" )"
-							   href="@Url.Action("Index", "NotaFiscal", new { area = "Estoque" })">
-								<div class="d-flex align-items-center" style="gap:0.8rem; font-size:0.80rem; padding-left:1rem;">
-									<span class="nav-link-icon"><span class="bi bi-file-earmark-text"></span></span>
-									<span class="nav-link-text-wrapper">
-										<span class="nav-link-text text-wrap">@Localizer["Invoice"]</span>
-									</span>
+							}
+							@if (Html.HasMenuAccess("NotaFiscal", Db))
+							{
+								<div class="nav-item-wrapper">
+									<a class="nav-link label-1 px-2 @(
+									                                ViewContext.RouteData.Values["controller"].ToString() == "NotaFiscal" &&
+									                                ViewContext.RouteData.Values["action"].ToString() == "Index"
+										                                ? "active"
+										                                : "")"
+									   href="@Url.Action("Index", "NotaFiscal", new { area = "Estoque" })">
+										<div class="d-flex align-items-center"
+										     style="gap:0.8rem; font-size:0.80rem; padding-left:1rem;">
+											<span class="nav-link-icon"><span
+													class="bi bi-file-earmark-text"></span></span>
+											<span class="nav-link-text-wrapper">
+											<span class="nav-link-text text-wrap">@Localizer["Invoice"]</span>
+										</span>
+										</div>
+									</a>
 								</div>
-							</a>
+							}
 						</div>
-					</div>
-				</li>
-
+					</li>
+				}
 				<!-- Relatórios -->
-				<li class="nav-item">
-					<a class="nav-link d-flex justify-content-between align-items-center px-2"
-					   data-bs-toggle="collapse" href="#collapseRelatorios" role="button"
-					   aria-expanded="false" aria-controls="collapseRelatorios">
-						<span class="text-wrap">@Localizer["Relatorios"]</span>
-						<span class="bi bi-chevron-down"></span>
-					</a>
-					<hr class="navbar-vertical-line">
+				@if (showRel)
+				{
+					<li class="nav-item">
+						<a class="nav-link d-flex justify-content-between align-items-center px-2"
+						   data-bs-toggle="collapse" href="#collapseRelatorios" role="button"
+						   aria-expanded="false" aria-controls="collapseRelatorios">
+							<span class="text-wrap">@Localizer["Relatorios"]</span>
+							<span class="bi bi-chevron-down"></span>
+						</a>
+						<hr class="navbar-vertical-line">
 
-					<div class="collapse show"
-						 id="collapseRelatorios">
-						@if (Html.HasMenuAccess("RelatorioPedido", Db))
-						{
-						<div class="nav-item-wrapper">
-							<a class="nav-link label-1 px-2 @(
-								  ViewContext.RouteData.Values["controller"].ToString() == "Pedido" &&
-								  ViewContext.RouteData.Values["action"].ToString() == "Report"
-									  ? "active" : "" )"
-							   href="@Url.Action("Report", "Pedido", new { area = "Estoque" })">
-								<div class="d-flex align-items-center" style="gap:0.8rem; font-size:0.80rem; padding-left:1rem;">
-									<span class="nav-link-icon"><span class="bi bi-file-earmark-text"></span></span>
-									<span class="nav-link-text-wrapper">
-										<span class="nav-link-text text-wrap">@Localizer["OrderReport"]</span>
-									</span>
+						<div class="collapse show"
+						     id="collapseRelatorios">
+							@if (Html.HasMenuAccess("RelatorioPedido", Db))
+							{
+								<div class="nav-item-wrapper">
+									<a class="nav-link label-1 px-2 @(
+									                                ViewContext.RouteData.Values["controller"].ToString() == "Pedido" &&
+									                                ViewContext.RouteData.Values["action"].ToString() == "Report"
+										                                ? "active"
+										                                : "")"
+									   href="@Url.Action("Report", "Pedido", new { area = "Estoque" })">
+										<div class="d-flex align-items-center"
+										     style="gap:0.8rem; font-size:0.80rem; padding-left:1rem;">
+											<span class="nav-link-icon"><span
+													class="bi bi-file-earmark-text"></span></span>
+											<span class="nav-link-text-wrapper">
+												<span class="nav-link-text text-wrap">@Localizer["OrderReport"]</span>
+											</span>
+										</div>
+									</a>
 								</div>
-							</a>
-						</div>
-						}
-
-						<div class="nav-item-wrapper">
-							<a class="nav-link label-1 px-2 @(
-		  ViewContext.RouteData.Values["controller"].ToString() == "Cliente" &&
-		  ViewContext.RouteData.Values["action"].ToString() == "Report"
-			  ? "active" : "" )"
-							   href="@Url.Action("Report", "Cliente", new { area = "Estoque" })">
-								<div class="d-flex align-items-center" style="gap:0.8rem; font-size:0.80rem; padding-left:1rem;">
-									<span class="nav-link-icon"><span class="bi bi-file-earmark-text"></span></span>
-									<span class="nav-link-text-wrapper">
-										<span class="nav-link-text text-wrap">@Localizer["CustomerReport"]</span>
-									</span>
+							}
+							@if (Html.HasMenuAccess("RelatorioCliente", Db))
+							{
+								<div class="nav-item-wrapper">
+									<a class="nav-link label-1 px-2 @(
+									                                ViewContext.RouteData.Values["controller"].ToString() == "Cliente" &&
+									                                ViewContext.RouteData.Values["action"].ToString() == "Report"
+										                                ? "active"
+										                                : "")"
+									   href="@Url.Action("Report", "Cliente", new { area = "Estoque" })">
+										<div class="d-flex align-items-center"
+										     style="gap:0.8rem; font-size:0.80rem; padding-left:1rem;">
+											<span class="nav-link-icon"><span
+													class="bi bi-file-earmark-text"></span></span>
+											<span class="nav-link-text-wrapper">
+												<span
+													class="nav-link-text text-wrap">@Localizer["CustomerReport"]</span>
+											</span>
+										</div>
+									</a>
 								</div>
-							</a>
-						</div>
-
-						<div class="nav-item-wrapper">
-							<a class="nav-link label-1 px-2 @(
-		  		  ViewContext.RouteData.Values["controller"].ToString() == "Devolucao" &&
-		  		  ViewContext.RouteData.Values["action"].ToString() == "Report"
-			  		  ? "active" : "" )"
-							   href="@Url.Action("Report", "Devolucao", new { area = "Estoque" })">
-								<div class="d-flex align-items-center" style="gap:0.8rem; font-size:0.80rem; padding-left:1rem;">
-									<span class="nav-link-icon"><span class="bi bi-file-earmark-text"></span></span>
-									<span class="nav-link-text-wrapper">
-										<span class="nav-link-text text-wrap">@Localizer["DevolutionReport"]</span>
-									</span>
+							}
+							@if (Html.HasMenuAccess("RelatorioDevolucao", Db))
+							{
+								<div class="nav-item-wrapper">
+									<a class="nav-link label-1 px-2 @(
+									                                ViewContext.RouteData.Values["controller"].ToString() == "Devolucao" &&
+									                                ViewContext.RouteData.Values["action"].ToString() == "Report"
+										                                ? "active"
+										                                : "")"
+									   href="@Url.Action("Report", "Devolucao", new { area = "Estoque" })">
+										<div class="d-flex align-items-center"
+										     style="gap:0.8rem; font-size:0.80rem; padding-left:1rem;">
+											<span class="nav-link-icon"><span
+													class="bi bi-file-earmark-text"></span></span>
+											<span class="nav-link-text-wrapper">
+												<span
+													class="nav-link-text text-wrap">@Localizer["DevolutionReport"]</span>
+											</span>
+										</div>
+									</a>
 								</div>
-							</a>
+							}
 						</div>
-
-					</div>
-				</li>
-
+					</li>
+				}
 			</ul>
 		</div>
 	</div>

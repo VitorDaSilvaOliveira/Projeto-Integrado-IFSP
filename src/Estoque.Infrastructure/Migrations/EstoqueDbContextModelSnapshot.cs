@@ -17,7 +17,7 @@ namespace Estoque.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.8")
+                .HasAnnotation("ProductVersion", "10.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -781,7 +781,7 @@ namespace Estoque.Infrastructure.Migrations
                     b.ToTable("SolicitacaoDevolucao");
                 });
 
-            modelBuilder.Entity("Estoque.Domain.Entities.UserSetting", b =>
+            modelBuilder.Entity("Estoque.Domain.Entities.UserSettings", b =>
                 {
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");

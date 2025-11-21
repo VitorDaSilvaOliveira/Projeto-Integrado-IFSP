@@ -1,23 +1,17 @@
 ﻿@using Estoque.Domain.Entities
-@model UserSetting
+@model UserSettings
 @{
     ViewData["Title"] = "Configurações";
     Layout = "~/Areas/Estoque/Views/Shared/_Layout.cshtml";
 
 }
 
-<div class="container py-5">
-    <h1 class="mb-4 fw-bold text-primary">
-        <i class="bi bi-gear-fill me-2"></i>Configurações
-    </h1>
+<h3>
+    <i class="fas fa-cog me-2"></i> Configurações
+</h3>
+<hr />
 
-@*     @if (TempData["Success"] != null)
-    {
-        <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
-            <i class="bi bi-check-circle me-2"></i>@TempData["Success"]
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    } *@
+<div class="container py-5">
 
     <form asp-area="Identity" asp-controller="Settings" asp-action="SaveSettings" method="post" class="row g-4">
         @Html.AntiForgeryToken()
@@ -49,7 +43,6 @@
                         <select asp-for="PreferredLanguage" class="form-select">
                             <option value="pt-BR">Português (Brasil)</option>
                             <option value="en-US">Inglês (EUA)</option>
-                            <option value="es-ES">Espanhol</option>
                         </select>
                     </div>
 

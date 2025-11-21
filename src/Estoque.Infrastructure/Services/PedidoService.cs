@@ -1,8 +1,11 @@
 ﻿using Estoque.Domain.Enums;
 using Estoque.Infrastructure.Data;
+using Estoque.Infrastructure.Documents;
 using JJMasterData.Core.UI.Components;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using QuestPDF.Fluent;
 
 namespace Estoque.Infrastructure.Services;
 
@@ -10,10 +13,9 @@ public class PedidoService(
     IComponentFactory componentFactory,
     EstoqueDbContext context,
     ILogger<MovimentacaoService> logger,
-    MovimentacaoService movimentacaoService)
+    MovimentacaoService movimentacaoService,
+    IWebHostEnvironment env)
 {
-    public int? statusPreUpdate = null;
-    public int? statusPostUpdate = null;
 
     public async Task<JJFormView> GetFormViewPedidoAsync()
     {
@@ -62,6 +64,19 @@ public class PedidoService(
             logger.LogError($"Erro ao confirmar pedido {idPedido}: {ex.Message}");
             throw;
         }
+    }
+    
+    public async Task<byte[]> ReportPedidoAsync(int pedidoId)
+    {
+        var pedido = await context.Pedidos
+            .Include(p => p.Itens)
+            .FirstOrDefaultAsync(p => p.Id == pedidoId);
+
+        if (pedido is null)
+            throw new Exception("Pedido não encontrado.");
+
+        var document = new RelatorioPedidoDocument(pedido, pedido.Itens.ToList(), env);
+        return document.GeneratePdf();
     }
 
     public async Task<IEnumerable<object>> ObterPedidosPorOperacaoAsync()

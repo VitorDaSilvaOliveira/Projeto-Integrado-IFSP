@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Estoque.Infrastructure.Data;
 
-public class EstoqueDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
+public class EstoqueDbContext(DbContextOptions<EstoqueDbContext> options)
+    : IdentityDbContext<ApplicationUser, ApplicationRole, string>(options)
 {
-    public EstoqueDbContext(DbContextOptions<EstoqueDbContext> options) : base(options) {}
     public DbSet<Produto> Produtos { get; set; }
     public DbSet<AuditLog> AuditLogs { get; set; }
     public DbSet<Categoria> Categorias { get; set; }
@@ -23,8 +23,8 @@ public class EstoqueDbContext : IdentityDbContext<ApplicationUser, ApplicationRo
     public DbSet<ProdutoLote> ProdutoLotes { get; set; }
     public DbSet<ProdutoSerie> ProdutoSeries { get; set; }
     public DbSet<MasterData> MasterData { get; set; }
-    public DbSet<PedidoNFView> Vw_PedidoNF { get; set; }
-    public DbSet<UserSetting> UserSettings { get; set; }
+    public DbSet<PedidoNfView> Vw_PedidoNF { get; set; }
+    public DbSet<UserSettings> UserSettings { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -33,7 +33,7 @@ public class EstoqueDbContext : IdentityDbContext<ApplicationUser, ApplicationRo
         modelBuilder.Entity<RoleMenu>()
             .HasKey(rm => new { rm.RoleId, rm.MenuId });
 
-        modelBuilder.Entity<PedidoNFView>(entity =>
+        modelBuilder.Entity<PedidoNfView>(entity =>
         {
             entity.HasNoKey(); 
             entity.ToView("vw_PedidoNF"); 
