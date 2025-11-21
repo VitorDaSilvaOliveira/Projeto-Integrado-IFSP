@@ -1,34 +1,41 @@
 # Sistema de Controle de Estoque VIP Penha <img src="src/Estoque.Web/wwwroot/img/logo.png" alt="Vip-Penha Logo" width="50" height="50">
 
-## 📌 Sobre o Projeto
-Sistema completo de gestão de estoque desenvolvido para a **VIP Penha**, loja especializada em eletrônicos. Oferece controle de produtos, movimentações, fornecedores e relatórios integrados.
+# Plano de Testes de Unidade: Cobertura de Domínio e Infraestrutura (Entities, Services & Utils)
 
-## 🚀 Como Rodar
+**Versão:** 1.0  
+**Data:** 20 de Novembro de 2025  
+**Autor:** Gean Carlos de Sousa Bandeira
 
-### 1️⃣ Pré-requisitos
+## 1. Introdução e Objetivo
 
-Antes de tudo, garanta que você tenha instalado:
+Este Pull Request implementa uma suíte abrangente de testes de unidade visando elevar a confiabilidade do sistema **Estoque**. O foco principal foi cobrir as Entidades de Domínio (garantindo integridade de dados), Classes Utilitárias (lógica pura) e Serviços de Infraestrutura (regras de negócio complexas).
 
-- [SDK .NET 10](https://dotnet.microsoft.com/en-us/download/dotnet/10.0)
-- [SQL Server](https://www.microsoft.com/pt-br/sql-server/sql-server-downloads)
-- [Visual Studio 2022](https://visualstudio.microsoft.com/) ou [Rider](https://www.jetbrains.com/rider/)
-- (Opcional) [Azure Data Studio](https://learn.microsoft.com/pt-br/sql/azure-data-studio/) ou [SQL Server Management Studio (SSMS)](https://learn.microsoft.com/pt-br/sql/ssms/download-sql-server-management-studio-ssms) para gerenciar o banco.
+Além da criação de novos testes, este PR resolve conflitos de versionamento do **.NET 10**, corrige duplicidades de pacotes NuGet e ajusta a arquitetura de serviços para permitir injeção de dependência e Mocking eficiente.
+
+## 2. Estratégia e Escopo
+
+* **Escopo:** O trabalho abrangeu `Estoque.Domain` (Entities e Models) e `Estoque.Infrastructure` (Services e Utils).
+* **Estratégia:**
+    * **Entities:** Validação de propriedades, encapsulamento e valores padrão.
+    * **Utils:** Testes de lógica pura para cálculos fiscais (Danfe) e manipulação de objetos.
+    * **Services:** Uso de **Mocks (Moq)** para isolar dependências externas (Banco de Dados, `IComponentFactory`).
+    * **Integração em Memória:** Uso do `EF Core InMemory` para validar persistência e transações complexas sem afetar o banco real.
+* **Ferramentas:** xUnit, Moq, FluentAssertions, Microsoft.EntityFrameworkCore.InMemory.
+
+## 3. Casos de Teste Detalhados e Melhorias
+
+Abaixo, detalhamos as principais implementações e correções realizadas:
+
+| Classe / Componente | Tipo de Teste | Cenário / Descrição | Resultado Esperado |
+| :--- | :--- | :--- | :--- |
+| **Entities (Cliente, Pedido, Produto, etc.)** | Unidade | Validação de Getters, Setters e Inicialização de Construtores. | Garantir que propriedades (Ids, Enums, Listas) sejam instanciadas corretamente e não nulas quando esperado. |
+| **DanfeUtils** | Lógica | Cálculo de Dígito Verificador e Geração de Chave de Acesso NFe (44 dígitos). | A chave gerada deve respeitar o padrão SEFAZ e o cálculo do módulo 11. |
+| **ObjectUtils** | Lógica | Extração segura de valores (`SafeGetDecimal`, `SafeGetString`) de objetos anônimos ou nulos. | Retornar valor tipado correto ou valor padrão (0, null) sem lançar exceções. |
+| **PedidoService** | Unidade / Mock | Método `ProcessOrder`: Processamento de pedido, cálculo de total e baixa de estoque. | O status do pedido deve mudar para `Realizado`, o valor total calculado e o método de movimentação invocado. |
+| **AuditLogService** | Integração (Memória) | Registro de logs de auditoria no banco de dados. | O log deve ser persistido no `DbContext` em memória com IP, Usuário e Ação corretos. |
+| **Services (Cliente, Produto)** | Mock Avançado | Método `GetFormView...`: Criação de `JJFormView`. | Simulação da criação de componentes de interface usando `FormatterServices` para contornar construtores complexos. |
+| **Correção Infra** | Refatoração | Ajuste em `MovimentacaoService`. | Métodos transformados em `virtual` para permitir sobrescrita e Mocking pelo framework de testes. |
+| **Correção Config** | Build | Atualização de `.csproj`. | Unificação das versões de pacotes para `.NET 10.0.0`, eliminando conflitos `NU1504` e `MissingMethodException`. |
 
 ---
-
-### 2️⃣ Clonar o Repositório
-
-```bash
-git clone https://github.com/seuusuario/vip-penha-estoque.git
-```
-
-### 3️⃣ Configurar o Banco de Dados
-
-Configure sua conexão de banco no `appsettings.json`
-
-### 4️⃣ Rodar a Aplicação
-
-```bash
-cd Estoque.Web
-dotnet run
-```
+**Status:** ✅ Todos os testes implementados estão passando (Green).
