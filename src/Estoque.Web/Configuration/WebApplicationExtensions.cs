@@ -1,6 +1,5 @@
 ﻿using Estoque.Infrastructure.Data;
 using JJMasterData.Web.Configuration;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
@@ -8,7 +7,7 @@ namespace Estoque.Web.Configuration;
 
 public static class WebApplicationExtensions
 {
-    public async static void UseEstoqueWeb(this WebApplication app)
+    public static void UseEstoqueWeb(this WebApplication app)
     {
         if (!app.Environment.IsDevelopment())
         {
@@ -35,42 +34,8 @@ public static class WebApplicationExtensions
         using (var scope = app.Services.CreateScope())
         {
             var dbContext = scope.ServiceProvider.GetRequiredService<EstoqueDbContext>();
-
-            var retryCount = 5;
-            while (retryCount > 0)
-            {
-                try
-                {
-                    dbContext.Database.Migrate();
-                    break; // OK
-                }
-                catch (SqlException ex)
-                {
-                    retryCount--;
-
-                    // Erros transitórios comuns do Azure SQL
-                    if (retryCount == 0 || !IsTransientError(ex))
-                        throw;
-
-                    await Task.Delay(3000);
-                }
-            }
+            dbContext.Database.Migrate();
         }
-
-        bool IsTransientError(SqlException ex)
-        {
-            // Lista oficial de erros transitórios do Azure SQL
-            return ex.Number == -2  // Timeout
-                || ex.Number == 4060
-                || ex.Number == 10928
-                || ex.Number == 10929
-                || ex.Number == 40197
-                || ex.Number == 40501
-                || ex.Number == 49918
-                || ex.Number == 49919
-                || ex.Number == 49920;
-        }
-
 
         IdentitySeed.CreateAdminAsync(app.Services).GetAwaiter().GetResult();
     }
@@ -110,5 +75,4 @@ public static class WebApplicationExtensions
             pattern: "{controller=SignIn}/{action=Index}/{id?}",
             defaults: new { area = "Identity" });
     }
-
 }
