@@ -54,7 +54,7 @@ public class PedidoController(PedidoService pedidoService) : Controller
         return File(
             pdf,
             "application/pdf",
-            $"pedido_{idPedido}.pdf"
+            $"Relatorio_Pedido_{idPedido}.pdf"
         );
     }
 

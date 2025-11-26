@@ -54,7 +54,7 @@ public class DevolucaoController(DevolucaoService devolucaoService) : Controller
         return File(
             pdf,
             "application/pdf",
-            $"pedido_{idDevolucao}.pdf"
+            $"Relatorio_Devolucao_{idDevolucao}.pdf"
         );
     }
 }
