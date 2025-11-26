@@ -85,6 +85,7 @@ public static class ConfigurationExtensions
             services.AddScoped<UserService>();
             services.AddScoped<AuditLogService>();
             services.AddScoped<HomeService>();
+            services.AddScoped<DevolucaoRepository>();
             services.AddSingleton<EmailSender>();
             services.AddScoped<PedidoService>();
             services.AddScoped<RoleService>();

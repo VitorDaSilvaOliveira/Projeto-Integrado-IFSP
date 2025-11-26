@@ -34,4 +34,27 @@ public class DevolucaoController(DevolucaoService devolucaoService) : Controller
         ViewBag.FormViewRelatorioDevolucao = resultGridReportDevolucaoAsync.Content;
         return View();
     }
+    public async Task<IActionResult> ViewReportDevolucaoPdf(int idDevolucao)
+    {
+        var pdf = await devolucaoService.ReportDevolucaoAsync(idDevolucao);
+
+        if (pdf.Length == 0)
+            return NotFound("PDF não pôde ser gerado.");
+
+        return File(pdf, "application/pdf");
+    }
+
+    public async Task<IActionResult> DownloadReportDevolucaoPdf(int idDevolucao)
+    {
+        var pdf = await devolucaoService.ReportDevolucaoAsync(idDevolucao);
+
+        if (pdf.Length == 0)
+            return NotFound("PDF não pôde ser gerado.");
+
+        return File(
+            pdf,
+            "application/pdf",
+            $"pedido_{idDevolucao}.pdf"
+        );
+    }
 }

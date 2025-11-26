@@ -31,4 +31,7 @@ public class DevolucaoItem
 
     // 🔗 Relacionamento
     public virtual Devolucao Devolucao { get; set; }
+
+    [NotMapped]
+    public Produto Produto { get; set; }
 }
