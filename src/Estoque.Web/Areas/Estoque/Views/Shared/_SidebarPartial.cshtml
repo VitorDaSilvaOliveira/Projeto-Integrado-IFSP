@@ -21,6 +21,13 @@
 		Html.HasMenuAccess("RelatorioPedido", Db) ||
 		Html.HasMenuAccess("RelatorioClientes", Db) ||
 		Html.HasMenuAccess("RelatorioDevolucao", Db);
+
+	var showAdm =
+		Html.HasMenuAccess("Formularios", Db) 	||
+		Html.HasMenuAccess("Usuarios", Db) ||
+		Html.HasMenuAccess("Perfis", Db) ||
+		Html.HasMenuAccess("Auditoria", Db) ||
+		Html.HasMenuAccess("Log", Db);
 }
 
 <nav class="navbar navbar-vertical navbar-expand-lg">
@@ -341,7 +348,7 @@
 			</ul>
 		</div>
 	</div>
-	@if (User.IsInRole("Admin"))
+	@if (User.IsInRole("Admin") || showAdm)
 	{
 		<div class="navbar-vertical-footer">
 			<a class="btn navbar-vertical-toggle fw-semibold w-100 white-space-nowrap d-flex align-items-center border-right-mode"
