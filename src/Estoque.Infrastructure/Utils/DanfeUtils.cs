@@ -1,4 +1,4 @@
-﻿using QRCoder;
+﻿
 using System.Drawing;
 using System.Xml.Linq;
 

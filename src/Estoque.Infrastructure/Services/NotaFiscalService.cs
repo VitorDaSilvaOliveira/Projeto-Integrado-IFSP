@@ -6,8 +6,9 @@ using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
 using ZXing;
 using ZXing.Common;
-using System.Drawing;
-using System.Drawing.Imaging;
+using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Formats.Png;
+using Image = SixLabors.ImageSharp.Image;
 
 namespace Estoque.Infrastructure.Services;
 
@@ -51,22 +52,19 @@ public class NotaFiscalService(EstoqueDbContext context, IComponentFactory compo
             Format = BarcodeFormat.CODE_128,
             Options = new EncodingOptions
             {
-                Height = 100,     
-                Width = 600, 
+                Height = 100,
+                Width = 600,
                 Margin = 0,
                 PureBarcode = true
             }
         };
         var pixelData = writer.Write(chaveAcesso);
+
         byte[] barcodePng;
-        using (var bmp = new Bitmap(pixelData.Width, pixelData.Height, PixelFormat.Format32bppArgb))
+        using (var image = Image.LoadPixelData<Rgba32>(pixelData.Pixels, pixelData.Width, pixelData.Height))
+        using (var ms = new MemoryStream())
         {
-            var data = bmp.LockBits(new Rectangle(0, 0, pixelData.Width, pixelData.Height),
-                ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
-            System.Runtime.InteropServices.Marshal.Copy(pixelData.Pixels, 0, data.Scan0, pixelData.Pixels.Length);
-            bmp.UnlockBits(data);
-            using var ms = new MemoryStream();
-            bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+            image.Save(ms, new PngEncoder());
             barcodePng = ms.ToArray();
         }
 
@@ -80,13 +78,11 @@ public class NotaFiscalService(EstoqueDbContext context, IComponentFactory compo
                 page.Margin(10);
                 page.DefaultTextStyle(t => t.FontSize(8));
 
-                // === LAYOUT PRINCIPAL ===
                 page.Content().Column(content =>
                 {
-                    // CABEÇALHO (Topo da página)
+                    // CABEÇALHO
                     content.Item().Height(120).Border(1).Padding(6).Row(row =>
                     {
-                        // Emitente
                         row.RelativeItem(3).Column(c =>
                         {
                             c.Item().Text("VIP PENHA ELETRÔNICOS LTDA").FontSize(16).Bold();
@@ -95,7 +91,6 @@ public class NotaFiscalService(EstoqueDbContext context, IComponentFactory compo
                             c.Item().Text("Telefone: (11) 2222-3333 | E-mail: contato@vippenha.com");
                         });
 
-                        // Título DANFE
                         row.RelativeItem(2).BorderLeft(1).PaddingLeft(8).Column(c =>
                         {
                             c.Item().AlignCenter().Text("DANFE").FontSize(18).Bold();
@@ -105,7 +100,6 @@ public class NotaFiscalService(EstoqueDbContext context, IComponentFactory compo
                             c.Item().AlignCenter().Text("Série: 1");
                         });
 
-                        // Código de barras
                         row.ConstantItem(200).BorderLeft(1).PaddingLeft(5).Column(c =>
                         {
                             c.Item().Image(barcodePng, ImageScaling.FitWidth);
@@ -163,7 +157,6 @@ public class NotaFiscalService(EstoqueDbContext context, IComponentFactory compo
                             cols.RelativeColumn(2);
                         });
 
-                        // Cabeçalho
                         table.Header(header =>
                         {
                             header.Cell().Border(1).AlignCenter().Text("CÓD").Bold();
@@ -176,7 +169,6 @@ public class NotaFiscalService(EstoqueDbContext context, IComponentFactory compo
                         void LinhaProduto(string c1, string c2, string c3, string c4, string c5, bool temProduto)
                         {
                             var top = temProduto ? 1 : 0;
-
                             table.Cell().BorderLeft(1).BorderTop(top).AlignCenter().Text(c1);
                             table.Cell().BorderLeft(1).BorderTop(top).Text(c2);
                             table.Cell().BorderLeft(1).BorderTop(top).AlignRight().Text(c3);
@@ -184,7 +176,6 @@ public class NotaFiscalService(EstoqueDbContext context, IComponentFactory compo
                             table.Cell().BorderLeft(1).BorderRight(1).BorderTop(top).AlignRight().Text(c5);
                         }
 
-                        // Linhas reais
                         foreach (var item in itens)
                         {
                             LinhaProduto(
@@ -197,17 +188,15 @@ public class NotaFiscalService(EstoqueDbContext context, IComponentFactory compo
                             );
                         }
 
-                        // Linhas vazias (só verticais)
-                        var totalLinhas = 35;
+                        const int totalLinhas = 35;
                         var linhasFaltando = totalLinhas - itens.Count;
 
-                        for (int i = 0; i < linhasFaltando; i++)
+                        for (var i = 0; i < linhasFaltando; i++)
                         {
                             LinhaProduto(" ", " ", " ", " ", " ", false);
                         }
                     });
-
-                    // DADOS ADICIONAIS
+                    
                     content.Item().Height(100).Border(1).Padding(4).Column(c =>
                     {
                         c.Item().Text("DADOS ADICIONAIS").Bold();
@@ -215,7 +204,7 @@ public class NotaFiscalService(EstoqueDbContext context, IComponentFactory compo
                     });
                 });
 
-                // Rodapé
+                // RODAPÉ
                 page.Footer().Height(30).Padding(2).BorderTop(1).Column(f =>
                 {
                     f.Item().AlignCenter().Text("Documento emitido em ambiente de homologação - Sem valor fiscal").FontSize(8);
