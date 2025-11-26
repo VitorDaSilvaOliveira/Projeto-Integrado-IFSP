@@ -4,8 +4,9 @@ public static class PermissionDefinitions
 {
     public static readonly PermissionGroup[] All =
     [
-        new("Dashboards", "Dashboards", [
-            new PermissionItem("PainelPedidos", "Painel de Pedidos")
+        new("Dashboards", "Painel", [
+            new PermissionItem("PainelPedidos", "Painel Pedidos"),
+            new PermissionItem("PainelClientes", "Painel Clientes")
         ]),
 
         new("Cadastros", "Cadastros", [

@@ -1,12 +1,17 @@
-﻿@{
-    ViewBag.Title = "Dashboard de Pedidos";
+﻿@using Estoque.Lib.Resources
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<EstoqueResources> Localizer
+
+@{
+    Layout = "_Layout";
+    ViewBag.Title = Localizer["DashboardPedidos"];
 }
 
 <h3>
-    <i class="fas fa-chart-line"></i> Dashboard de Pedidos
+    <i class="fas fa-chart-line"></i> @Localizer["DashboardPedidos"]
 </h3>
 
-<hr />
+<hr/>
 
 <div class="row mt-4">
 
@@ -39,7 +44,7 @@
     </div>
 </div>
 
-<hr />
+<hr/>
 
 <div class="row">
 
