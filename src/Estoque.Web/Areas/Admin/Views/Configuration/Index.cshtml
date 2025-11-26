@@ -53,6 +53,7 @@
 					<p class="nav-label">@Localizer["Audit"]</p>
 				</a>
 			}
+			
 			@if (Html.HasMenuAccess("Log", Db) || User.IsInRole("Admin"))
 			{
 				<a class="icon-nav-item" href="@Url.Action("Index", "Log", new { area = "Admin" })">

@@ -83,7 +83,8 @@ public class UserController(UserManager<ApplicationUser> userManager, UserServic
             FirstName = user.FirstName,
             LastName = user.LastName,
             AvatarUrl = user.AvatarFileName,
-            Status = user.Status
+            Status = user.Status,
+            Loja = user.Loja
         };
 
         return View(model);

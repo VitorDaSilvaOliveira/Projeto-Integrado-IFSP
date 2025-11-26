@@ -9,5 +9,6 @@ public class ApplicationUser(string? firstName, string? lastName) : IdentityUser
     public string? LastName { get; set; } = lastName;
     public string? AvatarFileName { get; set; }
     public UserStatus Status { get; set; }
+    public string? Loja { get; set; }
     
 }

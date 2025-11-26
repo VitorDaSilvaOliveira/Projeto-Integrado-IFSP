@@ -86,16 +86,22 @@
                                 <label class="form-label">Sobrenome <span class="required-symbol">*</span></label>
                                 <input class="form-control" type="text" name="LastName" value="@Model.LastName" />
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Número de Telefone</label>
-                                <span class="fa fa-question-circle help-description"
-                                      data-bs-toggle="tooltip"
-                                      data-bs-html="true"
-                                      aria-label="+55 99999-9999"
-                                      data-bs-original-title="+55 99999-9999"></span>
-                                <input class="form-control" type="text" name="PhoneNumber" value="@Model.PhoneNumber"
-                                       maxlength="19" inputmode="text" />
-                            </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Número de Telefone
+                                        <span class="fa fa-question-circle help-description"
+                                              data-bs-toggle="tooltip"
+                                              data-bs-html="true"
+                                              aria-label="+55 99999-9999"
+                                              data-bs-original-title="+55 99999-9999"></span>
+                                    </label>
+                                    <input class="form-control" type="text" name="PhoneNumber" value="@Model.PhoneNumber"
+                                           maxlength="19" inputmode="text" />
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Loja <span class="required-symbol">*</span></label>
+                                    <input class="form-control" type="text" name="Loja" value="@Model.Loja" />
+                                </div>
                         </div>
                         <div class="text-end">
                             <button type="submit" class="btn btn-primary">@Localizer["Save"]</button>
