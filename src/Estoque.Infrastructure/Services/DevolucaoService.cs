@@ -1,21 +1,28 @@
 ﻿using Estoque.Domain.Entities;
 using Estoque.Domain.Enums;
 using Estoque.Infrastructure.Data;
+using Estoque.Infrastructure.Documents;
+using Estoque.Infrastructure.Repository;
 using JJMasterData.Core.Events.Abstractions;
 using JJMasterData.Core.Events.Args;
 using JJMasterData.Core.UI.Components;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
+using QuestPDF.Fluent;
 
 namespace Estoque.Infrastructure.Services;
 
 public class DevolucaoService(
 IComponentFactory componentFactory,
+DevolucaoRepository repository,
 EstoqueDbContext context,
 ILogger<MovimentacaoService> logger,
 AuditLogService auditLogService,
 MovimentacaoService movimentacaoService,
-SignInManager<ApplicationUser> signInManager) : IFormEventHandler
+SignInManager<ApplicationUser> signInManager,
+IWebHostEnvironment env
+    ) : IFormEventHandler
 {
     public async Task<JJFormView> GetFormViewDevolucaoAsync()
     {
@@ -34,7 +41,16 @@ SignInManager<ApplicationUser> signInManager) : IFormEventHandler
         formView.ShowTitle = true;
         return formView;
     }
+    public async Task<byte[]> ReportDevolucaoAsync(int idDevolucao)
+    {
+        var devolucao = await repository.GetDevolucaoAsync(idDevolucao);
 
+        if (devolucao is null)
+            throw new Exception("Devolucao não encontrada.");
+
+        var document = new RelatorioDevolucaoDocument(devolucao, devolucao.Itens.ToList(), env);
+        return document.GeneratePdf();
+    }
     public async ValueTask ProcessAfterInsertAsync(object sender, FormAfterActionEventArgs e)
     {
         var values = e.Values;
