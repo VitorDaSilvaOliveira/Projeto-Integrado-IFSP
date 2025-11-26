@@ -1,7 +1,8 @@
-﻿@using Estoque.Lib.Resources
+﻿@using Estoque.Infrastructure.Utils
+@using Estoque.Lib.Resources
 @using Microsoft.Extensions.Localization
 @inject IStringLocalizer<EstoqueResources> Localizer
-
+@inject Estoque.Infrastructure.Data.EstoqueDbContext Db
 <head>
 	<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
 	<link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
@@ -14,41 +15,53 @@
 
 <section class="py-3">
 	<div class="container-small">
+
 		<div class="d-flex flex-wrap justify-content-center gap-4">
+			@if (Html.HasMenuAccess("Formularios", Db) || User.IsInRole("Admin"))
+			{
 			<a class="icon-nav-item" href="/DataDictionary/Element">
 				<div class="icon-container mb-2">
 					<i class="fs-4 uil uil-book"></i>
 				</div>
 				<p class="nav-label">@Localizer["Forms"]</p>
 			</a>
-
-			<a class="icon-nav-item" href="@Url.Action("Index", "User", new { area = "Admin" })">
-				<div class="icon-container mb-2">
-					<i class="fs-4 uil uil-users-alt"></i>
-				</div>
-				<p class="nav-label">@Localizer["Users"]</p>
-			</a>
-
-			<a class="icon-nav-item" href="@Url.Action("Index", "Roles", new { area = "Admin" })">
-				<div class="icon-container mb-2">
-					<i class="fs-4 uil uil-user-check"></i>
-				</div>
-				<p class="nav-label">@Localizer["Roles"]</p>
-			</a>
-
-			<a class="icon-nav-item" href="@Url.Action("Index", "AuditLog", new { area = "Admin" })">
-				<div class="icon-container mb-2">
-					<i class="fs-4 uil uil-shield-check"></i>
-				</div>
-				<p class="nav-label">@Localizer["Audit"]</p>
-			</a>
-
-			<a class="icon-nav-item" href="@Url.Action("Index", "Log", new { area = "Admin" })">
-				<div class="icon-container mb-2">
-					<i class="fs-4 uil uil-film"></i>
-				</div>
-				<p class="nav-label">@Localizer["Log"]</p>
-			</a>
+			}
+			@if (Html.HasMenuAccess("Usuarios", Db) || User.IsInRole("Admin"))
+			{
+				<a class="icon-nav-item" href="@Url.Action("Index", "User", new { area = "Admin" })">
+					<div class="icon-container mb-2">
+						<i class="fs-4 uil uil-users-alt"></i>
+					</div>
+					<p class="nav-label">@Localizer["Users"]</p>
+				</a>
+			}
+			@if (Html.HasMenuAccess("Perfis", Db) || User.IsInRole("Admin"))
+			{
+				<a class="icon-nav-item" href="@Url.Action("Index", "Roles", new { area = "Admin" })">
+					<div class="icon-container mb-2">
+						<i class="fs-4 uil uil-user-check"></i>
+					</div>
+					<p class="nav-label">@Localizer["Roles"]</p>
+				</a>
+			}
+			@if (Html.HasMenuAccess("Auditoria", Db) || User.IsInRole("Admin"))
+			{
+				<a class="icon-nav-item" href="@Url.Action("Index", "AuditLog", new { area = "Admin" })">
+					<div class="icon-container mb-2">
+						<i class="fs-4 uil uil-shield-check"></i>
+					</div>
+					<p class="nav-label">@Localizer["Audit"]</p>
+				</a>
+			}
+			@if (Html.HasMenuAccess("Log", Db) || User.IsInRole("Admin"))
+			{
+				<a class="icon-nav-item" href="@Url.Action("Index", "Log", new { area = "Admin" })">
+					<div class="icon-container mb-2">
+						<i class="fs-4 uil uil-film"></i>
+					</div>
+					<p class="nav-label">@Localizer["Log"]</p>
+				</a>
+			}
 		</div>
 	</div>
 </section>
