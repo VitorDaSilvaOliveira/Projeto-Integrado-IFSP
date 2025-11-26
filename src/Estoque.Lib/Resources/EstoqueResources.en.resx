@@ -298,7 +298,7 @@
     <value>Monthly Revenue Evolution</value>
   </data>
   <data name="DashboardPedidos" xml:space="preserve">
-    <value>Orders Dashboard</value>
+    <value>Orders Panel</value>
   </data>
   <data name="OrdersByOperationTitle" xml:space="preserve">
     <value>Orders By Operation</value>
@@ -335,5 +335,11 @@
   </data>
   <data name="Settings" xml:space="preserve">
     <value>Settings</value>
+  </data>
+  <data name="DashboardClientes" xml:space="preserve">
+    <value>Customers Panel</value>
+  </data>
+  <data name="Painel" xml:space="preserve">
+    <value>Panel</value>
   </data>
 </root>

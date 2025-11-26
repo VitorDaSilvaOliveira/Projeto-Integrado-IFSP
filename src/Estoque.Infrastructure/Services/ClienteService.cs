@@ -1,8 +1,9 @@
-﻿using JJMasterData.Core.UI.Components;
+﻿using Estoque.Infrastructure.Repository;
+using JJMasterData.Core.UI.Components;
 
 namespace Estoque.Infrastructure.Services;
 
-public class ClienteService(IComponentFactory componentFactory)
+public class ClienteService(IComponentFactory componentFactory, ClienteRepository clienteRepository)
 {
     public async Task<JJFormView> GetFormViewClienteAsync()
     {
@@ -10,14 +11,10 @@ public class ClienteService(IComponentFactory componentFactory)
         formView.ShowTitle = true;
         return formView;
     }
-
-    public async Task<JJFormView> GetFormViewReportClienteAsync()
+    public async Task<object> DashboardClienteAsync()
     {
-        var formView = await componentFactory.FormView.CreateAsync("RelatorioCliente");
-        formView.ShowTitle = true;
-        return formView;
+        return await clienteRepository.DashboardClienteAsync();
     }
-
 }
 
 

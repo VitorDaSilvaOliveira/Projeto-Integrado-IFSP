@@ -47,7 +47,7 @@
 					<a class="nav-link d-flex justify-content-between align-items-center px-2"
 					   data-bs-toggle="collapse" href="#collapseHome" role="button"
 					   aria-expanded="false" aria-controls="collapseHome">
-						<span class="text-wrap">@Localizer["Dashboards"]</span>
+						<span class="text-wrap">@Localizer["Painel"]</span>
 						<span class="bi bi-chevron-down"></span>
 					</a>
 					<hr class="navbar-vertical-line">
@@ -90,6 +90,28 @@
 								</a>
 							</div>
 						}
+						
+						@if (Html.HasMenuAccess("PainelClientes", Db))
+						{
+							<div class="nav-item-wrapper">
+								<a class="nav-link label-1 px-2 @(
+								                                ViewContext.RouteData.Values["controller"].ToString() == "Cliente" &&
+								                                ViewContext.RouteData.Values["action"].ToString() == "Dashboard"
+									                                ? "active"
+									                                : "")"
+								   href="@Url.Action("Dashboard", "Cliente", new { area = "Estoque" })">
+
+									<div class="d-flex align-items-center"
+									     style="gap:0.8rem; font-size:0.80rem; padding-left:1rem;">
+										<span class="nav-link-icon"><span class="bi bi-clipboard-data"></span></span>
+										<span class="nav-link-text-wrapper">
+											<span class="nav-link-text text-wrap">@Localizer["DashboardClientes"]</span>
+										</span>
+									</div>
+								</a>
+							</div>
+						}
+						
 					</div>
 				</li>
 
@@ -156,7 +178,11 @@
 							@if (Html.HasMenuAccess("Cliente", Db))
 							{
 								<div class="nav-item-wrapper">
-									<a class="nav-link label-1 px-2 @(ViewContext.RouteData.Values["controller"].ToString() == "Cliente" ? "active" : "")"
+									<a class="nav-link label-1 px-2 @(
+									                                ViewContext.RouteData.Values["controller"].ToString() == "Cliente" &&
+									                                ViewContext.RouteData.Values["action"].ToString() == "Index"
+										                                ? "active"
+										                                : "")"		
 									   href="@Url.Action("Index", "Cliente", new { area = "Estoque" })">
 										<div class="d-flex align-items-center"
 										     style="gap:0.8rem; font-size:0.80rem; padding-left:1rem;">

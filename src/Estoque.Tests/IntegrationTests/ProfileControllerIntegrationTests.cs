@@ -74,7 +74,7 @@ public class ProfileControllerIntegrationTests
             Id = "user123",
             Email = "teste@example.com",
             UserName = "teste@example.com",
-            Status = UserStatus.Active,
+            Status = UserStatus.Ativo,
             AvatarFileName = "avatar.png"
         };
 
