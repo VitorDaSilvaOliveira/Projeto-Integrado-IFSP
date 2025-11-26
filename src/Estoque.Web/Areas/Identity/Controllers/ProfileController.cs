@@ -103,4 +103,54 @@ public class ProfileController(
 
         return File(fileContents: avatarBytes, "image/png");
     }
+    
+    [HttpGet]
+    public async Task<IActionResult> ChangeEmail()
+    {
+        var user = await userManager.GetUserAsync(User);
+        if (user == null) return NotFound();
+
+        var model = new ChangeEmailViewModel
+        {
+            CurrentEmail = user.Email
+        };
+
+        return View(model);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> ChangeEmail(ChangeEmailViewModel model)
+    {
+        if (!ModelState.IsValid)
+            return View(model);
+
+        var user = await userManager.GetUserAsync(User);
+        if (user == null) return NotFound();
+
+        if (model.NewEmail == user.Email)
+        {
+            ModelState.AddModelError("", "O novo email deve ser diferente do atual.");
+            return View(model);
+        }
+
+        var existingUser = await userManager.FindByEmailAsync(model.NewEmail);
+        if (existingUser != null)
+        {
+            ModelState.AddModelError("", "Esse email já está em uso.");
+            return View(model);
+        }
+
+        var token = await userManager.GenerateChangeEmailTokenAsync(user, model.NewEmail);
+        var result = await userManager.ChangeEmailAsync(user, model.NewEmail, token);
+
+        if (!result.Succeeded)
+        {
+            ModelState.AddModelError("", "Não foi possível alterar o email.");
+            return View(model);
+        }
+
+        await signInManager.RefreshSignInAsync(user);
+        TempData["Success"] = "Email alterado com sucesso!";
+        return RedirectToAction("ChangeEmail");
+    }
 }

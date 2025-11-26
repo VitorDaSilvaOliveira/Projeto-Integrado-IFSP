@@ -18,7 +18,6 @@ public static class WebApplicationExtensions
         app.UseHttpsRedirection();
         app.UseStaticFiles();
         app.UseForwardedHeaders();
-
         app.UseRouting();
         app.UseAppLocalization();
         app.UseCookiePolicy();

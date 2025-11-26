@@ -27,13 +27,7 @@ public class SignInController(AuthService authService, UserManager<ApplicationUs
 
         var user = await userManager.FindByNameAsync(model.Login);
         
-        if (user == null)
-        {
-            ModelState.AddModelError(string.Empty, "Login ou senha inválidos.");
-            return View(model);
-        }
-
-        if (user.Status == UserStatus.Inativo)
+        if (user == null || user.Status == UserStatus.Inativo)
         {
             ModelState.AddModelError(string.Empty, "Login ou senha inválidos.");
             return View(model);
@@ -97,7 +91,7 @@ public class SignInController(AuthService authService, UserManager<ApplicationUs
 
     [HttpGet]
     [AllowAnonymous]
-    public IActionResult ResetPassword(string token, string email)
+    public IActionResult ResetPassword(string? token, string? email)
     {
         if (token == null || email == null)
             return BadRequest("Token ou e-mail inválido.");

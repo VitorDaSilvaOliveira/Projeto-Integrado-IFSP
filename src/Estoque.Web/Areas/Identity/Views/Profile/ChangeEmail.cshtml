@@ -1,0 +1,32 @@
+﻿@model ChangeEmailViewModel
+
+@{
+    Layout = "~/Areas/Estoque/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Alterar Email";
+}
+
+<h3>
+    <i class="fa-solid fa-reply me-2"></i> Alterar Email
+</h3>
+<hr />
+
+<div class="container mt-4" style="max-width:800px;">
+    <div class="mb-3">
+        <label class="form-label">Email Atual</label>
+        <input type="email" class="form-control" value="@Model.CurrentEmail" readonly />
+    </div>
+
+    <form asp-action="ChangeEmail" method="post">
+        <div class="mb-3">
+            <label class="form-label">Novo Email</label>
+            <input type="email" name="newEmail" class="form-control" placeholder="Digite o novo email" required />
+        </div>
+        <button type="submit" class="btn btn-primary">Alterar Email</button>
+        <a asp-area="Estoque" asp-controller="Home" asp-action="Index" class="btn btn-secondary ms-2">Voltar</a>
+    </form>
+    
+    @await Html.PartialAsync("_Error")
+
+    @await Html.PartialAsync("_Success")
+
+</div>
