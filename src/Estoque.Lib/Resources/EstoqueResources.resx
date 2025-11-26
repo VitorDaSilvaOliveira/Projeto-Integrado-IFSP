@@ -321,4 +321,19 @@
   <data name="Invoice" xml:space="preserve">
     <value>Nota Fiscal</value>
   </data>
+  <data name="Configuration" xml:space="preserve">
+    <value>Configuração</value>
+  </data>
+  <data name="ShowLanguageIcon" xml:space="preserve">
+    <value>Mostrar ícone de idioma</value>
+  </data>
+  <data name="ShowNightModeIcon" xml:space="preserve">
+    <value>Mostrar ícone de modo noturno</value>
+  </data>
+  <data name="UserPreferences" xml:space="preserve">
+    <value>Preferências do Usuário</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Configurações</value>
+  </data>
 </root>

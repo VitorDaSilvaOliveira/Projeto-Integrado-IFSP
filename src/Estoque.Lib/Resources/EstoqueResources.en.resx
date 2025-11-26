@@ -307,7 +307,7 @@
     <value>Exchanges</value>
   </data>
   <data name="Currency" xml:space="preserve">
-    <value>R$</value>
+    <value>$</value>
   </data>
   <data name="Sales" xml:space="preserve">
     <value>Sales</value>
@@ -320,5 +320,20 @@
   </data>
   <data name="Invoice" xml:space="preserve">
     <value>Invoice</value>
+  </data>
+  <data name="Configuration" xml:space="preserve">
+    <value>Configuration</value>
+  </data>
+  <data name="ShowLanguageIcon" xml:space="preserve">
+    <value>Show language icon</value>
+  </data>
+  <data name="ShowNightModeIcon" xml:space="preserve">
+    <value>Show night mode icon</value>
+  </data>
+  <data name="UserPreferences" xml:space="preserve">
+    <value>User Preferences</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
   </data>
 </root>

@@ -1,82 +1,92 @@
-﻿@model Estoque.Domain.Entities.UserSettings
+﻿@using Estoque.Lib.Resources
+@using Microsoft.Extensions.Localization
+@model Estoque.Domain.Entities.UserSettings
+@inject IStringLocalizer<EstoqueResources> Localizer
+
 @{
-    ViewData["Title"] = "Configurações";
+    ViewData["Title"] = @Localizer["Configuration"];
     Layout = "~/Areas/Estoque/Views/Shared/_Layout.cshtml";
 }
 
+<h3>
+    <i class="fa-solid fa-reply me-2"></i> @Localizer["Configuration"]
+</h3>
+<hr/>
+
 <div class="container py-5">
-    <h3 class="mb-4"><i class="fas fa-cog me-2"></i> Configurações</h3>
 
     <form asp-area="Identity" asp-controller="Settings" asp-action="SaveSettings" method="post" class="row g-4">
         @Html.AntiForgeryToken()
-        <input type="hidden" asp-for="UserId" />
+        <input type="hidden" asp-for="UserId"/>
 
         <!-- Preferências do Usuário -->
-        <div class="col-lg-6">
+        <div class="col-lg-12">
             <div class="card shadow-sm border-0 h-100">
                 <div class="card-header bg-primary text-white fw-bold">
-                    <i class="bi bi-person-gear me-2"></i> Preferências do Usuário
+                    <i class="bi bi-person-gear me-2"></i> @Localizer["UserPreferences"]
                 </div>
                 <div class="card-body">
                     <div class="form-check form-switch mb-3">
-                        <input class="form-check-input" asp-for="EnableLanguageSwitch" type="checkbox" id="languageSwitch">
+                        <input class="form-check-input" asp-for="EnableLanguageSwitch" type="checkbox"
+                               id="languageSwitch">
                         <label class="form-check-label fw-semibold" for="languageSwitch">
-                            Mostrar ícone de idioma
+                            @Localizer["ShowLanguageIcon"]
                         </label>
                     </div>
 
                     <div class="form-check form-switch mb-3">
-                        <input class="form-check-input" asp-for="EnableDarkModeSwitch" type="checkbox" id="darkModeSwitch">
+                        <input class="form-check-input" asp-for="EnableDarkModeSwitch" type="checkbox"
+                               id="darkModeSwitch">
                         <label class="form-check-label fw-semibold" for="darkModeSwitch">
-                            Mostrar ícone de modo noturno
+                            @Localizer["ShowNightModeIcon"]
                         </label>
                     </div>
+                    @* TODO *@
+                    @* <div class="mb-3"> *@
+                    @*     <label class="fw-semibold" asp-for="PreferredLanguage">Idioma padrão</label> *@
+                    @*     <select asp-for="PreferredLanguage" class="form-select"> *@
+                    @*         <option value="pt-BR" selected="@(string.IsNullOrEmpty(Model.PreferredLanguage) || Model.PreferredLanguage == "pt-BR")">Português (Brasil)</option> *@
+                    @*         <option value="en-US" selected="@(Model.PreferredLanguage == "en-US")">Inglês (EUA)</option> *@
+                    @*     </select> *@
+                    @* </div> *@
 
-                    <div class="mb-3">
-                        <label class="fw-semibold" asp-for="PreferredLanguage">Idioma padrão</label>
-                        <select asp-for="PreferredLanguage" class="form-select">
-                            <option value="pt-BR" selected="@(string.IsNullOrEmpty(Model.PreferredLanguage) || Model.PreferredLanguage == "pt-BR")">Português (Brasil)</option>
-                            <option value="en-US" selected="@(Model.PreferredLanguage == "en-US")">Inglês (EUA)</option>
-                        </select>
-                    </div>
-
-                    <div class="form-check form-switch mb-3">
-                        <input class="form-check-input" asp-for="DarkMode" type="checkbox" id="darkModeDefault">
-                        <label class="form-check-label fw-semibold" for="darkModeDefault">
-                            Ativar modo noturno por padrão
-                        </label>
-                    </div>
+                    @* <div class="form-check form-switch mb-3"> *@
+                    @*     <input class="form-check-input" asp-for="DarkMode" type="checkbox" id="darkModeDefault"> *@
+                    @*     <label class="form-check-label fw-semibold" for="darkModeDefault"> *@
+                    @*         Ativar modo noturno por padrão *@
+                    @*     </label> *@
+                    @* </div> *@
                 </div>
             </div>
         </div>
 
-        <!-- Configurações Gerais -->
-        <div class="col-lg-6">
-            <div class="card shadow-sm border-0 h-100">
-                <div class="card-header bg-success text-white fw-bold">
-                    <i class="bi bi-sliders me-2"></i> Configurações Gerais
-                </div>
-                <div class="card-body">
-                    <div class="mb-3">
-                        <label class="fw-semibold">Tempo de cache (em minutos)</label>
-                        <input type="number" class="form-control" placeholder="Ex: 30" disabled />
-                        <small class="text-muted">Campo reservado para futuras configurações</small>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="fw-semibold">Outras Configurações</label>
-                        <input type="text" class="form-control" placeholder="Ex: Configuração futura" disabled />
-                        <small class="text-muted">Espaço reservado para novas opções</small>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-12 text-end mt-3">
-            <button type="submit" class="btn btn-primary px-5 py-2 shadow-sm">
-                <i class="bi bi-save me-2"></i> Salvar Configurações
-            </button>
-        </div>
+        @* <!-- Configurações Gerais --> *@
+        @* <div class="col-lg-6"> *@
+        @*     <div class="card shadow-sm border-0 h-100"> *@
+        @*         <div class="card-header bg-success text-white fw-bold"> *@
+        @*             <i class="bi bi-sliders me-2"></i> Configurações Gerais *@
+        @*         </div> *@
+        @*         <div class="card-body"> *@
+        @*             <div class="mb-3"> *@
+        @*                 <label class="fw-semibold">Tempo de cache (em minutos)</label> *@
+        @*                 <input type="number" class="form-control" placeholder="Ex: 30" disabled /> *@
+        @*                 <small class="text-muted">Campo reservado para futuras configurações</small> *@
+        @*             </div> *@
+        @* *@
+        @*             <div class="mb-3"> *@
+        @*                 <label class="fw-semibold">Outras Configurações</label> *@
+        @*                 <input type="text" class="form-control" placeholder="Ex: Configuração futura" disabled /> *@
+        @*                 <small class="text-muted">Espaço reservado para novas opções</small> *@
+        @*             </div> *@
+        @*         </div> *@
+        @*     </div> *@
+        @* </div> *@
+        @* *@
+        @* <div class="col-12 text-end mt-3"> *@
+        @*     <button type="submit" class="btn btn-primary px-5 py-2 shadow-sm"> *@
+        @*         <i class="bi bi-save me-2"></i> Salvar Configurações *@
+        @*     </button> *@
+        @* </div> *@
     </form>
 
     @await Html.PartialAsync("_Error")
