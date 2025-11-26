@@ -2,5 +2,6 @@
 
 public enum PedidoOperacao
 {
-    Vendas = 1
+    Vendas = 1,
+    Troca = 2
 }
