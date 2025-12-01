@@ -309,11 +309,7 @@
 
 \setlength{\absparsep}{18pt} % ajusta o espaçamento dos parágrafos do resumo
 \begin{resumo}
-Este projeto descreve a criação de um sistema de controle de estoque para a loja de eletrônicos VIP PENHA. Em um cenário de rápido avanço tecnológico e crescente competitividade de mercado, a gestão eficiente de recursos é essencial para empreendimentos. O sistema foi desenvolvido para otimizar o controle de produtos, tornando a operação mais eficiente. 
-
-A problemática central é a falta de controle de estoque e os erros de processos manuais na "VIP PENHA". A solução implementada é um sistema unificado que permite o cadastro de produtos, o controle de entradas e saídas de mercadorias, e a geração automática de relatórios gerenciais. Isso resultou na redução de erros manuais, na diminuição do tempo gasto na gestão do estoque e na melhoria da tomada de decisões estratégicas, oferecendo uma perspectiva clara sobre o desempenho do inventário. 
-
-Para o desenvolvimento do sistema, foram realizadas pesquisas sobre gestão de estoque e sistemas de informação, utilizando uma metodologia de trabalho ágil, o Kanban. O projeto abrangeu o detalhamento de funcionalidades, requisitos técnicos, arquitetura do sistema (front-end, back-end, banco de dados e infraestrutura), tecnologias empregadas, planos de testes e planejamentos financeiros.
+Este projeto descreve a criação e implementação de um sistema de controle de estoque otimizado para a loja de eletrônicos VIP PENHA, visando superar a problemática central da falta de controle de inventário e os erros inerentes aos processos manuais existentes. Em um cenário de rápido avanço tecnológico e alta competitividade, a gestão eficiente de recursos torna-se crucial para o sucesso do empreendimento. A solução desenvolvida consiste em um sistema unificado que integra funcionalidades essenciais como o cadastro de produtos, o controle preciso de entradas e saídas de mercadorias, e a geração automática de relatórios gerenciais detalhados. A metodologia de trabalho adotada foi a ágil, utilizando o Kanban, complementada por pesquisas aprofundadas sobre gestão de estoque e sistemas de informação. O desenvolvimento contemplou o detalhamento completo de funcionalidades, a definição de requisitos técnicos, a arquitetura do sistema (abrangendo front-end, back-end, banco de dados e infraestrutura), as tecnologias empregadas, planos de testes rigorosos e planejamentos financeiros. Os resultados da implementação demonstraram uma redução significativa de erros manuais, uma diminuição do tempo gasto na gestão do inventário e uma melhoria substancial na tomada de decisões estratégicas, oferecendo à VIP PENHA uma perspectiva clara e precisa sobre o desempenho do seu estoque.
 
 
  \textbf{Palavras-chave}: Sistema de estoque. Gestão de produtos. Automação. Relatórios gerenciais. Kanban. 
@@ -322,12 +318,7 @@ Para o desenvolvimento do sistema, foram realizadas pesquisas sobre gestão de e
 % resumo em inglês
 \begin{resumo}[Abstract]
  \begin{otherlanguage*}{english}
-This project describes the creation of an inventory control system for the VIP PENHA electronics store. In a scenario of rapid technological advancement and increasing market competitiveness, efficient resource management is essential for businesses. The system was developed to
-optimize product control, making operations more efficient. 
-
-The central problem addressed is the lack of inventory control and manual process errors at "VIP PENHA". The implemented solution is a unified system that allows product registration, control of goods entry and exit, and automatic generation of management reports. This resulted in the reduction of manual errors, decreased time spent on inventory management, and improved strategic decision-making, offering a clear perspective on inventory performance. 
-
-For the system's development, research on inventory management and information systems was conducted, utilizing an agilemethodology, Kanban. The project covered the detailing of functionalities, technical requirements, system architecture (front-end, back-end, database, and infrastructure), technologies employed, test plans, and financial planning.
+This project describes the creation and implementation of an optimized stock control system for the electronics store VIP PENHA, aiming to overcome the core problem of lacking inventory control and the errors inherent in existing manual processes. In a scenario of rapid technological advancement and high competitiveness, efficient resource management is crucial for the success of the business. The developed solution consists of a unified system that integrates essential functionalities such as product registration, precise control of goods input and output, and the automatic generation of detailed management reports. The adopted work methodology was the agile approach, utilizing Kanban, complemented by in-depth research on inventory management and information systems. The development encompassed the complete detailing of functionalities, the definition of technical requirements, the system architecture (covering front-end, back-end, database, and infrastructure), the technologies employed, rigorous testing plans, and financial planning. The implementation results demonstrated a significant reduction in manual errors, a decrease in the time spent on inventory management, and a substantial improvement in strategic decision-making, offering VIP PENHA a clear and precise perspective on its stock performance.
 
 
    \vspace{\onelineskip}
@@ -406,7 +397,7 @@ Nesta seção serão apresentados os objetivos do projeto, ele estão divididos 
 
 \subsection{Objetivo Geral}
 
-Auxiliar a gestão da loja VIP Penha por meio do desenvolvimento de um sistema de gerenciamento de estoque para a loja VIP PENHA, visando transformar a gestão de inventário em um processo automatizado e estratégico para otimizar o controle de produtos, diminuir erros manuais e reduzir o tempo gasto na gestão, ao possibilitar o cadastro detalhado de itens, o monitoramento de entradas e saídas em tempo real e a configuração de alertas de estoque mínimo. 
+Desenvolver um sistema de gerenciamento de estoque para a loja VIP PENHA, a fim de transformar a gestão de inventário em um processo moderno e estratégico, otimizando o controle de produtos e fornecendo dados cruciais para a tomada de decisões.
 
 \subsection{Objetivos Específicos}
 
@@ -419,6 +410,7 @@ Para alcançar o objetivo geral proposto, torna-se necessário estabelecer metas
     \item Facilitar a tomada de decisão através de indicadores e gráficos que permitam visualizar o comportamento das vendas e a movimentação dos produtos.
     \item Garantir a integridade e segurança das informações, assegurando que os dados cadastrados e relatórios gerados sejam armazenados e acessados de forma confiável.
     \item Proporcionar uma interface intuitiva e acessível, de modo que usuários com diferentes níveis de familiaridade tecnológica consigam operar o sistema sem dificuldades.
+    \item Implementar um módulo de cadastro e gerenciamento de clientes, integrando o registro de vendas ao histórico individual do consumidor, para auxiliar na análise de padrões de compra.
 \end{itemize}
 
 \section{Problema e Solução Proposta}
@@ -468,7 +460,7 @@ Digitalizar o sistema de estoque é, portanto, um passo essencial para empresas 
 Nesta seção, foi realizada uma análise dos principais sistemas de gerenciamento de estoque disponíveis no mercado, com foco em soluções utilizadas por lojas de pequeno e médio porte. Assim, demostrando quais as vantagens de usar o sistema que produzimos.
 
 \subsection{Concorrente 1: Bling ERP}
-O Bling é um sistema ERP completo que oferece controle de estoque, vendas, emissão de notas fiscais e integração com plataformas de e-commerce. É bastante utilizado por empresas que também vendem online, oferecendo funcionalidades robustas. No entanto, seu uso pode ser complexo para iniciantes, além de exigir pagamento mensal.
+O Bling é um sistema ERP (Enterprise Resource Planning) completo que oferece controle de estoque, vendas, emissão de notas fiscais e integração com plataformas de e-commerce. É bastante utilizado por empresas que também vendem online, oferecendo funcionalidades robustas. No entanto, seu uso pode ser complexo para iniciantes, além de exigir pagamento mensal.
 
 \subsection{Concorrente 2: Tiny ERP}
 O Tiny ERP oferece funcionalidades similares ao Bling, como controle de estoque, pedidos, emissão de notas fiscais e integração com o setor financeiro. É conhecido por sua interface amigável, mas ainda assim exige uma curva de aprendizado e também é um serviço pago.
