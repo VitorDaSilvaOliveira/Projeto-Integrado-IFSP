@@ -55,6 +55,7 @@
 \usepackage{graphicx}			% Inclusão de gráficos
 \usepackage{microtype} 			% para melhorias de justificação
 \usepackage{placeins}
+\usepackage{amsmath}
 
 
 % ---
@@ -643,12 +644,15 @@ Já a aplicação pode ser acessada no link abaixo:
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.3\textwidth]{Figuras/site.png}
-    \caption{QR Code para a aplicação}
+    \caption{QR Code para a aplicação - recomendado acessar no PC}
 \end{figure}
 
 \begin{center}
-    \href{https://ifspestoque.azurewebsites.net/}{https://ifspestoque.azurewebsites.net/}
+    \href{https://estoqueifsp.azurewebsites.net}{https://estoqueifsp.azurewebsites.net}
 \end{center}
+
+Login: Admin
+Senha: Admin@123
 
 % ---
 % primeiro capitulo de Resultados
@@ -1498,15 +1502,11 @@ No segundo período de desenvolvimento, o foco maior está no desenvolvimento da
 \end{itemize}
 \chapter{Viabilidade Financeira}
 
-A viabilidade financeira do projeto foi feita através de uma simulação de possíveis custos da mão de obra, baseado na experiência dos integrantes, e nas horas efetivamente trabalhadas, além de custos operacionais.
+O presente capítulo visa demonstrar a viabilidade econômica do sistema de gerenciamento de estoque, indo além do mero levantamento de custos e apresentando uma análise completa do retorno sobre o investimento. Para tal, serão simulados e detalhados os custos de desenvolvimento e operacionais, quantificados os benefícios gerados pela otimização do processo e calculados os principais indicadores financeiros, como o \textit{Payback}.
 
 \section{Custos}
 
-A primeira tabela apresenta uma análise detalhada dos custos de desenvolvimento, com foco no investimento em mão de obra, que representa o principal ativo do projeto. A metodologia de cálculo é simples e transparente: o esforço previsto (em horas) é multiplicado pela taxa horária específica de cada especialista (desenvolvedores, analistas, gestores), garantindo uma apuração precisa e fiel aos valores de mercado.
-
-Esta abordagem, portanto, transcende um simples levantamento numérico. Ela não só oferece clareza sobre os custos inerentes a cada fase do desenvolvimento, mas, ao ser projetada sobre a duração total do desenvolvimento, transforma-se em uma poderosa ferramenta de gestão estratégica e preditiva. A projeção temporal permite uma análise aprofundada da distribuição dos custos mensais e globais, oferecendo previsibilidade e permitindo a antecipação de picos de investimento. Com isso, a gestão pode mitigar riscos financeiros, como desvios orçamentários, antes que se concretizem.
-
-Consequentemente, a tabela constitui um pilar para um planejamento financeiro robusto, que justifica o orçamento perante stakeholders e estabelece uma linha de base para o controle rigoroso das despesas, viabilizando a alocação otimizada de recursos e assegurando a sustentabilidade operacional do projeto.
+O investimento inicial é focado na mão de obra especializada, representando o principal ativo do projeto. A metodologia de cálculo consiste na multiplicação do esforço previsto em horas pela taxa horária de cada especialista, refletindo os valores de mercado para o desenvolvimento do sistema. O custo total de desenvolvimento é de R\$ 61.500,00.
 
 \begin{table}[hbtp]
     \centering
@@ -1526,42 +1526,55 @@ Consequentemente, a tabela constitui um pilar para um planejamento financeiro ro
         \hline
         QA (Testes)           & 4 & 100 & 22,00 & 8.800,00 \\
         \hline
-        \textbf{Total} & \textbf{7} & - & - & \textbf{61.500,00} \\
+        \textbf{Total de Pessoas} & \textbf{7} & - & - & \textbf{61.500,00} \\
         \hline
     \end{tabular}
 \fonte{Elaborado pelos autores.}
 \end{table}
 
-Na segunda tabela é representada a estrutura mensal da empresa, detalhando os custos associados às instalações, equipamentos e serviços de TI. No item 2.1, destacam-se os gastos com aluguel de espaço e mobiliário, totalizando 0 reais por mês. Já no item 2.2, referente à aquisição de equipamentos, observa-se que não há custos neste momento. No entanto, no item 2.3, estão listados os custos mensais de serviços de TI.
+\FloatBarrier
+
+Além do custo de desenvolvimento do projeto, também há um custo mensal de cerca de R\$ 100,00 com a manutenção do servidor que hospeda a aplicação.
+
+\section{Receita/Economia Gerada}
+
+Para a análise de viabilidade, os benefícios são calculados com base na economia de tempo, redução de perdas e aumento de vendas que o sistema proporcionará à VIP PENHA.
 
 \begin{table}[hbtp]
-\centering
-\caption{Estrutura Mensal da Empresa.}
-\label{tab:estrutura_mensal}
-\begin{tabular}{lcr}
-\toprule
-\textbf{Item} & \textbf{Quantidade} & \textbf{Valor (R\$)} \\
-\midrule
-\multicolumn{3}{l}{\textbf{2. Estrutura da empresa (mensal)}} \\
-\addlinespace % Adiciona um pequeno espaço vertical
-\quad 2.1. Instalações - Aluguel & - & 0,00 \\
-\addlinespace
-\multicolumn{3}{l}{\quad 2.2. Equipamentos (TI e Outros)} \\
-\qquad - Computadores/notebooks & 0 & 0,00 \\
-\qquad - Servidores proprietários & 0 & 0,00 \\
-\qquad - Outros (mobiliário, etc.) & 0 & 0,00 \\
-\addlinespace
-\multicolumn{3}{l}{\quad 2.3. Serviços de TI} \\
-\qquad - Ferramentas de desenvolvimento & - & 0,00 \\
-\qquad - Hospedagem e banco de dados & - &100,00 \\
-\midrule
-\textbf{Total mensal} & & \textbf{R\$ 100,00} \\
-\bottomrule
-\end{tabular}
-\fonte{Elaborado pelos autores.}
+    \centering
+    \caption{Projeção Anual de Benefícios Quantificáveis}
+    \label{tab:beneficios}
+    % Usa tabularx para a largura total da página
+    \begin{tabularx}{\textwidth}{>{\centering}p{3cm} X >{\raggedleft\arraybackslash}p{2.5cm}}
+        \toprule
+        \textbf{Benefício} & \textbf{Descrição/Cálculo (Simulado)} & \textbf{Valor Anual (R\$)} \\
+        \midrule
+        Economia de Produtividade & Redução de 450 horas/ano em tarefas manuais (registro, contagem), liberando tempo para vendas. (450h x R\$ 25/h) & 11.250,00 \\
+        \midrule
+        Evitamento de Erros & Redução de 70\% dos custos anuais de R\$ 8.000,00 incorridos por divergências ou registros incorretos de estoque. & 5.600,00 \\
+        \midrule
+        Vendas Resgatadas & Evitamento de Ruptura de Estoque (Alertas de mínimo) salvando R\$ 2.112,50 por mês em vendas. & 25.350,00 \\
+        \midrule
+        \textbf{Total Anual de Benefícios Brutos} & \multicolumn{1}{r}{\textbf{Subtotal}} & \textbf{42.200,00} \\
+        \bottomrule
+    \end{tabularx}
+    \fonte{Elaborado pelos autores.}
 \end{table}
 
+\FloatBarrier
 
+\section{Conclusão de Viabilidade}
+
+O indicador de Payback foi utilizado para determinar a viabilidade do projeto, calculando o tempo necessário para que o investimento inicial seja recuperado pelo fluxo de caixa gerado pela operação do sistema.O Investimento Inicial no desenvolvimento foi de R\$ 61.500,00. O Fluxo de Caixa Anual, obtido pela diferença entre os Benefícios Brutos Anuais (R\$ 42.200,00) e os Custos Operacionais Anuais (R\$ 1.200,00), foi de R\$ 41.000,00.O cálculo do \textit{Payback} resultou em:
+
+\begin{align*}
+\text{Payback (Anos)} &= \frac{\text{R\$ } 61.500,00}{\text{R\$ } 41.000,00} = \textbf{1,5 \text{ anos}} \\
+\text{Payback em Meses} &= 1,5 \text{ anos} \times 12 \text{ meses} = \textbf{18 \text{ meses}}
+\end{align*}
+
+\FloatBarrier
+
+O resultado demonstra que o investimento será integralmente recuperado em 18 meses em um cenário realista, podendo chegar a pouco mais de 2 anos em um cenário mais pessimista. Considerando que este prazo é inferior ou próximo a dois anos, o projeto é classificado como financeiramente viável e atrativo, evidenciando que os ganhos operacionais (como a redução de erros e o resgate de vendas por ruptura de estoque) rapidamente cobrem os custos de implantação e manutenção. O sistema passa a gerar valor e lucro líquido operacional para a VIP PENHA a partir do 19º mês.
 
 
 \chapter{Considerações Finais}
